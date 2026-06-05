@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Sverkaus Labs">
+    <title>Sverkaus Labs</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --text-color: #f0f0f0;
+            --accent-color: #a3e635;
+            --dim-color: #666666;
+            --tagline-color: #888888;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'JetBrains Mono', monospace;
+            cursor: crosshair;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; 
+            position: relative;
+            /* Animation 3: CRT Flicker */
+            animation: crtFlicker 8s infinite;
+        }
+
+        /* Subtle flicker */
+        @keyframes crtFlicker {
+            0% { opacity: 1; }
+            3% { opacity: 0.96; }
+            6% { opacity: 1; }
+            7% { opacity: 0.98; }
+            8% { opacity: 1; }
+            9% { opacity: 0.95; }
+            10% { opacity: 1; }
+            89% { opacity: 1; }
+            90% { opacity: 0.96; }
+            91% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+
+        /* Scanline effect */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0) 1px,
+                rgba(0, 0, 0, 0.03) 1px,
+                rgba(0, 0, 0, 0.03) 2px
+            );
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .top-left-label {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 0.8s;
+        }
+
+        .center-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            width: 100%;
+        }
+
+        .ascii-art {
+            font-size: 8px;
+            line-height: 0.95; /* Tight vertical to fuse block characters */
+            letter-spacing: -0.2px; /* Tight horizontal to fuse block characters */
+            font-weight: 700;
+            white-space: pre;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            text-shadow: 
+                1px 1px 0px #333,
+                0px 0px 10px rgba(163, 230, 53, 0.1); /* Subtle lime glow */
+        }
+
+        /* Animation 5: Staggered ASCII Reveal */
+        .ascii-line {
+            display: block;
+            opacity: 0;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: var(--tagline-color);
+            letter-spacing: 0.05em;
+            text-align: center;
+            min-height: 20px; /* prevent layout shift during typing */
+        }
+
+        /* Animation 1: Blinking Cursor */
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background-color: var(--accent-color);
+            vertical-align: middle;
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .bottom-projects {
+            position: absolute;
+            bottom: 80px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            z-index: 10;
+            padding: 0 20px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 1s;
+        }
+
+        .project {
+            font-size: 12px;
+            color: var(--dim-color);
+            text-align: center;
+            line-height: 1.5;
+            width: max-content;
+            position: relative;
+            padding: 0 20px; /* Space for brackets */
+            transition: color 0.2s;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        /* Animation 4: Targeting Brackets */
+        .project::before, .project::after {
+            position: absolute;
+            opacity: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+            transition: all 0.2s ease;
+            top: 0;
+        }
+        
+        .project::before {
+            content: "[";
+            left: 0;
+            transform: translateX(10px);
+        }
+        
+        .project::after {
+            content: "]";
+            right: 0;
+            transform: translateX(-10px);
+        }
+
+        .project:hover::before, .project:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .project:hover {
+            color: #888;
+        }
+
+        .project:hover a {
+            color: var(--accent-color);
+            text-decoration: underline;
+            text-decoration-color: var(--accent-color);
+        }
+
+        .project .diamond {
+            color: var(--text-color);
+            transition: color 0.2s;
+        }
+
+        .project:hover .diamond {
+            color: var(--accent-color);
+        }
+
+        .project .project-name {
+            color: var(--accent-color);
+            font-weight: 700;
+            display: inline-block;
+            min-width: 65px; /* Prevent jitter during glitch */
+        }
+
+        a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+            text-decoration-color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .ascii-art {
+                font-size: 7px;
+                letter-spacing: -0.5px;
+            }
+            .bottom-projects {
+                position: relative;
+                bottom: 0;
+                padding-bottom: 40px;
+                margin-top: auto;
+            }
+            body {
+                overflow-y: auto;
+                overflow-x: auto;
+            }
+            .center-content {
+                padding-top: 60px;
+            }
+            .project {
+                margin-bottom: 12px;
+                padding: 0 20px;
+            }
+            .project::before, .project::after {
+                display: none; /* Disable brackets on mobile to avoid mess */
+            }
+        }
+        /* Starry Sky Background */
+        canvas#starCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Starry Sky Background -->
+    <canvas id="starCanvas"></canvas>
+
+    <div class="top-left-label">
+        ■ SVERKAUS LABS
+    </div>
+
+    <div class="center-content">
+        <pre class="ascii-art">
+<span class="ascii-line" style="animation-delay: 0.1s">███████╗██╗   ██╗███████╗██████╗ ██╗  ██╗ █████╗ ██╗   ██╗███████╗</span>
+<span class="ascii-line" style="animation-delay: 0.2s">██╔════╝██║   ██║██╔════╝██╔══██╗██║ ██╔╝██╔══██╗██║   ██║██╔════╝</span>
+<span class="ascii-line" style="animation-delay: 0.3s">███████╗██║   ██║█████╗  ██████╔╝█████╔╝ ███████║██║   ██║███████╗</span>
+<span class="ascii-line" style="animation-delay: 0.4s">╚════██║╚██╗ ██╔╝██╔══╝  ██╔══██╗██╔═██╗ ██╔══██║██║   ██║╚════██║</span>
+<span class="ascii-line" style="animation-delay: 0.5s">███████║ ╚████╔╝ ███████╗██║  ██║██║  ██╗██║  ██║╚██████╔╝███████║</span>
+<span class="ascii-line" style="animation-delay: 0.6s">╚══════╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝</span>
+        </pre>
+        <div class="tagline"><span id="typewriter"></span><span class="cursor"></span></div>
+    </div>
+
+    <div class="bottom-projects">
+        <div class="project">
+            <span class="diamond">◇</span> <span class="project-name" data-value="HOTELMOL">HOTELMOL</span> app for hoteliers and travellers orchestrating by AI agents covering the entire guest journey end-to-end > <a href="https://hotelmol.com" target="_blank">hotelmol.com</a>
+        </div>
+        <div class="project">
+            <span class="diamond">◇</span> <span class="project-name" data-value="GENNETY">GENNETY</span> Applied social network for autonomous networking via personal agents > <a href="https://gennety.com" target="_blank">gennety.com</a>
+        </div>
+        <div class="project">
+            <span class="diamond">◇</span> <span class="project-name" data-value="DATING">DATING</span> Dating social network for IRL — no chat before meeting > <a href="https://dating.gennety.com" target="_blank">dating.gennety.com</a>
+        </div>
+    </div>
+
+    <script>
+        // Animation 1: Typing Effect
+        const textToType = "Building Ai native apps in Europe";
+        const typeElement = document.getElementById('typewriter');
+        let typeIndex = 0;
+
+        function typeWriter() {
+            if (typeIndex < textToType.length) {
+                typeElement.textContent += textToType.charAt(typeIndex);
+                typeIndex++;
+                setTimeout(typeWriter, 40 + Math.random() * 40); // Random typing speed
+            }
+        }
+        
+        // Start typing after ASCII reveal
+        setTimeout(typeWriter, 600);
+
+        // Animation 2: Matrix Decode (Glitch) and Click to open site
+        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
+        
+        document.querySelectorAll('.project').forEach(project => {
+            const el = project.querySelector('.project-name');
+            const link = project.querySelector('a');
+            
+            // Glitch effect on hovering the project row
+            if (el) {
+                project.addEventListener('mouseenter', () => {
+                    let iterations = 0;
+                    const originalText = el.dataset.value;
+                    
+                    clearInterval(el.dataset.interval);
+                    
+                    el.dataset.interval = setInterval(() => {
+                        el.innerText = originalText.split("")
+                            .map((letter, index) => {
+                                if(index < iterations) {
+                                    return originalText[index];
+                                }
+                                return letters[Math.floor(Math.random() * letters.length)];
+                            })
+                            .join("");
+                        
+                        if(iterations >= originalText.length){
+                            clearInterval(el.dataset.interval);
+                        }
+                        
+                        iterations += 1 / 3; // Controls speed of decode
+                    }, 30);
+                });
+            }
+
+            // Click listener for the entire row
+            project.addEventListener('click', (event) => {
+                // If clicked directly on the anchor, let the browser handle it naturally
+                if (event.target.tagName === 'A') return;
+                
+                if (link) {
+                    window.open(link.href, link.target || '_blank');
+                }
+            });
+        });
+        // Animation 3: Starry Sky
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+        
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 1.5 + 0.5; // Very small stars
+                this.baseAlpha = Math.random() * 0.5 + 0.1;
+                this.blinkSpeed = Math.random() * 0.02 + 0.005;
+                this.angle = Math.random() * Math.PI * 2;
+                this.speedY = Math.random() * 0.1 + 0.02; // Very slow upward drift
+            }
+            update() {
+                this.angle += this.blinkSpeed;
+                this.y -= this.speedY;
+                if (this.y < 0) {
+                    this.y = canvas.height;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+            draw() {
+                const alpha = this.baseAlpha + Math.sin(this.angle) * 0.3;
+                ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0, alpha)})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        function initStars() {
+            stars = [];
+            const numStars = Math.floor((window.innerWidth * window.innerHeight) / 3000);
+            for (let i = 0; i < numStars; i++) {
+                stars.push(new Star());
+            }
+        }
+        initStars();
+        
+        // Re-initialize stars if window resizes significantly
+        window.addEventListener('resize', initStars);
+        
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                star.update();
+                star.draw();
+            });
+            requestAnimationFrame(animateStars);
+        }
+        animateStars();
+    </script>
+</body>
+</html>

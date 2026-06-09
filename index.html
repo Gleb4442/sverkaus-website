@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #0d0d0d;
@@ -99,24 +100,25 @@
             width: 100%;
         }
 
-        .ascii-art {
-            font-size: 8px;
-            line-height: 0.95; /* Tight vertical to fuse block characters */
-            letter-spacing: -0.2px; /* Tight horizontal to fuse block characters */
-            font-weight: 700;
-            white-space: pre;
-            color: var(--text-color);
+        .logo-center {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(32px, 5vw, 56px);
+            font-weight: 300;
+            letter-spacing: 0.25em;
+            margin-left: 0.25em; /* Compensate for the last letter's tracking */
             margin-bottom: 20px;
-            text-shadow: 
-                1px 1px 0px #333,
-                0px 0px 10px rgba(163, 230, 53, 0.1); /* Subtle lime glow */
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f0f0f0;
+            text-shadow: 0px 0px 20px rgba(163, 230, 53, 0.3);
         }
 
-        /* Animation 5: Staggered ASCII Reveal */
-        .ascii-line {
-            display: block;
+        .logo-center span {
             opacity: 0;
-            animation: fadeIn 0.3s ease forwards;
+            display: inline-block;
+            animation: fadeIn 0.8s ease forwards;
         }
 
         .tagline {
@@ -238,9 +240,9 @@
         }
 
         @media (max-width: 768px) {
-            .ascii-art {
-                font-size: 7px;
-                letter-spacing: -0.5px;
+            .logo-center {
+                letter-spacing: 0.15em;
+                margin-left: 0.15em;
             }
             .bottom-projects {
                 position: relative;
@@ -285,14 +287,16 @@
     </div>
 
     <div class="center-content">
-        <pre class="ascii-art">
-<span class="ascii-line" style="animation-delay: 0.1s">███████╗██╗   ██╗███████╗██████╗ ██╗  ██╗ █████╗ ██╗   ██╗███████╗</span>
-<span class="ascii-line" style="animation-delay: 0.2s">██╔════╝██║   ██║██╔════╝██╔══██╗██║ ██╔╝██╔══██╗██║   ██║██╔════╝</span>
-<span class="ascii-line" style="animation-delay: 0.3s">███████╗██║   ██║█████╗  ██████╔╝█████╔╝ ███████║██║   ██║███████╗</span>
-<span class="ascii-line" style="animation-delay: 0.4s">╚════██║╚██╗ ██╔╝██╔══╝  ██╔══██╗██╔═██╗ ██╔══██║██║   ██║╚════██║</span>
-<span class="ascii-line" style="animation-delay: 0.5s">███████║ ╚████╔╝ ███████╗██║  ██║██║  ██╗██║  ██║╚██████╔╝███████║</span>
-<span class="ascii-line" style="animation-delay: 0.6s">╚══════╝  ╚═══╝  ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝</span>
-        </pre>
+        <div class="logo-center">
+            <span style="animation-delay: 0.1s">S</span>
+            <span style="animation-delay: 0.2s">V</span>
+            <span style="animation-delay: 0.3s">E</span>
+            <span style="animation-delay: 0.4s">R</span>
+            <span style="animation-delay: 0.5s">K</span>
+            <span style="animation-delay: 0.6s">A</span>
+            <span style="animation-delay: 0.7s">U</span>
+            <span style="animation-delay: 0.8s">S</span>
+        </div>
         <div class="tagline"><span id="typewriter"></span><span class="cursor"></span></div>
     </div>
 
@@ -301,10 +305,10 @@
             <span class="diamond">◇</span> <span class="project-name" data-value="HOTELMOL">HOTELMOL</span> app for hoteliers and travellers orchestrating by AI agents covering the entire guest journey end-to-end > <a href="https://hotelmol.com" target="_blank">hotelmol.com</a>
         </div>
         <div class="project">
-            <span class="diamond">◇</span> <span class="project-name" data-value="GENNETY">GENNETY</span> Applied social network for autonomous networking via personal agents > <a href="https://gennety.com" target="_blank">gennety.com</a>
+            <span class="diamond">◇</span> <span class="project-name" data-value="BEAJEE">BEAJEE</span> Applied social network for autonomous networking via personal agents > <a href="https://beajee.com" target="_blank">beajee.com</a>
         </div>
         <div class="project">
-            <span class="diamond">◇</span> <span class="project-name" data-value="DATING">DATING</span> Dating social network for IRL — no chat before meeting > <a href="https://dating.gennety.com" target="_blank">dating.gennety.com</a>
+            <span class="diamond">◇</span> <span class="project-name" data-value="DATING">DATING</span> Dating social network for IRL — no chat before meeting > <a href="https://gennety.com" target="_blank">gennety.com</a>
         </div>
     </div>
 

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:title" content="Sverkaus Labs">
     <title>Sverkaus Labs</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -34,43 +35,6 @@
             flex-direction: column;
             overflow: hidden; 
             position: relative;
-            /* Animation 3: CRT Flicker */
-            animation: crtFlicker 8s infinite;
-        }
-
-        /* Subtle flicker */
-        @keyframes crtFlicker {
-            0% { opacity: 1; }
-            3% { opacity: 0.96; }
-            6% { opacity: 1; }
-            7% { opacity: 0.98; }
-            8% { opacity: 1; }
-            9% { opacity: 0.95; }
-            10% { opacity: 1; }
-            89% { opacity: 1; }
-            90% { opacity: 0.96; }
-            91% { opacity: 1; }
-            100% { opacity: 1; }
-        }
-
-        /* Scanline effect */
-        body::before {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: repeating-linear-gradient(
-                to bottom,
-                rgba(255, 255, 255, 0),
-                rgba(255, 255, 255, 0) 1px,
-                rgba(0, 0, 0, 0.03) 1px,
-                rgba(0, 0, 0, 0.03) 2px
-            );
-            z-index: 50;
-            pointer-events: none;
         }
 
         @keyframes fadeIn {
@@ -98,6 +62,34 @@
             justify-content: center;
             z-index: 10;
             width: 100%;
+        }
+
+        .logo-icon-container {
+            width: 130px;
+            height: 130px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 0.3s;
+        }
+
+        .logo-icon {
+            width: 100%;
+            height: 100%;
+            animation: rotateLogo 45s linear infinite;
+            transform-origin: center;
+            will-change: transform;
+        }
+
+        @keyframes rotateLogo {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .logo-center {
@@ -265,6 +257,45 @@
                 display: none; /* Disable brackets on mobile to avoid mess */
             }
         }
+
+        /* Language Selector Styles */
+        .top-right-langs {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            z-index: 10;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 0.8s;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            white-space: nowrap;
+        }
+
+        .lang-option {
+            color: var(--dim-color);
+            cursor: pointer;
+            transition: color 0.2s, text-shadow 0.2s;
+            padding: 2px 4px;
+        }
+
+        .lang-option.active {
+            color: var(--accent-color);
+            text-shadow: 0 0 8px rgba(163, 230, 53, 0.5);
+            font-weight: bold;
+        }
+
+        .lang-option:hover {
+            color: var(--text-color);
+        }
+
+        .lang-separator {
+            color: var(--dim-color);
+            user-select: none;
+        }
+
         /* Starry Sky Background */
         canvas#starCanvas {
             position: absolute;
@@ -283,10 +314,23 @@
     <canvas id="starCanvas"></canvas>
 
     <div class="top-left-label">
-        ■ SVERKAUS LABS
+        SVERKAUS LABS
+    </div>
+
+    <div class="top-right-langs">
+        <span class="lang-option" data-lang="en">EN</span>
+        <span class="lang-separator">/</span>
+        <span class="lang-option" data-lang="zh">中文</span>
+        <span class="lang-separator">/</span>
+        <span class="lang-option" data-lang="hi">हिन्दी</span>
     </div>
 
     <div class="center-content">
+        <div class="logo-icon-container">
+            <svg class="logo-icon" viewBox="0 0 200 200">
+                <path d="M 155.00 100.00 Q 180.38 133.29, 138.89 138.89 Q 133.29 180.38, 100.00 155.00 Q 66.71 180.38, 61.11 138.89 Q 19.62 133.29, 45.00 100.00 Q 19.62 66.71, 61.11 61.11 Q 66.71 19.62, 100.00 45.00 Q 133.29 19.62, 138.89 61.11 Q 180.38 66.71, 155.00 100.00 Z" fill="#ffffff" />
+            </svg>
+        </div>
         <div class="logo-center">
             <span style="animation-delay: 0.1s">S</span>
             <span style="animation-delay: 0.2s">V</span>
@@ -302,32 +346,119 @@
 
     <div class="bottom-projects">
         <div class="project">
-            <span class="diamond">◇</span> <span class="project-name" data-value="HOTELMOL">HOTELMOL</span> app for hoteliers and travellers orchestrating by AI agents covering the entire guest journey end-to-end > <a href="https://hotelmol.com" target="_blank">hotelmol.com</a>
+            <span class="diamond">◇</span> <span class="project-name" data-value="HOTELMOL">HOTELMOL</span> <span class="project-desc" id="desc-hotelmol">app for hoteliers and travellers orchestrating by AI agents covering the entire guest journey end-to-end</span> > <a href="https://hotelmol.com" target="_blank">hotelmol.com</a>
         </div>
         <div class="project">
-            <span class="diamond">◇</span> <span class="project-name" data-value="BEAJEE">BEAJEE</span> Applied social network for autonomous networking via personal agents > <a href="https://beajee.com" target="_blank">beajee.com</a>
+            <span class="diamond">◇</span> <span class="project-name" data-value="BEAJEE">BEAJEE</span> <span class="project-desc" id="desc-beajee">Applied Social Network for Autonomous Networking via Personal Agent like OpenClaw</span> > <a href="https://beajee.com" target="_blank">beajee.com</a>
         </div>
         <div class="project">
-            <span class="diamond">◇</span> <span class="project-name" data-value="DATING">DATING</span> Dating social network for IRL — no chat before meeting > <a href="https://gennety.com" target="_blank">gennety.com</a>
+            <span class="diamond">◇</span> <span class="project-name" data-value="GENNETY">GENNETY</span> <span class="project-desc" id="desc-gennety">Dating social network for IRL — no chat before meeting</span> > <a href="https://gennety.com" target="_blank">gennety.com</a>
         </div>
     </div>
 
     <script>
+        // Translation Dictionary
+        const translations = {
+            en: {
+                tagline: "Simplifying human-to-human interaction",
+                projects: {
+                    hotelmol: "app for hoteliers and travellers orchestrating by AI agents covering the entire guest journey end-to-end",
+                    beajee: "Applied Social Network for Autonomous Networking via Personal Agent like OpenClaw",
+                    gennety: "Dating social network for IRL — no chat before meeting"
+                }
+            },
+            zh: {
+                tagline: "简化人与人之间的互动",
+                projects: {
+                    hotelmol: "面向酒店业主与旅客的 AI 智能体应用，端到端覆盖完整宾客旅程",
+                    beajee: "基于个人智能体（如 OpenClaw）实现自主社交的应用型社交网络",
+                    gennety: "真实生活约会社交网络 — 见面之前无需聊天"
+                }
+            },
+            hi: {
+                tagline: "मानव-से-मानव संपर्क को सरल बनाना",
+                projects: {
+                    hotelmol: "होटल व्यवसायियों और यात्रियों के लिए AI एजेंटों द्वारा संचालित ऐप, जो शुरू से अंत तक मेहमानों की पूरी यात्रा को कवर करता है",
+                    beajee: "व्यक्तिगत एजेंट (जैसे OpenClaw) के माध्यम से स्वायत्त नेटवर्किंग के लिए व्यावहारिक सोशल नेटवर्क",
+                    gennety: "वास्तविक जीवन (IRL) के लिए डेटिंग सोशल नेटवर्क — मिलने से पहले कोई चैट नहीं"
+                }
+            }
+        };
+
+        // Language state management
+        let currentLang = localStorage.getItem('sverkaus-lang') || 'en';
+        // Fallback in case stored language is not supported
+        if (!translations[currentLang]) {
+            currentLang = 'en';
+        }
+
         // Animation 1: Typing Effect
-        const textToType = "Building Ai native apps in Europe";
         const typeElement = document.getElementById('typewriter');
+        const cursorElement = document.querySelector('.cursor');
         let typeIndex = 0;
+        let currentText = "";
+        let typeTimeout = null;
+        let cursorTimeout = null;
+
+        function startTypewriter(text) {
+            clearTimeout(typeTimeout);
+            clearTimeout(cursorTimeout);
+            typeElement.textContent = "";
+            typeIndex = 0;
+            currentText = text;
+            
+            // Show cursor
+            cursorElement.style.visibility = 'visible';
+            
+            typeWriter();
+        }
 
         function typeWriter() {
-            if (typeIndex < textToType.length) {
-                typeElement.textContent += textToType.charAt(typeIndex);
+            if (typeIndex < currentText.length) {
+                typeElement.textContent += currentText.charAt(typeIndex);
                 typeIndex++;
-                setTimeout(typeWriter, 40 + Math.random() * 40); // Random typing speed
+                typeTimeout = setTimeout(typeWriter, 40 + Math.random() * 40); // Random typing speed
+            } else {
+                // Done typing: let the cursor blink a couple of times and then disappear
+                cursorTimeout = setTimeout(() => {
+                    cursorElement.style.visibility = 'hidden';
+                }, 1500);
             }
         }
-        
-        // Start typing after ASCII reveal
-        setTimeout(typeWriter, 600);
+
+        function switchLanguage(lang) {
+            if (lang === currentLang) return;
+            currentLang = lang;
+            localStorage.setItem('sverkaus-lang', currentLang);
+
+            // Update language switcher UI active states
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.lang === currentLang);
+            });
+
+            // Update tagline via typewriter
+            startTypewriter(translations[currentLang].tagline);
+
+            // Update project descriptions
+            document.getElementById('desc-hotelmol').textContent = translations[currentLang].projects.hotelmol;
+            document.getElementById('desc-beajee').textContent = translations[currentLang].projects.beajee;
+            document.getElementById('desc-gennety').textContent = translations[currentLang].projects.gennety;
+        }
+
+        // Initialize translations on load
+        document.getElementById('desc-hotelmol').textContent = translations[currentLang].projects.hotelmol;
+        document.getElementById('desc-beajee').textContent = translations[currentLang].projects.beajee;
+        document.getElementById('desc-gennety').textContent = translations[currentLang].projects.gennety;
+
+        document.querySelectorAll('.lang-option').forEach(opt => {
+            opt.classList.toggle('active', opt.dataset.lang === currentLang);
+            opt.addEventListener('click', () => switchLanguage(opt.dataset.lang));
+        });
+
+        // Start typing tagline
+        setTimeout(() => {
+            startTypewriter(translations[currentLang].tagline);
+        }, 600);
 
         // Animation 2: Matrix Decode (Glitch) and Click to open site
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";

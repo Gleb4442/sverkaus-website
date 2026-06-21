@@ -105,6 +105,7 @@
             justify-content: center;
             color: #f0f0f0;
             text-shadow: 0px 0px 20px rgba(163, 230, 53, 0.3);
+            white-space: nowrap;
         }
 
         .logo-center span {
@@ -232,26 +233,55 @@
         }
 
         @media (max-width: 768px) {
+            .top-left-label {
+                display: none; /* Hide top-left label on mobile to save space and avoid clutter */
+            }
+            .top-right-langs {
+                position: absolute;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                right: auto;
+                font-size: 10px;
+                gap: 10px;
+            }
+            .logo-icon-container {
+                width: 90px;
+                height: 90px;
+                margin-bottom: 20px;
+            }
             .logo-center {
+                font-size: clamp(24px, 8vw, 42px);
                 letter-spacing: 0.15em;
                 margin-left: 0.15em;
+            }
+            .tagline {
+                padding: 0 20px;
+                font-size: 13px;
             }
             .bottom-projects {
                 position: relative;
                 bottom: 0;
-                padding-bottom: 40px;
-                margin-top: auto;
+                padding: 20px 20px 40px 20px;
+                margin-top: 40px;
             }
             body {
                 overflow-y: auto;
-                overflow-x: auto;
+                overflow-x: hidden; /* Prevent horizontal scroll completely */
             }
             .center-content {
-                padding-top: 60px;
+                padding-top: 80px;
             }
             .project {
-                margin-bottom: 12px;
-                padding: 0 20px;
+                margin-bottom: 16px;
+                padding: 0 15px;
+                width: 100%;
+                max-width: 550px;
+                white-space: normal;
+                word-break: normal;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
             }
             .project::before, .project::after {
                 display: none; /* Disable brackets on mobile to avoid mess */
@@ -509,14 +539,6 @@
         const ctx = canvas.getContext('2d');
         let stars = [];
         
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        
         class Star {
             constructor() {
                 this.x = Math.random() * canvas.width;
@@ -546,15 +568,33 @@
         
         function initStars() {
             stars = [];
-            const numStars = Math.floor((window.innerWidth * window.innerHeight) / 3000);
+            const numStars = Math.floor((canvas.width * canvas.height) / 3000);
             for (let i = 0; i < numStars; i++) {
                 stars.push(new Star());
             }
         }
+
+        let lastWidth = window.innerWidth;
+        function resizeCanvas() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            
+            // Only re-initialize stars if width changed (orientation change or desktop resize)
+            // to prevent flickering/jumping stars when vertical address bar hides/shows on mobile
+            if (width !== lastWidth) {
+                lastWidth = width;
+                initStars();
+            }
+        }
+        
+        // Initial setup
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         initStars();
         
-        // Re-initialize stars if window resizes significantly
-        window.addEventListener('resize', initStars);
+        window.addEventListener('resize', resizeCanvas);
         
         function animateStars() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);

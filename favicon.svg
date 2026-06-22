@@ -1,3 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="100%" height="100%">
-    <path d="M 155.00 100.00 Q 180.38 133.29, 138.89 138.89 Q 133.29 180.38, 100.00 155.00 Q 66.71 180.38, 61.11 138.89 Q 19.62 133.29, 45.00 100.00 Q 19.62 66.71, 61.11 61.11 Q 66.71 19.62, 100.00 45.00 Q 133.29 19.62, 138.89 61.11 Q 180.38 66.71, 155.00 100.00 Z" fill="#ffffff" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-30 -30 260 260" width="100%" height="100%">
+    <rect x="-30" y="-30" width="260" height="260" rx="40" fill="#1c1c1c" />
+    <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#ffffff" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="10" />
+    <ellipse cx="85" cy="100" rx="13" ry="21" fill="#ffffff" />
+    <ellipse cx="115" cy="100" rx="13" ry="21" fill="#ffffff" />
 </svg>

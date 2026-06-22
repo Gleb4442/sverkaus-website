@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0d0d0d;
+            --bg-color: #1c1c1c;
             --text-color: #f0f0f0;
             --accent-color: #a3e635;
             --dim-color: #666666;
@@ -78,18 +78,8 @@
         .logo-icon {
             width: 100%;
             height: 100%;
-            animation: rotateLogo 45s linear infinite;
             transform-origin: center;
             will-change: transform;
-        }
-
-        @keyframes rotateLogo {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
         }
 
         .logo-center {
@@ -326,22 +316,9 @@
             user-select: none;
         }
 
-        /* Starry Sky Background */
-        canvas#starCanvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            display: block;
-        }
     </style>
 </head>
 <body>
-    <!-- Starry Sky Background -->
-    <canvas id="starCanvas"></canvas>
 
     <div class="top-left-label">
         SVERKAUS LABS
@@ -357,8 +334,10 @@
 
     <div class="center-content">
         <div class="logo-icon-container">
-            <svg class="logo-icon" viewBox="0 0 200 200">
-                <path d="M 155.00 100.00 Q 180.38 133.29, 138.89 138.89 Q 133.29 180.38, 100.00 155.00 Q 66.71 180.38, 61.11 138.89 Q 19.62 133.29, 45.00 100.00 Q 19.62 66.71, 61.11 61.11 Q 66.71 19.62, 100.00 45.00 Q 133.29 19.62, 138.89 61.11 Q 180.38 66.71, 155.00 100.00 Z" fill="#ffffff" />
+            <svg class="logo-icon" viewBox="-30 -30 260 260">
+                <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#ffffff" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="10" />
+                <ellipse cx="85" cy="100" rx="13" ry="21" fill="#ffffff" />
+                <ellipse cx="115" cy="100" rx="13" ry="21" fill="#ffffff" />
             </svg>
         </div>
         <div class="logo-center">
@@ -534,77 +513,6 @@
                 }
             });
         });
-        // Animation 3: Starry Sky
-        const canvas = document.getElementById('starCanvas');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
-        
-        class Star {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 1.5 + 0.5; // Very small stars
-                this.baseAlpha = Math.random() * 0.5 + 0.1;
-                this.blinkSpeed = Math.random() * 0.02 + 0.005;
-                this.angle = Math.random() * Math.PI * 2;
-                this.speedY = Math.random() * 0.1 + 0.02; // Very slow upward drift
-            }
-            update() {
-                this.angle += this.blinkSpeed;
-                this.y -= this.speedY;
-                if (this.y < 0) {
-                    this.y = canvas.height;
-                    this.x = Math.random() * canvas.width;
-                }
-            }
-            draw() {
-                const alpha = this.baseAlpha + Math.sin(this.angle) * 0.3;
-                ctx.fillStyle = `rgba(255, 255, 255, ${Math.max(0, alpha)})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-        
-        function initStars() {
-            stars = [];
-            const numStars = Math.floor((canvas.width * canvas.height) / 3000);
-            for (let i = 0; i < numStars; i++) {
-                stars.push(new Star());
-            }
-        }
-
-        let lastWidth = window.innerWidth;
-        function resizeCanvas() {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-            
-            // Only re-initialize stars if width changed (orientation change or desktop resize)
-            // to prevent flickering/jumping stars when vertical address bar hides/shows on mobile
-            if (width !== lastWidth) {
-                lastWidth = width;
-                initStars();
-            }
-        }
-        
-        // Initial setup
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        initStars();
-        
-        window.addEventListener('resize', resizeCanvas);
-        
-        function animateStars() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            stars.forEach(star => {
-                star.update();
-                star.draw();
-            });
-            requestAnimationFrame(animateStars);
-        }
-        animateStars();
     </script>
 </body>
 </html>

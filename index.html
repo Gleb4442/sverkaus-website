@@ -240,7 +240,7 @@
 
         .footer-watermark {
             position: absolute;
-            bottom: -0.22em;
+            bottom: 0;
             left: -0.05em;
             font-family: 'Outfit', sans-serif;
             font-size: 18vw;
@@ -295,6 +295,14 @@
             fill: none;
             stroke: currentColor;
             stroke-width: 12;
+        }
+
+        .social-link.x-link {
+            padding: 8px;
+            width: 34px;
+            height: 34px;
+            justify-content: center;
+            box-sizing: border-box;
         }
 
         .footer-email {
@@ -355,7 +363,7 @@
             }
             .footer-watermark {
                 font-size: clamp(50px, 18vw, 80px);
-                bottom: -0.2em;
+                bottom: 0;
                 left: 50%;
                 transform: translateX(-50%);
                 text-align: center;
@@ -379,6 +387,11 @@
                 justify-content: center;
                 flex: 1 1 calc(33.333% - 12px);
                 min-width: 105px;
+                padding: 10px 12px;
+            }
+            .social-link.x-link {
+                width: auto;
+                height: auto;
                 padding: 10px 12px;
             }
             .footer-email {
@@ -505,11 +518,10 @@
                     </svg>
                     <span>LinkedIn</span>
                 </a>
-                <a href="https://x.com/gleb443?s=11" target="_blank" class="social-link">
+                <a href="https://x.com/gleb443?s=11" target="_blank" class="social-link x-link">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                     </svg>
-                    <span>X</span>
                 </a>
                 <a href="https://t.me/GGen1e" target="_blank" class="social-link telegram-link">
                     <svg viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">

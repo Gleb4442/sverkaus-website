@@ -457,6 +457,82 @@
             user-select: none;
         }
 
+        /* Update Badge Styles */
+        .update-badge-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 1.2s;
+            margin-top: 25px;
+            user-select: none;
+        }
+
+        .update-badge-container:hover {
+            background: rgba(163, 230, 53, 0.03);
+            border-color: rgba(163, 230, 53, 0.3);
+            box-shadow: 0 0 15px rgba(163, 230, 53, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .update-badge-container a.badge-main-target {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .update-badge-container a.badge-main-target:hover {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .badge-new {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            font-weight: 700;
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-right: 8px;
+            letter-spacing: 0.08em;
+            display: inline-block;
+            line-height: 1;
+        }
+
+        .badge-title {
+            color: var(--text-color);
+            font-weight: 400;
+        }
+
+        .badge-separator {
+            color: rgba(255, 255, 255, 0.15);
+            user-select: none;
+            font-size: 10px;
+        }
+
+        .update-badge-container a.badge-info {
+            color: var(--dim-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .update-badge-container a.badge-info:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+            text-decoration-color: var(--accent-color);
+        }
+
     </style>
 </head>
 <body>
@@ -494,6 +570,16 @@
             <span style="animation-delay: 0.8s">S</span>
         </div>
         <div class="tagline"><span id="typewriter"></span><span class="cursor"></span></div>
+
+        <!-- Gennety Beta Launch Badge -->
+        <div class="update-badge-container">
+            <a href="https://gennety.com" target="_blank" class="badge-main-target">
+                <span class="badge-new">New</span>
+                <span class="badge-title">Gennety Beta Launch</span>
+            </a>
+            <span class="badge-separator">|</span>
+            <a href="https://gennety.com" target="_blank" class="badge-info" id="badge-info-link">Details &rarr;</a>
+        </div>
 
     </div>
 
@@ -546,7 +632,8 @@
                     hotelmol: "app for hoteliers and travellers orchestrating by AI agents covering the entire guest journey end-to-end",
                     beajee: "Applied Social Network for Autonomous Networking via Personal Agent like OpenClaw",
                     gennety: "Dating social network for IRL — no chat before meeting"
-                }
+                },
+                badgeInfo: "Details →"
             },
             zh: {
                 tagline: "简化人与人之间的互动",
@@ -554,7 +641,8 @@
                     hotelmol: "面向酒店业主与旅客的 AI 智能体应用，端到端覆盖完整宾客旅程",
                     beajee: "基于个人智能体（如 OpenClaw）实现自主社交的应用型社交网络",
                     gennety: "真实生活约会社交网络 — 见面之前无需聊天"
-                }
+                },
+                badgeInfo: "详情 →"
             },
             hi: {
                 tagline: "मानव-से-मानव संपर्क को सरल बनाना",
@@ -562,7 +650,8 @@
                     hotelmol: "होटल व्यवसायियों और यात्रियों के लिए AI एजेंटों द्वारा संचालित ऐप, जो शुरू से अंत तक मेहमानों की पूरी यात्रा को कवर करता है",
                     beajee: "व्यक्तिगत एजेंट (जैसे OpenClaw) के माध्यम से स्वायत्त नेटवर्किंग के लिए व्यावहारिक सोशल नेटवर्क",
                     gennety: "वास्तविक जीवन (IRL) के लिए डेटिंग सोशल नेटवर्क — मिलने से पहले कोई चैट नहीं"
-                }
+                },
+                badgeInfo: "विवरण →"
             }
         };
 
@@ -624,12 +713,16 @@
             document.getElementById('desc-hotelmol').textContent = translations[currentLang].projects.hotelmol;
             document.getElementById('desc-beajee').textContent = translations[currentLang].projects.beajee;
             document.getElementById('desc-gennety').textContent = translations[currentLang].projects.gennety;
+
+            // Update badge translation
+            document.getElementById('badge-info-link').textContent = translations[currentLang].badgeInfo;
         }
 
         // Initialize translations on load
         document.getElementById('desc-hotelmol').textContent = translations[currentLang].projects.hotelmol;
         document.getElementById('desc-beajee').textContent = translations[currentLang].projects.beajee;
         document.getElementById('desc-gennety').textContent = translations[currentLang].projects.gennety;
+        document.getElementById('badge-info-link').textContent = translations[currentLang].badgeInfo;
 
         document.querySelectorAll('.lang-option').forEach(opt => {
             opt.classList.toggle('active', opt.dataset.lang === currentLang);

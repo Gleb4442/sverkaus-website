@@ -233,7 +233,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 80px 20px;
+            padding: 60px 20px;
             overflow: hidden;
             background-color: var(--bg-color);
         }
@@ -243,30 +243,16 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             width: 100%;
             max-width: 600px;
-        }
-
-        .footer-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: clamp(36px, 6vw, 64px);
-            font-weight: 300;
-            letter-spacing: 0.25em;
-            margin-left: 0.25em; /* compensate tracking */
-            text-transform: uppercase;
-            color: #f0f0f0;
-            text-shadow: 0px 0px 20px rgba(163, 230, 53, 0.15);
-            text-align: center;
-            margin-bottom: 5px;
-            user-select: none;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 16px;
+            gap: 20px;
             flex-wrap: wrap;
         }
 
@@ -274,22 +260,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
+            width: 34px;
+            height: 34px;
             color: var(--dim-color);
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 50%;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            background: transparent;
+            border: none;
             box-sizing: border-box;
         }
 
         .social-link:hover {
             color: var(--accent-color);
-            background: rgba(163, 230, 53, 0.05);
-            border-color: rgba(163, 230, 53, 0.3);
-            box-shadow: 0 0 15px rgba(163, 230, 53, 0.1);
             transform: translateY(-2px);
         }
 
@@ -305,6 +287,42 @@
             stroke-width: 12;
             width: 22px;
             height: 22px;
+        }
+
+        /* Language Selector in Footer */
+        .footer-langs {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            margin-top: 10px;
+            white-space: nowrap;
+            user-select: none;
+            opacity: 0.75;
+        }
+
+        .lang-option {
+            color: var(--dim-color);
+            cursor: pointer;
+            transition: color 0.2s, text-shadow 0.2s;
+            padding: 2px 4px;
+        }
+
+        .lang-option.active {
+            color: var(--accent-color);
+            text-shadow: 0 0 8px rgba(163, 230, 53, 0.4);
+            font-weight: bold;
+        }
+
+        .lang-option:hover {
+            color: var(--text-color);
+        }
+
+        .lang-separator {
+            color: var(--dim-color);
+            user-select: none;
         }
 
         @media (max-width: 768px) {
@@ -480,7 +498,6 @@
 
     <footer class="site-footer">
         <div class="footer-content">
-            <h2 class="footer-title">SVERKAUS</h2>
             <div class="footer-links">
                 <a href="https://www.linkedin.com/in/gleb-gosha" target="_blank" class="social-link linkedin-link" title="LinkedIn">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -503,10 +520,51 @@
                     </svg>
                 </a>
             </div>
+            <div class="footer-langs">
+                <span class="lang-option" data-lang="en">EN</span>
+                <span class="lang-separator">/</span>
+                <span class="lang-option" data-lang="zh">中文</span>
+                <span class="lang-separator">/</span>
+                <span class="lang-option" data-lang="hi">हिन्दी</span>
+            </div>
         </div>
     </footer>
 
     <script>
+        // Translation Dictionary
+        const translations = {
+            en: {
+                tagline: "Simplifying human-to-human interaction",
+                projects: {
+                    beajee: "Applied Social Network for Autonomous Networking via Personal Agent like OpenClaw",
+                    gennety: "Dating social network for IRL — no chat before meeting"
+                },
+                badgeInfo: "Details →"
+            },
+            zh: {
+                tagline: "简化人与人之间的互动",
+                projects: {
+                    beajee: "基于个人智能体（如 OpenClaw）实现自主社交的应用型社交网络",
+                    gennety: "真实生活约会社交网络 — 见面之前无需聊天"
+                },
+                badgeInfo: "详情 →"
+            },
+            hi: {
+                tagline: "मानव-से-मानव संपर्क को सरल बनाना",
+                projects: {
+                    beajee: "व्यक्तिगत एजेंट (जैसे OpenClaw) के माध्यम से स्वायत्त नेटवर्किंग के लिए व्यावहारिक सोशल नेटवर्क",
+                    gennety: "वास्तविक जीवन (IRL) के लिए डेटिंग सोशल नेटवर्क — मिलने से पहले कोई चैट नहीं"
+                },
+                badgeInfo: "विवरण →"
+            }
+        };
+
+        // Language state management
+        let currentLang = localStorage.getItem('sverkaus-lang') || 'en';
+        if (!translations[currentLang]) {
+            currentLang = 'en';
+        }
+
         // Animation 1: Typing Effect
         const typeElement = document.getElementById('typewriter');
         const cursorElement = document.querySelector('.cursor');
@@ -541,9 +599,40 @@
             }
         }
 
+        function switchLanguage(lang) {
+            if (lang === currentLang) return;
+            currentLang = lang;
+            localStorage.setItem('sverkaus-lang', currentLang);
+
+            // Update language switcher UI active states
+            document.querySelectorAll('.lang-option').forEach(opt => {
+                opt.classList.toggle('active', opt.dataset.lang === currentLang);
+            });
+
+            // Update tagline via typewriter
+            startTypewriter(translations[currentLang].tagline);
+
+            // Update project descriptions
+            document.getElementById('desc-beajee').textContent = translations[currentLang].projects.beajee;
+            document.getElementById('desc-gennety').textContent = translations[currentLang].projects.gennety;
+
+            // Update badge translation
+            document.getElementById('badge-info-link').textContent = translations[currentLang].badgeInfo;
+        }
+
+        // Initialize translations on load
+        document.getElementById('desc-beajee').textContent = translations[currentLang].projects.beajee;
+        document.getElementById('desc-gennety').textContent = translations[currentLang].projects.gennety;
+        document.getElementById('badge-info-link').textContent = translations[currentLang].badgeInfo;
+
+        document.querySelectorAll('.lang-option').forEach(opt => {
+            opt.classList.toggle('active', opt.dataset.lang === currentLang);
+            opt.addEventListener('click', () => switchLanguage(opt.dataset.lang));
+        });
+
         // Start typing tagline
         setTimeout(() => {
-            startTypewriter("Simplifying human-to-human interaction");
+            startTypewriter(translations[currentLang].tagline);
         }, 600);
 
         // Animation 2: Matrix Decode (Glitch) and Click to open site

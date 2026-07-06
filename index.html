@@ -229,65 +229,73 @@
 
         .site-footer {
             position: relative;
-            min-height: 400px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            align-items: flex-end;
-            padding: 40px;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 20px;
             overflow: hidden;
-        }
-
-        .footer-watermark {
-            position: absolute;
-            bottom: 0;
-            left: -0.05em;
-            font-family: 'Outfit', sans-serif;
-            font-size: 18vw;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.03);
-            line-height: 1;
-            pointer-events: none;
-            text-transform: uppercase;
-            letter-spacing: -0.02em;
-            z-index: 0;
-            white-space: nowrap;
+            background-color: var(--bg-color);
         }
 
         .footer-content {
             z-index: 10;
             display: flex;
             flex-direction: column;
-            align-items: flex-end;
-            gap: 15px;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .footer-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(36px, 6vw, 64px);
+            font-weight: 300;
+            letter-spacing: 0.25em;
+            margin-left: 0.25em; /* compensate tracking */
+            text-transform: uppercase;
+            color: #f0f0f0;
+            text-shadow: 0px 0px 20px rgba(163, 230, 53, 0.15);
+            text-align: center;
+            margin-bottom: 5px;
+            user-select: none;
         }
 
         .footer-links {
             display: flex;
-            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
         }
 
         .social-link {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            font-size: 13px;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
             color: var(--dim-color);
             text-decoration: none;
-            transition: all 0.3s ease;
-            background: transparent;
-            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            box-sizing: border-box;
         }
 
         .social-link:hover {
             color: var(--accent-color);
             background: rgba(163, 230, 53, 0.05);
+            border-color: rgba(163, 230, 53, 0.3);
+            box-shadow: 0 0 15px rgba(163, 230, 53, 0.1);
+            transform: translateY(-2px);
         }
 
         .social-link svg {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             fill: currentColor;
         }
         
@@ -295,47 +303,13 @@
             fill: none;
             stroke: currentColor;
             stroke-width: 12;
-        }
-
-        .social-link.x-link,
-        .social-link.linkedin-link {
-            padding: 8px;
-            width: 34px;
-            height: 34px;
-            justify-content: center;
-            box-sizing: border-box;
-        }
-
-        .footer-email {
-            font-size: 13px;
-            color: var(--dim-color);
-            letter-spacing: 0.05em;
-            margin-top: 10px;
-            padding-right: 16px;
-        }
-
-        .footer-email a {
-            color: var(--dim-color);
-            transition: color 0.2s ease;
-        }
-
-        .footer-email a:hover {
-            color: var(--text-color);
-            text-decoration: none;
+            width: 22px;
+            height: 22px;
         }
 
         @media (max-width: 768px) {
             .top-left-label {
                 display: none; /* Hide top-left label on mobile to save space and avoid clutter */
-            }
-            .top-right-langs {
-                position: absolute;
-                top: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                right: auto;
-                font-size: 10px;
-                gap: 10px;
             }
             .logo-icon-container {
                 width: 90px;
@@ -357,49 +331,6 @@
                 padding: 20px 20px 20px 20px;
                 margin-top: 40px;
             }
-            .site-footer {
-                min-height: auto;
-                padding: 80px 20px 70px;
-                align-items: center;
-            }
-            .footer-watermark {
-                font-size: clamp(50px, 18vw, 80px);
-                bottom: 0;
-                left: 50%;
-                transform: translateX(-50%);
-                text-align: center;
-            }
-            .footer-content {
-                align-items: center;
-                width: 100%;
-                gap: 12px;
-            }
-            .footer-links {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 12px;
-                width: 100%;
-                max-width: 360px;
-            }
-            .social-link {
-                background: rgba(255, 255, 255, 0.03);
-                border: 1px solid rgba(255, 255, 255, 0.05);
-                justify-content: center;
-                flex: 1 1 calc(33.333% - 12px);
-                min-width: 105px;
-                padding: 10px 12px;
-            }
-            .social-link.x-link,
-            .social-link.linkedin-link {
-                width: auto;
-                height: auto;
-                padding: 10px 12px;
-            }
-            .footer-email {
-                padding-right: 0;
-                margin-top: 0;
-            }
             .center-content {
                 padding-top: 80px;
             }
@@ -417,44 +348,6 @@
             .project::before, .project::after {
                 display: none; /* Disable brackets on mobile to avoid mess */
             }
-        }
-
-        /* Language Selector Styles */
-        .top-right-langs {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 11px;
-            letter-spacing: 0.1em;
-            z-index: 100;
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards 0.8s;
-            display: flex;
-            gap: 8px;
-            align-items: center;
-            white-space: nowrap;
-        }
-
-        .lang-option {
-            color: var(--dim-color);
-            cursor: pointer;
-            transition: color 0.2s, text-shadow 0.2s;
-            padding: 2px 4px;
-        }
-
-        .lang-option.active {
-            color: var(--accent-color);
-            text-shadow: 0 0 8px rgba(163, 230, 53, 0.5);
-            font-weight: bold;
-        }
-
-        .lang-option:hover {
-            color: var(--text-color);
-        }
-
-        .lang-separator {
-            color: var(--dim-color);
-            user-select: none;
         }
 
         /* Update Badge Styles */
@@ -543,14 +436,6 @@
         SVERKAUS LABS
     </div>
 
-    <div class="top-right-langs">
-        <span class="lang-option" data-lang="en">EN</span>
-        <span class="lang-separator">/</span>
-        <span class="lang-option" data-lang="zh">中文</span>
-        <span class="lang-separator">/</span>
-        <span class="lang-option" data-lang="hi">हिन्दी</span>
-    </div>
-
     <div class="center-content">
         <div class="logo-icon-container">
             <svg class="logo-icon" viewBox="-30 -30 260 260">
@@ -585,9 +470,6 @@
 
     <div class="bottom-projects">
         <div class="project">
-            <span class="diamond">◇</span> <span class="project-name" data-value="HOTELMOL">HOTELMOL</span> <span class="project-desc" id="desc-hotelmol">app for hoteliers and travellers orchestrating by AI agents covering the entire guest journey end-to-end</span> > <a href="https://hotelmol.com" target="_blank">hotelmol.com</a>
-        </div>
-        <div class="project">
             <span class="diamond">◇</span> <span class="project-name" data-value="BEAJEE">BEAJEE</span> <span class="project-desc" id="desc-beajee">Applied Social Network for Autonomous Networking via Personal Agent like OpenClaw</span> > <a href="https://beajee.com" target="_blank">beajee.com</a>
         </div>
         <div class="project">
@@ -597,71 +479,34 @@
     </div> <!-- end of hero-section -->
 
     <footer class="site-footer">
-        <div class="footer-watermark">SVERKAUS</div>
         <div class="footer-content">
+            <h2 class="footer-title">SVERKAUS</h2>
             <div class="footer-links">
-                <a href="https://www.linkedin.com/in/gleb-gosha" target="_blank" class="social-link linkedin-link">
+                <a href="https://www.linkedin.com/in/gleb-gosha" target="_blank" class="social-link linkedin-link" title="LinkedIn">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                     </svg>
                 </a>
-                <a href="https://x.com/gleb443?s=11" target="_blank" class="social-link x-link">
+                <a href="https://x.com/gleb443?s=11" target="_blank" class="social-link x-link" title="X">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                     </svg>
                 </a>
-                <a href="https://t.me/GGen1e" target="_blank" class="social-link telegram-link">
+                <a href="https://t.me/GGen1e" target="_blank" class="social-link telegram-link" title="Telegram">
                     <svg viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
                         <path d="M23.073 88.132s65.458-26.782 88.16-36.212c8.702-3.772 38.215-15.843 38.215-15.843s13.621-5.28 12.486 7.544c-.379 5.281-3.406 23.764-6.433 43.756-4.54 28.291-9.459 59.221-9.459 59.221s-.756 8.676-7.188 10.185c-6.433 1.509-17.027-5.281-18.919-6.79-1.513-1.132-28.377-18.106-38.214-26.404-2.649-2.263-5.676-6.79.378-12.071 13.621-12.447 29.891-27.913 39.728-37.72 4.54-4.527 9.081-15.089-9.837-2.264-26.864 18.483-53.35 35.835-53.35 35.835s-6.053 3.772-17.404.377c-11.351-3.395-24.594-7.921-24.594-7.921s-9.08-5.659 6.433-11.693Z"/>
                     </svg>
-                    <span>Telegram</span>
                 </a>
-            </div>
-            <div class="footer-email">
-                <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>
+                <a href="mailto:main@sverkaus.com" class="social-link email-link" title="Email">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Translation Dictionary
-        const translations = {
-            en: {
-                tagline: "Simplifying human-to-human interaction",
-                projects: {
-                    hotelmol: "app for hoteliers and travellers orchestrating by AI agents covering the entire guest journey end-to-end",
-                    beajee: "Applied Social Network for Autonomous Networking via Personal Agent like OpenClaw",
-                    gennety: "Dating social network for IRL — no chat before meeting"
-                },
-                badgeInfo: "Details →"
-            },
-            zh: {
-                tagline: "简化人与人之间的互动",
-                projects: {
-                    hotelmol: "面向酒店业主与旅客的 AI 智能体应用，端到端覆盖完整宾客旅程",
-                    beajee: "基于个人智能体（如 OpenClaw）实现自主社交的应用型社交网络",
-                    gennety: "真实生活约会社交网络 — 见面之前无需聊天"
-                },
-                badgeInfo: "详情 →"
-            },
-            hi: {
-                tagline: "मानव-से-मानव संपर्क को सरल बनाना",
-                projects: {
-                    hotelmol: "होटल व्यवसायियों और यात्रियों के लिए AI एजेंटों द्वारा संचालित ऐप, जो शुरू से अंत तक मेहमानों की पूरी यात्रा को कवर करता है",
-                    beajee: "व्यक्तिगत एजेंट (जैसे OpenClaw) के माध्यम से स्वायत्त नेटवर्किंग के लिए व्यावहारिक सोशल नेटवर्क",
-                    gennety: "वास्तविक जीवन (IRL) के लिए डेटिंग सोशल नेटवर्क — मिलने से पहले कोई चैट नहीं"
-                },
-                badgeInfo: "विवरण →"
-            }
-        };
-
-        // Language state management
-        let currentLang = localStorage.getItem('sverkaus-lang') || 'en';
-        // Fallback in case stored language is not supported
-        if (!translations[currentLang]) {
-            currentLang = 'en';
-        }
-
         // Animation 1: Typing Effect
         const typeElement = document.getElementById('typewriter');
         const cursorElement = document.querySelector('.cursor');
@@ -696,42 +541,9 @@
             }
         }
 
-        function switchLanguage(lang) {
-            if (lang === currentLang) return;
-            currentLang = lang;
-            localStorage.setItem('sverkaus-lang', currentLang);
-
-            // Update language switcher UI active states
-            document.querySelectorAll('.lang-option').forEach(opt => {
-                opt.classList.toggle('active', opt.dataset.lang === currentLang);
-            });
-
-            // Update tagline via typewriter
-            startTypewriter(translations[currentLang].tagline);
-
-            // Update project descriptions
-            document.getElementById('desc-hotelmol').textContent = translations[currentLang].projects.hotelmol;
-            document.getElementById('desc-beajee').textContent = translations[currentLang].projects.beajee;
-            document.getElementById('desc-gennety').textContent = translations[currentLang].projects.gennety;
-
-            // Update badge translation
-            document.getElementById('badge-info-link').textContent = translations[currentLang].badgeInfo;
-        }
-
-        // Initialize translations on load
-        document.getElementById('desc-hotelmol').textContent = translations[currentLang].projects.hotelmol;
-        document.getElementById('desc-beajee').textContent = translations[currentLang].projects.beajee;
-        document.getElementById('desc-gennety').textContent = translations[currentLang].projects.gennety;
-        document.getElementById('badge-info-link').textContent = translations[currentLang].badgeInfo;
-
-        document.querySelectorAll('.lang-option').forEach(opt => {
-            opt.classList.toggle('active', opt.dataset.lang === currentLang);
-            opt.addEventListener('click', () => switchLanguage(opt.dataset.lang));
-        });
-
         // Start typing tagline
         setTimeout(() => {
-            startTypewriter(translations[currentLang].tagline);
+            startTypewriter("Simplifying human-to-human interaction");
         }, 600);
 
         // Animation 2: Matrix Decode (Glitch) and Click to open site

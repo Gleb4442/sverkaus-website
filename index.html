@@ -313,7 +313,7 @@
             color: var(--dim-color);
             border: 1px solid transparent;
             border-radius: 30px;
-            padding: 6px 20px;
+            padding: 6px 12px;
             cursor: pointer;
             outline: none;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -339,24 +339,6 @@
             box-shadow: 0 0 10px rgba(163, 230, 53, 0.05);
         }
 
-        .select-arrow {
-            position: absolute;
-            right: 12px;
-            top: 52%;
-            width: 5px;
-            height: 5px;
-            border-right: 1px solid currentColor;
-            border-bottom: 1px solid currentColor;
-            transform: translateY(-50%) rotate(45deg);
-            transition: transform 0.2s ease, opacity 0.2s ease;
-            opacity: 0.6;
-        }
-
-        .custom-select.active .select-arrow {
-            transform: translateY(-20%) rotate(-135deg);
-            opacity: 1;
-        }
-
         .select-options {
             position: absolute;
             top: 100%;
@@ -365,9 +347,9 @@
             padding: 4px 0;
             list-style: none;
             background: rgba(28, 28, 28, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: none;
             border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             opacity: 0;
@@ -538,7 +520,6 @@
         <div class="custom-select" id="custom-lang-select">
             <button class="select-trigger" aria-haspopup="listbox" aria-expanded="false" id="lang-select-trigger">
                 <span class="selected-text" id="lang-selected-text">EN</span>
-                <span class="select-arrow"></span>
             </button>
             <ul class="select-options" role="listbox" id="lang-select-options">
                 <li class="select-option" data-value="en" role="option">EN</li>

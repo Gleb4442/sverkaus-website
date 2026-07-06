@@ -289,40 +289,45 @@
             height: 22px;
         }
 
-        /* Language Selector in Footer */
-        .footer-langs {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            justify-content: center;
+        .top-right-langs {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 0.8s;
+        }
+
+        .lang-select {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--dim-color);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
-            letter-spacing: 0.1em;
-            margin-top: 10px;
-            white-space: nowrap;
-            user-select: none;
-            opacity: 0.75;
-        }
-
-        .lang-option {
-            color: var(--dim-color);
             cursor: pointer;
-            transition: color 0.2s, text-shadow 0.2s;
-            padding: 2px 4px;
+            outline: none;
+            transition: all 0.2s ease;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding-right: 24px;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23666666'><polygon points='0,3 10,3 5,8'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
         }
 
-        .lang-option.active {
-            color: var(--accent-color);
-            text-shadow: 0 0 8px rgba(163, 230, 53, 0.4);
-            font-weight: bold;
-        }
-
-        .lang-option:hover {
+        .lang-select:hover, .lang-select:focus {
             color: var(--text-color);
+            border-color: rgba(163, 230, 53, 0.3);
+            background-color: rgba(255, 255, 255, 0.04);
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23f0f0f0'><polygon points='0,3 10,3 5,8'/></svg>");
         }
 
-        .lang-separator {
-            color: var(--dim-color);
-            user-select: none;
+        .lang-select option {
+            background-color: var(--bg-color);
+            color: var(--text-color);
         }
 
         @media (max-width: 768px) {
@@ -454,6 +459,17 @@
         SVERKAUS LABS
     </div>
 
+    <div class="top-right-langs">
+        <select class="lang-select" id="lang-select">
+            <option value="en">EN</option>
+            <option value="zh">中文</option>
+            <option value="hi">हिन्दी</option>
+            <option value="ko">한국어</option>
+            <option value="de">DE</option>
+            <option value="pl">PL</option>
+        </select>
+    </div>
+
     <div class="center-content">
         <div class="logo-icon-container">
             <svg class="logo-icon" viewBox="-30 -30 260 260">
@@ -520,13 +536,6 @@
                     </svg>
                 </a>
             </div>
-            <div class="footer-langs">
-                <span class="lang-option" data-lang="en">EN</span>
-                <span class="lang-separator">/</span>
-                <span class="lang-option" data-lang="zh">中文</span>
-                <span class="lang-separator">/</span>
-                <span class="lang-option" data-lang="hi">हिन्दी</span>
-            </div>
         </div>
     </footer>
 
@@ -556,6 +565,30 @@
                     gennety: "वास्तविक जीवन (IRL) के लिए डेटिंग सोशल नेटवर्क — मिलने से पहले कोई चैट नहीं"
                 },
                 badgeInfo: "विवरण →"
+            },
+            ko: {
+                tagline: "사람과 사람 사이의 상호작용을 단순화합니다",
+                projects: {
+                    beajee: "OpenClaw와 같은 개인 에이전트를 통한 자율 네트워크용 응용 소셜 네트워크",
+                    gennety: "IRL을 위한 데이팅 소셜 네트워크 — 만나기 전 채팅 없음"
+                },
+                badgeInfo: "상세보기 →"
+            },
+            de: {
+                tagline: "Vereinfachung der zwischenmenschlichen Interaktion",
+                projects: {
+                    beajee: "Anwendungsorientiertes soziales Netzwerk für autonome Vernetzung über persönliche Agenten wie OpenClaw",
+                    gennety: "Dating-Netzwerk für das echte Leben (IRL) – kein Chatten vor dem Treffen"
+                },
+                badgeInfo: "Details →"
+            },
+            pl: {
+                tagline: "Upraszczanie interakcji międzyludzkich",
+                projects: {
+                    beajee: "Aplikacyjna sieć społecznościowa do autonomicznego nawiązywania kontaktów za pośrednictwem osobistych agentów, takich jak OpenClaw",
+                    gennety: "Sieć randkowa w świecie rzeczywistym (IRL) – bez czatu przed spotkaniem"
+                },
+                badgeInfo: "Szczegóły →"
             }
         };
 
@@ -604,10 +637,11 @@
             currentLang = lang;
             localStorage.setItem('sverkaus-lang', currentLang);
 
-            // Update language switcher UI active states
-            document.querySelectorAll('.lang-option').forEach(opt => {
-                opt.classList.toggle('active', opt.dataset.lang === currentLang);
-            });
+            // Update language selector dropdown value if changed programmatically
+            const langSelect = document.getElementById('lang-select');
+            if (langSelect && langSelect.value !== currentLang) {
+                langSelect.value = currentLang;
+            }
 
             // Update tagline via typewriter
             startTypewriter(translations[currentLang].tagline);
@@ -621,14 +655,17 @@
         }
 
         // Initialize translations on load
+        const langSelect = document.getElementById('lang-select');
+        if (langSelect) {
+            langSelect.value = currentLang;
+            langSelect.addEventListener('change', (e) => {
+                switchLanguage(e.target.value);
+            });
+        }
+        
         document.getElementById('desc-beajee').textContent = translations[currentLang].projects.beajee;
         document.getElementById('desc-gennety').textContent = translations[currentLang].projects.gennety;
         document.getElementById('badge-info-link').textContent = translations[currentLang].badgeInfo;
-
-        document.querySelectorAll('.lang-option').forEach(opt => {
-            opt.classList.toggle('active', opt.dataset.lang === currentLang);
-            opt.addEventListener('click', () => switchLanguage(opt.dataset.lang));
-        });
 
         // Start typing tagline
         setTimeout(() => {

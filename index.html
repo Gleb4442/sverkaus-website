@@ -305,24 +305,25 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             user-select: none;
+            width: 85px;
         }
 
         .select-trigger {
             background: rgba(255, 255, 255, 0.02);
             color: var(--dim-color);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 6px;
-            padding: 6px 12px;
-            padding-right: 28px;
+            border: 1px solid transparent;
+            border-radius: 30px;
+            padding: 6px 20px;
             cursor: pointer;
             outline: none;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            text-align: left;
+            justify-content: center;
+            text-align: center;
             position: relative;
-            min-width: 65px;
+            width: 100%;
+            box-sizing: border-box;
             font-family: inherit;
             font-size: inherit;
         }
@@ -333,7 +334,7 @@
 
         .select-trigger:hover, .select-trigger:focus, .custom-select.active .select-trigger {
             color: var(--text-color);
-            border-color: rgba(163, 230, 53, 0.3);
+            border-color: transparent;
             background-color: rgba(255, 255, 255, 0.04);
             box-shadow: 0 0 10px rgba(163, 230, 53, 0.05);
         }
@@ -365,7 +366,7 @@
             list-style: none;
             background: rgba(28, 28, 28, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 6px;
+            border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -374,7 +375,8 @@
             transform: translateY(-8px);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
-            min-width: 90px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .custom-select.active .select-options {
@@ -388,8 +390,8 @@
             color: var(--dim-color);
             cursor: pointer;
             transition: all 0.15s ease;
-            text-align: right;
-            border-radius: 4px;
+            text-align: center;
+            border-radius: 20px;
             margin: 2px 4px;
         }
 

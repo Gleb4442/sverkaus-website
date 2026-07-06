@@ -298,36 +298,109 @@
             animation: fadeIn 0.8s ease forwards 0.8s;
         }
 
-        .lang-select {
+        /* Custom Select Styles */
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            user-select: none;
+        }
+
+        .select-trigger {
             background: rgba(255, 255, 255, 0.02);
             color: var(--dim-color);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 6px;
-            padding: 6px 10px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
+            padding: 6px 12px;
+            padding-right: 28px;
             cursor: pointer;
             outline: none;
-            transition: all 0.2s ease;
-            appearance: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            padding-right: 24px;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23666666'><polygon points='0,3 10,3 5,8'/></svg>");
-            background-repeat: no-repeat;
-            background-position: right 8px center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            position: relative;
+            min-width: 65px;
+            font-family: inherit;
+            font-size: inherit;
         }
 
-        .lang-select:hover, .lang-select:focus {
+        .select-trigger * {
+            pointer-events: none;
+        }
+
+        .select-trigger:hover, .select-trigger:focus, .custom-select.active .select-trigger {
             color: var(--text-color);
             border-color: rgba(163, 230, 53, 0.3);
             background-color: rgba(255, 255, 255, 0.04);
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='10' fill='%23f0f0f0'><polygon points='0,3 10,3 5,8'/></svg>");
+            box-shadow: 0 0 10px rgba(163, 230, 53, 0.05);
         }
 
-        .lang-select option {
-            background-color: var(--bg-color);
+        .select-arrow {
+            position: absolute;
+            right: 12px;
+            top: 52%;
+            width: 5px;
+            height: 5px;
+            border-right: 1px solid currentColor;
+            border-bottom: 1px solid currentColor;
+            transform: translateY(-50%) rotate(45deg);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+            opacity: 0.6;
+        }
+
+        .custom-select.active .select-arrow {
+            transform: translateY(-20%) rotate(-135deg);
+            opacity: 1;
+        }
+
+        .select-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 6px;
+            padding: 4px 0;
+            list-style: none;
+            background: rgba(28, 28, 28, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            min-width: 90px;
+        }
+
+        .custom-select.active .select-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .select-option {
+            padding: 7px 12px;
+            color: var(--dim-color);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: right;
+            border-radius: 4px;
+            margin: 2px 4px;
+        }
+
+        .select-option:hover {
             color: var(--text-color);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .select-option.selected {
+            color: var(--accent-color);
+            background: rgba(163, 230, 53, 0.04);
         }
 
         @media (max-width: 768px) {
@@ -460,7 +533,21 @@
     </div>
 
     <div class="top-right-langs">
-        <select class="lang-select" id="lang-select">
+        <div class="custom-select" id="custom-lang-select">
+            <button class="select-trigger" aria-haspopup="listbox" aria-expanded="false" id="lang-select-trigger">
+                <span class="selected-text" id="lang-selected-text">EN</span>
+                <span class="select-arrow"></span>
+            </button>
+            <ul class="select-options" role="listbox" id="lang-select-options">
+                <li class="select-option" data-value="en" role="option">EN</li>
+                <li class="select-option" data-value="zh" role="option">中文</li>
+                <li class="select-option" data-value="hi" role="option">हिन्दी</li>
+                <li class="select-option" data-value="ko" role="option">한국어</li>
+                <li class="select-option" data-value="de" role="option">DE</li>
+                <li class="select-option" data-value="pl" role="option">PL</li>
+            </ul>
+        </div>
+        <select class="lang-select" id="lang-select" style="display: none;">
             <option value="en">EN</option>
             <option value="zh">中文</option>
             <option value="hi">हिन्दी</option>
@@ -632,6 +719,27 @@
             }
         }
 
+        // Custom select UI update helper
+        function updateCustomSelectUI(lang) {
+            const selectOptions = document.querySelectorAll('.select-option');
+            const selectedText = document.getElementById('lang-selected-text');
+            let selectedOptionText = "EN";
+            
+            selectOptions.forEach(opt => {
+                if (opt.getAttribute('data-value') === lang) {
+                    opt.classList.add('selected');
+                    opt.setAttribute('aria-selected', 'true');
+                    selectedOptionText = opt.textContent;
+                } else {
+                    opt.classList.remove('selected');
+                    opt.removeAttribute('aria-selected');
+                }
+            });
+            if (selectedText) {
+                selectedText.textContent = selectedOptionText;
+            }
+        }
+
         function switchLanguage(lang) {
             if (lang === currentLang) return;
             currentLang = lang;
@@ -642,6 +750,9 @@
             if (langSelect && langSelect.value !== currentLang) {
                 langSelect.value = currentLang;
             }
+
+            // Sync custom select UI
+            updateCustomSelectUI(currentLang);
 
             // Update tagline via typewriter
             startTypewriter(translations[currentLang].tagline);
@@ -660,6 +771,36 @@
             langSelect.value = currentLang;
             langSelect.addEventListener('change', (e) => {
                 switchLanguage(e.target.value);
+            });
+        }
+
+        // Setup custom language select event listeners
+        const customSelect = document.getElementById('custom-lang-select');
+        const selectTrigger = document.getElementById('lang-select-trigger');
+        const selectOptions = document.querySelectorAll('.select-option');
+
+        if (customSelect && selectTrigger) {
+            updateCustomSelectUI(currentLang);
+
+            selectTrigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isActive = customSelect.classList.toggle('active');
+                selectTrigger.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+            });
+
+            selectOptions.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const lang = option.getAttribute('data-value');
+                    switchLanguage(lang);
+                    customSelect.classList.remove('active');
+                    selectTrigger.setAttribute('aria-expanded', 'false');
+                });
+            });
+
+            document.addEventListener('click', () => {
+                customSelect.classList.remove('active');
+                selectTrigger.setAttribute('aria-expanded', 'false');
             });
         }
         

@@ -311,7 +311,7 @@
         .select-trigger {
             background: rgba(255, 255, 255, 0.02);
             color: var(--dim-color);
-            border: 1px solid transparent;
+            border: none;
             border-radius: 30px;
             padding: 6px 12px;
             cursor: pointer;
@@ -326,17 +326,23 @@
             box-sizing: border-box;
             font-family: inherit;
             font-size: inherit;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .select-trigger * {
             pointer-events: none;
         }
 
-        .select-trigger:hover, .select-trigger:focus, .custom-select.active .select-trigger {
+        .select-trigger:hover, .select-trigger:focus {
             color: var(--text-color);
-            border-color: transparent;
             background-color: rgba(255, 255, 255, 0.04);
-            box-shadow: 0 0 10px rgba(163, 230, 53, 0.05);
+            box-shadow: none;
+        }
+
+        .custom-select.active .select-trigger {
+            color: var(--text-color);
+            background-color: rgba(255, 255, 255, 0.04);
+            box-shadow: none;
         }
 
         .select-options {
@@ -344,11 +350,11 @@
             top: 100%;
             right: 0;
             margin-top: 6px;
-            padding: 4px 0;
+            padding: 4px;
             list-style: none;
             background: rgba(28, 28, 28, 0.95);
             border: none;
-            border-radius: 8px;
+            border-radius: 24px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -359,6 +365,9 @@
             z-index: 1000;
             width: 100%;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .custom-select.active .select-options {
@@ -374,7 +383,8 @@
             transition: all 0.15s ease;
             text-align: center;
             border-radius: 20px;
-            margin: 2px 4px;
+            margin: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .select-option:hover {
@@ -408,22 +418,28 @@
             .bottom-projects {
                 position: relative;
                 bottom: 0;
-                padding: 20px 20px 20px 20px;
+                padding: 20px;
                 margin-top: 40px;
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                width: fit-content;
+                max-width: calc(100% - 40px);
+                margin-left: auto;
+                margin-right: auto;
             }
             .center-content {
                 padding-top: 80px;
             }
             .project {
                 margin-bottom: 16px;
-                padding: 0 15px;
+                padding: 0;
                 width: 100%;
                 max-width: 550px;
                 white-space: normal;
                 word-break: normal;
                 display: block;
-                margin-left: auto;
-                margin-right: auto;
+                text-align: left;
             }
             .project::before, .project::after {
                 display: none; /* Disable brackets on mobile to avoid mess */

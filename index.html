@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #1c1c1c;
@@ -32,14 +32,9 @@
             cursor: crosshair;
             overflow-x: hidden;
             overflow-y: auto;
-        }
-
-        .hero-section {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            position: relative;
-            overflow: hidden;
         }
 
         @keyframes fadeIn {
@@ -47,16 +42,241 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .top-left-label {
-            position: absolute;
-            top: 20px;
-            left: 20px;
+        @keyframes viewFadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Top Header Navigation */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+
+        .header-left, .nav-tabs, .header-right {
+            pointer-events: auto;
+        }
+
+        .brand-link {
             font-size: 11px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            z-index: 100;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
             opacity: 0;
             animation: fadeIn 0.8s ease forwards 0.8s;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .brand-link:hover {
+            color: var(--accent-color);
+            text-decoration: none;
+            text-shadow: 0 0 12px rgba(163, 230, 53, 0.4);
+        }
+
+        .nav-tabs {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 0.8s;
+            background: rgba(28, 28, 28, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            padding: 4px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            user-select: none;
+        }
+
+        .nav-tab {
+            color: var(--dim-color);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            padding: 6px 14px;
+            border-radius: 20px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .nav-tab:hover {
+            color: var(--text-color);
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-tab.active {
+            color: #121212;
+            background: #f0f0f0;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .tab-badge {
+            font-size: 9px;
+            font-weight: 700;
+            line-height: 1;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: var(--accent-color);
+            color: #1c1c1c;
+            transition: all 0.2s ease;
+        }
+
+        .nav-tab.active .tab-badge {
+            background: #1c1c1c;
+            color: var(--accent-color);
+        }
+
+        .header-right {
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 0.8s;
+        }
+
+        /* Custom Select Styles */
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            user-select: none;
+            width: 85px;
+        }
+
+        .select-trigger {
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--dim-color);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 30px;
+            padding: 6px 12px;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: inherit;
+            -webkit-tap-highlight-color: transparent;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .select-trigger * {
+            pointer-events: none;
+        }
+
+        .select-trigger:hover, .select-trigger:focus {
+            color: var(--text-color);
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .custom-select.active .select-trigger {
+            color: var(--text-color);
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .select-options {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 6px;
+            padding: 4px;
+            list-style: none;
+            background: rgba(28, 28, 28, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-8px);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .custom-select.active .select-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .select-option {
+            padding: 7px 12px;
+            color: var(--dim-color);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+            border-radius: 16px;
+            margin: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .select-option:hover {
+            color: var(--text-color);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .select-option.selected {
+            color: var(--accent-color);
+            background: rgba(163, 230, 53, 0.06);
+        }
+
+        /* Main Content View Switcher */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .view-section {
+            display: none;
+            width: 100%;
+            animation: viewFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .view-section.active {
+            display: flex;
+        }
+
+        /* Overview / Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
         }
 
         .center-content {
@@ -67,6 +287,7 @@
             justify-content: center;
             z-index: 10;
             width: 100%;
+            padding: 80px 20px;
         }
 
         .logo-icon-container {
@@ -92,7 +313,7 @@
             font-size: clamp(32px, 5vw, 56px);
             font-weight: 300;
             letter-spacing: 0.25em;
-            margin-left: 0.25em; /* Compensate for the last letter's tracking */
+            margin-left: 0.25em;
             margin-bottom: 20px;
             text-transform: uppercase;
             display: flex;
@@ -114,10 +335,10 @@
             color: var(--tagline-color);
             letter-spacing: 0.05em;
             text-align: center;
-            min-height: 20px; /* prevent layout shift during typing */
+            min-height: 20px;
         }
 
-        /* Animation 1: Blinking Cursor */
+        /* Blinking Cursor */
         .cursor {
             display: inline-block;
             width: 8px;
@@ -131,6 +352,77 @@
         @keyframes blink {
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
+        }
+
+        /* Update Badge Styles */
+        .update-badge-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards 1.2s;
+            margin-top: 25px;
+            user-select: none;
+        }
+
+        .update-badge-container:hover {
+            background: rgba(163, 230, 53, 0.03);
+            border-color: rgba(163, 230, 53, 0.3);
+            box-shadow: 0 0 15px rgba(163, 230, 53, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .update-badge-container a.badge-main-target {
+            display: flex;
+            align-items: center;
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .badge-new {
+            background-color: var(--accent-color);
+            color: var(--bg-color);
+            font-weight: 700;
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            margin-right: 8px;
+            letter-spacing: 0.08em;
+            display: inline-block;
+            line-height: 1;
+        }
+
+        .badge-title {
+            color: var(--text-color);
+            font-weight: 400;
+        }
+
+        .badge-separator {
+            color: rgba(255, 255, 255, 0.15);
+            user-select: none;
+            font-size: 10px;
+        }
+
+        .update-badge-container a.badge-info {
+            color: var(--dim-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .update-badge-container a.badge-info:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+            text-decoration-color: var(--accent-color);
         }
 
         .bottom-projects {
@@ -155,13 +447,13 @@
             line-height: 1.5;
             width: max-content;
             position: relative;
-            padding: 0 20px; /* Space for brackets */
+            padding: 0 20px;
             transition: color 0.2s;
             white-space: nowrap;
             cursor: pointer;
         }
 
-        /* Animation 4: Targeting Brackets */
+        /* Targeting Brackets */
         .project::before, .project::after {
             position: absolute;
             opacity: 0;
@@ -211,9 +503,610 @@
             color: var(--accent-color);
             font-weight: 700;
             display: inline-block;
-            min-width: 65px; /* Prevent jitter during glitch */
+            min-width: 65px;
         }
 
+        /* Careers Section Styles (Frameless / Borderless Minimalist) */
+        .careers-section {
+            min-height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            padding: 120px 24px 80px;
+            max-width: 920px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .careers-header {
+            width: 100%;
+            margin-bottom: 44px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .careers-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent-color);
+            animation: pulseDot 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.4); opacity: 0.5; }
+        }
+
+        .careers-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 300;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-color);
+            margin-bottom: 14px;
+            line-height: 1.1;
+        }
+
+        .careers-tagline {
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--tagline-color);
+            max-width: 650px;
+            margin-bottom: 18px;
+        }
+
+        .careers-stats {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 11px;
+            color: var(--dim-color);
+            letter-spacing: 0.05em;
+        }
+
+        .stat-pill .accent-text {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .stat-separator {
+            color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Frameless Job Card Item */
+        .careers-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .job-item {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .job-item:hover {
+            background: rgba(255, 255, 255, 0.025);
+            border-color: rgba(163, 230, 53, 0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .job-header {
+            padding: 24px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            cursor: pointer;
+            user-select: none;
+            background: transparent;
+            transition: background-color 0.2s ease;
+        }
+
+        .job-header:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .job-primary-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .job-title-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .job-bracket {
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 16px;
+            opacity: 0.3;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .job-item:hover .job-bracket {
+            opacity: 1;
+        }
+
+        .job-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(20px, 3.5vw, 26px);
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            color: var(--text-color);
+            margin: 0;
+            transition: color 0.2s ease;
+        }
+
+        .job-item:hover .job-title {
+            color: var(--accent-color);
+        }
+
+        .job-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--dim-color);
+            flex-wrap: wrap;
+        }
+
+        .meta-dot {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .project-tag {
+            color: var(--tagline-color);
+        }
+
+        .project-tag .diamond {
+            color: var(--accent-color);
+        }
+
+        .comp-highlight {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .job-action-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--dim-color);
+            letter-spacing: 0.05em;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .job-item:hover .job-action-toggle {
+            color: var(--text-color);
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .toggle-arrow {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 12px;
+        }
+
+        .job-item.expanded .toggle-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* Job Details */
+        .job-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .job-item.expanded .job-details {
+            max-height: 3500px;
+            opacity: 1;
+        }
+
+        .job-details-inner {
+            padding: 0 28px 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+        }
+
+        /* Quick Specs */
+        .job-quick-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .spec-pill {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-size: 11px;
+            color: #d6d6d6;
+            letter-spacing: 0.02em;
+        }
+
+        .spec-label {
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-right: 4px;
+        }
+
+        .job-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .job-section-title {
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+
+        .job-prose {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #c4c4c4;
+        }
+
+        .job-prose strong {
+            color: #ffffff;
+        }
+
+        .job-grid-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .job-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .job-list li {
+            font-size: 12px;
+            line-height: 1.6;
+            color: #b0b0b0;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .job-list li strong {
+            color: #f0f0f0;
+        }
+
+        .list-bullet {
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--accent-color);
+            font-size: 11px;
+        }
+
+        /* Compensation Box */
+        .comp-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .comp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            padding-bottom: 12px;
+            font-size: 13px;
+            color: #e0e0e0;
+        }
+
+        .highlight-accent {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .bonuses-title {
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--dim-color);
+            font-weight: 700;
+        }
+
+        .bonuses-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bonuses-list li {
+            font-size: 12px;
+            color: #bbbbbb;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bonus-tag {
+            background: rgba(163, 230, 53, 0.1);
+            color: var(--accent-color);
+            font-weight: 700;
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(163, 230, 53, 0.25);
+            white-space: nowrap;
+        }
+
+        /* Perks Grid */
+        .perks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 4px;
+        }
+
+        .perk-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .perk-icon {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .perk-text {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #b8b8b8;
+        }
+
+        .perk-text strong {
+            color: #f0f0f0;
+        }
+
+        /* Screening Template Box */
+        .screening-template-box {
+            margin: 12px 0;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 12px 16px 12px 30px;
+        }
+
+        .screening-questions {
+            color: #cccccc;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .screening-questions li {
+            padding-left: 4px;
+        }
+
+        /* Job Application CTA Box */
+        .job-apply-box {
+            margin-top: 10px;
+            padding: 22px;
+            background: rgba(163, 230, 53, 0.025);
+            border: 1px dashed rgba(163, 230, 53, 0.25);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .apply-info {
+            width: 100%;
+        }
+
+        .apply-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 6px;
+        }
+
+        .apply-subtitle {
+            font-size: 12px;
+            color: var(--tagline-color);
+            line-height: 1.5;
+        }
+
+        .apply-actions-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .action-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #dedede;
+            padding: 9px 15px;
+            border-radius: 30px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .action-btn.copied {
+            background: rgba(163, 230, 53, 0.15);
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .btn-icon {
+            width: 13px;
+            height: 13px;
+        }
+
+        .apply-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 16px;
+            border-radius: 30px;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+        }
+
+        .apply-telegram {
+            background: var(--accent-color);
+            color: #121212;
+        }
+
+        .apply-telegram:hover {
+            background: #bbf74c;
+            color: #000000;
+            text-decoration: none;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(163, 230, 53, 0.35);
+        }
+
+        .apply-telegram svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 12;
+        }
+
+        .apply-email {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-color);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .apply-email:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            text-decoration: none;
+            transform: translateY(-1px);
+        }
+
+        .apply-email svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .apply-questions-note {
+            margin-top: 10px;
+            font-size: 11px;
+            line-height: 1.6;
+            color: var(--tagline-color);
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 12px;
+        }
+
+        .apply-questions-note strong {
+            color: #e0e0e0;
+        }
+
+        .accent-link {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        .careers-footer-note {
+            margin-top: 48px;
+            font-size: 12px;
+            color: var(--dim-color);
+            line-height: 1.6;
+            text-align: center;
+            max-width: 620px;
+        }
+
+        .careers-footer-note .diamond {
+            color: var(--accent-color);
+            margin-right: 6px;
+        }
+
+        .careers-footer-note a {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* Generic Link */
         a {
             color: var(--text-color);
             text-decoration: none;
@@ -227,15 +1120,17 @@
             text-decoration-color: var(--accent-color);
         }
 
+        /* Footer */
         .site-footer {
             position: relative;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 60px 20px;
+            padding: 50px 20px 40px;
             overflow: hidden;
             background-color: var(--bg-color);
+            margin-top: auto;
         }
 
         .footer-content {
@@ -289,117 +1184,42 @@
             height: 22px;
         }
 
-        .top-right-langs {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 100;
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards 0.8s;
-        }
-
-        /* Custom Select Styles */
-        .custom-select {
-            position: relative;
-            display: inline-block;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            user-select: none;
-            width: 85px;
-        }
-
-        .select-trigger {
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--dim-color);
-            border: none;
-            border-radius: 30px;
-            padding: 6px 12px;
-            cursor: pointer;
-            outline: none;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            width: 100%;
-            box-sizing: border-box;
-            font-family: inherit;
-            font-size: inherit;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .select-trigger * {
-            pointer-events: none;
-        }
-
-        .select-trigger:hover, .select-trigger:focus {
-            color: var(--text-color);
-            background-color: rgba(255, 255, 255, 0.04);
-            box-shadow: none;
-        }
-
-        .custom-select.active .select-trigger {
-            color: var(--text-color);
-            background-color: rgba(255, 255, 255, 0.04);
-            box-shadow: none;
-        }
-
-        .select-options {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            margin-top: 6px;
-            padding: 4px;
-            list-style: none;
-            background: rgba(28, 28, 28, 0.95);
-            border: none;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-8px);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 1000;
-            width: 100%;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .custom-select.active .select-options {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .select-option {
-            padding: 7px 12px;
-            color: var(--dim-color);
-            cursor: pointer;
-            transition: all 0.15s ease;
-            text-align: center;
-            border-radius: 20px;
-            margin: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .select-option:hover {
-            color: var(--text-color);
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        .select-option.selected {
-            color: var(--accent-color);
-            background: rgba(163, 230, 53, 0.04);
-        }
-
+        /* Responsive Breakpoints */
         @media (max-width: 768px) {
-            .top-left-label {
-                display: none; /* Hide top-left label on mobile to save space and avoid clutter */
+            .site-header {
+                padding: 14px 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+                background: rgba(28, 28, 28, 0.9);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            .header-left {
+                order: 1;
+            }
+            .header-right {
+                order: 2;
+            }
+            .nav-tabs {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                background: rgba(255, 255, 255, 0.03);
+            }
+            .nav-tab {
+                flex: 1;
+                justify-content: center;
+                padding: 8px 12px;
+            }
+            .center-content {
+                padding-top: 140px;
+                padding-bottom: 40px;
+            }
+            .careers-section {
+                padding-top: 140px;
+                padding-left: 16px;
+                padding-right: 16px;
             }
             .logo-icon-container {
                 width: 90px;
@@ -428,9 +1248,6 @@
                 margin-left: auto;
                 margin-right: auto;
             }
-            .center-content {
-                padding-top: 80px;
-            }
             .project {
                 margin-bottom: 16px;
                 padding: 0;
@@ -442,162 +1259,315 @@
                 text-align: left;
             }
             .project::before, .project::after {
-                display: none; /* Disable brackets on mobile to avoid mess */
+                display: none;
+            }
+            .job-grid-sections {
+                grid-template-columns: 1fr;
+            }
+            .job-header {
+                padding: 20px 18px;
+            }
+            .job-details-inner {
+                padding: 0 18px 20px;
             }
         }
-
-        /* Update Badge Styles */
-        .update-badge-container {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 5px 12px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 30px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            font-size: 11px;
-            letter-spacing: 0.05em;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards 1.2s;
-            margin-top: 25px;
-            user-select: none;
-        }
-
-        .update-badge-container:hover {
-            background: rgba(163, 230, 53, 0.03);
-            border-color: rgba(163, 230, 53, 0.3);
-            box-shadow: 0 0 15px rgba(163, 230, 53, 0.08);
-            transform: translateY(-1px);
-        }
-
-        .update-badge-container a.badge-main-target {
-            display: flex;
-            align-items: center;
-            color: var(--text-color);
-            text-decoration: none;
-        }
-
-        .update-badge-container a.badge-main-target:hover {
-            color: var(--text-color);
-            text-decoration: none;
-        }
-
-        .badge-new {
-            background-color: var(--accent-color);
-            color: var(--bg-color);
-            font-weight: 700;
-            font-size: 9px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            margin-right: 8px;
-            letter-spacing: 0.08em;
-            display: inline-block;
-            line-height: 1;
-        }
-
-        .badge-title {
-            color: var(--text-color);
-            font-weight: 400;
-        }
-
-        .badge-separator {
-            color: rgba(255, 255, 255, 0.15);
-            user-select: none;
-            font-size: 10px;
-        }
-
-        .update-badge-container a.badge-info {
-            color: var(--dim-color);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .update-badge-container a.badge-info:hover {
-            color: var(--accent-color);
-            text-decoration: underline;
-            text-decoration-color: var(--accent-color);
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="hero-section">
-
-    <div class="top-left-label">
-        SVERKAUS LABS
-    </div>
-
-    <div class="top-right-langs">
-        <div class="custom-select" id="custom-lang-select">
-            <button class="select-trigger" aria-haspopup="listbox" aria-expanded="false" id="lang-select-trigger">
-                <span class="selected-text" id="lang-selected-text">EN</span>
-            </button>
-            <ul class="select-options" role="listbox" id="lang-select-options">
-                <li class="select-option" data-value="en" role="option">EN</li>
-                <li class="select-option" data-value="zh" role="option">中文</li>
-                <li class="select-option" data-value="hi" role="option">हिन्दी</li>
-                <li class="select-option" data-value="ko" role="option">한국어</li>
-                <li class="select-option" data-value="de" role="option">DE</li>
-                <li class="select-option" data-value="pl" role="option">PL</li>
-            </ul>
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="header-left">
+            <a href="#overview" class="brand-link" id="brand-link">SVERKAUS LABS</a>
         </div>
-        <select class="lang-select" id="lang-select" style="display: none;">
-            <option value="en">EN</option>
-            <option value="zh">中文</option>
-            <option value="hi">हिन्दी</option>
-            <option value="ko">한국어</option>
-            <option value="de">DE</option>
-            <option value="pl">PL</option>
-        </select>
-    </div>
 
-    <div class="center-content">
-        <div class="logo-icon-container">
-            <svg class="logo-icon" viewBox="-30 -30 260 260">
-                <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#ffffff" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="10" />
-                <ellipse cx="85" cy="100" rx="13" ry="21" fill="#ffffff" />
-                <ellipse cx="115" cy="100" rx="13" ry="21" fill="#ffffff" />
-            </svg>
-        </div>
-        <div class="logo-center">
-            <span style="animation-delay: 0.1s">S</span>
-            <span style="animation-delay: 0.2s">V</span>
-            <span style="animation-delay: 0.3s">E</span>
-            <span style="animation-delay: 0.4s">R</span>
-            <span style="animation-delay: 0.5s">K</span>
-            <span style="animation-delay: 0.6s">A</span>
-            <span style="animation-delay: 0.7s">U</span>
-            <span style="animation-delay: 0.8s">S</span>
-        </div>
-        <div class="tagline"><span id="typewriter"></span><span class="cursor"></span></div>
-
-        <!-- Gennety Beta Launch Badge -->
-        <div class="update-badge-container">
-            <a href="https://gennety.com" target="_blank" class="badge-main-target">
-                <span class="badge-new">New</span>
-                <span class="badge-title">Gennety Beta Launch</span>
+        <nav class="nav-tabs" role="tablist" aria-label="Main navigation">
+            <a href="#overview" class="nav-tab active" data-tab="overview" id="tab-overview" role="tab" aria-selected="true">
+                <span class="tab-label" id="label-nav-overview">Overview</span>
             </a>
-            <span class="badge-separator">|</span>
-            <a href="https://gennety.com" target="_blank" class="badge-info" id="badge-info-link">Details &rarr;</a>
+            <a href="#careers" class="nav-tab" data-tab="careers" id="tab-careers" role="tab" aria-selected="false">
+                <span class="tab-label" id="label-nav-careers">Careers</span>
+                <span class="tab-badge">1</span>
+            </a>
+        </nav>
+
+        <div class="header-right">
+            <div class="custom-select" id="custom-lang-select">
+                <button class="select-trigger" aria-haspopup="listbox" aria-expanded="false" id="lang-select-trigger">
+                    <span class="selected-text" id="lang-selected-text">EN</span>
+                </button>
+                <ul class="select-options" role="listbox" id="lang-select-options">
+                    <li class="select-option" data-value="en" role="option">EN</li>
+                    <li class="select-option" data-value="zh" role="option">中文</li>
+                    <li class="select-option" data-value="hi" role="option">हिन्दी</li>
+                    <li class="select-option" data-value="ko" role="option">한국어</li>
+                    <li class="select-option" data-value="de" role="option">DE</li>
+                    <li class="select-option" data-value="pl" role="option">PL</li>
+                </ul>
+            </div>
+            <select class="lang-select" id="lang-select" style="display: none;">
+                <option value="en">EN</option>
+                <option value="zh">中文</option>
+                <option value="hi">हिन्दी</option>
+                <option value="ko">한국어</option>
+                <option value="de">DE</option>
+                <option value="pl">PL</option>
+            </select>
         </div>
+    </header>
+
+    <div class="main-wrapper">
+        
+        <!-- Tab 1: Overview Section -->
+        <section id="view-overview" class="view-section hero-section active">
+            <div class="center-content">
+                <div class="logo-icon-container">
+                    <svg class="logo-icon" viewBox="-30 -30 260 260">
+                        <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#ffffff" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="10" />
+                        <ellipse cx="85" cy="100" rx="13" ry="21" fill="#ffffff" />
+                        <ellipse cx="115" cy="100" rx="13" ry="21" fill="#ffffff" />
+                    </svg>
+                </div>
+                <div class="logo-center">
+                    <span style="animation-delay: 0.1s">S</span>
+                    <span style="animation-delay: 0.2s">V</span>
+                    <span style="animation-delay: 0.3s">E</span>
+                    <span style="animation-delay: 0.4s">R</span>
+                    <span style="animation-delay: 0.5s">K</span>
+                    <span style="animation-delay: 0.6s">A</span>
+                    <span style="animation-delay: 0.7s">U</span>
+                    <span style="animation-delay: 0.8s">S</span>
+                </div>
+                <div class="tagline"><span id="typewriter"></span><span class="cursor"></span></div>
+
+                <!-- Gennety Beta Launch Badge -->
+                <div class="update-badge-container">
+                    <a href="https://gennety.com" target="_blank" class="badge-main-target">
+                        <span class="badge-new">New</span>
+                        <span class="badge-title">Gennety Beta Launch</span>
+                    </a>
+                    <span class="badge-separator">|</span>
+                    <a href="https://gennety.com" target="_blank" class="badge-info" id="badge-info-link">Details &rarr;</a>
+                </div>
+            </div>
+
+            <div class="bottom-projects">
+                <div class="project">
+                    <span class="diamond">◇</span> <span class="project-name" data-value="BEAJEE">BEAJEE</span> <span class="project-desc" id="desc-beajee">Applied Social Network for Autonomous Networking via Personal Agent like OpenClaw</span> > <a href="https://beajee.com" target="_blank">beajee.com</a>
+                </div>
+                <div class="project">
+                    <span class="diamond">◇</span> <span class="project-name" data-value="GENNETY">GENNETY</span> <span class="project-desc" id="desc-gennety">Dating social network for IRL — no chat before meeting</span> > <a href="https://gennety.com" target="_blank">gennety.com</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Careers Section -->
+        <section id="view-careers" class="view-section careers-section">
+            <div class="careers-header">
+                <div class="careers-kicker">
+                    <span class="pulse-dot"></span>
+                    <span id="txt-careers-kicker">WE ARE HIRING</span>
+                </div>
+                <h1 class="careers-title" id="txt-careers-title">Careers</h1>
+                <p class="careers-tagline" id="txt-careers-tagline">
+                    Simplifying human-to-human interaction. Build the next generation of social applications with us.
+                </p>
+                <div class="careers-stats">
+                    <span class="stat-pill"><span class="accent-text">1</span> <span id="txt-stat-open">open position</span></span>
+                    <span class="stat-separator">/</span>
+                    <span class="stat-pill">Kyiv, Ukraine</span>
+                </div>
+            </div>
+
+            <!-- Frameless Vacancies List -->
+            <div class="careers-list">
+                
+                <!-- Vacancy: Campus Growth Lead (Kyiv) -->
+                <article class="job-item expanded" id="job-campus-growth-lead">
+                    <div class="job-header" tabindex="0" role="button" aria-expanded="true" aria-controls="job-details-cgl">
+                        <div class="job-primary-info">
+                            <div class="job-title-row">
+                                <span class="job-bracket">[</span>
+                                <h2 class="job-title">Campus Growth Lead (Kyiv)</h2>
+                                <span class="job-bracket">]</span>
+                                <span class="badge-new">NEW</span>
+                            </div>
+                            <div class="job-meta-row">
+                                <span class="meta-tag">📍 Kyiv, Ukraine (Campuses + Hybrid)</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-tag">Full-time or Intensive Part-time (20–30h)</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-tag project-tag"><span class="diamond">◇</span> Gennety (by Sverkaus)</span>
+                                <span class="meta-dot">·</span>
+                                <span class="meta-tag comp-highlight">$1,000/mo base + bonuses (up to $3k)</span>
+                            </div>
+                        </div>
+                        <div class="job-action-toggle">
+                            <span class="toggle-label" id="txt-toggle-label">Details</span>
+                            <span class="toggle-arrow">↓</span>
+                        </div>
+                    </div>
+
+                    <!-- Expandable Details -->
+                    <div class="job-details" id="job-details-cgl">
+                        <div class="job-details-inner">
+                            
+                            <!-- Quick Specs Bar -->
+                            <div class="job-quick-specs">
+                                <div class="spec-pill"><span class="spec-label">Format:</span> Full-time or intensive part-time (20–30 hours/week)</div>
+                                <div class="spec-pill"><span class="spec-label">Location:</span> Kyiv, Ukraine (on-site at campuses + hybrid)</div>
+                                <div class="spec-pill"><span class="spec-label">Start:</span> ASAP</div>
+                                <div class="spec-pill"><span class="spec-label">Target Campuses:</span> КІМО, Шевченка (КНУ), НаУКМА</div>
+                            </div>
+
+                            <!-- About Gennety -->
+                            <div class="job-section">
+                                <h3 class="job-section-title">// ABOUT GENNETY</h3>
+                                <p class="job-prose">
+                                    <strong>Gennety</strong> is an AI-powered dating platform for students that turns matches into real-life dates. We're not about endless swiping and chats — we're about short, beautiful stories that start with the first meeting. We're launching in Kyiv and looking for someone who will make Gennety the #1 dating story in Ukrainian universities.
+                                </p>
+                            </div>
+
+                            <!-- About the Role -->
+                            <div class="job-section">
+                                <h3 class="job-section-title">// ABOUT THE ROLE</h3>
+                                <p class="job-prose">
+                                    We're looking for a <strong>Campus Growth Lead</strong> — someone who will launch Gennety at key universities in Kyiv (with primary focus on <strong>КІМО</strong>, <strong>університет Шевченка (КНУ)</strong>, and <strong>НаУКМА</strong>) within 1–2 months, build a network of ambassadors, and make sure every student knows about us.
+                                </p>
+                            </div>
+
+                            <!-- What You'll Do -->
+                            <div class="job-section">
+                                <h3 class="job-section-title">// WHAT YOU'LL DO</h3>
+                                <ul class="job-list">
+                                    <li><span class="list-bullet">⚡</span> <strong>Launch Gennety at universities:</strong> organize events, parties, speed-dating, tabling</li>
+                                    <li><span class="list-bullet">⚡</span> <strong>Build relationships</strong> with student councils, clubs, and influencers, and recruit them as ambassadors</li>
+                                    <li><span class="list-bullet">⚡</span> <strong>Create content</strong> for Instagram, TikTok, Telegram: Reels, posts, announcements, memes</li>
+                                    <li><span class="list-bullet">⚡</span> <strong>Manage a network</strong> of 10–20 micro-ambassadors per university</li>
+                                    <li><span class="list-bullet">⚡</span> <strong>Track metrics:</strong> registrations, activity, number of IRL dates, conversion to paid users</li>
+                                    <li><span class="list-bullet">⚡</span> <strong>Coordinate event logistics</strong> and moderate the community</li>
+                                </ul>
+                            </div>
+
+                            <!-- What We're Looking For (Must-Have & Nice to Have) -->
+                            <div class="job-grid-sections">
+                                <div class="job-section">
+                                    <h3 class="job-section-title">// MUST-HAVE</h3>
+                                    <ul class="job-list">
+                                        <li><span class="list-bullet">✦</span> <strong>Kyiv student:</strong> Current student or recent graduate (within 1 year) of a Kyiv university (priority for КІМО, Шевченка, НаУКМА)</li>
+                                        <li><span class="list-bullet">✦</span> <strong>Campus Insider:</strong> You're "one of your own" on campus — you know student leaders, club heads, and party organizers</li>
+                                        <li><span class="list-bullet">✦</span> <strong>Event Experience:</strong> Experience organizing events (at least 3–5: parties, faculty days, tournaments, etc.)</li>
+                                        <li><span class="list-bullet">✦</span> <strong>Content Creator:</strong> Shoot and edit Reels/TikTok, write posts, manage social media</li>
+                                        <li><span class="list-bullet">✦</span> <strong>Proactive & Outgoing:</strong> Not afraid to write DMs, negotiate, and engage people</li>
+                                    </ul>
+                                </div>
+
+                                <div class="job-section">
+                                    <h3 class="job-section-title">// NICE TO HAVE</h3>
+                                    <ul class="job-list">
+                                        <li><span class="list-bullet">◇</span> Experience in student government, student union, team captain, or dorm organizer roles</li>
+                                        <li><span class="list-bullet">◇</span> Your own Instagram/TikTok/Telegram blog with 500+ followers</li>
+                                        <li><span class="list-bullet">◇</span> Interest in the dating market, relationship psychology, or behavioral mechanics</li>
+                                        <li><span class="list-bullet">◇</span> Ability to work with Notion, Google Sheets, and basic analytics</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- What We Offer -->
+                            <div class="job-section">
+                                <h3 class="job-section-title">// WHAT WE OFFER</h3>
+                                
+                                <div class="comp-box">
+                                    <div class="comp-header">
+                                        <div>Base Salary: <span class="highlight-accent">$1,000 / month</span></div>
+                                        <div>Total Potential: <span class="highlight-accent">up to $2,000–$3,000 / month</span></div>
+                                    </div>
+                                    <div class="bonuses-title">Performance Bonuses:</div>
+                                    <ul class="bonuses-list">
+                                        <li><span class="bonus-tag">+$100</span> for every 500 new campus registrations</li>
+                                        <li><span class="bonus-tag">+$200</span> for each successful event (50+ attendees)</li>
+                                        <li><span class="bonus-tag">+$500</span> for reaching 5,000 active users across the campus network per quarter</li>
+                                    </ul>
+                                </div>
+
+                                <div class="perks-grid">
+                                    <div class="perk-item">
+                                        <span class="perk-icon">🎯</span>
+                                        <div class="perk-text"><strong>Mentorship:</strong> direct access to the founder, learn growth marketing and product management</div>
+                                    </div>
+                                    <div class="perk-item">
+                                        <span class="perk-icon">🤝</span>
+                                        <div class="perk-text"><strong>Networking:</strong> connections with student community leaders and event organizers</div>
+                                    </div>
+                                    <div class="perk-item">
+                                        <span class="perk-icon">🚀</span>
+                                        <div class="perk-text"><strong>Impact:</strong> opportunity to change dating culture in Ukrainian universities</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- How to Apply Box -->
+                            <div class="job-apply-box">
+                                <div class="apply-info">
+                                    <h4 class="apply-title">How to Apply</h4>
+                                    <p class="apply-subtitle">
+                                        If this sounds like you, message us on Telegram at <a href="https://t.me/gennetysupport" target="_blank" class="accent-link">@gennetysupport</a>. In your message, tell us:
+                                    </p>
+                                    
+                                    <div class="screening-template-box" id="screening-template-box">
+                                        <ol class="screening-questions">
+                                            <li>Which university you attend and what year you're in</li>
+                                            <li>About 2–3 events you've organized (goal, result, what went wrong)</li>
+                                            <li>Link to your Instagram/TikTok/Telegram (if you have one)</li>
+                                            <li>How you would acquire the first 100 Gennety users at your university in 1 week with zero budget</li>
+                                        </ol>
+                                    </div>
+                                </div>
+
+                                <div class="apply-actions-row">
+                                    <button type="button" class="action-btn copy-template-btn" id="btn-copy-template" onclick="copyScreeningTemplate()">
+                                        <svg viewBox="0 0 24 24" class="btn-icon">
+                                            <path d="M16 1H4C2.9 1 2 1.9 2 3v14h2V3h12V1zm3 4H8C6.9 5 6 5.9 6 7v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" fill="currentColor"/>
+                                        </svg>
+                                        <span id="txt-copy-btn">Copy Questions Template</span>
+                                    </button>
+
+                                    <a href="https://t.me/gennetysupport" target="_blank" class="apply-btn apply-telegram">
+                                        <svg viewBox="0 0 192 192" class="apply-icon">
+                                            <path d="M23.073 88.132s65.458-26.782 88.16-36.212c8.702-3.772 38.215-15.843 38.215-15.843s13.621-5.28 12.486 7.544c-.379 5.281-3.406 23.764-6.433 43.756-4.54 28.291-9.459 59.221-9.459 59.221s-.756 8.676-7.188 10.185c-6.433 1.509-17.027-5.281-18.919-6.79-1.513-1.132-28.377-18.106-38.214-26.404-2.649-2.263-5.676-6.79.378-12.071 13.621-12.447 29.891-27.913 39.728-37.72 4.54-4.527 9.081-15.089-9.837-2.264-26.864 18.483-53.35 35.835-53.35 35.835s-6.053 3.772-17.404.377c-11.351-3.395-24.594-7.921-24.594-7.921s-9.08-5.659 6.433-11.693Z"/>
+                                        </svg>
+                                        <span>Apply via Telegram (@gennetysupport)</span>
+                                    </a>
+
+                                    <a href="mailto:main@sverkaus.com?subject=Campus%20Growth%20Lead%20(Kyiv)%20Application%20-%20[Your%20Name]&body=Hi%20Gennety%20%26%20Sverkaus%20Labs%20team,%0A%0AI'm%20applying%20for%20the%20Campus%20Growth%20Lead%20(Kyiv)%20role.%0A%0A1.%20University%20%26%20Year:%20%0A2.%202-3%20Events%20I've%20organized:%20%0A3.%20Social%20Links%20(Instagram/TikTok/Telegram):%20%0A4.%20How%20I'd%20get%20first%20100%20users%20with%20zero%20budget:%20%0A%0ABest%20regards," class="apply-btn apply-email">
+                                        <svg viewBox="0 0 24 24" class="apply-icon">
+                                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                                        </svg>
+                                        <span>Apply via Email</span>
+                                    </a>
+                                </div>
+
+                                <div class="apply-questions-note">
+                                    <span class="diamond">◇</span> <strong>Questions?</strong> Message us directly in the same Telegram chat (<a href="https://t.me/gennetysupport" target="_blank" class="accent-link">@gennetysupport</a>). We're not looking for just an executor, but a partner who will help us build a new dating culture together.
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- General Inquiries -->
+            <div class="careers-footer-note">
+                <span class="diamond">◇</span>
+                <span id="txt-general-note">Don't see your specific role? We're always eager to meet exceptional engineers, designers, and growth hackers. Write to us at <a href="mailto:main@sverkaus.com">main@sverkaus.com</a></span>
+            </div>
+        </section>
 
     </div>
 
-    <div class="bottom-projects">
-        <div class="project">
-            <span class="diamond">◇</span> <span class="project-name" data-value="BEAJEE">BEAJEE</span> <span class="project-desc" id="desc-beajee">Applied Social Network for Autonomous Networking via Personal Agent like OpenClaw</span> > <a href="https://beajee.com" target="_blank">beajee.com</a>
-        </div>
-        <div class="project">
-            <span class="diamond">◇</span> <span class="project-name" data-value="GENNETY">GENNETY</span> <span class="project-desc" id="desc-gennety">Dating social network for IRL — no chat before meeting</span> > <a href="https://gennety.com" target="_blank">gennety.com</a>
-        </div>
-    </div>
-    </div> <!-- end of hero-section -->
-
+    <!-- Footer -->
     <footer class="site-footer">
         <div class="footer-content">
             <div class="footer-links">
@@ -634,7 +1604,19 @@
                     beajee: "Applied Social Network for Autonomous Networking via Personal Agent like OpenClaw",
                     gennety: "Dating social network for IRL — no chat before meeting"
                 },
-                badgeInfo: "Details →"
+                badgeInfo: "Details →",
+                nav: {
+                    overview: "Overview",
+                    careers: "Careers"
+                },
+                careers: {
+                    kicker: "WE ARE HIRING",
+                    title: "Careers",
+                    tagline: "Simplifying human-to-human interaction. Build the next generation of social applications with us.",
+                    openPositions: "open position",
+                    details: "Details",
+                    generalNote: "Don't see your specific role? We're always eager to meet exceptional engineers, designers, and growth hackers. Write to us at "
+                }
             },
             zh: {
                 tagline: "简化人与人之间的互动",
@@ -642,7 +1624,19 @@
                     beajee: "基于个人智能体（如 OpenClaw）实现自主社交的应用型社交网络",
                     gennety: "真实生活约会社交网络 — 见面之前无需聊天"
                 },
-                badgeInfo: "详情 →"
+                badgeInfo: "详情 →",
+                nav: {
+                    overview: "概览",
+                    careers: "招聘"
+                },
+                careers: {
+                    kicker: "正在招聘",
+                    title: "招贤纳士",
+                    tagline: "简化人与人之间的互动。与我们一起打造下一代社交产品。",
+                    openPositions: "个开放职位",
+                    details: "详情",
+                    generalNote: "没有找到匹配的职位？我们始终欢迎优秀的工程师、设计师与增长专家。请联系 "
+                }
             },
             hi: {
                 tagline: "मानव-से-मानव संपर्क को सरल बनाना",
@@ -650,7 +1644,19 @@
                     beajee: "व्यक्तिगत एजेंट (जैसे OpenClaw) के माध्यम से स्वायत्त नेटवर्किंग के लिए व्यावहारिक सोशल नेटवर्क",
                     gennety: "वास्तविक जीवन (IRL) के लिए डेटिंग सोशल नेटवर्क — मिलने से पहले कोई चैट नहीं"
                 },
-                badgeInfo: "विवरण →"
+                badgeInfo: "विवरण →",
+                nav: {
+                    overview: "अवलोकन",
+                    careers: "करियर"
+                },
+                careers: {
+                    kicker: "हम भर्ती कर रहे हैं",
+                    title: "करियर",
+                    tagline: "मानव-से-मानв संपर्क को सरल बनाना। हमारे साथ अगली पीढ़ी के सोशल ऐप्स बनाएं।",
+                    openPositions: "रिक्त पद",
+                    details: "विवरण",
+                    generalNote: "अपनी उपयुक्त भूमिका नहीं मिली? हम हमेशा प्रतिभाशाली इंजीनियरों और डिजाइनरों का स्वागत करते हैं। संपर्क करें: "
+                }
             },
             ko: {
                 tagline: "사람과 사람 사이의 상호작용을 단순화합니다",
@@ -658,7 +1664,19 @@
                     beajee: "OpenClaw와 같은 개인 에이전트를 통한 자율 네트워크용 응용 소셜 네트워크",
                     gennety: "IRL을 위한 데이팅 소셜 네트워크 — 만나기 전 채팅 없음"
                 },
-                badgeInfo: "상세보기 →"
+                badgeInfo: "상세보기 →",
+                nav: {
+                    overview: "개요",
+                    careers: "채용"
+                },
+                careers: {
+                    kicker: "인재 채용 중",
+                    title: "채용 정보",
+                    tagline: "사람과 사람 사이의 상호작용을 단순화합니다. 차세대 소셜 프로덕트를 함께 만들어갈 인재를 찾습니다.",
+                    openPositions: "개의 채용 공고",
+                    details: "상세보기",
+                    generalNote: "원하는 포지션이 없으신가요? 뛰어난 엔지니어와 디자이너의 연락은 언제나 환영합니다. "
+                }
             },
             de: {
                 tagline: "Vereinfachung der zwischenmenschlichen Interaktion",
@@ -666,7 +1684,19 @@
                     beajee: "Anwendungsorientiertes soziales Netzwerk für autonome Vernetzung über persönliche Agenten wie OpenClaw",
                     gennety: "Dating-Netzwerk für das echte Leben (IRL) – kein Chatten vor dem Treffen"
                 },
-                badgeInfo: "Details →"
+                badgeInfo: "Details →",
+                nav: {
+                    overview: "Übersicht",
+                    careers: "Karriere"
+                },
+                careers: {
+                    kicker: "WIR STELLEN EIN",
+                    title: "Karriere",
+                    tagline: "Vereinfachung der zwischenmenschlichen Interaktion. Baue mit uns die nächste Generation sozialer Plattformen.",
+                    openPositions: "offene Stelle",
+                    details: "Details",
+                    generalNote: "Keine passende Rolle gefunden? Wir freuen uns jederzeit über Initiativbewerbungen an "
+                }
             },
             pl: {
                 tagline: "Upraszczanie interakcji międzyludzkich",
@@ -674,7 +1704,19 @@
                     beajee: "Aplikacyjna sieć społecznościowa do autonomicznego nawiązywania kontaktów za pośrednictwem osobistych agentów, takich jak OpenClaw",
                     gennety: "Sieć randkowa w świecie rzeczywistym (IRL) – bez czatu przed spotkaniem"
                 },
-                badgeInfo: "Szczegóły →"
+                badgeInfo: "Szczegóły →",
+                nav: {
+                    overview: "Przegląd",
+                    careers: "Kariera"
+                },
+                careers: {
+                    kicker: "REKRUTUJEMY",
+                    title: "Kariera",
+                    tagline: "Upraszczanie interakcji międzyludzkich. Twórz z nami nową generację aplikacji społecznościowych.",
+                    openPositions: "otwarta pozycja",
+                    details: "Szczegóły",
+                    generalNote: "Nie widzisz odpowiedniej dla siebie roli? Zawsze chętnie poznamy utalentowanych twórców. Napisz do nas: "
+                }
             }
         };
 
@@ -684,7 +1726,124 @@
             currentLang = 'en';
         }
 
-        // Animation 1: Typing Effect
+        // Tab Navigation State
+        let currentTab = 'overview';
+
+        function switchTab(tabName, updateHash = true) {
+            if (tabName !== 'overview' && tabName !== 'careers') {
+                tabName = 'overview';
+            }
+            currentTab = tabName;
+
+            // Update tab button styles and attributes
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                const isTarget = btn.getAttribute('data-tab') === tabName;
+                btn.classList.toggle('active', isTarget);
+                btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
+            });
+
+            // Update visible section
+            document.querySelectorAll('.view-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+
+            const targetSection = document.getElementById(`view-${tabName}`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // If switching to overview, ensure typewriter is playing if text is empty
+            if (tabName === 'overview') {
+                const typewriterEl = document.getElementById('typewriter');
+                if (!typewriterEl || !typewriterEl.textContent) {
+                    startTypewriter(translations[currentLang].tagline);
+                }
+            }
+
+            // Update URL hash
+            if (updateHash) {
+                if (window.location.hash !== `#${tabName}`) {
+                    history.pushState(null, '', `#${tabName}`);
+                }
+            }
+
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Handle hash navigation
+        function handleHashChange() {
+            const hash = window.location.hash.replace('#', '').toLowerCase();
+            if (hash === 'careers') {
+                switchTab('careers', false);
+            } else {
+                switchTab('overview', false);
+            }
+        }
+
+        window.addEventListener('hashchange', handleHashChange);
+
+        // Setup nav tab click listeners
+        document.querySelectorAll('.nav-tab').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const tab = btn.getAttribute('data-tab');
+                switchTab(tab);
+            });
+        });
+
+        const brandLink = document.getElementById('brand-link');
+        if (brandLink) {
+            brandLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                switchTab('overview');
+            });
+        }
+
+        // Setup Vacancy Accordion
+        const jobHeader = document.querySelector('.job-header');
+        const jobItem = document.getElementById('job-campus-growth-lead');
+        if (jobHeader && jobItem) {
+            function toggleJob() {
+                const isExpanded = jobItem.classList.toggle('expanded');
+                jobHeader.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+            }
+
+            jobHeader.addEventListener('click', toggleJob);
+            jobHeader.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleJob();
+                }
+            });
+        }
+
+        // Screening Template Copy Functionality
+        function copyScreeningTemplate() {
+            const templateText = `Hi Gennety team! I'm applying for the Campus Growth Lead (Kyiv) position.
+
+1. University & Year: 
+2. 2-3 Events I've organized (goal, result, what went wrong): 
+3. Social profile (Instagram / TikTok / Telegram): 
+4. My 1-week zero-budget plan for first 100 users: `;
+
+            navigator.clipboard.writeText(templateText).then(() => {
+                const btn = document.getElementById('btn-copy-template');
+                const txt = document.getElementById('txt-copy-btn');
+                if (btn && txt) {
+                    btn.classList.add('copied');
+                    txt.textContent = 'Template Copied! ✓';
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        txt.textContent = 'Copy Questions Template';
+                    }, 2500);
+                }
+            }).catch(err => {
+                console.error('Could not copy template text: ', err);
+            });
+        }
+
+        // Animation: Typing Effect
         const typeElement = document.getElementById('typewriter');
         const cursorElement = document.querySelector('.cursor');
         let typeIndex = 0;
@@ -695,12 +1854,14 @@
         function startTypewriter(text) {
             clearTimeout(typeTimeout);
             clearTimeout(cursorTimeout);
+            if (!typeElement) return;
             typeElement.textContent = "";
             typeIndex = 0;
             currentText = text;
             
-            // Show cursor
-            cursorElement.style.visibility = 'visible';
+            if (cursorElement) {
+                cursorElement.style.visibility = 'visible';
+            }
             
             typeWriter();
         }
@@ -709,11 +1870,12 @@
             if (typeIndex < currentText.length) {
                 typeElement.textContent += currentText.charAt(typeIndex);
                 typeIndex++;
-                typeTimeout = setTimeout(typeWriter, 40 + Math.random() * 40); // Random typing speed
+                typeTimeout = setTimeout(typeWriter, 40 + Math.random() * 40);
             } else {
-                // Done typing: let the cursor blink a couple of times and then disappear
                 cursorTimeout = setTimeout(() => {
-                    cursorElement.style.visibility = 'hidden';
+                    if (cursorElement) {
+                        cursorElement.style.visibility = 'hidden';
+                    }
                 }, 1500);
             }
         }
@@ -740,11 +1902,11 @@
         }
 
         function switchLanguage(lang) {
-            if (lang === currentLang) return;
+            if (!translations[lang]) lang = 'en';
             currentLang = lang;
             localStorage.setItem('sverkaus-lang', currentLang);
 
-            // Update language selector dropdown value if changed programmatically
+            // Update language selector dropdown
             const langSelect = document.getElementById('lang-select');
             if (langSelect && langSelect.value !== currentLang) {
                 langSelect.value = currentLang;
@@ -753,15 +1915,41 @@
             // Sync custom select UI
             updateCustomSelectUI(currentLang);
 
+            const t = translations[currentLang];
+
             // Update tagline via typewriter
-            startTypewriter(translations[currentLang].tagline);
+            startTypewriter(t.tagline);
 
             // Update project descriptions
-            document.getElementById('desc-beajee').textContent = translations[currentLang].projects.beajee;
-            document.getElementById('desc-gennety').textContent = translations[currentLang].projects.gennety;
+            const descBeajee = document.getElementById('desc-beajee');
+            const descGennety = document.getElementById('desc-gennety');
+            const badgeInfo = document.getElementById('badge-info-link');
+            if (descBeajee) descBeajee.textContent = t.projects.beajee;
+            if (descGennety) descGennety.textContent = t.projects.gennety;
+            if (badgeInfo) badgeInfo.textContent = t.badgeInfo;
 
-            // Update badge translation
-            document.getElementById('badge-info-link').textContent = translations[currentLang].badgeInfo;
+            // Update Nav Labels
+            const labelOverview = document.getElementById('label-nav-overview');
+            const labelCareers = document.getElementById('label-nav-careers');
+            if (labelOverview) labelOverview.textContent = t.nav.overview;
+            if (labelCareers) labelCareers.textContent = t.nav.careers;
+
+            // Update Careers Content
+            const kicker = document.getElementById('txt-careers-kicker');
+            const title = document.getElementById('txt-careers-title');
+            const tagline = document.getElementById('txt-careers-tagline');
+            const statOpen = document.getElementById('txt-stat-open');
+            const toggleLabel = document.getElementById('txt-toggle-label');
+            const generalNote = document.getElementById('txt-general-note');
+
+            if (kicker) kicker.textContent = t.careers.kicker;
+            if (title) title.textContent = t.careers.title;
+            if (tagline) tagline.textContent = t.careers.tagline;
+            if (statOpen) statOpen.textContent = t.careers.openPositions;
+            if (toggleLabel) toggleLabel.textContent = t.careers.details;
+            if (generalNote) {
+                generalNote.innerHTML = `${t.careers.generalNote}<a href="mailto:main@sverkaus.com">main@sverkaus.com</a>`;
+            }
         }
 
         // Initialize translations on load
@@ -802,24 +1990,25 @@
                 selectTrigger.setAttribute('aria-expanded', 'false');
             });
         }
-        
-        document.getElementById('desc-beajee').textContent = translations[currentLang].projects.beajee;
-        document.getElementById('desc-gennety').textContent = translations[currentLang].projects.gennety;
-        document.getElementById('badge-info-link').textContent = translations[currentLang].badgeInfo;
 
-        // Start typing tagline
-        setTimeout(() => {
-            startTypewriter(translations[currentLang].tagline);
-        }, 600);
+        // Initial setup from stored language & hash
+        switchLanguage(currentLang);
+        handleHashChange();
 
-        // Animation 2: Matrix Decode (Glitch) and Click to open site
+        // Start typing tagline on initial load if on overview
+        if (window.location.hash.toLowerCase() !== '#careers') {
+            setTimeout(() => {
+                startTypewriter(translations[currentLang].tagline);
+            }, 600);
+        }
+
+        // Matrix Decode (Glitch) and Click to open site
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
         
         document.querySelectorAll('.project').forEach(project => {
             const el = project.querySelector('.project-name');
             const link = project.querySelector('a');
             
-            // Glitch effect on hovering the project row
             if (el) {
                 project.addEventListener('mouseenter', () => {
                     let iterations = 0;
@@ -841,16 +2030,13 @@
                             clearInterval(el.dataset.interval);
                         }
                         
-                        iterations += 1 / 3; // Controls speed of decode
+                        iterations += 1 / 3;
                     }, 30);
                 });
             }
 
-            // Click listener for the entire row
             project.addEventListener('click', (event) => {
-                // If clicked directly on the anchor, let the browser handle it naturally
                 if (event.target.tagName === 'A') return;
-                
                 if (link) {
                     window.open(link.href, link.target || '_blank');
                 }

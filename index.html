@@ -265,7 +265,12 @@
         .view-section.active {
             opacity: 1;
             visibility: visible;
+            display: block;
             transform: translateY(0);
+        }
+
+        .hero-section.view-section.active {
+            display: flex;
         }
 
         /* Overview Section */
@@ -519,7 +524,7 @@
             text-decoration-color: var(--accent-color);
         }
 
-        /* Careers Section (Ultra-Minimalist, Clean, Bold Typography) */
+        /* Careers Section (Ultra-Minimalist & Borderless Expandable) */
         .careers-section {
             min-height: 100vh;
             padding: 130px 24px 80px;
@@ -560,42 +565,109 @@
             letter-spacing: 0.02em;
         }
 
-        .vacancy-block {
+        /* Expandable Vacancies List */
+        .vacancies-list {
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 20px;
         }
 
-        .vacancy-header {
+        .vacancy-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .vacancy-row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            user-select: none;
+            padding: 6px 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .vacancy-row-header:hover .vacancy-title {
+            color: var(--accent-color);
+        }
+
+        .vacancy-info-col {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
         }
 
         .vacancy-title {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(26px, 4.5vw, 36px);
+            font-size: clamp(24px, 4.5vw, 32px);
             font-weight: 800;
             letter-spacing: 0.02em;
             color: #ffffff;
-            line-height: 1.15;
+            line-height: 1.2;
+            transition: color 0.2s ease;
         }
 
         .vacancy-meta {
             font-size: 12px;
             color: #888888;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
         .vacancy-meta strong {
-            color: #d0d0d0;
-            font-weight: 700;
+            color: #cccccc;
+            font-weight: 600;
         }
 
-        .vacancy-content {
+        .vacancy-toggle-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #777777;
+            white-space: nowrap;
+            transition: color 0.2s ease;
+        }
+
+        .vacancy-row-header:hover .vacancy-toggle-indicator {
+            color: #ffffff;
+        }
+
+        .toggle-icon {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-block;
+            line-height: 1;
+        }
+
+        .vacancy-item.expanded .toggle-icon {
+            transform: rotate(45deg);
+        }
+
+        .vacancy-expandable-body {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, margin-top 0.3s ease;
+        }
+
+        .vacancy-item.expanded .vacancy-expandable-body {
+            max-height: 3500px;
+            opacity: 1;
+            margin-top: 24px;
+        }
+
+        .vacancy-expandable-content {
             display: flex;
             flex-direction: column;
-            gap: 32px;
+            gap: 28px;
+            padding-top: 4px;
         }
 
         .content-group {
@@ -929,7 +1001,7 @@
             </div>
         </section>
 
-        <!-- Tab 2: Careers Section (Minimalist & Bold) -->
+        <!-- Tab 2: Careers Section (Minimalist, Borderless & Expandable) -->
         <section id="view-careers" class="view-section careers-section">
             <div class="careers-inner">
                 
@@ -939,107 +1011,118 @@
                     <p class="careers-subtitle" id="txt-careers-tagline">Simplifying human-to-human interaction.</p>
                 </div>
 
-                <!-- Vacancy Content -->
-                <div class="vacancy-block">
+                <!-- Expandable Vacancies List -->
+                <div class="vacancies-list">
                     
-                    <div class="vacancy-header">
-                        <h2 class="vacancy-title">Campus Growth Lead</h2>
-                        <div class="vacancy-meta">
-                            <strong>Kyiv, Ukraine</strong> · <strong>Full-time or Part-time (20–30h)</strong> · <strong>Gennety</strong>
-                        </div>
-                    </div>
-
-                    <div class="vacancy-content">
-                        
-                        <div class="content-group">
-                            <h3 class="group-title">// ABOUT GENNETY</h3>
-                            <p class="group-text">
-                                <strong>Gennety</strong> is an AI dating platform for students that turns matches into real-life dates — no endless swiping or small talk, just real meetings. We are launching in Kyiv and looking for a leader to make Gennety the #1 dating story across Ukrainian universities.
-                            </p>
-                        </div>
-
-                        <div class="content-group">
-                            <h3 class="group-title">// ABOUT THE ROLE</h3>
-                            <p class="group-text">
-                                Launch Gennety across key Kyiv campuses within 1–2 months (primary focus on <strong>КІМО</strong>, <strong>університет Шевченка (КНУ)</strong>, and <strong>НаУКМА</strong>), build an ambassador network, and ensure every student knows about us.
-                            </p>
-                            <p class="group-text">
-                                <strong>Format:</strong> Full-time or intensive part-time (20–30 hours/week).<br>
-                                <strong>Location:</strong> Kyiv, Ukraine (on-campus + hybrid).<br>
-                                <strong>Start:</strong> ASAP.
-                            </p>
-                        </div>
-
-                        <div class="content-group">
-                            <h3 class="group-title">// WHAT YOU'LL DO</h3>
-                            <ul class="clean-list">
-                                <li><strong>Launch Gennety at universities:</strong> organize events, parties, speed-dating, and tabling.</li>
-                                <li><strong>Build campus networks:</strong> partner with student councils, clubs, and influencers to recruit ambassadors.</li>
-                                <li><strong>Create viral content:</strong> Reels, TikToks, announcements, and memes.</li>
-                                <li><strong>Lead ambassadors:</strong> manage a team of 10–20 micro-ambassadors per campus.</li>
-                                <li><strong>Track growth:</strong> registrations, activity, IRL dates, and conversion to paid users.</li>
-                                <li><strong>Manage operations:</strong> coordinate event logistics and community moderation.</li>
-                            </ul>
-                        </div>
-
-                        <div class="content-group">
-                            <h3 class="group-title">// WHAT WE'RE LOOKING FOR</h3>
-                            <div class="requirements-split">
-                                <div>
-                                    <div class="subgroup-title">MUST-HAVE</div>
-                                    <ul class="clean-list">
-                                        <li><strong>Current student or recent graduate</strong> (within 1 year) of a Kyiv university (priority for КІМО, Шевченка, НаУКМА).</li>
-                                        <li><strong>Campus insider:</strong> connected with student leaders, club heads, and party organizers.</li>
-                                        <li><strong>Event experience:</strong> organized at least 3–5 parties, faculty days, or tournaments.</li>
-                                        <li><strong>Content creation:</strong> shoot and edit Reels/TikTok, write posts, manage social media.</li>
-                                        <li><strong>Proactive communicator:</strong> comfortable with outreach, pitching, and negotiating.</li>
-                                    </ul>
+                    <!-- Vacancy Item: Campus Growth Lead -->
+                    <article class="vacancy-item" id="vacancy-cgl">
+                        <div class="vacancy-row-header" tabindex="0" role="button" aria-expanded="false" aria-controls="vacancy-body-cgl" onclick="toggleVacancy('vacancy-cgl')">
+                            <div class="vacancy-info-col">
+                                <h2 class="vacancy-title">Campus Growth Lead</h2>
+                                <div class="vacancy-meta">
+                                    <strong>Kyiv, Ukraine</strong> · <strong>Full-time or Part-time (20–30h)</strong> · <strong>Gennety</strong>
                                 </div>
-                                <div>
-                                    <div class="subgroup-title">NICE TO HAVE</div>
-                                    <ul class="clean-list">
-                                        <li><strong>Leadership experience</strong> in student government, student unions, or dorms.</li>
-                                        <li><strong>Active personal blog</strong> with 500+ followers (Instagram / TikTok / Telegram).</li>
-                                        <li><strong>Interest in social mechanics</strong>, dating markets, and relationship psychology.</li>
-                                        <li><strong>Basic tools:</strong> Notion, Google Sheets, and simple analytics.</li>
-                                    </ul>
-                                </div>
+                            </div>
+                            <div class="vacancy-toggle-indicator">
+                                <span class="toggle-text">Details</span>
+                                <span class="toggle-icon">+</span>
                             </div>
                         </div>
 
-                        <div class="content-group">
-                            <h3 class="group-title">// WHAT WE OFFER</h3>
-                            <p class="group-text">
-                                <strong>Base salary:</strong> <strong>$1,000 / month</strong>.<br>
-                                <strong>Performance bonuses:</strong><br>
-                                — <strong>+$100</strong> for every 500 new campus registrations<br>
-                                — <strong>+$200</strong> for each successful event (50+ attendees)<br>
-                                — <strong>+$500</strong> for reaching 5,000 active users per quarter<br>
-                                <strong>Total potential:</strong> <strong>$2,000–$3,000 / month</strong> when hitting ambitious goals.
-                            </p>
-                            <p class="group-text">
-                                <strong>Perks:</strong> Direct mentorship from founders (growth marketing & product), strong network of student community leaders, and the opportunity to reshape student dating culture.
-                            </p>
-                        </div>
+                        <div class="vacancy-expandable-body" id="vacancy-body-cgl">
+                            <div class="vacancy-expandable-content">
+                                
+                                <div class="content-group">
+                                    <h3 class="group-title">// ABOUT GENNETY</h3>
+                                    <p class="group-text">
+                                        <strong>Gennety</strong> is an AI dating platform for students that turns matches into real-life dates — no endless swiping or small talk, just real meetings. We are launching in Kyiv and looking for a leader to make Gennety the #1 dating story across Ukrainian universities.
+                                    </p>
+                                </div>
 
-                        <div class="content-group apply-group">
-                            <h3 class="group-title">// HOW TO APPLY</h3>
-                            <p class="group-text">
-                                Message us directly on Telegram: <a href="https://t.me/gennetysupport" target="_blank" class="bold-link">@gennetysupport</a> (or email <a href="mailto:main@sverkaus.com" class="bold-link">main@sverkaus.com</a>).
-                            </p>
-                            <p class="group-text">
-                                <strong>In your message, tell us:</strong><br>
-                                1. <strong>Which university you attend and what year you're in</strong><br>
-                                2. <strong>About 2–3 events you've organized</strong> (goal, result, what went wrong)<br>
-                                3. <strong>Link to your Instagram / TikTok / Telegram</strong><br>
-                                4. <strong>How you would get the first 100 Gennety users at your university in 1 week with zero budget</strong>
-                            </p>
-                            <p class="group-text apply-note">
-                                <strong>Questions?</strong> Message us in the same Telegram chat — we are looking for a true partner, not just an executor.
-                            </p>
-                        </div>
+                                <div class="content-group">
+                                    <h3 class="group-title">// ABOUT THE ROLE</h3>
+                                    <p class="group-text">
+                                        Launch Gennety across key Kyiv campuses within 1–2 months (primary focus on <strong>КІМО</strong>, <strong>університет Шевченка (КНУ)</strong>, and <strong>НаУКМА</strong>), build an ambassador network, and ensure every student knows about us.
+                                    </p>
+                                    <p class="group-text">
+                                        <strong>Format:</strong> Full-time or intensive part-time (20–30 hours/week).<br>
+                                        <strong>Location:</strong> Kyiv, Ukraine (on-campus + hybrid).<br>
+                                        <strong>Start:</strong> ASAP.
+                                    </p>
+                                </div>
 
-                    </div>
+                                <div class="content-group">
+                                    <h3 class="group-title">// WHAT YOU'LL DO</h3>
+                                    <ul class="clean-list">
+                                        <li><strong>Launch Gennety at universities:</strong> organize events, parties, speed-dating, and tabling.</li>
+                                        <li><strong>Build campus networks:</strong> partner with student councils, clubs, and influencers to recruit ambassadors.</li>
+                                        <li><strong>Create viral content:</strong> Reels, TikToks, announcements, and memes.</li>
+                                        <li><strong>Lead ambassadors:</strong> manage a team of 10–20 micro-ambassadors per campus.</li>
+                                        <li><strong>Track growth:</strong> registrations, activity, IRL dates, and conversion to paid users.</li>
+                                        <li><strong>Manage operations:</strong> coordinate event logistics and community moderation.</li>
+                                    </ul>
+                                </div>
+
+                                <div class="content-group">
+                                    <h3 class="group-title">// WHAT WE'RE LOOKING FOR</h3>
+                                    <div class="requirements-split">
+                                        <div>
+                                            <div class="subgroup-title">MUST-HAVE</div>
+                                            <ul class="clean-list">
+                                                <li><strong>Current student or recent graduate</strong> (within 1 year) of a Kyiv university (priority for КІМО, Шевченка, НаУКМА).</li>
+                                                <li><strong>Campus insider:</strong> connected with student leaders, club heads, and party organizers.</li>
+                                                <li><strong>Event experience:</strong> organized at least 3–5 parties, faculty days, or tournaments.</li>
+                                                <li><strong>Content creation:</strong> shoot and edit Reels/TikTok, write posts, manage social media.</li>
+                                                <li><strong>Proactive communicator:</strong> comfortable with outreach, pitching, and negotiating.</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <div class="subgroup-title">NICE TO HAVE</div>
+                                            <ul class="clean-list">
+                                                <li><strong>Leadership experience</strong> in student government, student unions, or dorms.</li>
+                                                <li><strong>Active personal blog</strong> with 500+ followers (Instagram / TikTok / Telegram).</li>
+                                                <li><strong>Interest in social mechanics</strong>, dating markets, and relationship psychology.</li>
+                                                <li><strong>Basic tools:</strong> Notion, Google Sheets, and simple analytics.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="content-group">
+                                    <h3 class="group-title">// WHAT WE OFFER</h3>
+                                    <p class="group-text">
+                                        <strong>Base salary:</strong> <strong>$1,000 / month</strong>.<br>
+                                        <strong>Performance bonuses:</strong><br>
+                                        — <strong>+$100</strong> for every 500 new campus registrations<br>
+                                        — <strong>+$200</strong> for each successful event (50+ attendees)<br>
+                                        — <strong>+$500</strong> for reaching 5,000 active users per quarter<br>
+                                        <strong>Total potential:</strong> <strong>$2,000–$3,000 / month</strong> when hitting ambitious goals.
+                                    </p>
+                                    <p class="group-text">
+                                        <strong>Perks:</strong> Direct mentorship from founders (growth marketing & product), strong network of student community leaders, and the opportunity to reshape student dating culture.
+                                    </p>
+                                </div>
+
+                                <div class="content-group apply-group">
+                                    <h3 class="group-title">// HOW TO APPLY</h3>
+                                    <p class="group-text">
+                                        Message us directly on Telegram: <a href="https://t.me/gennetysupport" target="_blank" class="bold-link">@gennetysupport</a> (or email <a href="mailto:main@sverkaus.com" class="bold-link">main@sverkaus.com</a>).
+                                    </p>
+                                    <p class="group-text">
+                                        <strong>In your message, tell us:</strong><br>
+                                        1. <strong>Which university you attend and what year you're in</strong><br>
+                                        2. <strong>About 2–3 events you've organized</strong> (goal, result, what went wrong)<br>
+                                        3. <strong>Link to your Instagram / TikTok / Telegram</strong><br>
+                                        4. <strong>How you would get the first 100 Gennety users at your university in 1 week with zero budget</strong>
+                                    </p>
+                                    <p class="group-text apply-note">
+                                        <strong>Questions?</strong> Message us in the same Telegram chat — we are looking for a true partner, not just an executor.
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </article>
 
                 </div>
 
@@ -1195,13 +1278,6 @@
                 tabName = 'overview';
             }
             
-            const currentSection = document.querySelector('.view-section.active');
-            const targetSection = document.getElementById(`view-${tabName}`);
-
-            if (currentTab === tabName && targetSection && targetSection.classList.contains('active')) {
-                return;
-            }
-
             currentTab = tabName;
 
             // Update tab buttons
@@ -1211,30 +1287,21 @@
                 btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
             });
 
-            // Smooth cross-fade transition between sections
-            if (currentSection && currentSection !== targetSection) {
-                currentSection.style.opacity = '0';
-                currentSection.style.transform = 'translateY(6px)';
-                
-                setTimeout(() => {
-                    currentSection.classList.remove('active');
-                    currentSection.style.display = 'none';
-
-                    if (targetSection) {
-                        targetSection.style.display = (tabName === 'overview') ? 'flex' : 'block';
-                        void targetSection.offsetWidth; // Force reflow
-                        targetSection.classList.add('active');
-                        targetSection.style.opacity = '1';
-                        targetSection.style.transform = 'translateY(0)';
-                    }
-                }, 160);
-            } else if (targetSection) {
-                targetSection.style.display = (tabName === 'overview') ? 'flex' : 'block';
-                void targetSection.offsetWidth;
-                targetSection.classList.add('active');
-                targetSection.style.opacity = '1';
-                targetSection.style.transform = 'translateY(0)';
-            }
+            const targetSection = document.getElementById(`view-${tabName}`);
+            document.querySelectorAll('.view-section').forEach(sec => {
+                if (sec === targetSection) {
+                    sec.classList.add('active');
+                    sec.style.display = (tabName === 'overview') ? 'flex' : 'block';
+                    sec.style.opacity = '1';
+                    sec.style.transform = 'translateY(0)';
+                    sec.style.visibility = 'visible';
+                } else {
+                    sec.classList.remove('active');
+                    sec.style.display = 'none';
+                    sec.style.opacity = '0';
+                    sec.style.visibility = 'hidden';
+                }
+            });
 
             if (tabName === 'overview') {
                 const typewriterEl = document.getElementById('typewriter');
@@ -1278,6 +1345,31 @@
                 switchTab('overview');
             });
         }
+
+        // Toggle Vacancy Accordion
+        function toggleVacancy(id) {
+            const item = document.getElementById(id);
+            if (!item) return;
+            const isExpanded = item.classList.toggle('expanded');
+            const header = item.querySelector('.vacancy-row-header');
+            const toggleText = item.querySelector('.toggle-text');
+            if (header) {
+                header.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+            }
+            if (toggleText) {
+                toggleText.textContent = isExpanded ? 'Close' : 'Details';
+            }
+        }
+
+        // Keyboard accessible vacancy toggle
+        document.querySelectorAll('.vacancy-row-header').forEach(header => {
+            header.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    header.click();
+                }
+            });
+        });
 
         // Animation: Typing Effect
         const typeElement = document.getElementById('typewriter');

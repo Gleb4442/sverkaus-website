@@ -8,8 +8,8 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #1c1c1c;
@@ -42,12 +42,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes viewFadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Top Header Navigation */
+        /* Top Header Navigation (Borderless & Minimalist) */
         .site-header {
             position: fixed;
             top: 0;
@@ -56,9 +51,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 20px 24px;
+            padding: 24px 30px;
             z-index: 1000;
             pointer-events: none;
+            background: transparent;
         }
 
         .header-left, .nav-tabs, .header-right {
@@ -71,8 +67,8 @@
             text-transform: uppercase;
             color: var(--text-color);
             text-decoration: none;
-            font-weight: 700;
-            transition: color 0.2s ease, text-shadow 0.2s ease;
+            font-weight: 800;
+            transition: color 0.2s ease;
             opacity: 0;
             animation: fadeIn 0.8s ease forwards 0.8s;
             display: inline-flex;
@@ -80,71 +76,76 @@
         }
 
         .brand-link:hover {
-            color: var(--accent-color);
+            color: #ffffff;
             text-decoration: none;
-            text-shadow: 0 0 12px rgba(163, 230, 53, 0.4);
         }
 
+        /* Frameless Nav Tabs */
         .nav-tabs {
             opacity: 0;
             animation: fadeIn 0.8s ease forwards 0.8s;
-            background: rgba(28, 28, 28, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 30px;
-            padding: 4px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            gap: 28px;
+            background: transparent;
+            border: none;
+            padding: 0;
             user-select: none;
         }
 
         .nav-tab {
-            color: var(--dim-color);
+            color: #777777;
             text-decoration: none;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
-            letter-spacing: 0.06em;
-            padding: 6px 14px;
-            border-radius: 20px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 4px 0;
+            transition: color 0.25s ease;
             display: inline-flex;
             align-items: center;
-            gap: 7px;
+            gap: 6px;
             cursor: pointer;
+            position: relative;
+            background: transparent;
+            border: none;
             -webkit-tap-highlight-color: transparent;
         }
 
         .nav-tab:hover {
-            color: var(--text-color);
+            color: #ffffff;
             text-decoration: none;
-            background: rgba(255, 255, 255, 0.05);
         }
 
         .nav-tab.active {
-            color: #121212;
-            background: #f0f0f0;
-            font-weight: 700;
+            color: #ffffff;
+            font-weight: 800;
             text-decoration: none;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+        }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #ffffff;
+            border-radius: 1px;
         }
 
         .tab-badge {
             font-size: 9px;
             font-weight: 700;
-            line-height: 1;
-            padding: 2px 6px;
-            border-radius: 10px;
-            background: var(--accent-color);
-            color: #1c1c1c;
-            transition: all 0.2s ease;
+            color: #888888;
+            letter-spacing: 0;
+            transition: color 0.25s ease;
         }
 
+        .nav-tab:hover .tab-badge,
         .nav-tab.active .tab-badge {
-            background: #1c1c1c;
-            color: var(--accent-color);
+            color: #ffffff;
         }
 
         .header-right {
@@ -152,74 +153,65 @@
             animation: fadeIn 0.8s ease forwards 0.8s;
         }
 
-        /* Custom Select Styles */
+        /* Custom Select Styles (Borderless Minimal) */
         .custom-select {
             position: relative;
             display: inline-block;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             user-select: none;
-            width: 85px;
+            width: 60px;
         }
 
         .select-trigger {
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--dim-color);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 30px;
-            padding: 6px 12px;
+            background: transparent;
+            color: #777777;
+            border: none;
+            padding: 4px 0;
             cursor: pointer;
             outline: none;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: color 0.2s ease;
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
+            justify-content: flex-end;
+            text-align: right;
             position: relative;
             width: 100%;
             box-sizing: border-box;
             font-family: inherit;
             font-size: inherit;
+            font-weight: 700;
+            letter-spacing: 0.1em;
             -webkit-tap-highlight-color: transparent;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
         }
 
         .select-trigger * {
             pointer-events: none;
         }
 
-        .select-trigger:hover, .select-trigger:focus {
-            color: var(--text-color);
-            background-color: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.12);
-        }
-
-        .custom-select.active .select-trigger {
-            color: var(--text-color);
-            background-color: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.15);
+        .select-trigger:hover, .select-trigger:focus, .custom-select.active .select-trigger {
+            color: #ffffff;
         }
 
         .select-options {
             position: absolute;
             top: 100%;
             right: 0;
-            margin-top: 6px;
-            padding: 4px;
+            margin-top: 8px;
+            padding: 6px 0;
             list-style: none;
-            background: rgba(28, 28, 28, 0.95);
+            background: rgba(24, 24, 24, 0.96);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-8px);
+            transform: translateY(-6px);
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
-            width: 100%;
+            width: 80px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -233,45 +225,50 @@
         }
 
         .select-option {
-            padding: 7px 12px;
-            color: var(--dim-color);
+            padding: 6px 12px;
+            color: #777777;
             cursor: pointer;
             transition: all 0.15s ease;
             text-align: center;
-            border-radius: 16px;
-            margin: 0;
+            font-weight: 500;
             -webkit-tap-highlight-color: transparent;
         }
 
         .select-option:hover {
-            color: var(--text-color);
-            background: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .select-option.selected {
-            color: var(--accent-color);
-            background: rgba(163, 230, 53, 0.06);
+            color: #ffffff;
+            font-weight: 700;
         }
 
-        /* Main Content View Switcher */
+        /* Smooth View Switching */
         .main-wrapper {
             flex: 1;
             display: flex;
             flex-direction: column;
             width: 100%;
+            position: relative;
         }
 
         .view-section {
+            opacity: 0;
+            visibility: hidden;
             display: none;
             width: 100%;
-            animation: viewFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            transform: translateY(8px);
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .view-section.active {
-            display: flex;
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
-        /* Overview / Hero Section */
+        /* Overview Section */
         .hero-section {
             min-height: 100vh;
             flex-direction: column;
@@ -338,7 +335,6 @@
             min-height: 20px;
         }
 
-        /* Blinking Cursor */
         .cursor {
             display: inline-block;
             width: 8px;
@@ -354,7 +350,6 @@
             50% { opacity: 0; }
         }
 
-        /* Update Badge Styles */
         .update-badge-container {
             display: inline-flex;
             align-items: center;
@@ -453,7 +448,6 @@
             cursor: pointer;
         }
 
-        /* Targeting Brackets */
         .project::before, .project::after {
             position: absolute;
             opacity: 0;
@@ -506,618 +500,194 @@
             min-width: 65px;
         }
 
-        /* Careers Section Styles (Frameless / Borderless Minimalist) */
+        /* Careers Section (Ultra-Minimalist, Clean, Bold Typography) */
         .careers-section {
             min-height: 100vh;
-            flex-direction: column;
-            align-items: center;
-            padding: 120px 24px 80px;
-            max-width: 920px;
-            margin: 0 auto;
+            padding: 130px 24px 80px;
             width: 100%;
             box-sizing: border-box;
         }
 
-        .careers-header {
+        .careers-inner {
+            max-width: 780px;
+            margin: 0 auto;
             width: 100%;
-            margin-bottom: 44px;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            gap: 40px;
         }
 
-        .careers-kicker {
-            display: inline-flex;
-            align-items: center;
+        .careers-header {
+            display: flex;
+            flex-direction: column;
             gap: 8px;
-            font-size: 11px;
-            letter-spacing: 0.15em;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .pulse-dot {
-            width: 7px;
-            height: 7px;
-            background-color: var(--accent-color);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--accent-color);
-            animation: pulseDot 2s infinite ease-in-out;
-        }
-
-        @keyframes pulseDot {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.4); opacity: 0.5; }
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 24px;
         }
 
         .careers-title {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(32px, 5vw, 52px);
-            font-weight: 300;
+            font-size: clamp(40px, 7vw, 64px);
+            font-weight: 900;
             letter-spacing: 0.06em;
             text-transform: uppercase;
-            color: var(--text-color);
-            margin-bottom: 14px;
-            line-height: 1.1;
-        }
-
-        .careers-tagline {
-            font-size: 14px;
-            line-height: 1.6;
-            color: var(--tagline-color);
-            max-width: 650px;
-            margin-bottom: 18px;
-        }
-
-        .careers-stats {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 11px;
-            color: var(--dim-color);
-            letter-spacing: 0.05em;
-        }
-
-        .stat-pill .accent-text {
-            color: var(--accent-color);
-            font-weight: 700;
-        }
-
-        .stat-separator {
-            color: rgba(255, 255, 255, 0.15);
-        }
-
-        /* Frameless Job Card Item */
-        .careers-list {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .job-item {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.015);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-
-        .job-item:hover {
-            background: rgba(255, 255, 255, 0.025);
-            border-color: rgba(163, 230, 53, 0.25);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .job-header {
-            padding: 24px 28px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            cursor: pointer;
-            user-select: none;
-            background: transparent;
-            transition: background-color 0.2s ease;
-        }
-
-        .job-header:hover {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        .job-primary-info {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .job-title-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .job-bracket {
-            color: var(--accent-color);
-            font-weight: 700;
-            font-size: 16px;
-            opacity: 0.3;
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-
-        .job-item:hover .job-bracket {
-            opacity: 1;
-        }
-
-        .job-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: clamp(20px, 3.5vw, 26px);
-            font-weight: 400;
-            letter-spacing: 0.04em;
-            color: var(--text-color);
-            margin: 0;
-            transition: color 0.2s ease;
-        }
-
-        .job-item:hover .job-title {
-            color: var(--accent-color);
-        }
-
-        .job-meta-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--dim-color);
-            flex-wrap: wrap;
-        }
-
-        .meta-dot {
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        .project-tag {
-            color: var(--tagline-color);
-        }
-
-        .project-tag .diamond {
-            color: var(--accent-color);
-        }
-
-        .comp-highlight {
-            color: var(--accent-color);
-            font-weight: 700;
-        }
-
-        .job-action-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 11px;
-            color: var(--dim-color);
-            letter-spacing: 0.05em;
-            padding: 6px 14px;
-            border-radius: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.2s ease;
-            white-space: nowrap;
-        }
-
-        .job-item:hover .job-action-toggle {
-            color: var(--text-color);
-            background: rgba(255, 255, 255, 0.07);
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .toggle-arrow {
-            display: inline-block;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 12px;
-        }
-
-        .job-item.expanded .toggle-arrow {
-            transform: rotate(180deg);
-        }
-
-        /* Job Details */
-        .job-details {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
-            opacity: 0;
-        }
-
-        .job-item.expanded .job-details {
-            max-height: 3500px;
-            opacity: 1;
-        }
-
-        .job-details-inner {
-            padding: 0 28px 28px;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            display: flex;
-            flex-direction: column;
-            gap: 26px;
-        }
-
-        /* Quick Specs */
-        .job-quick-specs {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .spec-pill {
-            background: rgba(255, 255, 255, 0.025);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 20px;
-            padding: 5px 12px;
-            font-size: 11px;
-            color: #d6d6d6;
-            letter-spacing: 0.02em;
-        }
-
-        .spec-label {
-            color: var(--accent-color);
-            font-weight: 700;
-            margin-right: 4px;
-        }
-
-        .job-section {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .job-section-title {
-            font-size: 11px;
-            letter-spacing: 0.15em;
-            color: var(--accent-color);
-            font-weight: 700;
-            text-transform: uppercase;
-            margin-top: 10px;
-        }
-
-        .job-prose {
-            font-size: 13px;
-            line-height: 1.7;
-            color: #c4c4c4;
-        }
-
-        .job-prose strong {
             color: #ffffff;
-        }
-
-        .job-grid-sections {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-
-        .job-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .job-list li {
-            font-size: 12px;
-            line-height: 1.6;
-            color: #b0b0b0;
-            position: relative;
-            padding-left: 20px;
-        }
-
-        .job-list li strong {
-            color: #f0f0f0;
-        }
-
-        .list-bullet {
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: var(--accent-color);
-            font-size: 11px;
-        }
-
-        /* Compensation Box */
-        .comp-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 12px;
-            padding: 16px 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .comp-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            padding-bottom: 12px;
-            font-size: 13px;
-            color: #e0e0e0;
-        }
-
-        .highlight-accent {
-            color: var(--accent-color);
-            font-weight: 700;
-        }
-
-        .bonuses-title {
-            font-size: 11px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--dim-color);
-            font-weight: 700;
-        }
-
-        .bonuses-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .bonuses-list li {
-            font-size: 12px;
-            color: #bbbbbb;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .bonus-tag {
-            background: rgba(163, 230, 53, 0.1);
-            color: var(--accent-color);
-            font-weight: 700;
-            font-size: 10px;
-            padding: 2px 8px;
-            border-radius: 6px;
-            border: 1px solid rgba(163, 230, 53, 0.25);
-            white-space: nowrap;
-        }
-
-        /* Perks Grid */
-        .perks-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 12px;
-            margin-top: 4px;
-        }
-
-        .perk-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            padding: 12px 14px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .perk-icon {
-            font-size: 16px;
             line-height: 1;
         }
 
-        .perk-text {
+        .careers-subtitle {
+            font-size: 13px;
+            color: #888888;
+            letter-spacing: 0.02em;
+        }
+
+        .vacancy-block {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .vacancy-header {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vacancy-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(26px, 4.5vw, 36px);
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            color: #ffffff;
+            line-height: 1.15;
+        }
+
+        .vacancy-meta {
             font-size: 12px;
-            line-height: 1.5;
+            color: #888888;
+            line-height: 1.6;
+        }
+
+        .vacancy-meta strong {
+            color: #d0d0d0;
+            font-weight: 700;
+        }
+
+        .vacancy-content {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .content-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .group-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.16em;
+            color: #666666;
+            text-transform: uppercase;
+        }
+
+        .group-text {
+            font-size: 13px;
+            line-height: 1.8;
             color: #b8b8b8;
         }
 
-        .perk-text strong {
-            color: #f0f0f0;
+        .group-text strong {
+            color: #ffffff;
+            font-weight: 700;
         }
 
-        /* Screening Template Box */
-        .screening-template-box {
-            margin: 12px 0;
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 8px;
-            padding: 12px 16px 12px 30px;
-        }
-
-        .screening-questions {
-            color: #cccccc;
-            font-size: 12px;
-            line-height: 1.7;
-        }
-
-        .screening-questions li {
-            padding-left: 4px;
-        }
-
-        /* Job Application CTA Box */
-        .job-apply-box {
-            margin-top: 10px;
-            padding: 22px;
-            background: rgba(163, 230, 53, 0.025);
-            border: 1px dashed rgba(163, 230, 53, 0.25);
-            border-radius: 12px;
+        .clean-list {
+            list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-        }
-
-        .apply-info {
-            width: 100%;
-        }
-
-        .apply-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 17px;
-            font-weight: 500;
-            color: var(--text-color);
-            margin-bottom: 6px;
-        }
-
-        .apply-subtitle {
-            font-size: 12px;
-            color: var(--tagline-color);
-            line-height: 1.5;
-        }
-
-        .apply-actions-row {
-            display: flex;
-            align-items: center;
             gap: 10px;
-            flex-wrap: wrap;
-            width: 100%;
         }
 
-        .action-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #dedede;
-            padding: 9px 15px;
-            border-radius: 30px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            letter-spacing: 0.04em;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            -webkit-tap-highlight-color: transparent;
+        .clean-list li {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #b0b0b0;
+            position: relative;
+            padding-left: 18px;
         }
 
-        .action-btn:hover {
-            background: rgba(255, 255, 255, 0.09);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: #ffffff;
-        }
-
-        .action-btn.copied {
-            background: rgba(163, 230, 53, 0.15);
-            border-color: var(--accent-color);
-            color: var(--accent-color);
-        }
-
-        .btn-icon {
-            width: 13px;
-            height: 13px;
-        }
-
-        .apply-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 9px 16px;
-            border-radius: 30px;
-            font-size: 11px;
-            letter-spacing: 0.05em;
+        .clean-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #555555;
             font-weight: 700;
-            text-decoration: none;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
         }
 
-        .apply-telegram {
-            background: var(--accent-color);
-            color: #121212;
-        }
-
-        .apply-telegram:hover {
-            background: #bbf74c;
-            color: #000000;
-            text-decoration: none;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 16px rgba(163, 230, 53, 0.35);
-        }
-
-        .apply-telegram svg {
-            width: 16px;
-            height: 16px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 12;
-        }
-
-        .apply-email {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text-color);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .apply-email:hover {
-            background: rgba(255, 255, 255, 0.12);
+        .clean-list li strong {
             color: #ffffff;
-            text-decoration: none;
-            transform: translateY(-1px);
+            font-weight: 700;
         }
 
-        .apply-email svg {
-            width: 14px;
-            height: 14px;
-            fill: currentColor;
+        .requirements-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
         }
 
-        .apply-questions-note {
-            margin-top: 10px;
+        .subgroup-title {
             font-size: 11px;
-            line-height: 1.6;
-            color: var(--tagline-color);
-            width: 100%;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-            padding-top: 12px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            color: #888888;
+            margin-bottom: 12px;
+            text-transform: uppercase;
         }
 
-        .apply-questions-note strong {
-            color: #e0e0e0;
-        }
-
-        .accent-link {
-            color: var(--accent-color);
+        .bold-link {
+            color: #ffffff;
+            font-weight: 700;
             text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s ease;
+        }
+
+        .bold-link:hover {
+            color: var(--accent-color);
+        }
+
+        .apply-group {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 24px;
+        }
+
+        .apply-note {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #777777;
         }
 
         .careers-footer-note {
-            margin-top: 48px;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 24px;
             font-size: 12px;
-            color: var(--dim-color);
+            color: #666666;
             line-height: 1.6;
-            text-align: center;
-            max-width: 620px;
-        }
-
-        .careers-footer-note .diamond {
-            color: var(--accent-color);
-            margin-right: 6px;
         }
 
         .careers-footer-note a {
-            color: var(--accent-color);
+            color: #999999;
             text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
-        /* Generic Link */
-        a {
-            color: var(--text-color);
-            text-decoration: none;
-            transition: color 0.2s ease;
-            position: relative;
-        }
-
-        a:hover {
-            color: var(--accent-color);
-            text-decoration: underline;
-            text-decoration-color: var(--accent-color);
+        .careers-footer-note a:hover {
+            color: #ffffff;
         }
 
         /* Footer */
@@ -1166,7 +736,7 @@
         }
 
         .social-link:hover {
-            color: var(--accent-color);
+            color: #ffffff;
             transform: translateY(-2px);
         }
 
@@ -1187,39 +757,27 @@
         /* Responsive Breakpoints */
         @media (max-width: 768px) {
             .site-header {
-                padding: 14px 16px;
-                flex-wrap: wrap;
-                gap: 10px;
-                background: rgba(28, 28, 28, 0.9);
-                backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px);
+                padding: 16px 20px;
+                background: rgba(28, 28, 28, 0.95);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
                 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             }
-            .header-left {
-                order: 1;
-            }
-            .header-right {
-                order: 2;
-            }
             .nav-tabs {
-                order: 3;
-                width: 100%;
-                justify-content: center;
-                background: rgba(255, 255, 255, 0.03);
-            }
-            .nav-tab {
-                flex: 1;
-                justify-content: center;
-                padding: 8px 12px;
+                gap: 16px;
             }
             .center-content {
-                padding-top: 140px;
+                padding-top: 120px;
                 padding-bottom: 40px;
             }
             .careers-section {
-                padding-top: 140px;
-                padding-left: 16px;
-                padding-right: 16px;
+                padding-top: 100px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            .requirements-split {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
             .logo-icon-container {
                 width: 90px;
@@ -1261,34 +819,25 @@
             .project::before, .project::after {
                 display: none;
             }
-            .job-grid-sections {
-                grid-template-columns: 1fr;
-            }
-            .job-header {
-                padding: 20px 18px;
-            }
-            .job-details-inner {
-                padding: 0 18px 20px;
-            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
+    <!-- Header Navigation (Borderless) -->
     <header class="site-header">
         <div class="header-left">
             <a href="#overview" class="brand-link" id="brand-link">SVERKAUS LABS</a>
         </div>
 
         <nav class="nav-tabs" role="tablist" aria-label="Main navigation">
-            <a href="#overview" class="nav-tab active" data-tab="overview" id="tab-overview" role="tab" aria-selected="true">
+            <button class="nav-tab active" data-tab="overview" id="tab-overview" role="tab" aria-selected="true">
                 <span class="tab-label" id="label-nav-overview">Overview</span>
-            </a>
-            <a href="#careers" class="nav-tab" data-tab="careers" id="tab-careers" role="tab" aria-selected="false">
+            </button>
+            <button class="nav-tab" data-tab="careers" id="tab-careers" role="tab" aria-selected="false">
                 <span class="tab-label" id="label-nav-careers">Careers</span>
-                <span class="tab-badge">1</span>
-            </a>
+                <span class="tab-badge">(1)</span>
+            </button>
         </nav>
 
         <div class="header-right">
@@ -1361,207 +910,124 @@
             </div>
         </section>
 
-        <!-- Tab 2: Careers Section -->
+        <!-- Tab 2: Careers Section (Minimalist & Bold) -->
         <section id="view-careers" class="view-section careers-section">
-            <div class="careers-header">
-                <div class="careers-kicker">
-                    <span class="pulse-dot"></span>
-                    <span id="txt-careers-kicker">WE ARE HIRING</span>
-                </div>
-                <h1 class="careers-title" id="txt-careers-title">Careers</h1>
-                <p class="careers-tagline" id="txt-careers-tagline">
-                    Simplifying human-to-human interaction. Build the next generation of social applications with us.
-                </p>
-                <div class="careers-stats">
-                    <span class="stat-pill"><span class="accent-text">1</span> <span id="txt-stat-open">open position</span></span>
-                    <span class="stat-separator">/</span>
-                    <span class="stat-pill">Kyiv, Ukraine</span>
-                </div>
-            </div>
-
-            <!-- Frameless Vacancies List -->
-            <div class="careers-list">
+            <div class="careers-inner">
                 
-                <!-- Vacancy: Campus Growth Lead (Kyiv) -->
-                <article class="job-item expanded" id="job-campus-growth-lead">
-                    <div class="job-header" tabindex="0" role="button" aria-expanded="true" aria-controls="job-details-cgl">
-                        <div class="job-primary-info">
-                            <div class="job-title-row">
-                                <span class="job-bracket">[</span>
-                                <h2 class="job-title">Campus Growth Lead (Kyiv)</h2>
-                                <span class="job-bracket">]</span>
-                                <span class="badge-new">NEW</span>
-                            </div>
-                            <div class="job-meta-row">
-                                <span class="meta-tag">📍 Kyiv, Ukraine (Campuses + Hybrid)</span>
-                                <span class="meta-dot">·</span>
-                                <span class="meta-tag">Full-time or Intensive Part-time (20–30h)</span>
-                                <span class="meta-dot">·</span>
-                                <span class="meta-tag project-tag"><span class="diamond">◇</span> Gennety (by Sverkaus)</span>
-                                <span class="meta-dot">·</span>
-                                <span class="meta-tag comp-highlight">$1,000/mo base + bonuses (up to $3k)</span>
-                            </div>
-                        </div>
-                        <div class="job-action-toggle">
-                            <span class="toggle-label" id="txt-toggle-label">Details</span>
-                            <span class="toggle-arrow">↓</span>
+                <!-- Careers Header -->
+                <div class="careers-header">
+                    <h1 class="careers-title" id="txt-careers-title">CAREERS</h1>
+                    <p class="careers-subtitle" id="txt-careers-tagline">Simplifying human-to-human interaction.</p>
+                </div>
+
+                <!-- Vacancy Content -->
+                <div class="vacancy-block">
+                    
+                    <div class="vacancy-header">
+                        <h2 class="vacancy-title">Campus Growth Lead</h2>
+                        <div class="vacancy-meta">
+                            <strong>Kyiv, Ukraine</strong> · <strong>Full-time or Part-time (20–30h)</strong> · <strong>Gennety</strong>
                         </div>
                     </div>
 
-                    <!-- Expandable Details -->
-                    <div class="job-details" id="job-details-cgl">
-                        <div class="job-details-inner">
-                            
-                            <!-- Quick Specs Bar -->
-                            <div class="job-quick-specs">
-                                <div class="spec-pill"><span class="spec-label">Format:</span> Full-time or intensive part-time (20–30 hours/week)</div>
-                                <div class="spec-pill"><span class="spec-label">Location:</span> Kyiv, Ukraine (on-site at campuses + hybrid)</div>
-                                <div class="spec-pill"><span class="spec-label">Start:</span> ASAP</div>
-                                <div class="spec-pill"><span class="spec-label">Target Campuses:</span> КІМО, Шевченка (КНУ), НаУКМА</div>
-                            </div>
-
-                            <!-- About Gennety -->
-                            <div class="job-section">
-                                <h3 class="job-section-title">// ABOUT GENNETY</h3>
-                                <p class="job-prose">
-                                    <strong>Gennety</strong> is an AI-powered dating platform for students that turns matches into real-life dates. We're not about endless swiping and chats — we're about short, beautiful stories that start with the first meeting. We're launching in Kyiv and looking for someone who will make Gennety the #1 dating story in Ukrainian universities.
-                                </p>
-                            </div>
-
-                            <!-- About the Role -->
-                            <div class="job-section">
-                                <h3 class="job-section-title">// ABOUT THE ROLE</h3>
-                                <p class="job-prose">
-                                    We're looking for a <strong>Campus Growth Lead</strong> — someone who will launch Gennety at key universities in Kyiv (with primary focus on <strong>КІМО</strong>, <strong>університет Шевченка (КНУ)</strong>, and <strong>НаУКМА</strong>) within 1–2 months, build a network of ambassadors, and make sure every student knows about us.
-                                </p>
-                            </div>
-
-                            <!-- What You'll Do -->
-                            <div class="job-section">
-                                <h3 class="job-section-title">// WHAT YOU'LL DO</h3>
-                                <ul class="job-list">
-                                    <li><span class="list-bullet">⚡</span> <strong>Launch Gennety at universities:</strong> organize events, parties, speed-dating, tabling</li>
-                                    <li><span class="list-bullet">⚡</span> <strong>Build relationships</strong> with student councils, clubs, and influencers, and recruit them as ambassadors</li>
-                                    <li><span class="list-bullet">⚡</span> <strong>Create content</strong> for Instagram, TikTok, Telegram: Reels, posts, announcements, memes</li>
-                                    <li><span class="list-bullet">⚡</span> <strong>Manage a network</strong> of 10–20 micro-ambassadors per university</li>
-                                    <li><span class="list-bullet">⚡</span> <strong>Track metrics:</strong> registrations, activity, number of IRL dates, conversion to paid users</li>
-                                    <li><span class="list-bullet">⚡</span> <strong>Coordinate event logistics</strong> and moderate the community</li>
-                                </ul>
-                            </div>
-
-                            <!-- What We're Looking For (Must-Have & Nice to Have) -->
-                            <div class="job-grid-sections">
-                                <div class="job-section">
-                                    <h3 class="job-section-title">// MUST-HAVE</h3>
-                                    <ul class="job-list">
-                                        <li><span class="list-bullet">✦</span> <strong>Kyiv student:</strong> Current student or recent graduate (within 1 year) of a Kyiv university (priority for КІМО, Шевченка, НаУКМА)</li>
-                                        <li><span class="list-bullet">✦</span> <strong>Campus Insider:</strong> You're "one of your own" on campus — you know student leaders, club heads, and party organizers</li>
-                                        <li><span class="list-bullet">✦</span> <strong>Event Experience:</strong> Experience organizing events (at least 3–5: parties, faculty days, tournaments, etc.)</li>
-                                        <li><span class="list-bullet">✦</span> <strong>Content Creator:</strong> Shoot and edit Reels/TikTok, write posts, manage social media</li>
-                                        <li><span class="list-bullet">✦</span> <strong>Proactive & Outgoing:</strong> Not afraid to write DMs, negotiate, and engage people</li>
-                                    </ul>
-                                </div>
-
-                                <div class="job-section">
-                                    <h3 class="job-section-title">// NICE TO HAVE</h3>
-                                    <ul class="job-list">
-                                        <li><span class="list-bullet">◇</span> Experience in student government, student union, team captain, or dorm organizer roles</li>
-                                        <li><span class="list-bullet">◇</span> Your own Instagram/TikTok/Telegram blog with 500+ followers</li>
-                                        <li><span class="list-bullet">◇</span> Interest in the dating market, relationship psychology, or behavioral mechanics</li>
-                                        <li><span class="list-bullet">◇</span> Ability to work with Notion, Google Sheets, and basic analytics</li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- What We Offer -->
-                            <div class="job-section">
-                                <h3 class="job-section-title">// WHAT WE OFFER</h3>
-                                
-                                <div class="comp-box">
-                                    <div class="comp-header">
-                                        <div>Base Salary: <span class="highlight-accent">$1,000 / month</span></div>
-                                        <div>Total Potential: <span class="highlight-accent">up to $2,000–$3,000 / month</span></div>
-                                    </div>
-                                    <div class="bonuses-title">Performance Bonuses:</div>
-                                    <ul class="bonuses-list">
-                                        <li><span class="bonus-tag">+$100</span> for every 500 new campus registrations</li>
-                                        <li><span class="bonus-tag">+$200</span> for each successful event (50+ attendees)</li>
-                                        <li><span class="bonus-tag">+$500</span> for reaching 5,000 active users across the campus network per quarter</li>
-                                    </ul>
-                                </div>
-
-                                <div class="perks-grid">
-                                    <div class="perk-item">
-                                        <span class="perk-icon">🎯</span>
-                                        <div class="perk-text"><strong>Mentorship:</strong> direct access to the founder, learn growth marketing and product management</div>
-                                    </div>
-                                    <div class="perk-item">
-                                        <span class="perk-icon">🤝</span>
-                                        <div class="perk-text"><strong>Networking:</strong> connections with student community leaders and event organizers</div>
-                                    </div>
-                                    <div class="perk-item">
-                                        <span class="perk-icon">🚀</span>
-                                        <div class="perk-text"><strong>Impact:</strong> opportunity to change dating culture in Ukrainian universities</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- How to Apply Box -->
-                            <div class="job-apply-box">
-                                <div class="apply-info">
-                                    <h4 class="apply-title">How to Apply</h4>
-                                    <p class="apply-subtitle">
-                                        If this sounds like you, message us on Telegram at <a href="https://t.me/gennetysupport" target="_blank" class="accent-link">@gennetysupport</a>. In your message, tell us:
-                                    </p>
-                                    
-                                    <div class="screening-template-box" id="screening-template-box">
-                                        <ol class="screening-questions">
-                                            <li>Which university you attend and what year you're in</li>
-                                            <li>About 2–3 events you've organized (goal, result, what went wrong)</li>
-                                            <li>Link to your Instagram/TikTok/Telegram (if you have one)</li>
-                                            <li>How you would acquire the first 100 Gennety users at your university in 1 week with zero budget</li>
-                                        </ol>
-                                    </div>
-                                </div>
-
-                                <div class="apply-actions-row">
-                                    <button type="button" class="action-btn copy-template-btn" id="btn-copy-template" onclick="copyScreeningTemplate()">
-                                        <svg viewBox="0 0 24 24" class="btn-icon">
-                                            <path d="M16 1H4C2.9 1 2 1.9 2 3v14h2V3h12V1zm3 4H8C6.9 5 6 5.9 6 7v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" fill="currentColor"/>
-                                        </svg>
-                                        <span id="txt-copy-btn">Copy Questions Template</span>
-                                    </button>
-
-                                    <a href="https://t.me/gennetysupport" target="_blank" class="apply-btn apply-telegram">
-                                        <svg viewBox="0 0 192 192" class="apply-icon">
-                                            <path d="M23.073 88.132s65.458-26.782 88.16-36.212c8.702-3.772 38.215-15.843 38.215-15.843s13.621-5.28 12.486 7.544c-.379 5.281-3.406 23.764-6.433 43.756-4.54 28.291-9.459 59.221-9.459 59.221s-.756 8.676-7.188 10.185c-6.433 1.509-17.027-5.281-18.919-6.79-1.513-1.132-28.377-18.106-38.214-26.404-2.649-2.263-5.676-6.79.378-12.071 13.621-12.447 29.891-27.913 39.728-37.72 4.54-4.527 9.081-15.089-9.837-2.264-26.864 18.483-53.35 35.835-53.35 35.835s-6.053 3.772-17.404.377c-11.351-3.395-24.594-7.921-24.594-7.921s-9.08-5.659 6.433-11.693Z"/>
-                                        </svg>
-                                        <span>Apply via Telegram (@gennetysupport)</span>
-                                    </a>
-
-                                    <a href="mailto:main@sverkaus.com?subject=Campus%20Growth%20Lead%20(Kyiv)%20Application%20-%20[Your%20Name]&body=Hi%20Gennety%20%26%20Sverkaus%20Labs%20team,%0A%0AI'm%20applying%20for%20the%20Campus%20Growth%20Lead%20(Kyiv)%20role.%0A%0A1.%20University%20%26%20Year:%20%0A2.%202-3%20Events%20I've%20organized:%20%0A3.%20Social%20Links%20(Instagram/TikTok/Telegram):%20%0A4.%20How%20I'd%20get%20first%20100%20users%20with%20zero%20budget:%20%0A%0ABest%20regards," class="apply-btn apply-email">
-                                        <svg viewBox="0 0 24 24" class="apply-icon">
-                                            <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                                        </svg>
-                                        <span>Apply via Email</span>
-                                    </a>
-                                </div>
-
-                                <div class="apply-questions-note">
-                                    <span class="diamond">◇</span> <strong>Questions?</strong> Message us directly in the same Telegram chat (<a href="https://t.me/gennetysupport" target="_blank" class="accent-link">@gennetysupport</a>). We're not looking for just an executor, but a partner who will help us build a new dating culture together.
-                                </div>
-                            </div>
-
+                    <div class="vacancy-content">
+                        
+                        <div class="content-group">
+                            <h3 class="group-title">// ABOUT GENNETY</h3>
+                            <p class="group-text">
+                                <strong>Gennety</strong> is an AI dating platform for students that turns matches into real-life dates — no endless swiping or small talk, just real meetings. We are launching in Kyiv and looking for a leader to make Gennety the #1 dating story across Ukrainian universities.
+                            </p>
                         </div>
+
+                        <div class="content-group">
+                            <h3 class="group-title">// ABOUT THE ROLE</h3>
+                            <p class="group-text">
+                                Launch Gennety across key Kyiv campuses within 1–2 months (primary focus on <strong>КІМО</strong>, <strong>університет Шевченка (КНУ)</strong>, and <strong>НаУКМА</strong>), build an ambassador network, and ensure every student knows about us.
+                            </p>
+                            <p class="group-text">
+                                <strong>Format:</strong> Full-time or intensive part-time (20–30 hours/week).<br>
+                                <strong>Location:</strong> Kyiv, Ukraine (on-campus + hybrid).<br>
+                                <strong>Start:</strong> ASAP.
+                            </p>
+                        </div>
+
+                        <div class="content-group">
+                            <h3 class="group-title">// WHAT YOU'LL DO</h3>
+                            <ul class="clean-list">
+                                <li><strong>Launch Gennety at universities:</strong> organize events, parties, speed-dating, and tabling.</li>
+                                <li><strong>Build campus networks:</strong> partner with student councils, clubs, and influencers to recruit ambassadors.</li>
+                                <li><strong>Create viral content:</strong> Reels, TikToks, announcements, and memes.</li>
+                                <li><strong>Lead ambassadors:</strong> manage a team of 10–20 micro-ambassadors per campus.</li>
+                                <li><strong>Track growth:</strong> registrations, activity, IRL dates, and conversion to paid users.</li>
+                                <li><strong>Manage operations:</strong> coordinate event logistics and community moderation.</li>
+                            </ul>
+                        </div>
+
+                        <div class="content-group">
+                            <h3 class="group-title">// WHAT WE'RE LOOKING FOR</h3>
+                            <div class="requirements-split">
+                                <div>
+                                    <div class="subgroup-title">MUST-HAVE</div>
+                                    <ul class="clean-list">
+                                        <li><strong>Current student or recent graduate</strong> (within 1 year) of a Kyiv university (priority for КІМО, Шевченка, НаУКМА).</li>
+                                        <li><strong>Campus insider:</strong> connected with student leaders, club heads, and party organizers.</li>
+                                        <li><strong>Event experience:</strong> organized at least 3–5 parties, faculty days, or tournaments.</li>
+                                        <li><strong>Content creation:</strong> shoot and edit Reels/TikTok, write posts, manage social media.</li>
+                                        <li><strong>Proactive communicator:</strong> comfortable with outreach, pitching, and negotiating.</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div class="subgroup-title">NICE TO HAVE</div>
+                                    <ul class="clean-list">
+                                        <li><strong>Leadership experience</strong> in student government, student unions, or dorms.</li>
+                                        <li><strong>Active personal blog</strong> with 500+ followers (Instagram / TikTok / Telegram).</li>
+                                        <li><strong>Interest in social mechanics</strong>, dating markets, and relationship psychology.</li>
+                                        <li><strong>Basic tools:</strong> Notion, Google Sheets, and simple analytics.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-group">
+                            <h3 class="group-title">// WHAT WE OFFER</h3>
+                            <p class="group-text">
+                                <strong>Base salary:</strong> <strong>$1,000 / month</strong>.<br>
+                                <strong>Performance bonuses:</strong><br>
+                                — <strong>+$100</strong> for every 500 new campus registrations<br>
+                                — <strong>+$200</strong> for each successful event (50+ attendees)<br>
+                                — <strong>+$500</strong> for reaching 5,000 active users per quarter<br>
+                                <strong>Total potential:</strong> <strong>$2,000–$3,000 / month</strong> when hitting ambitious goals.
+                            </p>
+                            <p class="group-text">
+                                <strong>Perks:</strong> Direct mentorship from founders (growth marketing & product), strong network of student community leaders, and the opportunity to reshape student dating culture.
+                            </p>
+                        </div>
+
+                        <div class="content-group apply-group">
+                            <h3 class="group-title">// HOW TO APPLY</h3>
+                            <p class="group-text">
+                                Message us directly on Telegram: <a href="https://t.me/gennetysupport" target="_blank" class="bold-link">@gennetysupport</a> (or email <a href="mailto:main@sverkaus.com" class="bold-link">main@sverkaus.com</a>).
+                            </p>
+                            <p class="group-text">
+                                <strong>In your message, tell us:</strong><br>
+                                1. <strong>Which university you attend and what year you're in</strong><br>
+                                2. <strong>About 2–3 events you've organized</strong> (goal, result, what went wrong)<br>
+                                3. <strong>Link to your Instagram / TikTok / Telegram</strong><br>
+                                4. <strong>How you would get the first 100 Gennety users at your university in 1 week with zero budget</strong>
+                            </p>
+                            <p class="group-text apply-note">
+                                <strong>Questions?</strong> Message us in the same Telegram chat — we are looking for a true partner, not just an executor.
+                            </p>
+                        </div>
+
                     </div>
-                </article>
 
-            </div>
+                </div>
 
-            <!-- General Inquiries -->
-            <div class="careers-footer-note">
-                <span class="diamond">◇</span>
-                <span id="txt-general-note">Don't see your specific role? We're always eager to meet exceptional engineers, designers, and growth hackers. Write to us at <a href="mailto:main@sverkaus.com">main@sverkaus.com</a></span>
+                <div class="careers-footer-note">
+                    Don't see your role? We're always open to exceptional engineers and builders: <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>
+                </div>
+
             </div>
         </section>
 
@@ -1610,12 +1076,8 @@
                     careers: "Careers"
                 },
                 careers: {
-                    kicker: "WE ARE HIRING",
-                    title: "Careers",
-                    tagline: "Simplifying human-to-human interaction. Build the next generation of social applications with us.",
-                    openPositions: "open position",
-                    details: "Details",
-                    generalNote: "Don't see your specific role? We're always eager to meet exceptional engineers, designers, and growth hackers. Write to us at "
+                    title: "CAREERS",
+                    tagline: "Simplifying human-to-human interaction."
                 }
             },
             zh: {
@@ -1630,12 +1092,8 @@
                     careers: "招聘"
                 },
                 careers: {
-                    kicker: "正在招聘",
                     title: "招贤纳士",
-                    tagline: "简化人与人之间的互动。与我们一起打造下一代社交产品。",
-                    openPositions: "个开放职位",
-                    details: "详情",
-                    generalNote: "没有找到匹配的职位？我们始终欢迎优秀的工程师、设计师与增长专家。请联系 "
+                    tagline: "简化人与人之间的互动。"
                 }
             },
             hi: {
@@ -1650,12 +1108,8 @@
                     careers: "करियर"
                 },
                 careers: {
-                    kicker: "हम भर्ती कर रहे हैं",
                     title: "करियर",
-                    tagline: "मानव-से-मानв संपर्क को सरल बनाना। हमारे साथ अगली पीढ़ी के सोशल ऐप्स बनाएं।",
-                    openPositions: "रिक्त पद",
-                    details: "विवरण",
-                    generalNote: "अपनी उपयुक्त भूमिका नहीं मिली? हम हमेशा प्रतिभाशाली इंजीनियरों और डिजाइनरों का स्वागत करते हैं। संपर्क करें: "
+                    tagline: "मानव-से-मानव संपर्क को सरल बनाना।"
                 }
             },
             ko: {
@@ -1670,12 +1124,8 @@
                     careers: "채용"
                 },
                 careers: {
-                    kicker: "인재 채용 중",
                     title: "채용 정보",
-                    tagline: "사람과 사람 사이의 상호작용을 단순화합니다. 차세대 소셜 프로덕트를 함께 만들어갈 인재를 찾습니다.",
-                    openPositions: "개의 채용 공고",
-                    details: "상세보기",
-                    generalNote: "원하는 포지션이 없으신가요? 뛰어난 엔지니어와 디자이너의 연락은 언제나 환영합니다. "
+                    tagline: "사람과 사람 사이의 상호작용을 단순화합니다."
                 }
             },
             de: {
@@ -1690,12 +1140,8 @@
                     careers: "Karriere"
                 },
                 careers: {
-                    kicker: "WIR STELLEN EIN",
-                    title: "Karriere",
-                    tagline: "Vereinfachung der zwischenmenschlichen Interaktion. Baue mit uns die nächste Generation sozialer Plattformen.",
-                    openPositions: "offene Stelle",
-                    details: "Details",
-                    generalNote: "Keine passende Rolle gefunden? Wir freuen uns jederzeit über Initiativbewerbungen an "
+                    title: "KARRIERE",
+                    tagline: "Vereinfachung der zwischenmenschlichen Interaktion."
                 }
             },
             pl: {
@@ -1710,12 +1156,8 @@
                     careers: "Kariera"
                 },
                 careers: {
-                    kicker: "REKRUTUJEMY",
-                    title: "Kariera",
-                    tagline: "Upraszczanie interakcji międzyludzkich. Twórz z nami nową generację aplikacji społecznościowych.",
-                    openPositions: "otwarta pozycja",
-                    details: "Szczegóły",
-                    generalNote: "Nie widzisz odpowiedniej dla siebie roli? Zawsze chętnie poznamy utalentowanych twórców. Napisz do nas: "
+                    title: "KARIERA",
+                    tagline: "Upraszczanie interakcji międzyludzkich."
                 }
             }
         };
@@ -1733,26 +1175,48 @@
             if (tabName !== 'overview' && tabName !== 'careers') {
                 tabName = 'overview';
             }
+            
+            const currentSection = document.querySelector('.view-section.active');
+            const targetSection = document.getElementById(`view-${tabName}`);
+
+            if (currentTab === tabName && targetSection && targetSection.classList.contains('active')) {
+                return;
+            }
+
             currentTab = tabName;
 
-            // Update tab button styles and attributes
+            // Update tab buttons
             document.querySelectorAll('.nav-tab').forEach(btn => {
                 const isTarget = btn.getAttribute('data-tab') === tabName;
                 btn.classList.toggle('active', isTarget);
                 btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
             });
 
-            // Update visible section
-            document.querySelectorAll('.view-section').forEach(sec => {
-                sec.classList.remove('active');
-            });
+            // Smooth cross-fade transition between sections
+            if (currentSection && currentSection !== targetSection) {
+                currentSection.style.opacity = '0';
+                currentSection.style.transform = 'translateY(6px)';
+                
+                setTimeout(() => {
+                    currentSection.classList.remove('active');
+                    currentSection.style.display = 'none';
 
-            const targetSection = document.getElementById(`view-${tabName}`);
-            if (targetSection) {
+                    if (targetSection) {
+                        targetSection.style.display = (tabName === 'overview') ? 'flex' : 'block';
+                        void targetSection.offsetWidth; // Force reflow
+                        targetSection.classList.add('active');
+                        targetSection.style.opacity = '1';
+                        targetSection.style.transform = 'translateY(0)';
+                    }
+                }, 160);
+            } else if (targetSection) {
+                targetSection.style.display = (tabName === 'overview') ? 'flex' : 'block';
+                void targetSection.offsetWidth;
                 targetSection.classList.add('active');
+                targetSection.style.opacity = '1';
+                targetSection.style.transform = 'translateY(0)';
             }
 
-            // If switching to overview, ensure typewriter is playing if text is empty
             if (tabName === 'overview') {
                 const typewriterEl = document.getElementById('typewriter');
                 if (!typewriterEl || !typewriterEl.textContent) {
@@ -1760,14 +1224,10 @@
                 }
             }
 
-            // Update URL hash
-            if (updateHash) {
-                if (window.location.hash !== `#${tabName}`) {
-                    history.pushState(null, '', `#${tabName}`);
-                }
+            if (updateHash && window.location.hash !== `#${tabName}`) {
+                history.pushState(null, '', `#${tabName}`);
             }
 
-            // Scroll to top smoothly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -1797,49 +1257,6 @@
             brandLink.addEventListener('click', (e) => {
                 e.preventDefault();
                 switchTab('overview');
-            });
-        }
-
-        // Setup Vacancy Accordion
-        const jobHeader = document.querySelector('.job-header');
-        const jobItem = document.getElementById('job-campus-growth-lead');
-        if (jobHeader && jobItem) {
-            function toggleJob() {
-                const isExpanded = jobItem.classList.toggle('expanded');
-                jobHeader.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-            }
-
-            jobHeader.addEventListener('click', toggleJob);
-            jobHeader.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    toggleJob();
-                }
-            });
-        }
-
-        // Screening Template Copy Functionality
-        function copyScreeningTemplate() {
-            const templateText = `Hi Gennety team! I'm applying for the Campus Growth Lead (Kyiv) position.
-
-1. University & Year: 
-2. 2-3 Events I've organized (goal, result, what went wrong): 
-3. Social profile (Instagram / TikTok / Telegram): 
-4. My 1-week zero-budget plan for first 100 users: `;
-
-            navigator.clipboard.writeText(templateText).then(() => {
-                const btn = document.getElementById('btn-copy-template');
-                const txt = document.getElementById('txt-copy-btn');
-                if (btn && txt) {
-                    btn.classList.add('copied');
-                    txt.textContent = 'Template Copied! ✓';
-                    setTimeout(() => {
-                        btn.classList.remove('copied');
-                        txt.textContent = 'Copy Questions Template';
-                    }, 2500);
-                }
-            }).catch(err => {
-                console.error('Could not copy template text: ', err);
             });
         }
 
@@ -1934,22 +1351,11 @@
             if (labelOverview) labelOverview.textContent = t.nav.overview;
             if (labelCareers) labelCareers.textContent = t.nav.careers;
 
-            // Update Careers Content
-            const kicker = document.getElementById('txt-careers-kicker');
+            // Update Careers Header Text
             const title = document.getElementById('txt-careers-title');
             const tagline = document.getElementById('txt-careers-tagline');
-            const statOpen = document.getElementById('txt-stat-open');
-            const toggleLabel = document.getElementById('txt-toggle-label');
-            const generalNote = document.getElementById('txt-general-note');
-
-            if (kicker) kicker.textContent = t.careers.kicker;
             if (title) title.textContent = t.careers.title;
             if (tagline) tagline.textContent = t.careers.tagline;
-            if (statOpen) statOpen.textContent = t.careers.openPositions;
-            if (toggleLabel) toggleLabel.textContent = t.careers.details;
-            if (generalNote) {
-                generalNote.innerHTML = `${t.careers.generalNote}<a href="mailto:main@sverkaus.com">main@sverkaus.com</a>`;
-            }
         }
 
         // Initialize translations on load

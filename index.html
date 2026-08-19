@@ -648,6 +648,7 @@
             vertical-align: middle;
             margin-left: 4px;
             animation: blink 1s step-end infinite;
+            visibility: hidden;
         }
 
         @keyframes blink {
@@ -1627,6 +1628,7 @@
 
         // Tab Navigation State
         let currentTab = 'overview';
+        let introFinished = false;
 
         function switchTab(tabName, updateHash = true) {
             if (tabName !== 'overview' && tabName !== 'careers') {
@@ -1660,7 +1662,7 @@
 
             if (tabName === 'overview') {
                 const typewriterEl = document.getElementById('typewriter');
-                if (!typewriterEl || !typewriterEl.textContent) {
+                if (introFinished && (!typewriterEl || !typewriterEl.textContent)) {
                     startTypewriter(translations[currentLang].tagline);
                 }
             }
@@ -1800,8 +1802,10 @@
 
             const t = translations[currentLang];
 
-            // Update tagline via typewriter
-            startTypewriter(t.tagline);
+            // Update tagline via typewriter only if intro finished and on overview
+            if (introFinished && currentTab === 'overview') {
+                startTypewriter(t.tagline);
+            }
 
             // Update project descriptions
             const descBeajee = document.getElementById('desc-beajee');
@@ -1877,12 +1881,16 @@
             });
         }
 
-        // Start typing tagline on initial load if on overview
-        if (window.location.hash.toLowerCase() !== '#careers') {
-            setTimeout(() => {
-                startTypewriter(translations[currentLang].tagline);
-            }, 3100);
-        }
+        // Start typing tagline on initial load after intro animation finishes
+        setTimeout(() => {
+            introFinished = true;
+            if (currentTab === 'overview') {
+                const typewriterEl = document.getElementById('typewriter');
+                if (!typewriterEl || !typewriterEl.textContent) {
+                    startTypewriter(translations[currentLang].tagline);
+                }
+            }
+        }, 3100);
 
         // Matrix Decode (Glitch) and Click to open site
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";

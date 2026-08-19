@@ -70,7 +70,7 @@
             font-weight: 800;
             transition: color 0.2s ease;
             opacity: 0;
-            animation: fadeIn 0.8s ease forwards 0.8s;
+            animation: fadeIn 0.8s ease forwards 1.6s;
             display: inline-flex;
             align-items: center;
         }
@@ -83,7 +83,7 @@
         /* Frameless Nav Tabs */
         .nav-tabs {
             opacity: 0;
-            animation: fadeIn 0.8s ease forwards 0.8s;
+            animation: fadeIn 0.8s ease forwards 1.6s;
             display: inline-flex;
             align-items: center;
             gap: 28px;
@@ -150,7 +150,7 @@
 
         .header-right {
             opacity: 0;
-            animation: fadeIn 0.8s ease forwards 0.8s;
+            animation: fadeIn 0.8s ease forwards 1.6s;
         }
 
         /* Custom Select Styles (Borderless Minimal) */
@@ -292,6 +292,7 @@
             padding: 80px 20px;
         }
 
+        /* Star Logo & Intro Choreography */
         .logo-icon-container {
             width: 130px;
             height: 130px;
@@ -299,15 +300,314 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
-            animation: fadeIn 0.8s ease forwards 0.3s;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            overflow: visible;
         }
 
         .logo-icon {
             width: 100%;
             height: 100%;
-            transform-origin: center;
+            overflow: visible;
+            filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.08));
+            transition: filter 0.3s ease;
+        }
+
+        .logo-icon-container:hover .logo-icon {
+            filter: drop-shadow(0 0 22px rgba(163, 230, 53, 0.35));
+        }
+
+        .star-root, .star-body, .star-eyes {
+            transform-origin: 100px 100px;
+            transform-box: view-box;
+        }
+
+        .star-root {
+            will-change: transform, opacity;
+        }
+
+        .star-body {
             will-change: transform;
+        }
+
+        .star-eyes {
+            will-change: transform;
+        }
+
+        .star-eye {
+            will-change: transform;
+        }
+
+        .star-eye-left {
+            transform-origin: 85px 100px;
+            transform-box: view-box;
+        }
+
+        .star-eye-right-group {
+            transform-origin: 115px 100px;
+            transform-box: view-box;
+        }
+
+        .star-eye-right {
+            transform-origin: 115px 100px;
+            transform-box: view-box;
+            will-change: transform, opacity;
+        }
+
+        .star-eye-wink {
+            transform-origin: 115px 100px;
+            transform-box: view-box;
+            opacity: 0;
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+
+        /* Running the intro animation */
+        .logo-icon-container.animating .star-root {
+            animation: starIntroRoot 3.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .logo-icon-container.animating .star-body {
+            animation: starIntroBody 3.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .logo-icon-container.animating .star-eyes {
+            animation: starIntroEyes 3.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .logo-icon-container.animating .star-eye-left {
+            animation: starIntroEyeLeft 3.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .logo-icon-container.animating .star-eye-right {
+            animation: starIntroEyeRight 3.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .logo-icon-container.animating .star-eye-wink {
+            animation: starIntroEyeWink 3.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* 1. Star Root: Lunge left, recoil, lunge right, recoil, lock on center, BIG TILTED CLOSE-UP WINK, settle */
+        @keyframes starIntroRoot {
+            0% {
+                opacity: 0;
+                transform: scale(0.85) translate(0px, 0px) rotate(0deg);
+            }
+            3% {
+                opacity: 1;
+                transform: scale(0.9) translate(0px, 0px) rotate(0deg);
+            }
+            /* Lunge Left & look left (Enhanced Zoom Lunge!) */
+            13% {
+                transform: scale(1.68) translate(-24px, -15px) rotate(-9deg);
+            }
+            18% {
+                transform: scale(1.64) translate(-26px, -13px) rotate(-8deg);
+            }
+            /* Recoil to Center */
+            26% {
+                transform: scale(1.02) translate(0px, 4px) rotate(1deg);
+            }
+            /* Lunge Right & look right (Enhanced Zoom Lunge!) */
+            34% {
+                transform: scale(1.68) translate(24px, -15px) rotate(9deg);
+            }
+            39% {
+                transform: scale(1.64) translate(26px, -13px) rotate(8deg);
+            }
+            /* Recoil Back / Surprise Pause */
+            47% {
+                transform: scale(0.92) translate(0px, 7px) rotate(0deg);
+            }
+            /* Snap Attention to user with wide eyes (Enhanced Zoom Focus!) */
+            53% {
+                transform: scale(1.38) translate(0px, -8px) rotate(0deg);
+            }
+            60% {
+                transform: scale(1.38) translate(0px, -8px) rotate(0deg);
+            }
+            /* Expressive Wink: Tilt to the left along axis + dramatic zoom in closer to screen! */
+            64% {
+                transform: scale(1.65) translate(-14px, -14px) rotate(-11deg);
+            }
+            67% {
+                transform: scale(1.72) translate(-16px, -16px) rotate(-13deg);
+            }
+            /* Slow, charming close-up hold of the tilted wink */
+            74% {
+                transform: scale(1.73) translate(-16px, -17px) rotate(-13deg);
+            }
+            77% {
+                transform: scale(1.66) translate(-14px, -14px) rotate(-11deg);
+            }
+            /* Reopen eye & ease recovery back */
+            82% {
+                transform: scale(1.18) translate(-4px, -4px) rotate(-3deg);
+            }
+            87% {
+                transform: scale(1.03) translate(0px, 0px) rotate(0deg);
+            }
+            /* Settle statically in place */
+            92%, 100% {
+                opacity: 1;
+                transform: scale(1.0) translate(0px, 0px) rotate(0deg);
+            }
+        }
+
+        /* 2. Star Body: Squash & stretch micro-physics */
+        @keyframes starIntroBody {
+            0%, 3% {
+                transform: scale(1);
+            }
+            13% {
+                transform: scale(1.04, 0.96);
+            }
+            18% {
+                transform: scale(1);
+            }
+            26% {
+                transform: scale(0.97, 1.03);
+            }
+            34% {
+                transform: scale(1.04, 0.96);
+            }
+            39% {
+                transform: scale(1);
+            }
+            47% {
+                transform: scale(0.96, 1.04);
+            }
+            53% {
+                transform: scale(1.03, 0.98);
+            }
+            60% {
+                transform: scale(1);
+            }
+            67%, 76% {
+                transform: scale(1.02, 0.98);
+            }
+            82% {
+                transform: scale(0.98, 1.02);
+            }
+            92%, 100% {
+                transform: scale(1);
+            }
+        }
+
+        /* 3. Star Eyes Group: Parallax eye shifts left, right, and straight ahead */
+        @keyframes starIntroEyes {
+            0%, 3% {
+                transform: translate(0px, 0px);
+            }
+            /* Dart Left */
+            13% {
+                transform: translate(-22px, -4px);
+            }
+            18% {
+                transform: translate(-23px, -4px);
+            }
+            /* Pass center */
+            26% {
+                transform: translate(-2px, 1px);
+            }
+            /* Dart Right */
+            34% {
+                transform: translate(22px, -4px);
+            }
+            39% {
+                transform: translate(23px, -4px);
+            }
+            /* Recoil back */
+            47% {
+                transform: translate(0px, 2px);
+            }
+            /* Lock directly on the user */
+            53%, 60% {
+                transform: translate(0px, 0px);
+            }
+            64%, 78% {
+                transform: translate(0px, 0px);
+            }
+            82%, 100% {
+                transform: translate(0px, 0px);
+            }
+        }
+
+        /* 4. Left Eye: Expands wide (wide-eyed O_O) when looking at user, friendly gaze during wink */
+        @keyframes starIntroEyeLeft {
+            0%, 47% {
+                transform: scale(1);
+            }
+            /* Wide-eyed gaze at the user */
+            53%, 60% {
+                transform: scale(1.06, 1.36);
+            }
+            /* Warm, friendly open eye during the wink */
+            64%, 78% {
+                transform: scale(1.04, 1.15);
+            }
+            84%, 100% {
+                transform: scale(1);
+            }
+        }
+
+        /* 5. Right Eye (Open Ellipse): Expands wide, then fades/closes into the semicircular wink */
+        @keyframes starIntroEyeRight {
+            0%, 47% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            /* Wide-eyed gaze at the user */
+            53%, 59% {
+                opacity: 1;
+                transform: scale(1.06, 1.36);
+            }
+            /* Transition into wink */
+            62% {
+                opacity: 0;
+                transform: scale(1.05, 0.1);
+            }
+            /* Held closed during slow wink */
+            63%, 77% {
+                opacity: 0;
+                transform: scale(1.05, 0.1);
+            }
+            /* Reopen */
+            79% {
+                opacity: 1;
+                transform: scale(1.05, 0.7);
+            }
+            83%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* 6. Right Eye (Semicircular Smiling Wink Arc): Appears as a charming smiling curve tilted with the star */
+        @keyframes starIntroEyeWink {
+            0%, 59% {
+                opacity: 0;
+                transform: scale(0.6, 0.2);
+            }
+            62% {
+                opacity: 1;
+                transform: scale(1.0, 1.0);
+            }
+            /* Prominent smiling semicircular wink hold */
+            64%, 76% {
+                opacity: 1;
+                transform: scale(1.02, 1.02);
+            }
+            78% {
+                opacity: 0;
+                transform: scale(0.8, 0.3);
+            }
+            80%, 100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
         }
 
         .logo-center {
@@ -359,70 +659,98 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 5px 12px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 30px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            font-size: 11px;
-            letter-spacing: 0.05em;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 5px 14px 5px 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: none;
+            border-radius: 9999px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-size: 12.5px;
+            letter-spacing: 0.02em;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             opacity: 0;
-            animation: fadeIn 0.8s ease forwards 1.2s;
-            margin-top: 25px;
+            animation: fadeIn 0.8s ease forwards 2.8s;
+            margin-top: 24px;
             user-select: none;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
         }
 
         .update-badge-container:hover {
-            background: rgba(163, 230, 53, 0.03);
-            border-color: rgba(163, 230, 53, 0.3);
-            box-shadow: 0 0 15px rgba(163, 230, 53, 0.08);
+            background: rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28), 0 0 16px rgba(163, 230, 53, 0.14);
             transform: translateY(-1px);
         }
 
+        .update-badge-container:active {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(163, 230, 53, 0.22);
+            transform: translateY(0) scale(0.99);
+        }
+
         .update-badge-container a.badge-main-target {
-            display: flex;
+            display: inline-flex;
             align-items: center;
+            gap: 9px;
             color: var(--text-color);
             text-decoration: none;
         }
 
         .badge-new {
             background-color: var(--accent-color);
-            color: var(--bg-color);
-            font-weight: 700;
-            font-size: 9px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            margin-right: 8px;
-            letter-spacing: 0.08em;
-            display: inline-block;
-            line-height: 1;
+            color: #0e1606;
+            font-weight: 800;
+            font-size: 11.5px;
+            padding: 3px 9px;
+            border-radius: 9999px;
+            text-transform: lowercase;
+            letter-spacing: 0.01em;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.1;
+            box-sizing: border-box;
+            transition: transform 0.2s ease;
+        }
+
+        .update-badge-container:hover .badge-new {
+            transform: scale(1.02);
         }
 
         .badge-title {
             color: var(--text-color);
-            font-weight: 400;
+            font-weight: 500;
+            font-size: 12.5px;
+            letter-spacing: 0.01em;
+            transition: color 0.2s ease;
+        }
+
+        .update-badge-container:hover .badge-title {
+            color: #ffffff;
         }
 
         .badge-separator {
-            color: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.2);
             user-select: none;
-            font-size: 10px;
+            font-size: 11px;
         }
 
         .update-badge-container a.badge-info {
             color: var(--dim-color);
+            font-size: 12.5px;
             text-decoration: none;
-            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s ease, transform 0.2s ease;
         }
 
+        .update-badge-container:hover a.badge-info,
         .update-badge-container a.badge-info:hover {
             color: var(--accent-color);
-            text-decoration: underline;
-            text-decoration-color: var(--accent-color);
+            text-decoration: none;
+            transform: translateX(2px);
         }
 
         .bottom-projects {
@@ -437,7 +765,7 @@
             z-index: 10;
             padding: 0 20px;
             opacity: 0;
-            animation: fadeIn 0.8s ease forwards 1s;
+            animation: fadeIn 0.8s ease forwards 2.8s;
         }
 
         .project {
@@ -911,6 +1239,24 @@
                 display: none;
             }
         }
+
+        @media (max-width: 480px) {
+            .update-badge-container {
+                font-size: 11px;
+                gap: 7px;
+                padding: 4px 11px 4px 5px;
+            }
+            .badge-new {
+                font-size: 10px;
+                padding: 2px 7px;
+            }
+            .badge-title {
+                font-size: 11px;
+            }
+            .update-badge-container a.badge-info {
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -961,30 +1307,39 @@
         <!-- Tab 1: Overview Section -->
         <section id="view-overview" class="view-section hero-section active">
             <div class="center-content">
-                <div class="logo-icon-container">
-                    <svg class="logo-icon" viewBox="-30 -30 260 260">
-                        <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#ffffff" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="10" />
-                        <ellipse cx="85" cy="100" rx="13" ry="21" fill="#ffffff" />
-                        <ellipse cx="115" cy="100" rx="13" ry="21" fill="#ffffff" />
+                <div class="logo-icon-container animating" id="logo-icon-container" title="Click to replay animation">
+                    <svg class="logo-icon" id="star-svg" viewBox="-30 -30 260 260">
+                        <g id="star-root" class="star-root">
+                            <g id="star-body" class="star-body">
+                                <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#ffffff" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="10" />
+                            </g>
+                            <g id="star-eyes" class="star-eyes">
+                                <ellipse id="star-eye-left" class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#ffffff" />
+                                <g id="star-eye-right-group" class="star-eye-right-group">
+                                    <ellipse id="star-eye-right" class="star-eye star-eye-right" cx="115" cy="100" rx="13" ry="21" fill="#ffffff" />
+                                    <path id="star-eye-right-wink" class="star-eye-wink" d="M 106 104 Q 115 90 124 104" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" />
+                                </g>
+                            </g>
+                        </g>
                     </svg>
                 </div>
                 <div class="logo-center">
-                    <span style="animation-delay: 0.1s">S</span>
-                    <span style="animation-delay: 0.2s">V</span>
-                    <span style="animation-delay: 0.3s">E</span>
-                    <span style="animation-delay: 0.4s">R</span>
-                    <span style="animation-delay: 0.5s">K</span>
-                    <span style="animation-delay: 0.6s">A</span>
-                    <span style="animation-delay: 0.7s">U</span>
-                    <span style="animation-delay: 0.8s">S</span>
+                    <span style="animation-delay: 1.8s">S</span>
+                    <span style="animation-delay: 1.9s">V</span>
+                    <span style="animation-delay: 2.0s">E</span>
+                    <span style="animation-delay: 2.1s">R</span>
+                    <span style="animation-delay: 2.2s">K</span>
+                    <span style="animation-delay: 2.3s">A</span>
+                    <span style="animation-delay: 2.4s">U</span>
+                    <span style="animation-delay: 2.5s">S</span>
                 </div>
                 <div class="tagline"><span id="typewriter"></span><span class="cursor"></span></div>
 
-                <!-- Gennety Beta Launch Badge -->
+                <!-- Gennety Launch Badge -->
                 <div class="update-badge-container">
                     <a href="https://gennety.com" target="_blank" class="badge-main-target">
-                        <span class="badge-new">New</span>
-                        <span class="badge-title">Gennety Beta Launch</span>
+                        <span class="badge-new">new</span>
+                        <span class="badge-title">Gennety Launch</span>
                     </a>
                     <span class="badge-separator">|</span>
                     <a href="https://gennety.com" target="_blank" class="badge-info" id="badge-info-link">Details &rarr;</a>
@@ -1512,11 +1867,21 @@
         switchLanguage(currentLang);
         handleHashChange();
 
+        // Star Logo interactive click replay
+        const logoContainer = document.getElementById('logo-icon-container');
+        if (logoContainer) {
+            logoContainer.addEventListener('click', () => {
+                logoContainer.classList.remove('animating');
+                void logoContainer.offsetWidth; // trigger reflow to restart CSS animation
+                logoContainer.classList.add('animating');
+            });
+        }
+
         // Start typing tagline on initial load if on overview
         if (window.location.hash.toLowerCase() !== '#careers') {
             setTimeout(() => {
                 startTypewriter(translations[currentLang].tagline);
-            }, 600);
+            }, 3100);
         }
 
         // Matrix Decode (Glitch) and Click to open site

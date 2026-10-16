@@ -1354,6 +1354,9 @@
                 <div class="project">
                     <span class="diamond">◇</span> <span class="project-name" data-value="GENNETY">GENNETY</span> <span class="project-desc" id="desc-gennety">Dating social network for IRL — no chat before meeting</span> > <a href="https://gennety.com" target="_blank">gennety.com</a>
                 </div>
+                <div class="project">
+                    <span class="diamond">◇</span> <span class="project-name" data-value="any">any</span> <span class="project-desc" id="desc-any">Local voice dictation for Mac — your speech stays on your device</span> &gt; <a href="/any/">sverkaus.com/any</a>
+                </div>
             </div>
         </section>
 
@@ -1633,7 +1636,8 @@
             en: {
                 tagline: "Simplifying human-to-human interaction",
                 projects: {
-                    gennety: "Dating social network for IRL — no chat before meeting"
+                    gennety: "Dating social network for IRL — no chat before meeting",
+                    any: "Local voice dictation for Mac — your speech stays on your device"
                 },
                 badgeInfo: "Details →",
                 nav: {
@@ -1648,7 +1652,8 @@
             zh: {
                 tagline: "简化人与人之间的互动",
                 projects: {
-                    gennety: "真实生活约会社交网络 — 见面之前无需聊天"
+                    gennety: "真实生活约会社交网络 — 见面之前无需聊天",
+                    any: "Mac 本地语音输入 — 语音留在你的设备上"
                 },
                 badgeInfo: "详情 →",
                 nav: {
@@ -1663,7 +1668,8 @@
             hi: {
                 tagline: "मानव-से-मानव संपर्क को सरल बनाना",
                 projects: {
-                    gennety: "वास्तविक जीवन (IRL) के लिए डेटिंग सोशल नेटवर्क — मिलने से पहले कोई चैट नहीं"
+                    gennety: "वास्तविक जीवन (IRL) के लिए डेटिंग सोशल नेटवर्क — मिलने से पहले कोई चैट नहीं",
+                    any: "Mac के लिए स्थानीय वॉइस डिक्टेशन — आपकी आवाज़ आपके डिवाइस पर रहती है"
                 },
                 badgeInfo: "विवरण →",
                 nav: {
@@ -1678,7 +1684,8 @@
             ko: {
                 tagline: "사람과 사람 사이의 상호작용을 단순화합니다",
                 projects: {
-                    gennety: "IRL을 위한 데이팅 소셜 네트워크 — 만나기 전 채팅 없음"
+                    gennety: "IRL을 위한 데이팅 소셜 네트워크 — 만나기 전 채팅 없음",
+                    any: "Mac용 로컬 음성 입력 — 음성은 기기에 보관됩니다"
                 },
                 badgeInfo: "상세보기 →",
                 nav: {
@@ -1693,7 +1700,8 @@
             de: {
                 tagline: "Vereinfachung der zwischenmenschlichen Interaktion",
                 projects: {
-                    gennety: "Dating-Netzwerk für das echte Leben (IRL) – kein Chatten vor dem Treffen"
+                    gennety: "Dating-Netzwerk für das echte Leben (IRL) – kein Chatten vor dem Treffen",
+                    any: "Lokales Sprachdiktat für Mac – deine Sprache bleibt auf deinem Gerät"
                 },
                 badgeInfo: "Details →",
                 nav: {
@@ -1708,7 +1716,8 @@
             pl: {
                 tagline: "Upraszczanie interakcji międzyludzkich",
                 projects: {
-                    gennety: "Sieć randkowa w świecie rzeczywistym (IRL) – bez czatu przed spotkaniem"
+                    gennety: "Sieć randkowa w świecie rzeczywistym (IRL) – bez czatu przed spotkaniem",
+                    any: "Lokalne dyktowanie na Macu — Twój głos pozostaje na urządzeniu"
                 },
                 badgeInfo: "Szczegóły →",
                 nav: {
@@ -1911,8 +1920,10 @@
 
             // Update project descriptions
             const descGennety = document.getElementById('desc-gennety');
+            const descAny = document.getElementById('desc-any');
             const badgeInfo = document.getElementById('badge-info-link');
             if (descGennety) descGennety.textContent = t.projects.gennety;
+            if (descAny) descAny.textContent = t.projects.any;
             if (badgeInfo) badgeInfo.textContent = t.badgeInfo;
 
             // Update Nav Labels

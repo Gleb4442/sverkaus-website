@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="any — диктовка для Apple Silicon Mac. Локальные модели, личная история, 30 дней бесплатно.">
+  <title>any — речь становится текстом</title>
+  <link rel="icon" href="assets/any.png"><link rel="stylesheet" href="style.css">
+  <script id="release-config" type="application/json">{"downloadURL": null, "supportURL": "https://t.me/gennetysupport"}</script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <header class="nav wrap">
+    <a class="brand" href="#" aria-label="any"><img src="assets/any.png" alt="any" width="44" height="44"></a>
+    <nav aria-label="Навигация"><a href="#how" data-en="How it works">Как работает</a><a href="#price" data-en="One purchase">Одна покупка</a><a href="help.html" data-en="Help">Помощь</a></nav>
+    <button id="language" class="language" aria-label="Switch language">EN</button>
+  </header>
+  <main>
+    <section class="hero wrap">
+      <div class="hero-copy">
+        <span class="eyebrow" data-en="YOUR VOICE. YOUR MAC.">ВАШ ГОЛОС. ВАШ MAC.</span>
+        <h1 data-en="Less typing.\nMore you.">Меньше печатать.\nБольше успевать.</h1>
+        <p class="lead" data-en="Hold Fn, speak, and get text where you work. Choose local models that keep speech on your Mac.">Зажмите Fn, скажите — и получите текст там, где работаете. Выбирайте локальные модели, чтобы обрабатывать речь на своём Mac.</p>
+        <a class="button download" aria-disabled="true" data-en="Release in preparation">Релиз готовится</a>
+        <p class="fine" data-en="30 days free · no card · Apple Silicon · macOS 14+">30 дней бесплатно · без карты · Apple Silicon · macOS 14+</p>
+      </div>
+      <div class="desktop" aria-label="Иллюстрация диктовки">
+        <div class="desktop-bar"><span>9:41</span><span>⌁ &nbsp; ◒ &nbsp; ▰</span></div>
+        <div class="notch"><span class="signal"></span> any <span class="wave">▂ ▅ █ ▃ ▆ ▂</span></div>
+        <div class="note"><div class="note-label" data-en="A NOTE FOR TOMORROW">ЗАМЕТКА НА ЗАВТРА</div><p data-en="Let's keep the morning clear for the things that matter.\n\nA little less typing. A little more room to think.">Давайте оставим утро свободным для самого важного.\n\nЧуть меньше печатать. Чуть больше пространства для мыслей.</p><span class="cursor"></span></div>
+        <div class="keyhint"><kbd>fn</kbd><span data-en="Hold. Speak. Release.">Зажать. Сказать. Отпустить.</span></div>
+        <span class="illustration" data-en="Illustrative dictation example">Иллюстрация сценария диктовки</span>
+      </div>
+    </section>
+    <section class="workflow wrap" id="how">
+      <div><span class="eyebrow" data-en="A SMALLER ROUTINE">МЕНЬШЕ РУТИНЫ</span><h2 data-en="From a thought\nto the right field.">Из мысли —\nв нужное поле.</h2></div>
+      <ol><li><span>01</span><div><h3 data-en="Place the cursor">Поставьте курсор</h3><p data-en="In Notes, a message, or a supported text field in your editor.">В заметке, сообщении или поддерживаемом текстовом поле вашего редактора.</p></div></li><li><span>02</span><div><h3 data-en="Hold Fn and speak">Зажмите Fn и говорите</h3><p data-en="Your selected recognizer turns the recording into text. Local modes stay local.">Выбранный движок превращает запись в текст. Локальные режимы работают на Mac.</p></div></li><li><span>03</span><div><h3 data-en="Release and keep going">Отпустите и продолжайте</h3><p data-en="Insert the result, find it in local history, and teach any your own words.">Вставьте результат, найдите его в локальной истории и научите any своим словам.</p></div></li></ol>
+    </section>
+    <section class="modes wrap">
+      <div class="mode-heading"><span class="eyebrow" data-en="A CHOICE YOU CONTROL">ВЫБОР ЗА ВАМИ</span><h2 data-en="Choose where\nthe work happens.">Выберите, где\nпроисходит работа.</h2><div class="segmented" aria-label="Processing mode"><button class="active" id="local" aria-pressed="true" data-en="On your Mac">На вашем Mac</button><button id="cloud" aria-pressed="false">Groq</button></div></div>
+      <div class="mode-detail" aria-live="polite"><span class="mode-tag" id="mode-tag"></span><h3 id="mode-title"></h3><p id="mode-description"></p><div class="flow"><span id="flow-start"></span><b>→</b><span id="flow-engine"></span><b>→</b><span id="flow-end"></span></div><p class="fine" id="mode-limit"></p></div>
+    </section>
+    <section class="extras wrap"><h2 data-en="A tool that remembers\nhow you work.">Инструмент, который\nзнает ваши слова.</h2><div class="extras-grid"><article><span class="feature-number">A</span><h3 data-en="Your vocabulary">Ваш словарь</h3><p data-en="Names, terms, and shortcuts. Keep your own spellings close at hand.">Имена, термины и сокращения. Ваши варианты написания всегда под рукой.</p></article><article><span class="feature-number">B</span><h3 data-en="Local history">Локальная история</h3><p data-en="Return to a transcript, copy or export it. Your history lives on this Mac.">Вернитесь к расшифровке, скопируйте или экспортируйте её. История хранится на этом Mac.</p></article><article><span class="feature-number">C</span><h3 data-en="Optional text AI">Текстовый AI по выбору</h3><p data-en="Structure and voice edits use a separate local text model or your Groq key.">Структура и правка голосом используют отдельную локальную текстовую модель или ваш ключ Groq.</p></article></div></section>
+    <section id="price" class="pricing wrap"><div><span class="eyebrow" data-en="TIME TO MAKE IT YOURS">ПОПРОБУЙТЕ В СВОЁМ РИТМЕ</span><h2 data-en="30 days to try.\nOne purchase to keep.">30 дней на пробу.\nОдна покупка навсегда.</h2><p data-en="The trial starts after setup or your first successful dictation outside the practice field.">Пробный период начинается после настройки или первой успешной диктовки вне тренировочного поля.</p></div><div class="price-card"><span class="price">385 <span>Stars</span></span><p data-en="Lifetime licence for this Mac. Future updates included.">Пожизненная лицензия для этого Mac. Будущие обновления включены.</p><p class="fine" data-en="Buy from the app through Telegram. The cost of buying Stars varies by platform and region. Optional Groq usage is governed by your Groq account.">Покупка из приложения через Telegram. Стоимость Stars зависит от платформы и региона. Условия использования Groq определяются вашим аккаунтом Groq.</p><a class="button download" aria-disabled="true" data-en="Release in preparation">Релиз готовится</a></div></section>
+    <section class="faq wrap"><h2 data-en="Before you start">Перед первым запуском</h2><details><summary data-en="Will everything work offline?">Всё будет работать без интернета?</summary><p data-en="Local dictation works after downloading a speech model. Structure and voice edits need a separate text model. Translation needs macOS 15+ and supported installed Apple languages. Downloads, trial checks and update checks use the network. Groq is a cloud option.">Локальная диктовка работает после загрузки речевой модели. Для структуры и правки голосом нужна отдельная текстовая модель. Перевод требует macOS 15+ и поддерживаемых установленных языков Apple. Загрузка моделей, проверка trial и обновлений используют сеть. Groq — облачный вариант.</p></details><details><summary data-en="Which Mac do I need?">Какой Mac нужен?</summary><p data-en="Apple Silicon and macOS 14 or later. Apple Translation requires macOS 15+. The optional local text model needs at least 8 GB RAM and about 2.5 GB disk space; speech models need additional space. Performance depends on your Mac and the chosen model.">Apple Silicon и macOS 14 или новее. Перевод Apple требует macOS 15+. Для отдельной локальной текстовой модели нужны минимум 8 ГБ памяти и около 2,5 ГБ на диске; речевые модели занимают дополнительное место. Скорость зависит от Mac и выбранной модели.</p></details><details><summary data-en="Do I need to register?">Нужно регистрироваться?</summary><p data-en="There is no mandatory any account. Setup asks your name and languages. Groq and Telegram purchases use their respective accounts.">Обязательного аккаунта any нет. При настройке приложение спрашивает имя и языки. Для Groq и покупки в Telegram используются аккаунты соответствующих сервисов.</p></details><details><summary data-en="How do updates work?">Как получать обновления?</summary><p data-en="Check for updates from the any menu. Prepared public builds use signed updates. You choose when to download and install them.">Проверяйте обновления из меню any. Подготовленные публичные сборки используют подписанные обновления. Вы выбираете, когда скачать и установить их.</p></details></section>
+  </main>
+  <footer class="wrap"><img src="assets/any.png" alt="any" width="36" height="36"><span data-en="A personal tool for your Mac.">Личный инструмент для вашего Mac.</span><a href="privacy.html" data-en="Privacy">Конфиденциальность</a><a href="help.html" data-en="Installation & help">Установка и помощь</a><a id="support" hidden data-en="Contact support">Связаться с поддержкой</a></footer>
+</body>
+</html>

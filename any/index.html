@@ -1,48 +1,367 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="any — диктовка для Apple Silicon Mac. Локальные модели, личная история, 30 дней бесплатно.">
-  <title>any — речь становится текстом</title>
-  <link rel="icon" href="assets/any.png"><link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>any — голос в челке вашего Mac</title>
+  <meta name="description" content="any — голосовой ассистент для macOS: диктовка, задачи для ИИ, перевод выделенного и личный словарь. Fn — диктовка, Fn + ⌃ — команды. Локальные Whisper и Qwen на Apple Silicon.">
+  <meta name="theme-color" content="#06070b">
+  <meta property="og:title" content="any — голос в челке вашего Mac">
+  <meta property="og:description" content="Диктовка, задачи, перевод и личный словарь для macOS. Локальные модели на Apple Silicon.">
+  <meta property="og:image" content="assets/img/any-icon-512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/any.css">
+  <!-- Release contract shared with scripts/build-website.py in the any repo: downloads stay disabled until downloadURL is a verified build. -->
   <script id="release-config" type="application/json">{"downloadURL": null, "supportURL": "https://t.me/gennetysupport"}</script>
-  <script defer src="app.js"></script>
+  <script defer src="assets/js/sky.js"></script>
+  <script defer src="assets/js/any.js"></script>
 </head>
 <body>
-  <header class="nav wrap">
-    <a class="brand" href="#" aria-label="any"><img src="assets/any.png" alt="any" width="44" height="44"></a>
-    <nav aria-label="Навигация"><a href="#how" data-en="How it works">Как работает</a><a href="#price" data-en="One purchase">Одна покупка</a><a href="help.html" data-en="Help">Помощь</a></nav>
-    <button id="language" class="language" aria-label="Switch language">EN</button>
-  </header>
-  <main>
-    <section class="hero wrap">
-      <div class="hero-copy">
-        <span class="eyebrow" data-en="YOUR VOICE. YOUR MAC.">ВАШ ГОЛОС. ВАШ MAC.</span>
-        <h1 data-en="Less typing.\nMore you.">Меньше печатать.\nБольше успевать.</h1>
-        <p class="lead" data-en="Hold Fn, speak, and get text where you work. Choose local models that keep speech on your Mac.">Зажмите Fn, скажите — и получите текст там, где работаете. Выбирайте локальные модели, чтобы обрабатывать речь на своём Mac.</p>
-        <a class="button download" aria-disabled="true" data-en="Release in preparation">Релиз готовится</a>
-        <p class="fine" data-en="30 days free · no card · Apple Silicon · macOS 14+">30 дней бесплатно · без карты · Apple Silicon · macOS 14+</p>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h9.5a3 3 0 0 1 3 3V20H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h9.5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"/></symbol>
+<symbol id="i-chip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="6.5" width="11" height="11" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9.5 3.5v3M14.5 3.5v3M9.5 17.5v3M14.5 17.5v3M3.5 9.5h3M3.5 14.5h3M17.5 9.5h3M17.5 14.5h3"/></symbol>
+<symbol id="i-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18.5a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 9.5a4.5 4.5 0 0 1-.5 9z"/></symbol>
+<symbol id="i-command" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9V6.5A2.5 2.5 0 1 0 6.5 9H9zm0 0h6m-6 0v6m6-6V6.5A2.5 2.5 0 1 1 17.5 9H15zm0 0v6m0 0h-6m6 0v2.5a2.5 2.5 0 1 0 2.5-2.5H15zm-6 0H6.5A2.5 2.5 0 1 0 9 17.5V15z"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.5 5.3 3.5 8.5s-1.1 6.1-3.5 8.5c-2.4-2.4-3.5-5.3-3.5-8.5s1.1-6.1 3.5-8.5z"/></symbol>
+<symbol id="i-history" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.5"/><path d="M4 4v4.5h4.5"/><path d="M12 8v4.5l3 2"/></symbol>
+<symbol id="i-lock-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8.5 11V7.5a3.5 3.5 0 0 1 6.8-1.2"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8.5 11V7.5a3.5 3.5 0 0 1 7 0V11"/></symbol>
+<symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l7 2.5v5.5c0 4.4-3 7.9-7 9-4-1.1-7-4.6-7-9V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+<symbol id="i-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l1.9 5.1 5.1 1.9-5.1 1.9-1.9 5.1-1.9-5.1-5.1-1.9 5.1-1.9z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></symbol>
+<symbol id="i-speaker" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+<symbol id="i-translate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h9M8.5 3v2M6 5c.6 3 2.7 5.6 5.5 7"/><path d="M11 5c-.8 3.6-3.3 6.4-7 8"/><path d="M12.5 21l4-10 4 10M14 17.5h5"/></symbol>
+<symbol id="i-xmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+<symbol id="i-swap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7.5h12M15.5 4l3.5 3.5-3.5 3.5"/><path d="M17 16.5H5M8.5 13L5 16.5 8.5 20"/></symbol>
+</defs></svg>
+<div class="sky" aria-hidden="true"><canvas id="sky"></canvas></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="any"><img src="assets/img/any-icon-64.png" alt="" width="34" height="34"><span>any</span></a>
+    <nav class="nav-links" aria-label="Разделы" data-en-aria="Sections">
+      <a href="#tasks" data-en="Tasks">Задачи</a>
+      <a href="#translate" data-en="Translation">Перевод</a>
+      <a href="#vocabulary" data-en="Vocabulary">Словарь</a>
+      <a href="#local" data-en="Privacy">Приватность</a>
+      <a href="#price" data-en="Pricing">Цена</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="lang" id="lang" type="button" aria-label="Switch to English">EN</button>
+      <a class="btn btn-primary download" aria-disabled="true"><span class="btn-label-short" data-en="Soon">Скоро</span><span class="btn-label-long dl-label" data-en="Release in preparation">Релиз готовится</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- 1. HERO -->
+  <section class="hero horizon">
+    <div class="wrap">
+      <span class="eyebrow reveal" data-en="Voice assistant for macOS">Голосовой ассистент для macOS</span>
+      <h1 class="display grad-text reveal" data-en-html="Voice at the speed of light.<br class='br-wide'> Right in your Mac’s notch.">Голос со скоростью света.<br class="br-wide"> Прямо в челке вашего Mac.</h1>
+      <p class="lead reveal" data-en="Hold Fn and speak — the text lands where your cursor is. Add ⌃ and your voice becomes a command: a task for AI, a translation of the selection or an edit. Choose to run speech and text models on your Mac.">Зажмите Fn и говорите — текст появится там, где стоит курсор. Добавьте ⌃, и голос станет командой: задачей для ИИ, переводом выделенного или правкой. Речь и текст можно обрабатывать моделями прямо на Mac.</p>
+      <div class="hero-cta reveal">
+        <a class="btn btn-primary download" aria-disabled="true"><svg><use href="#i-arrow-up-right"/></svg><span class="dl-label" data-en="Release in preparation">Релиз готовится</span></a>
+        <a class="btn btn-ghost" href="#tasks"><span data-en="See it work">Посмотреть в деле</span></a>
       </div>
-      <div class="desktop" aria-label="Иллюстрация диктовки">
-        <div class="desktop-bar"><span>9:41</span><span>⌁ &nbsp; ◒ &nbsp; ▰</span></div>
-        <div class="notch"><span class="signal"></span> any <span class="wave">▂ ▅ █ ▃ ▆ ▂</span></div>
-        <div class="note"><div class="note-label" data-en="A NOTE FOR TOMORROW">ЗАМЕТКА НА ЗАВТРА</div><p data-en="Let's keep the morning clear for the things that matter.\n\nA little less typing. A little more room to think.">Давайте оставим утро свободным для самого важного.\n\nЧуть меньше печатать. Чуть больше пространства для мыслей.</p><span class="cursor"></span></div>
-        <div class="keyhint"><kbd>fn</kbd><span data-en="Hold. Speak. Release.">Зажать. Сказать. Отпустить.</span></div>
-        <span class="illustration" data-en="Illustrative dictation example">Иллюстрация сценария диктовки</span>
+      <div class="hero-facts reveal">
+        <span class="chip"><svg><use href="#i-command"/></svg><span data-en="Works across all of macOS">Работает поверх всей macOS</span></span>
+        <span class="chip"><svg><use href="#i-chip"/></svg><span data-en="Whisper + Qwen on Apple Silicon">Whisper + Qwen на Apple Silicon</span></span>
+        <span class="chip"><svg><use href="#i-translate"/></svg><span data-en="Translate and write under the cursor">Перевод и текст под курсор</span></span>
       </div>
-    </section>
-    <section class="workflow wrap" id="how">
-      <div><span class="eyebrow" data-en="A SMALLER ROUTINE">МЕНЬШЕ РУТИНЫ</span><h2 data-en="From a thought\nto the right field.">Из мысли —\nв нужное поле.</h2></div>
-      <ol><li><span>01</span><div><h3 data-en="Place the cursor">Поставьте курсор</h3><p data-en="In Notes, a message, or a supported text field in your editor.">В заметке, сообщении или поддерживаемом текстовом поле вашего редактора.</p></div></li><li><span>02</span><div><h3 data-en="Hold Fn and speak">Зажмите Fn и говорите</h3><p data-en="Your selected recognizer turns the recording into text. Local modes stay local.">Выбранный движок превращает запись в текст. Локальные режимы работают на Mac.</p></div></li><li><span>03</span><div><h3 data-en="Release and keep going">Отпустите и продолжайте</h3><p data-en="Insert the result, find it in local history, and teach any your own words.">Вставьте результат, найдите его в локальной истории и научите any своим словам.</p></div></li></ol>
-    </section>
-    <section class="modes wrap">
-      <div class="mode-heading"><span class="eyebrow" data-en="A CHOICE YOU CONTROL">ВЫБОР ЗА ВАМИ</span><h2 data-en="Choose where\nthe work happens.">Выберите, где\nпроисходит работа.</h2><div class="segmented" aria-label="Processing mode"><button class="active" id="local" aria-pressed="true" data-en="On your Mac">На вашем Mac</button><button id="cloud" aria-pressed="false">Groq</button></div></div>
-      <div class="mode-detail" aria-live="polite"><span class="mode-tag" id="mode-tag"></span><h3 id="mode-title"></h3><p id="mode-description"></p><div class="flow"><span id="flow-start"></span><b>→</b><span id="flow-engine"></span><b>→</b><span id="flow-end"></span></div><p class="fine" id="mode-limit"></p></div>
-    </section>
-    <section class="extras wrap"><h2 data-en="A tool that remembers\nhow you work.">Инструмент, который\nзнает ваши слова.</h2><div class="extras-grid"><article><span class="feature-number">A</span><h3 data-en="Your vocabulary">Ваш словарь</h3><p data-en="Names, terms, and shortcuts. Keep your own spellings close at hand.">Имена, термины и сокращения. Ваши варианты написания всегда под рукой.</p></article><article><span class="feature-number">B</span><h3 data-en="Local history">Локальная история</h3><p data-en="Return to a transcript, copy or export it. Your history lives on this Mac.">Вернитесь к расшифровке, скопируйте или экспортируйте её. История хранится на этом Mac.</p></article><article><span class="feature-number">C</span><h3 data-en="Optional text AI">Текстовый AI по выбору</h3><p data-en="Structure and voice edits use a separate local text model or your Groq key.">Структура и правка голосом используют отдельную локальную текстовую модель или ваш ключ Groq.</p></article></div></section>
-    <section id="price" class="pricing wrap"><div><span class="eyebrow" data-en="TIME TO MAKE IT YOURS">ПОПРОБУЙТЕ В СВОЁМ РИТМЕ</span><h2 data-en="30 days to try.\nOne purchase to keep.">30 дней на пробу.\nОдна покупка навсегда.</h2><p data-en="The trial starts after setup or your first successful dictation outside the practice field.">Пробный период начинается после настройки или первой успешной диктовки вне тренировочного поля.</p></div><div class="price-card"><span class="price">385 <span>Stars</span></span><p data-en="Lifetime licence for this Mac. Future updates included.">Пожизненная лицензия для этого Mac. Будущие обновления включены.</p><p class="fine" data-en="Buy from the app through Telegram. The cost of buying Stars varies by platform and region. Optional Groq usage is governed by your Groq account.">Покупка из приложения через Telegram. Стоимость Stars зависит от платформы и региона. Условия использования Groq определяются вашим аккаунтом Groq.</p><a class="button download" aria-disabled="true" data-en="Release in preparation">Релиз готовится</a></div></section>
-    <section class="faq wrap"><h2 data-en="Before you start">Перед первым запуском</h2><details><summary data-en="Will everything work offline?">Всё будет работать без интернета?</summary><p data-en="Local dictation works after downloading a speech model. Structure and voice edits need a separate text model. Translation needs macOS 15+ and supported installed Apple languages. Downloads, trial checks and update checks use the network. Groq is a cloud option.">Локальная диктовка работает после загрузки речевой модели. Для структуры и правки голосом нужна отдельная текстовая модель. Перевод требует macOS 15+ и поддерживаемых установленных языков Apple. Загрузка моделей, проверка trial и обновлений используют сеть. Groq — облачный вариант.</p></details><details><summary data-en="Which Mac do I need?">Какой Mac нужен?</summary><p data-en="Apple Silicon and macOS 14 or later. Apple Translation requires macOS 15+. The optional local text model needs at least 8 GB RAM and about 2.5 GB disk space; speech models need additional space. Performance depends on your Mac and the chosen model.">Apple Silicon и macOS 14 или новее. Перевод Apple требует macOS 15+. Для отдельной локальной текстовой модели нужны минимум 8 ГБ памяти и около 2,5 ГБ на диске; речевые модели занимают дополнительное место. Скорость зависит от Mac и выбранной модели.</p></details><details><summary data-en="Do I need to register?">Нужно регистрироваться?</summary><p data-en="There is no mandatory any account. Setup asks your name and languages. Groq and Telegram purchases use their respective accounts.">Обязательного аккаунта any нет. При настройке приложение спрашивает имя и языки. Для Groq и покупки в Telegram используются аккаунты соответствующих сервисов.</p></details><details><summary data-en="How do updates work?">Как получать обновления?</summary><p data-en="Check for updates from the any menu. Prepared public builds use signed updates. You choose when to download and install them.">Проверяйте обновления из меню any. Подготовленные публичные сборки используют подписанные обновления. Вы выбираете, когда скачать и установить их.</p></details></section>
-  </main>
-  <footer class="wrap"><img src="assets/any.png" alt="any" width="36" height="36"><span data-en="A personal tool for your Mac.">Личный инструмент для вашего Mac.</span><a href="privacy.html" data-en="Privacy">Конфиденциальность</a><a href="help.html" data-en="Installation & help">Установка и помощь</a><a id="support" hidden data-en="Contact support">Связаться с поддержкой</a></footer>
+
+      <div class="hero-stage reveal" data-video="hero">
+        <div class="mac-edge">
+          <div class="mac-screen">
+            <div class="menubar"><span class="mb-left"><b>Notes</b><span class="mb-hide" data-en="File">Файл</span><span class="mb-hide" data-en="Edit">Правка</span><span class="mb-hide" data-en="View">Вид</span></span><span class="mb-right"><span class="mb-any">any</span><span class="mb-hide">⌁</span><span id="hero-clock">9:41</span></span></div>
+            <div class="notch-host"><div class="notch" id="hero-notch" data-state="idle"></div></div>
+            <div class="hero-note">
+              <div class="app-window">
+                <div class="app-bar"><span class="lights"><i></i><i></i><i></i></span><span class="app-name"><span class="app-dot" style="background:#e5b400">N</span><span data-en="Notes">Заметки</span></span></div>
+                <div class="app-body"><div class="field-meta"><b data-en="Tomorrow">Завтра</b></div><div class="typed" id="hero-text"></div></div>
+              </div>
+            </div>
+            <div class="hero-keys">
+              <button class="kbd fn-key" id="hero-fn" type="button" aria-describedby="hero-fn-hint">fn</button>
+              <span class="fine" id="hero-fn-hint" data-en="Hold fn (or the F key) to try it">Зажмите fn (или клавишу F), чтобы попробовать</span>
+            </div>
+          </div>
+        </div>
+        <p class="stage-caption" data-en="Interactive illustration. Text and timings are an example.">Интерактивная иллюстрация. Текст и тайминги — пример.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. TASKS -->
+  <section class="section" id="tasks">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow reveal" data-en="Fn + ⌃ · nothing selected">Fn + ⌃ · ничего не выделено</span>
+        <h2 class="title reveal" data-en="One sentence. A finished answer under the cursor.">Одна фраза — готовый ответ под курсором.</h2>
+        <p class="lead reveal" style="margin-top:20px" data-en="Put the cursor in an empty email, chat or document, press Fn + ⌃ and say the task. any knows it is a task: nothing is selected and you did not name a language.">Поставьте курсор в пустое письмо, чат или документ, нажмите Fn + ⌃ и скажите задачу. any понимает, что это задача: ничего не выделено и вы не назвали язык.</p>
+        <div class="prompt-list reveal" role="group" aria-label="Примеры задач" data-en-aria="Example tasks" id="task-prompts">
+          <button class="prompt" type="button" data-task="0" aria-pressed="true"><svg><use href="#i-mic"/></svg><span data-en="“Write a polite rejection to the designer candidate”">«Напиши вежливый отказ кандидату на вакансию дизайнера»</span></button>
+          <button class="prompt" type="button" data-task="1" aria-pressed="false"><svg><use href="#i-mic"/></svg><span data-en="“List interview questions for a Swift developer”">«Составь список вопросов для собеседования по Swift»</span></button>
+          <button class="prompt" type="button" data-task="2" aria-pressed="false"><svg><use href="#i-mic"/></svg><span data-en="“Explain briefly how Supabase differs from Firebase”">«Коротко объясни, чем Supabase отличается от Firebase»</span><span class="tag"><svg><use href="#i-globe"/></svg><span data-en="web">интернет</span></span></button>
+        </div>
+        <ul class="points reveal">
+          <li><span class="pt-icon"><svg><use href="#i-cloud"/></svg></span><div><h3 data-en="gpt-oss-120b in the cloud or Qwen on your Mac">gpt-oss-120b в облаке или Qwen на Mac</h3><p data-en="You choose where it runs in Settings → AI text editing: Groq with your key, or Qwen3-4B offline.">Где работает задача, вы выбираете в настройках «ИИ для текста»: Groq с вашим ключом или Qwen3-4B без интернета.</p></div></li>
+          <li><span class="pt-icon"><svg><use href="#i-globe"/></svg></span><div><h3 data-en="Looks things up when facts matter">Сам ищет, когда нужны факты</h3><p data-en="In the cloud mode the model decides whether to use Groq’s built-in web search (Exa). The notch then says “Found online · inserting”.">В облачном режиме модель сама решает, нужен ли встроенный веб-поиск Groq (Exa). Тогда в челке горит «Нашёл в интернете · вставляю ответ».</p></div></li>
+          <li><span class="pt-icon"><svg><use href="#i-sparkle"/></svg></span><div><h3 data-en="Zero fluff">Без «Конечно! Вот ваш текст:»</h3><p data-en="The answer is pasted as is: no preamble, no closing offer, no questions back. ⌘Z in the app removes it; the request and answer stay in history.">Ответ вставляется как есть: без вступлений, предложений помочь ещё и встречных вопросов. ⌘Z в приложении уберёт его, а запрос и ответ останутся в истории.</p></div></li>
+        </ul>
+      </div>
+      <div class="reveal">
+        <div class="stage" id="task-stage" data-video="task">
+          <div class="stage-edge"></div>
+          <div class="notch-host"><div class="notch" id="task-notch" data-state="idle"></div></div>
+          <div class="stage-body">
+            <div class="app-window">
+              <div class="app-bar"><span class="lights"><i></i><i></i><i></i></span><span class="app-name"><span class="app-dot" style="background:#2f80ed">✉</span><span data-en="New message">Новое сообщение</span></span></div>
+              <div class="app-body">
+                <div class="field-meta"><span><span data-en="To:">Кому:</span> <b id="task-to">anna@studio.design</b></span><span><span data-en="Subject:">Тема:</span> <b id="task-subject" data-en="About the position">По поводу вакансии</b></span></div>
+                <div class="typed" id="task-text"></div>
+              </div>
+            </div>
+            <div class="hcard" id="task-card">
+              <div class="hcard-head"><span class="badge-task" id="task-chip"><span class="orb"></span><span data-en="Task">Задача</span></span><span data-en="just now">только что</span></div>
+              <div class="hcard-q" id="task-card-q"></div>
+              <div class="hcard-a" id="task-card-a"></div>
+            </div>
+          </div>
+          <p class="stage-caption" data-en="Illustration. The model’s answer depends on your request.">Иллюстрация. Ответ модели зависит от запроса.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. TRANSLATION -->
+  <section class="section" id="translate">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow reveal" data-en="Two ways to translate">Два механизма перевода</span>
+        <h2 class="title reveal" data-en-html="Select and say the language.<br class='br-wide'> Or just speak.">Выделите и назовите язык.<br class="br-wide"> Или просто говорите.</h2>
+        <div class="seg reveal" role="tablist" aria-label="Режим перевода" data-en-aria="Translation mode" id="tr-mode">
+          <button type="button" role="tab" aria-selected="true" data-mode="selection"><svg><use href="#i-translate"/></svg><span data-en="Selection translation">Перевод выделенного</span></button>
+          <button type="button" role="tab" aria-selected="false" data-mode="speech"><svg><use href="#i-mic"/></svg><span data-en="Speech → English">Речь → английский</span></button>
+        </div>
+      </div>
+      <div class="split">
+        <div class="reveal">
+          <div id="tr-copy-selection">
+            <p class="lead" data-en="Select text in any app, press Fn + ⌃ and name the language — briefly (“to English”, “Russian”) or as a phrase (“translate the selection into German”). Then press Fn.">Выделите текст в любой программе, нажмите Fn + ⌃ и назовите язык — коротко («на английский», «Русский») или фразой («переведи выделенный текст на немецкий»). Затем нажмите Fn.</p>
+            <div class="seg" role="tablist" aria-label="Тип поля" data-en-aria="Field type" id="tr-field" style="margin-top:24px">
+              <button type="button" role="tab" aria-selected="true" data-field="editable" data-en="Editable field">Редактируемое поле</button>
+              <button type="button" role="tab" aria-selected="false" data-field="readonly" data-en="Web page, PDF">Веб-страница, PDF</button>
+            </div>
+            <ul class="points">
+              <li><span class="pt-icon"><svg><use href="#i-check"/></svg></span><div><h3 data-en="Editable: replaced in place">Редактируемое: замена на месте</h3><p data-en="In a message, email or editor the translation replaces the selection right where it was — after any re-checks the app, field and original text.">В сообщении, письме или редакторе перевод встаёт на место выделенного — после того как any заново проверит приложение, поле и исходный текст.</p></div></li>
+              <li><span class="pt-icon"><svg><use href="#i-speaker"/></svg></span><div><h3 data-en="Read-only: a sheet from the notch">Только чтение: шторка из челки</h3><p data-en="On a web page or in a PDF the translation opens under the notch with Copy, Listen and the original selection. The clipboard changes only when you press Copy.">На веб-странице или в PDF перевод открывается под челкой: «Скопировать», «Слушать» и исходное выделение. Буфер обмена меняется, только когда вы нажмёте «Скопировать».</p></div></li>
+              <li><span class="pt-icon"><svg><use href="#i-shield"/></svg></span><div><h3 data-en="Apple Translation, on device">Apple Translation на устройстве</h3><p data-en="Translation runs through Apple’s on-device framework. Needs macOS 15+ and the language packs installed in System Settings.">Перевод выполняет фреймворк Apple на устройстве. Нужна macOS 15+ и языки, загруженные в Системных настройках.</p></div></li>
+            </ul>
+            <div class="lang-grid" aria-label="10 языков перевода" data-en-aria="10 target languages">
+              <span class="chip"><b>EN</b><span data-en="English">Английский</span></span><span class="chip"><b>RU</b><span data-en="Russian">Русский</span></span><span class="chip"><b>ES</b><span data-en="Spanish">Испанский</span></span><span class="chip"><b>DE</b><span data-en="German">Немецкий</span></span><span class="chip"><b>FR</b><span data-en="French">Французский</span></span><span class="chip"><b>IT</b><span data-en="Italian">Итальянский</span></span><span class="chip"><b>UK</b><span data-en="Ukrainian">Украинский</span></span><span class="chip"><b>ZH</b><span data-en="Chinese">Китайский</span></span><span class="chip"><b>JA</b><span data-en="Japanese">Японский</span></span><span class="chip"><b>PT</b><span data-en="Portuguese">Португальский</span></span>
+            </div>
+          </div>
+          <div id="tr-copy-speech" hidden>
+            <p class="lead" data-en="Turn on “Dictate with English translation” and use the usual Fn gesture: speak in your language — English text lands in the document, no intermediate steps.">Включите «Диктовать с переводом на английский» и пользуйтесь обычным жестом Fn: говорите на своём языке — в документ сразу попадает английский текст, без промежуточных шагов.</p>
+            <ul class="points">
+              <li><span class="pt-icon"><svg><use href="#i-cloud"/></svg></span><div><h3 data-en="Whisper large-v3 via Groq">Whisper large-v3 через Groq</h3><p data-en="The mode uses Groq’s translation endpoint with your key; the speech language is detected automatically. The target language is English.">Режим использует эндпоинт перевода Groq с вашим ключом, язык речи определяется автоматически. Язык результата — английский.</p></div></li>
+              <li><span class="pt-icon"><svg><use href="#i-book"/></svg></span><div><h3 data-en="Plain output">Чистый результат</h3><p data-en="Vocabulary, snippets, Shortcuts and voice commands are switched off in this mode; cleanup follows your dictation mode.">Словарь, сниппеты, Shortcuts и голосовые команды в этом режиме не применяются; очистка текста следует выбранному режиму.</p></div></li>
+            </ul>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="stage" id="tr-stage" data-video="translate">
+            <div class="stage-edge"></div>
+            <div class="notch-host"><div class="notch" id="tr-notch" data-state="idle"></div></div>
+            <div class="stage-body" id="tr-body"></div>
+            <p class="stage-caption" data-en="Interactive illustration">Интерактивная иллюстрация</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. VOCABULARY -->
+  <section class="section" id="vocabulary">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal" data-en="Personal vocabulary">Персональный словарь</span>
+        <h2 class="title reveal" data-en-html="“Supabase”, not “super base”.<br class='br-wide'> Your words, two layers deep.">«Supabase», а не «супер бейс».<br class="br-wide"> Ваши слова — на двух уровнях.</h2>
+        <p class="lead reveal" data-en="Speech recognizers stumble on names, brands and jargon. any fixes this before recognition and after it — and only where it makes sense.">Распознаватели речи спотыкаются на именах, брендах и жаргоне. any исправляет это до распознавания и после него — и только там, где это уместно.</p>
+      </div>
+      <div class="levels">
+        <article class="glass level reveal">
+          <span class="level-num" data-en="LEVEL 1 · BEFORE">УРОВЕНЬ 1 · ДО</span>
+          <h3 data-en="Hints for the recognizer">Подсказка распознавателю</h3>
+          <p data-en="Your terms go into the Whisper prompt (Groq or local) or Apple Speech’s contextual strings before decoding — ranked by priority, up to 224 bytes and 32 terms.">Ваши термины попадают в промпт Whisper (Groq или локального) или в contextual strings Apple Speech ещё до расшифровки — по приоритету, до 224 байт и 32 терминов.</p>
+          <div class="bytes" id="bytes">
+            <div class="bytes-bar"><i></i></div>
+            <div class="bytes-meta"><span id="bytes-count">0 / 224 B</span><span data-en="UTF-8 prompt budget">бюджет промпта UTF-8</span></div>
+            <div class="hint-cloud" id="hint-cloud"></div>
+          </div>
+        </article>
+        <article class="glass level reveal">
+          <span class="level-num" data-en="LEVEL 2 · AFTER">УРОВЕНЬ 2 · ПОСЛЕ</span>
+          <h3 data-en="A local replacement engine">Локальный движок замен</h3>
+          <p data-en="After recognition, whole-word rules run on your Mac for every recognizer: category, strict case, context cue words in the same sentence, app scope and priority.">После распознавания на Mac работают правила по целым словам — для любого распознавателя: категория, строгий регистр, слова-маркеры контекста в том же предложении, привязка к приложению и приоритет.</p>
+          <div class="entry" aria-label="Пример записи словаря" data-en-aria="Example dictionary entry">
+            <div class="entry-row"><span class="entry-k" data-en="Heard as">Как услышано</span><span class="pill">пул реквест</span></div>
+            <div class="entry-row"><span class="entry-k" data-en="Replacement">Как писать</span><span class="pill on">pull request</span></div>
+            <div class="entry-row"><span class="entry-k" data-en="Type">Тип</span><span class="pill" data-en="Replacement">Замена</span><span class="pill" data-en="Brand">Бренд</span><span class="pill on" data-en="Technical">Термин</span><span class="pill" data-en="Slang">Сленг</span></div>
+            <div class="entry-row"><span class="entry-k" data-en="Case">Регистр</span><span class="pill on" data-en="As in dictionary">Как в словаре</span></div>
+            <div class="entry-row"><span class="entry-k">Bundle ID</span><span class="pill on" style="font-family:var(--font-mono)">com.apple.dt.Xcode</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="glass vocab-demo reveal">
+        <div class="seg" role="tablist" aria-label="Приложение" data-en-aria="App" id="vocab-app">
+          <button type="button" role="tab" aria-selected="true" data-app="xcode"><span class="app-dot" style="background:#1d7cf2">X</span>Xcode</button>
+          <button type="button" role="tab" aria-selected="false" data-app="vscode"><span class="app-dot" style="background:#0e6fc4">V</span>VS Code</button>
+          <button type="button" role="tab" aria-selected="false" data-app="telegram"><span class="app-dot" style="background:#2aabee">T</span>Telegram</button>
+        </div>
+        <div class="vline" aria-live="polite">
+          <div class="heard" id="vocab-heard"></div>
+          <div class="out" id="vocab-out"></div>
+        </div>
+        <div class="vtrace" id="vocab-trace"></div>
+        <p class="fine" style="margin-top:14px" data-en="Example rules. The bundle ID is set per entry in the dictionary or taken from a history record (“Only in this app”).">Пример правил. Bundle ID задаётся у записи в словаре или берётся из записи истории («Только в приложении этой записи»).</p>
+      </div>
+
+      <div class="split" style="margin-top:72px">
+        <div class="reveal">
+          <h3 class="title" style="font-size:clamp(26px,3vw,36px)" data-en="Starter packs and self-learning">Стартовые наборы и самообучение</h3>
+          <ul class="points">
+            <li><span class="pt-icon"><svg><use href="#i-book"/></svg></span><div><h3 data-en="7 topics × 9 languages">7 тем × 9 языков</h3><p data-en="Essentials, Brands & services, Development, AI, Product & design, Business, Slang. “kube control” → kubectl, “oh auth” → OAuth, “Laura” → LoRA — but only next to “adapter” or “fine-tune”.">«Основное», «Бренды и сервисы», «Разработка», «ИИ», «Продукт и дизайн», «Бизнес», «Сленг». «ноушен» → Notion, «гитхаб» → GitHub, «печь» → «питч» — но только рядом со словом «инвестор».</p></div></li>
+            <li><span class="pt-icon"><svg><use href="#i-history"/></svg></span><div><h3 data-en="Learns from your corrections">Учится на ваших исправлениях</h3><p data-en="Fix a name in history — or right in the app within five minutes of the paste — and any offers to remember the spelling. Only the inserted fragment is watched; keystroke contents are never recorded.">Исправьте название в истории — или прямо в приложении в течение пяти минут после вставки — и any предложит запомнить написание. Отслеживается только вставленный фрагмент, содержимое нажатий не записывается.</p></div></li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <div class="learn-toast" role="img" aria-label="Тост: Написание запомнено, ноушен → Notion" data-en-aria="Toast: Spelling remembered, ноушен → Notion">
+            <span class="ok-dot"><svg><use href="#i-check"/></svg></span>
+            <div><b data-en="Spelling remembered">Написание запомнено</b><span class="pair">ноушен → <strong>Notion</strong></span><div class="lt-sub" data-en="Recognition hint · local only">Подсказка распознавания · только локально</div></div>
+            <span class="lt-undo" data-en="Undo">Отменить</span>
+          </div>
+          <div class="learn-toast" style="flex-direction:column;gap:10px">
+            <b data-en="Remember this correction?">Запомнить исправление?</b>
+            <div class="pair"><span data-en="Recognized">Было распознано</span>: Sphere Chaos → <strong>sverkaus</strong></div>
+            <div class="lt-sub" data-en="This looks like a special name. Confirm its spelling to use it in future dictations.">Похоже на особое название. Подтверди правильное написание, чтобы использовать его в следующих диктовках.</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="sbtn" data-en="Don’t learn">Не запоминать</span><span class="sbtn" style="background:#fff;color:#000" data-en="Remember">Запомнить</span><span class="sbtn" data-en="Later">Позже</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. CHAIN -->
+  <section class="section" id="chain">
+    <div class="wrap split">
+      <div>
+        <span class="eyebrow reveal" data-en="Chained workflow">Комбо-сценарий</span>
+        <h2 class="title reveal" data-en="From a draft to German in three gestures.">От черновика до немецкого — за три жеста.</h2>
+        <p class="lead reveal" style="margin:20px 0 28px" data-en="The commands compose: a task writes the text, the selection becomes the next command’s input.">Команды складываются: задача пишет текст, выделение становится входом для следующей команды.</p>
+        <div class="steps reveal" id="chain-steps">
+          <button class="step" type="button" data-step="0" aria-current="step"><span class="n">1</span><span><h3 data-en="Task in an empty email">Задача в пустом письме</h3><p data-en="“Write a bullet outline for the new product presentation” — clean text appears under the cursor.">«Напиши тезисный план презентации нового продукта» — под курсором появляется чистый текст.</p><span class="keys"><span class="kbd sm">fn</span><span class="plus">+</span><span class="kbd sm">⌃</span></span></span></button>
+          <button class="step" type="button" data-step="1"><span class="n">2</span><span><h3 data-en="Select everything">Выделить всё</h3><p data-en="⌘A, then Fn + ⌃ and say “to German”.">⌘A, затем Fn + ⌃ и «на немецкий».</p><span class="keys"><span class="kbd sm">⌘</span><span class="kbd sm">A</span><span class="plus">→</span><span class="kbd sm">fn</span><span class="plus">+</span><span class="kbd sm">⌃</span></span></span></button>
+          <button class="step" type="button" data-step="2"><span class="n">3</span><span><h3 data-en="Replaced in place">Замена на месте</h3><p data-en="The editable selection is replaced by the German version. Your spoken command is recognized with your dictionary in play.">Выделение в редактируемом поле заменяется немецкой версией. Сама голосовая команда распознаётся с учётом вашего словаря.</p></span></button>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="stage" id="chain-stage" data-video="chain">
+          <div class="stage-edge"></div>
+          <div class="notch-host"><div class="notch" id="chain-notch" data-state="idle"></div></div>
+          <div class="stage-body">
+            <div class="app-window">
+              <div class="app-bar"><span class="lights"><i></i><i></i><i></i></span><span class="app-name"><span class="app-dot" style="background:#2f80ed">✉</span><span data-en="New message">Новое сообщение</span></span></div>
+              <div class="app-body"><div class="field-meta"><span><span data-en="Subject:">Тема:</span> <b data-en="Launch deck">Презентация запуска</b></span></div><div class="typed" id="chain-text"></div></div>
+            </div>
+          </div>
+          <p class="stage-caption" data-en="Illustration. Texts are an example.">Иллюстрация. Тексты — пример.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. LOCAL & PRIVACY -->
+  <section class="section horizon" id="local">
+    <div class="wrap">
+      <div class="section-head center">
+        <span class="eyebrow reveal" data-en="What leaves your Mac — and what doesn’t">Что покидает ваш Mac — и что нет</span>
+        <h2 class="title reveal" data-en-html="Fully local on Apple Silicon.<br class='br-wide'> Cloud only when you choose it.">Полностью локально на Apple Silicon.<br class="br-wide"> Облако — только по вашему выбору.</h2>
+        <p class="lead reveal" data-en="Local dictation never silently falls back to the cloud. Models download only when you press the button.">Локальная диктовка никогда не уходит в облако молча. Модели скачиваются только по вашей кнопке.</p>
+      </div>
+      <div class="modes">
+        <article class="glass mode reveal">
+          <div class="mode-top"><span class="mode-icon"><svg><use href="#i-chip"/></svg></span><div><h3 data-en="100% local">100% локально</h3><div class="sub">Apple Silicon · Whisper + Qwen3-4B</div></div></div>
+          <div class="flow"><span data-en="Voice">Голос</span><b>→</b><span>Whisper / Apple Speech</span><b>→</b><span data-en="Vocabulary">Словарь</span><b>→</b><span data-en="Your field">Ваше поле</span></div>
+          <dl class="rows">
+            <div><dt data-en="Audio">Аудио</dt><dd class="local" data-en="stays on the Mac">остаётся на Mac</dd></div>
+            <div><dt data-en="Speech recognition">Распознавание речи</dt><dd>WhisperKit (Core ML) · Base / Small</dd></div>
+            <div><dt data-en="Tasks, Structure, voice edits">Задачи, «Структурировать», правка голосом</dt><dd>Qwen3-4B · llama.cpp</dd></div>
+            <div><dt data-en="Selection translation">Перевод выделенного</dt><dd>Apple Translation</dd></div>
+            <div><dt data-en="Web search">Поиск в интернете</dt><dd data-en="no">нет</dd></div>
+          </dl>
+          <div class="model-row"><span class="pt-icon" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:var(--glass-strong)"><svg class="icon" style="width:15px;height:15px"><use href="#i-mic"/></svg></span><div><div class="mr-name" data-en="Local Whisper · Small">Локальный Whisper · Small</div><div class="mr-sub" data-en="Small — balanced quality">Small — баланс качества</div></div><span class="mr-state"><i></i><span data-en="Ready for offline use">Готова к работе офлайн</span></span></div>
+          <div class="model-row"><span class="pt-icon" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:var(--glass-strong)"><svg class="icon" style="width:15px;height:15px"><use href="#i-sparkle"/></svg></span><div><div class="mr-name">Qwen3-4B Instruct</div><div class="mr-sub" data-en="2.5 GB · ~3.5 GB RAM while working · unloads after 2 idle minutes">2,5 ГБ · ~3,5 ГБ памяти в работе · выгружается через 2 минуты простоя</div></div><span class="mr-state"><i></i><span data-en="Offline">Без интернета</span></span></div>
+        </article>
+        <article class="glass mode reveal">
+          <div class="mode-top"><span class="mode-icon"><svg><use href="#i-cloud"/></svg></span><div><h3 data-en="Hybrid cloud">Гибридный облачный режим</h3><div class="sub" data-en="Groq with your own key">Groq с вашим собственным ключом</div></div></div>
+          <div class="flow"><span data-en="Voice">Голос</span><b>→</b><span>Groq Whisper</span><b>→</b><span>gpt-oss</span><b>→</b><span data-en="Your field">Ваше поле</span></div>
+          <dl class="rows">
+            <div><dt data-en="Audio">Аудио</dt><dd class="cloud" data-en="sent to Groq">отправляется в Groq</dd></div>
+            <div><dt data-en="Speech recognition">Распознавание речи</dt><dd>whisper-large-v3-turbo</dd></div>
+            <div><dt data-en="Tasks">Задачи</dt><dd>gpt-oss-120b</dd></div>
+            <div><dt data-en="Web search">Поиск в интернете</dt><dd data-en="Groq browser search (Exa)">browser search Groq (Exa)</dd></div>
+            <div><dt data-en="Your key">Ваш ключ</dt><dd data-en="macOS Keychain">Связка ключей macOS</dd></div>
+          </dl>
+          <p class="fine" style="margin-top:16px" data-en="In both modes history, vocabulary and audio backups stay on this Mac: no any account, no sync, no analytics.">В обоих режимах история, словарь и резервное аудио остаются на этом Mac: без аккаунта any, без синхронизации и аналитики.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. PRICE -->
+  <section class="section" id="price">
+    <div class="wrap">
+      <div class="glass price reveal">
+        <span class="eyebrow" data-en="Try it at your own pace">Попробуйте в своём ритме</span>
+        <h2 class="title" data-en="30 days free. One purchase to keep.">30 дней бесплатно. Одна покупка — навсегда.</h2>
+        <div class="price-num">385<small>Stars</small></div>
+        <p class="muted" style="max-width:520px" data-en="A lifetime licence for this Mac, bought from the app through Telegram. No card for the trial. The cost of Stars depends on platform and region; Groq usage is billed by your Groq account.">Пожизненная лицензия для этого Mac, покупка из приложения через Telegram. Для пробного периода карта не нужна. Стоимость Stars зависит от платформы и региона; использование Groq оплачивается вашим аккаунтом Groq.</p>
+        <a class="btn btn-primary download" aria-disabled="true"><span class="dl-label" data-en="Release in preparation">Релиз готовится</span></a>
+        <p class="fine" data-en="macOS 14+ · Apple Silicon · translation needs macOS 15+ · local Qwen needs 8 GB RAM">macOS 14+ · Apple Silicon · перевод — macOS 15+ · локальной Qwen нужно 8 ГБ памяти</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. FAQ -->
+  <section class="section" style="padding-top:0">
+    <div class="wrap faq">
+      <h2 class="title reveal" style="margin-bottom:24px" data-en="Before you start">Перед первым запуском</h2>
+      <details class="reveal"><summary><span data-en="Will everything work offline?">Всё будет работать без интернета?</span><svg><use href="#i-chevron-down"/></svg></summary><p data-en="Local dictation works after you download a speech model. Tasks, Structure and voice edits need the separate Qwen3-4B model. Translation needs macOS 15+ and installed Apple languages. Model downloads, trial checks and update checks use the network. Groq is a cloud option.">Локальная диктовка работает после загрузки речевой модели. Для задач, «Структурировать» и правки голосом нужна отдельная модель Qwen3-4B. Перевод требует macOS 15+ и установленных языков Apple. Загрузка моделей, проверка trial и обновлений используют сеть. Groq — облачный вариант.</p></details>
+      <details class="reveal"><summary><span data-en="What if my keyboard has no Fn?">А если на клавиатуре нет Fn?</span><svg><use href="#i-chevron-down"/></svg></summary><p data-en="Use the global Ctrl + Option + D toggle. Also set System Settings → Keyboard → “Press 🌐 key to: Do Nothing” so Fn does not open the emoji picker.">Используйте глобальный переключатель Ctrl + Option + D. А в Системных настройках → Клавиатура выберите «Нажатие 🌐: ничего не делать», чтобы Fn не открывал эмодзи.</p></details>
+      <details class="reveal"><summary><span data-en="Which Mac do I need?">Какой Mac нужен?</span><svg><use href="#i-chevron-down"/></svg></summary><p data-en="Apple Silicon and macOS 14 or later. Apple Translation requires macOS 15+. The local text model needs at least 8 GB of RAM and about 2.5 GB of disk; speech models need extra space.">Apple Silicon и macOS 14 или новее. Перевод Apple требует macOS 15+. Локальной текстовой модели нужно минимум 8 ГБ памяти и около 2,5 ГБ на диске; речевые модели занимают дополнительное место.</p></details>
+      <details class="reveal"><summary><span data-en="Do I need an account?">Нужно регистрироваться?</span><svg><use href="#i-chevron-down"/></svg></summary><p data-en="There is no any account. Setup asks for your name and languages. Groq and Telegram use their own accounts.">Аккаунта any нет. При настройке приложение спрашивает имя и языки. Groq и Telegram используют собственные аккаунты.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <a class="brand" href="#top"><img src="assets/img/any-icon-64.png" alt="" width="28" height="28" style="width:28px;height:28px"><span>any</span></a>
+    <a href="help.html" data-en="Installation & help">Установка и помощь</a>
+    <a href="privacy.html" data-en="Privacy">Конфиденциальность</a>
+    <a href="third-party-notices.txt" data-en="Third-party notices">Лицензии компонентов</a>
+    <a id="support" hidden data-en="Support">Поддержка</a>
+  </div>
+</footer>
 </body>
 </html>

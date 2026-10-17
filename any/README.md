@@ -11,9 +11,7 @@ A self-contained static module. Every URL inside is relative, so the folder work
 
 ## Downloads
 
-The `<script id="release-config">` block in `index.html` keeps the contract of `scripts/build-website.py` in the any repo. While `downloadURL` is `null`, download buttons read «Релиз готовится». Set it to the verified DMG URL to enable them.
-
-Note: that script still generates the previous landing page from the any repo's `website/` folder. Do not copy its output over this folder.
+While `downloadURL` in the `<script id="release-config">` block of `index.html` is `null`, download buttons read «Релиз готовится». After a release, check that the DMG answers `200` and put its versioned URL there (see `release/README.md` in the any repo). This folder is the only copy of the site.
 
 ## Moving to a subdomain
 

@@ -38,12 +38,15 @@
       link.setAttribute("aria-disabled", String(!config.downloadURL));
       if (config.downloadURL) link.href = config.downloadURL; else link.removeAttribute("href");
       const label = link.querySelector(".dl-label");
-      if (label) label.textContent = config.downloadURL ? T("Скачать для Mac", "Download for Mac") : T("Релиз готовится", "Release in preparation");
-      const short = link.querySelector(".btn-label-short");
-      if (short) short.textContent = config.downloadURL ? T("Скачать", "Download") : T("Скоро", "Soon");
+      const short = link.classList.contains("btn-sm");
+      label.textContent = config.downloadURL
+        ? (short ? T("Скачать", "Download") : T("Скачать для Mac", "Download for Mac"))
+        : (short ? T("Скоро", "Soon") : T("Релиз готовится", "Release in preparation"));
     }
     const support = $("#support");
     if (support && config.supportURL) { support.href = config.supportURL; support.hidden = false; }
+    syncTranslationMeta();
+    syncFlowMeta();
   }
 
   $("#lang").addEventListener("click", () => {
@@ -51,7 +54,6 @@
     store.set("any-site-language", lang);
     applyLanguage();
     demos.forEach(d => d.restart());
-    renderVocab(); renderBytes(true);
   });
 
   /* ---------------- Notch HUD ---------------- */
@@ -65,7 +67,7 @@
       this.speaking = false;
       this.timers = [];
     }
-    clear() { this.timers.forEach(clearInterval); this.timers = []; this.speaking = false; }
+    clear() { this.timers.forEach(clearInterval); this.timers = []; this.speaking = false; this.el.style.setProperty("--lvl", 0); }
     set(state, html = "") {
       this.clear();
       this.el.dataset.state = state;
@@ -79,7 +81,7 @@
     startWave(wave) {
       wave.innerHTML = "<i></i>".repeat(30);
       const bars = [...wave.children];
-      const max = this.el.dataset.state === "locked" || this.el.dataset.state === "command" ? 18 : 20;
+      const max = this.el.dataset.state === "command" ? 18 : 20;
       let t = 0;
       this.levels.fill(0);
       const tick = () => {
@@ -97,6 +99,8 @@
           bar.style.height = h + "px";
           bar.style.opacity = v < 0.04 ? 0.4 : 0.58 + 0.38 * v;
         });
+        // The glow around the notch breathes with the voice.
+        this.el.style.setProperty("--lvl", (this.levels.slice(-4).reduce((a, b) => a + b, 0) / 4).toFixed(2));
       };
       tick();
       this.timers.push(setInterval(tick, reduce ? 400 : 95));
@@ -109,17 +113,17 @@
     }
 
     // ---- State builders (NotchOverlayView.swift) ----
-    recording({ locked = false, command = null } = {}) {
+    recording({ command = null } = {}) {
       const badge = command === "task"
         ? `<span class="badge-task"><span class="orb"></span>${T("Задача", "Task")}</span>`
         : command === "selection"
           ? `<span class="badge-sel">${icon("translate")}${T("Выделение", "Selection")}</span>` : "";
       const hint = command === "task" ? T("Скажите, что сделать → Fn", "Say what to do → Fn")
         : command === "selection" ? T("Язык или правка → Fn", "Language or edit → Fn") : "";
-      const right = locked || command
+      const right = command
         ? `<span class="gbtn finish" aria-hidden="true">${icon("check")}</span><span class="gbtn" aria-hidden="true">${icon("xmark")}</span>`
         : `<span class="gbtn" aria-hidden="true">${icon("lock-open")}</span>`;
-      this.set(command ? "command" : locked ? "locked" : "hold",
+      this.set(command ? "command" : "hold",
         `${badge}<span class="timer">00:00</span>${hint ? `<span class="hint">${hint}</span>` : ""}<span class="spacer"></span><span class="wave"></span><span class="spacer"></span><span class="gbtn" aria-hidden="true">${icon("chevron-down")}</span>${right}`);
       this.speaking = true;
     }
@@ -152,30 +156,54 @@
   }
   const caret = '<span class="caret"></span>';
   function renderText(el, html) { el.innerHTML = html + caret; }
-  async function type(run, el, text, { prefix = "", step = reduce ? 9999 : 3, delay = 16 } = {}) {
+  async function type(run, el, text, { step = reduce ? 9999 : 4, delay = 14 } = {}) {
     for (let i = 0; i <= text.length; i += step) {
-      renderText(el, prefix + esc(text.slice(0, i)));
+      renderText(el, esc(text.slice(0, i)));
       await run.wait(delay);
     }
-    renderText(el, prefix + esc(text));
+    renderText(el, esc(text));
+  }
+  // Pasted text: every word condenses out of a blur, one after another.
+  function words(text, from = 0) {
+    return text.split(/(\s+)/).map((part, i) => /^\s+$/.test(part) ? part : `<span class="w" style="--i:${from + i}">${esc(part)}</span>`).join("");
+  }
+  // Decoding effect: characters pass through glyphs of the target text before settling.
+  async function morph(run, el, from, to, { frames = reduce ? 1 : 20, delay = 38, wrap = "" } = {}) {
+    const a = Array.from(from), b = Array.from(to);
+    const pool = b.filter(c => /\S/.test(c));
+    const len = Math.max(a.length, b.length);
+    for (let f = 1; f <= frames; f++) {
+      const p = f / frames * 1.25;
+      let html = "";
+      for (let i = 0; i < len; i++) {
+        const at = i / len;
+        if (p >= at + 0.25) html += esc(b[i] ?? "");
+        else if (p >= at) html += /\s/.test(b[i] ?? " ") ? (b[i] ?? "") : `<span class="glyph">${esc(pool[(Math.random() * pool.length) | 0] || "·")}</span>`;
+        else html += esc(a[i] ?? "");
+      }
+      el.innerHTML = wrap ? wrap.replace("$", html) : html;
+      await run.wait(delay);
+    }
+    el.innerHTML = wrap ? wrap.replace("$", esc(to)) : esc(to);
   }
   function said(stage, text) {
     let bubble = stage.querySelector(".said");
     if (!bubble) { bubble = document.createElement("div"); bubble.className = "said"; stage.appendChild(bubble); }
-    bubble.innerHTML = text ? `${icon("mic")}<span>${esc(text)}</span>` : "";
-    bubble.classList.toggle("show", Boolean(text));
+    if (text) { bubble.innerHTML = `${icon("mic")}<span>${esc(text)}</span>`; bubble.className = "said show"; }
+    else if (bubble.classList.contains("show")) bubble.className = "said up"; // pulled into the notch
+    else bubble.className = "said";
   }
 
-  // A demo loops its scenario while its stage is on screen.
+  // A demo loops its scenario while its element is on screen.
   const demos = [];
-  function demo(stageEl, scenario) {
+  function demo(el, scenario, { pause = 2600 } = {}) {
     const d = {
       run: null, visible: false, paused: false,
       start() {
         if (this.run || !this.visible || this.paused) return;
         const run = this.run = new Run();
         (async () => {
-          try { for (;;) { await scenario(run); await run.wait(2600); } }
+          try { for (;;) { await scenario(run); await run.wait(pause); } }
           catch (e) { if (e !== STOP) console.error(e); }
           finally { if (this.run === run) this.run = null; }
         })();
@@ -186,75 +214,78 @@
     new IntersectionObserver(([entry]) => {
       d.visible = entry.isIntersecting;
       if (d.visible) d.start(); else d.stop();
-    }, { threshold: 0.25 }).observe(stageEl);
+    }, { threshold: 0.25 }).observe(el);
     demos.push(d);
     return d;
+  }
+  function bindTabs(root, attr, onPick, pressed = "aria-selected") {
+    $$("button", root).forEach(b => b.addEventListener("click", () => {
+      $$("button", root).forEach(x => x.setAttribute(pressed, String(x === b)));
+      onPick(b.dataset[attr]);
+    }));
   }
 
   /* ---------------- Hero: Fn dictation ---------------- */
   const heroNotch = new Notch($("#hero-notch"));
   const heroText = $("#hero-text");
-  const heroStage = $(".hero-stage");
+  const heroStage = $("#hero-stage");
+  const fnKey = $("#hero-fn");
   const heroLines = () => [
-    T("Давайте оставим утро свободным для самого важного: созвон с командой переносим на 15:00.",
-      "Let’s keep the morning clear for what matters: the team call moves to 3 p.m."),
-    T("Чуть меньше печатать. Чуть больше пространства, чтобы думать.",
-      "A little less typing. A little more room to think.")
+    T("Давайте оставим утро свободным: созвон с командой переносим на 15:00.",
+      "Let’s keep the morning clear: the team call moves to 3 p.m."),
+    T("Чуть меньше печатать. Чуть больше времени думать.",
+      "A little less typing. A little more time to think.")
   ];
-  let heroCount = 0;
+  let heroCount = 0, heroDone = "";
   async function heroInsert(run) {
-    const lines = heroLines();
-    const line = lines[heroCount % lines.length];
+    const line = heroLines()[heroCount % 2];
     heroCount += 1;
     heroNotch.processing(T("Распознавание речи…", "Recognizing speech…"));
     await run.wait(850);
-    const before = heroText.dataset.done || "";
-    const joined = (before ? before + "\n\n" : "") + line;
-    heroText.dataset.done = heroCount % 2 === 0 ? "" : joined;
-    // Dictation is pasted in one go, not typed.
-    heroText.innerHTML = esc(joined) + caret;
-    heroText.classList.remove("flash"); void heroText.offsetWidth; heroText.classList.add("flash");
+    // Dictation is pasted in one go; the words then condense into place.
+    const before = heroDone;
+    heroText.innerHTML = (before ? esc(before) + "\n\n" : "") + words(line) + caret;
+    heroDone = heroCount % 2 === 0 ? "" : line;
     heroNotch.done(line);
-    await run.wait(2600);
+    await run.wait(2800);
     heroNotch.idle();
   }
   const heroDemo = demo(heroStage, async run => {
-    if (!heroText.dataset.done) renderText(heroText, "");
-    await run.wait(1100);
+    if (!heroDone) renderText(heroText, "");
+    await run.wait(1000);
     heroNotch.recording();
-    $("#hero-fn").classList.add("is-down");
+    fnKey.classList.add("is-down");
     await run.wait(2700);
-    $("#hero-fn").classList.remove("is-down");
+    fnKey.classList.remove("is-down");
     heroNotch.speaking = false;
     await heroInsert(run);
-  });
+  }, { pause: 1600 });
   // Hold-to-talk on the page: the on-screen fn key, or F on the keyboard.
   let holdRun = null, resumeTimer = 0;
   function holdStart() {
     if (holdRun) return;
     heroDemo.paused = true; heroDemo.stop(); clearTimeout(resumeTimer);
     holdRun = new Run();
-    $("#hero-fn").classList.add("is-down");
-    if (!heroText.dataset.done) renderText(heroText, "");
+    fnKey.classList.add("is-down");
+    if (!heroDone) renderText(heroText, "");
     heroNotch.recording();
   }
   async function holdEnd() {
     if (!holdRun) return;
     const run = holdRun;
-    $("#hero-fn").classList.remove("is-down");
+    fnKey.classList.remove("is-down");
     heroNotch.speaking = false;
     try { await heroInsert(run); } catch (e) { if (e !== STOP) console.error(e); }
     if (holdRun === run) holdRun = null;
     resumeTimer = setTimeout(() => { heroDemo.paused = false; heroDemo.start(); }, 6000);
   }
-  const fnKey = $("#hero-fn");
   fnKey.addEventListener("pointerdown", e => { e.preventDefault(); fnKey.setPointerCapture?.(e.pointerId); holdStart(); });
   fnKey.addEventListener("pointerup", holdEnd);
   fnKey.addEventListener("pointercancel", holdEnd);
   fnKey.addEventListener("keydown", e => { if ((e.key === " " || e.key === "Enter") && !e.repeat) { e.preventDefault(); holdStart(); } });
   fnKey.addEventListener("keyup", e => { if (e.key === " " || e.key === "Enter") holdEnd(); });
   addEventListener("keydown", e => {
-    if (e.repeat || e.metaKey || e.ctrlKey || e.altKey || (e.key !== "f" && e.key !== "F" && e.key !== "а" && e.key !== "А")) return;
+    if (e.repeat || e.metaKey || e.ctrlKey || e.altKey || !["f", "F", "а", "А"].includes(e.key)) return;
     if (e.target.closest("input, textarea, [contenteditable]") || !heroDemo.visible) return;
     holdStart();
   });
@@ -264,121 +295,125 @@
   const tasks = () => [
     {
       q: T("Напиши вежливый отказ кандидату на вакансию дизайнера", "Write a polite rejection to the designer candidate"),
-      to: "anna@studio.design", subject: T("По поводу вакансии", "About the position"), web: false,
-      a: T("Анна, здравствуйте!\n\nСпасибо за отклик на вакансию дизайнера и за время, которое вы уделили тестовому заданию. Мы внимательно изучили портфолио, но решили продолжить с кандидатом, чей опыт ближе к нашим текущим задачам.\n\nБудем рады вернуться к вашей кандидатуре, когда откроем новые позиции. Удачи в поиске!",
-        "Hi Anna,\n\nThank you for applying for the designer role and for the time you spent on the test assignment. We reviewed your portfolio carefully, but decided to move forward with a candidate whose experience is closer to our current work.\n\nWe’d be glad to reconnect when new positions open. Good luck with your search!")
+      to: "anna@studio.design", web: false,
+      a: T("Анна, здравствуйте!\n\nСпасибо за отклик на вакансию дизайнера и за время, которое вы уделили тестовому заданию. Мы решили продолжить с кандидатом, чей опыт ближе к нашим текущим задачам.\n\nБудем рады вернуться к вашей кандидатуре, когда откроем новые позиции.",
+        "Hi Anna,\n\nThank you for applying for the designer role and for the time you spent on the test assignment. We decided to move forward with a candidate whose experience is closer to our current work.\n\nWe’d be glad to reconnect when new positions open.")
     },
     {
       q: T("Составь список вопросов для собеседования по Swift", "List interview questions for a Swift developer"),
-      to: "team@studio.dev", subject: T("Собеседование iOS", "iOS interview"), web: false,
-      a: T("- Чем struct отличается от class и когда что выбирать?\n- Как работает ARC и откуда берутся циклы сильных ссылок?\n- Что такое actor и какую проблему он решает?\n- Как устроены async/await и отмена Task?\n- Когда нужен протокол с associatedtype?\n- Как вы тестируете код, который ходит в сеть?",
-        "- How does a struct differ from a class, and when do you pick each?\n- How does ARC work, and where do retain cycles come from?\n- What is an actor and which problem does it solve?\n- How do async/await and Task cancellation work?\n- When do you need a protocol with an associatedtype?\n- How do you test code that talks to the network?")
+      to: "team@studio.dev", web: false,
+      a: T("- Чем struct отличается от class?\n- Как работает ARC и откуда берутся циклы ссылок?\n- Какую проблему решает actor?\n- Как устроены async/await и отмена Task?\n- Как вы тестируете сетевой код?",
+        "- How does a struct differ from a class?\n- How does ARC work, and where do retain cycles come from?\n- Which problem does an actor solve?\n- How do async/await and Task cancellation work?\n- How do you test networking code?")
     },
     {
       q: T("Коротко объясни, чем Supabase отличается от Firebase", "Explain briefly how Supabase differs from Firebase"),
-      to: "cto@studio.dev", subject: T("Выбор бэкенда", "Choosing a backend"), web: true,
-      a: T("Supabase — открытая платформа поверх PostgreSQL: SQL, авторизация, файловое хранилище и realtime. Firebase от Google построен на NoSQL-базах Firestore и Realtime Database.\n- Данные: таблицы и связи в Supabase, документы и коллекции в Firebase.\n- Хостинг: Supabase можно развернуть у себя, Firebase работает в Google Cloud.\n- Доступ: row-level security в Postgres против правил безопасности Firebase.",
-        "Supabase is an open-source platform built on PostgreSQL: SQL, auth, file storage and realtime. Google’s Firebase is built on the NoSQL databases Firestore and Realtime Database.\n- Data: tables and relations in Supabase, documents and collections in Firebase.\n- Hosting: Supabase can be self-hosted, Firebase runs on Google Cloud.\n- Access: Postgres row-level security versus Firebase security rules.")
+      to: "cto@studio.dev", web: true,
+      a: T("Supabase — открытая платформа поверх PostgreSQL. Firebase от Google построен на NoSQL-базах.\n- Данные: таблицы и связи против документов и коллекций.\n- Хостинг: Supabase можно развернуть у себя, Firebase — только Google Cloud.\n- Доступ: row-level security в Postgres против правил Firebase.",
+        "Supabase is an open-source platform on PostgreSQL. Google’s Firebase is built on NoSQL databases.\n- Data: tables and relations versus documents and collections.\n- Hosting: Supabase can be self-hosted, Firebase runs on Google Cloud.\n- Access: Postgres row-level security versus Firebase rules.")
     }
   ];
   let taskIndex = 0;
   const taskNotch = new Notch($("#task-notch"));
   const taskStage = $("#task-stage");
+  const beacon = $("#task-beacon");
+  taskStage.insertAdjacentHTML("afterbegin", '<div class="agent-spill" aria-hidden="true"></div>');
   const taskDemo = demo(taskStage, async run => {
     const t = tasks()[taskIndex];
+    const out = $("#task-text");
     $("#task-to").textContent = t.to;
-    $("#task-subject").textContent = t.subject;
-    const out = $("#task-text"), card = $("#task-card");
-    card.classList.remove("show");
     renderText(out, "");
-    taskNotch.idle(); said(taskStage, "");
-    await run.wait(900);
+    taskNotch.idle(); said(taskStage, ""); beacon.classList.remove("on"); taskStage.classList.remove("agent");
+    await run.wait(800);
     taskNotch.recording({ command: "task" });
     await run.wait(500);
     said(taskStage, "«" + t.q + "»");
     await run.wait(2300);
     taskNotch.speaking = false;
     said(taskStage, "");
+    taskStage.classList.add("agent");
     taskNotch.task(T("Работаю над задачей", "Working on it"));
-    await run.wait(t.web ? 2600 : 1900);
+    if (t.web) { await run.wait(700); beacon.classList.add("on"); }
+    await run.wait(t.web ? 2200 : 1800);
     taskNotch.task(t.web ? T("Нашёл в интернете · вставляю ответ", "Found online · inserting") : T("Вставляю ответ", "Inserting the answer"));
-    await run.wait(700);
-    await type(run, out, t.a, { step: 4, delay: 14 });
+    await run.wait(600);
+    beacon.classList.remove("on");
+    await type(run, out, t.a);
+    taskStage.classList.remove("agent");
     taskNotch.done(t.a.split("\n")[0]);
-    $("#task-chip").innerHTML = t.web
-      ? `${icon("globe")}<span>${T("Задача · интернет", "Task · web")}</span>`
-      : `<span class="orb"></span><span>${T("Задача", "Task")}</span>`;
-    $("#task-card-q").textContent = T("Ваш запрос: ", "Your request: ") + t.q;
-    $("#task-card-a").textContent = t.a;
-    card.classList.add("show");
     await run.wait(3600);
     taskNotch.idle();
-    await run.wait(600);
     taskIndex = (taskIndex + 1) % 3;
     syncPrompts();
-  });
-  function syncPrompts() { $$("#task-prompts .prompt").forEach(b => b.setAttribute("aria-pressed", String(Number(b.dataset.task) === taskIndex))); }
-  $$("#task-prompts .prompt").forEach(b => b.addEventListener("click", () => { taskIndex = Number(b.dataset.task); syncPrompts(); taskDemo.restart(); }));
+  }, { pause: 900 });
+  function syncPrompts() { $$("#task-prompts button").forEach(b => b.setAttribute("aria-pressed", String(Number(b.dataset.task) === taskIndex))); }
+  bindTabs($("#task-prompts"), "task", i => { taskIndex = Number(i); taskDemo.restart(); }, "aria-pressed");
 
   /* ---------------- Translation ---------------- */
-  let trMode = "selection", trField = "editable";
+  let trMode = "editable";
   const trNotch = new Notch($("#tr-notch"));
   const trStage = $("#tr-stage"), trBody = $("#tr-body");
   const trData = () => ({
     chat: T("Привет! Завтра буду в офисе в 10:30. Пришли, пожалуйста, отчёт до полудня.", "Hi! I’ll be in the office at 10:30 tomorrow. Please send the report before noon."),
     chatOut: T("Hi! I’ll be in the office at 10:30 tomorrow. Please send the report before noon.", "¡Hola! Mañana estaré en la oficina a las 10:30. Envíame el informe antes del mediodía, por favor."),
     chatCmd: T("на английский", "to Spanish"),
-    chatLang: T("Английский", "Spanish"),
-    article: "Apple Silicon runs speech and language models on the Neural Engine and GPU, so dictation can stay on the device without a round trip to the cloud.",
-    articleOut: T("Apple Silicon запускает речевые и языковые модели на Neural Engine и GPU, поэтому диктовка может оставаться на устройстве без обращения к облаку.",
-      "Apple Silicon ejecuta modelos de voz y de lenguaje en el Neural Engine y la GPU, así que el dictado puede quedarse en el dispositivo sin pasar por la nube."),
+    chatLang: T("Английский", "Spanish"), chatPair: lang === "ru" ? ["RU", "EN"] : ["EN", "ES"],
+    article: "Apple Silicon runs speech and language models on the Neural Engine and GPU, so dictation can stay on the device.",
+    articleOut: T("Apple Silicon запускает речевые и языковые модели на Neural Engine и GPU, поэтому диктовка может оставаться на устройстве.",
+      "Apple Silicon ejecuta modelos de voz y de lenguaje en el Neural Engine y la GPU, así que el dictado puede quedarse en el dispositivo."),
     articleCmd: T("переведи на русский", "translate to Spanish"),
-    articleLang: T("Русский", "Spanish"),
-    speech: T("Завтра в десять встреча с командой дизайна, подготовь, пожалуйста, макеты главного экрана.", "Mañana a las diez nos reunimos con el equipo de diseño; prepara, por favor, las maquetas de la pantalla principal."),
-    speechOut: "Tomorrow at ten we have a meeting with the design team; please prepare the mockups of the home screen."
+    articleLang: T("Русский", "Spanish"), articlePair: lang === "ru" ? ["EN", "RU"] : ["EN", "ES"],
+    speech: T("Завтра в десять встреча с командой дизайна, подготовь макеты главного экрана.", "Mañana a las diez nos reunimos con el equipo de diseño; prepara las maquetas de la pantalla principal."),
+    speechOut: "Tomorrow at ten we meet the design team; please prepare the home screen mockups.",
+    speechPair: lang === "ru" ? ["RU", "EN"] : ["ES", "EN"]
   });
+  function lightLangs(pair) {
+    $$("#tr-langs span").forEach(s => { s.classList.toggle("from", Boolean(pair) && s.textContent === pair[0]); s.classList.toggle("on", Boolean(pair) && s.textContent === pair[1]); });
+  }
+  function syncTranslationMeta() {
+    $("#tr-meta").textContent = trMode === "speech" ? "Whisper large-v3 · Groq" : "Apple Translation · " + T("на устройстве", "on device");
+  }
   function trLayout() {
     const d = trData();
     if (trMode === "speech") {
-      trBody.innerHTML = `<div class="app-window"><div class="app-bar"><span class="lights"><i></i><i></i><i></i></span><span class="app-name"><span class="app-dot" style="background:#e5b400">N</span>${T("Заметки", "Notes")}</span></div><div class="app-body"><div class="field-meta"><b>${T("Встреча", "Meeting")}</b></div><div class="typed" id="tr-text"></div></div></div>`;
-    } else if (trField === "editable") {
-      trBody.innerHTML = `<div class="app-window"><div class="app-bar"><span class="lights"><i></i><i></i><i></i></span><span class="app-name"><span class="app-dot" style="background:#2aabee">T</span>Telegram</span></div><div class="app-body"><div class="field-meta"><b>Maria</b><span>${T("в сети", "online")}</span></div><div class="typed chat-input" id="tr-text"></div></div></div><p class="toast-undo" id="tr-note"></p>`;
+      trBody.innerHTML = `<div class="app-tag"><span class="app-dot" style="background:#e5b400">N</span>${T("Заметки", "Notes")}</div><div class="typed big" id="tr-text"></div>`;
+    } else if (trMode === "editable") {
+      trBody.innerHTML = `<div class="app-tag"><span class="app-dot" style="background:#2aabee">T</span>Telegram · Maria</div><div class="typed big"><span class="chat-bubble" id="tr-text"></span></div>`;
     } else {
-      trBody.innerHTML = `<div class="app-window"><div class="app-bar"><span class="lights"><i></i><i></i><i></i></span><span class="app-name"><span class="app-dot" style="background:#1e90ff">S</span>Safari</span><span class="urlbar">developer.apple.com</span></div><div class="app-body article"><h4>Machine learning on Apple Silicon</h4><p id="tr-text">${esc(d.article)}</p></div></div>`;
+      trBody.innerHTML = `<div class="app-tag"><span class="app-dot" style="background:#1e90ff">S</span>developer.apple.com</div><div class="article"><h4>Machine learning on Apple Silicon</h4><p class="typed" id="tr-text">${esc(d.article)}</p></div>`;
     }
   }
-  async function selectWords(run, el, text, html = s => esc(s)) {
-    const words = text.split(" ");
-    for (let i = 1; i <= words.length; i += reduce ? words.length : 2) {
-      el.innerHTML = `<span class="sel">${html(words.slice(0, i).join(" "))}</span>${words.length > i ? " " + html(words.slice(i).join(" ")) : ""}`;
+  async function selectWords(run, el, text) {
+    const parts = text.split(" ");
+    for (let i = 1; i <= parts.length; i += reduce ? parts.length : 2) {
+      el.innerHTML = `<span class="sel">${esc(parts.slice(0, i).join(" "))}</span>${parts.length > i ? " " + esc(parts.slice(i).join(" ")) : ""}`;
       await run.wait(40);
     }
-    el.innerHTML = `<span class="sel">${html(text)}</span>`;
+    el.innerHTML = `<span class="sel">${esc(text)}</span>`;
   }
   const trDemo = demo(trStage, async run => {
     const d = trData();
-    trNotch.idle(); said(trStage, "");
+    trNotch.idle(); said(trStage, ""); lightLangs(null);
     trLayout();
     const el = $("#tr-text");
     if (trMode === "speech") {
       renderText(el, "");
-      await run.wait(900);
+      await run.wait(800);
       trNotch.recording();
       await run.wait(400);
       said(trStage, "«" + d.speech + "»");
+      lightLangs(d.speechPair);
       await run.wait(2800);
       trNotch.speaking = false; said(trStage, "");
       trNotch.processing(T("Перевод речи на английский…", "Translating speech to English…"));
       await run.wait(1300);
-      el.innerHTML = esc(d.speechOut) + caret;
-      el.classList.add("flash");
+      el.innerHTML = words(d.speechOut) + caret;
       trNotch.done(d.speechOut);
-      await run.wait(3200);
+      await run.wait(3400);
       trNotch.idle();
       return;
     }
-    if (trField === "editable") {
-      renderText(el, esc(d.chat));
+    if (trMode === "editable") {
+      el.innerHTML = esc(d.chat);
       await run.wait(900);
       await selectWords(run, el, d.chat);
       await run.wait(400);
@@ -387,10 +422,10 @@
       said(trStage, "«" + d.chatCmd + "»");
       await run.wait(1500);
       trNotch.speaking = false; said(trStage, "");
+      lightLangs(d.chatPair);
       trNotch.processing(T("Перевод → ", "Translation → ") + d.chatLang, true);
-      await run.wait(1300);
-      el.innerHTML = esc(d.chatOut) + caret;
-      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+      await run.wait(700);
+      await morph(run, el, d.chat, d.chatOut);
       trNotch.done(T("Выделение заменено переводом", "Selection replaced with translation"));
       await run.wait(3400);
       trNotch.idle();
@@ -405,18 +440,20 @@
     said(trStage, "«" + d.articleCmd + "»");
     await run.wait(1700);
     trNotch.speaking = false; said(trStage, "");
+    lightLangs(d.articlePair);
     trNotch.processing(T("Перевод → ", "Translation → ") + d.articleLang, true);
     await run.wait(1200);
     trNotch.set("sheet", sheetHTML(d));
     wireSheet(d);
-    await run.wait(7000);
+    await morph(run, $("#tr-notch .sheet-result"), d.article, d.articleOut, { frames: reduce ? 1 : 16 });
+    await run.wait(6000);
     trNotch.idle();
   });
   function sheetHTML(d) {
     return `<div class="sheet-head"><span>${T("Перевод выделения", "Selection translation")}</span><span class="sheet-status">${icon("check")}${T("Перевод готов", "Translation ready")}</span></div>
       <div class="sheet-langs"><span class="lchip">${T("Автоопределение (Английский)", "Auto-detect (English)")}<svg><use href="#i-chevron-down"/></svg></span><span class="swap">${icon("swap")}</span><span class="lchip">${esc(d.articleLang)}<svg><use href="#i-chevron-down"/></svg></span></div>
-      <div class="sheet-result">${esc(d.articleOut)}</div>
-      <div class="sheet-actions"><button type="button" class="sbtn" data-act="copy">${icon("copy")}<span>${T("Скопировать", "Copy")}</span></button><button type="button" class="sbtn" data-act="listen">${icon("speaker")}<span>${T("Слушать", "Listen")}</span></button><span class="sbtn ghost">${T("Повторить перевод", "Retry translation")}</span><span class="sbtn ghost">${T("Открыть переводчик", "Open translator")}</span></div>
+      <div class="sheet-result"></div>
+      <div class="sheet-actions"><button type="button" class="sbtn" data-act="copy">${icon("copy")}<span>${T("Скопировать", "Copy")}</span></button><button type="button" class="sbtn" data-act="listen">${icon("speaker")}<span>${T("Слушать", "Listen")}</span></button><span class="sbtn ghost">${T("Повторить перевод", "Retry translation")}</span></div>
       <div class="sheet-source">› ${T("Исходное выделение", "Original selection")}</div>`;
   }
   function wireSheet(d) {
@@ -434,100 +471,93 @@
       speechSynthesis.cancel(); speechSynthesis.speak(u);
     });
   }
-  function bindSeg(root, attr, onPick) {
-    $$("button", root).forEach(b => b.addEventListener("click", () => {
-      $$("button", root).forEach(x => x.setAttribute("aria-selected", String(x === b)));
-      onPick(b.dataset[attr]);
-    }));
-  }
-  bindSeg($("#tr-mode"), "mode", m => {
-    trMode = m;
-    $("#tr-copy-selection").hidden = m !== "selection";
-    $("#tr-copy-speech").hidden = m !== "speech";
-    trDemo.paused = false; trDemo.restart();
-  });
-  bindSeg($("#tr-field"), "field", f => { trField = f; trDemo.paused = false; trDemo.restart(); });
+  bindTabs($("#tr-mode"), "mode", m => { trMode = m; syncTranslationMeta(); trDemo.paused = false; trDemo.restart(); });
 
-  /* ---------------- Vocabulary ---------------- */
-  // Example rules in the shape of VocabularyEntry; the scoped rule mirrors VocabularyTests.swift:273-280.
-  let vocabApp = "xcode";
-  const bundles = { xcode: "com.apple.dt.Xcode", vscode: "com.microsoft.VSCode", telegram: "ru.keepcoder.Telegram" };
-  function vocabCase() {
-    if (lang === "ru") return {
-      heard: "Открой пул реквест про супабейс и проверь миграцию в постгрес.",
-      rules: [
-        { from: "пул реквест", to: "pull request", scope: ["xcode", "vscode"], label: "Термин · только Xcode, VS Code" },
-        { from: "пул реквест", to: "пул-реквест", scope: null, label: "Замена · все приложения" },
-        { from: "супабейс", to: "Supabase", scope: null, label: "Бренд · как в словаре" },
-        { from: "постгрес", to: "PostgreSQL", scope: null, label: "Бренд · как в словаре" }
-      ]
-    };
-    return {
-      heard: "Rename user ID in the super base client and check the post gress migration.",
-      rules: [
-        { from: "user ID", to: "userId", scope: ["xcode", "vscode"], label: "Technical · Xcode, VS Code only" },
-        { from: "super base", to: "Supabase", scope: null, label: "Brand · as in dictionary" },
-        { from: "post gress", to: "PostgreSQL", scope: null, label: "Brand · as in dictionary" }
-      ]
-    };
-  }
-  function renderVocab() {
-    const c = vocabCase();
-    // Scoped rules win over global ones for the same alias (Vocabulary.swift:241-247).
-    const active = [];
-    for (const r of c.rules) {
-      if (r.scope && !r.scope.includes(vocabApp)) continue;
-      if (active.some(a => a.from === r.from)) continue;
-      active.push(r);
-    }
-    let heard = esc(c.heard), out = esc(c.heard);
-    for (const r of c.rules) heard = heard.replace(esc(r.from), `<mark>${esc(r.from)}</mark>`);
-    for (const r of active) out = out.replace(esc(r.from), `<mark class="hit">${esc(r.to)}</mark>`);
-    for (const r of c.rules) if (!active.includes(r) && !active.some(a => a.from === r.from)) out = out.replace(esc(r.from), `<mark class="keep">${esc(r.from)}</mark>`);
-    $("#vocab-heard").innerHTML = `${T("Распознано", "Recognized")}: ${heard}`;
-    $("#vocab-out").innerHTML = `${T("Вставлено", "Inserted")}: ${out}`;
-    $("#vocab-trace").innerHTML = [`frontmost · ${bundles[vocabApp]}`]
-      .concat(active.map(r => `«${esc(r.from)}» → ${esc(r.to)} · ${esc(r.label)}`))
-      .concat(c.rules.filter(r => r.scope && !r.scope.includes(vocabApp)).map(r => `«${esc(r.from)}» → ${esc(r.to)} · ${T("пропущено: другое приложение", "skipped: different app")}`))
-      .map(s => `<div>${s}</div>`).join("");
-  }
-  bindSeg($("#vocab-app"), "app", a => { vocabApp = a; renderVocab(); });
-  renderVocab();
-
-  // Level 1: fill the 224-byte prompt budget the way Vocabulary.selectHints does.
+  /* ---------------- Vocabulary, level 1: recognizer hints ---------------- */
+  // Fills the 224-byte prompt budget the way Vocabulary.selectHints does (≤224 UTF-8 bytes, ≤32 terms).
   const hintTerms = ["Supabase", "PostgreSQL", "Claude Code", "Notion", "GitHub", "kubectl", "OAuth", "SwiftUI", "TestFlight", "Xcode", "Figma", "Linear", "Vercel", "Tailwind", "Kubernetes", "Grafana", "Terraform", "Cloudflare", "Sentry", "Redis", "Prisma", "Webflow", "Miro", "Jira", "Confluence", "Postman", "Docker", "Nginx"];
-  let bytesDone = false;
-  function renderBytes(force) {
-    if (bytesDone && !force) return;
-    bytesDone = true;
-    const cloud = $("#hint-cloud"), bar = $("#bytes .bytes-bar i"), count = $("#bytes-count");
-    cloud.innerHTML = "";
+  const cloud = $("#hint-cloud"), bar = $("#bytes .bytes-bar i"), count = $("#bytes-count");
+  demo($("#bytes"), async run => {
+    cloud.innerHTML = hintTerms.map(t => `<span>${esc(t)}</span>`).join("");
+    bar.style.width = "0%"; count.textContent = "0 / 224 B";
     const enc = new TextEncoder();
     let used = 0, n = 0;
-    hintTerms.forEach((term, i) => {
-      const size = enc.encode(term).length + (n ? 2 : 0);
-      const fits = used + size <= 224 && n < 32;
-      const chip = document.createElement("span");
-      chip.textContent = term;
-      if (fits) { used += size; n += 1; } else { chip.style.opacity = ".3"; chip.style.textDecoration = "line-through"; chip.title = T("не помещается в 224 байта", "does not fit in 224 bytes"); }
-      chip.style.transition = "opacity .3s"; chip.style.opacity = "0";
-      cloud.appendChild(chip);
-      setTimeout(() => { chip.style.opacity = fits ? "1" : ".3"; }, reduce ? 0 : 60 * i);
-    });
-    setTimeout(() => { bar.style.width = (used / 224 * 100) + "%"; count.textContent = `${used} / 224 B · ${n} ${T("терминов", "terms")}`; }, reduce ? 0 : 200);
+    await run.wait(400);
+    for (const chip of cloud.children) {
+      const size = enc.encode(chip.textContent).length + (n ? 2 : 0);
+      if (used + size <= 224 && n < 32) {
+        used += size; n += 1;
+        chip.className = "in";
+        bar.style.width = (used / 224 * 100) + "%";
+        count.textContent = `${used} / 224 B · ${n}`;
+      } else chip.className = "out";
+      await run.wait(reduce ? 0 : 120);
+    }
+    await run.wait(4200);
+    for (const chip of cloud.children) chip.className = "";
+    await run.wait(700);
+  }, { pause: 200 });
+
+  /* ---------------- Vocabulary, level 2: local replacement engine ---------------- */
+  // Example rules in the shape of VocabularyEntry; scoped rules win over global ones (Vocabulary.swift:241-247).
+  const apps = ["xcode", "vscode", "telegram"];
+  const bundles = { xcode: "com.apple.dt.Xcode", vscode: "com.microsoft.VSCode", telegram: "ru.keepcoder.Telegram" };
+  let vocabApp = "xcode";
+  function vocabCase() {
+    if (lang === "ru") return {
+      parts: ["Открой ", "pr", " про ", "supa", " и проверь миграцию в ", "pg", "."],
+      rules: {
+        pr: [{ from: "пул реквест", to: "pull request", scope: ["xcode", "vscode"] }, { from: "пул реквест", to: "пул-реквест", scope: null }],
+        supa: [{ from: "супабейс", to: "Supabase", scope: null }],
+        pg: [{ from: "постгрес", to: "PostgreSQL", scope: null }]
+      }
+    };
+    return {
+      parts: ["Rename ", "uid", " in the ", "supa", " client and check the ", "pg", " migration."],
+      rules: {
+        uid: [{ from: "user ID", to: "userId", scope: ["xcode", "vscode"] }],
+        supa: [{ from: "super base", to: "Supabase", scope: null }],
+        pg: [{ from: "post gress", to: "PostgreSQL", scope: null }]
+      }
+    };
   }
-  new IntersectionObserver(([e], o) => { if (e.isIntersecting) { renderBytes(); o.disconnect(); } }, { threshold: .4 }).observe($("#bytes"));
+  function pickRule(list) { return list.find(r => r.scope && r.scope.includes(vocabApp)) || list.find(r => !r.scope) || null; }
+  const vocabOut = $("#vocab-out");
+  const vocabDemo = demo(vocabOut, async run => {
+    const c = vocabCase();
+    $$("#vocab-app button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.app === vocabApp)));
+    $("#vocab-bundle").textContent = "frontmost · " + bundles[vocabApp];
+    vocabOut.innerHTML = c.parts.map(p => c.rules[p] ? `<span class="term" data-k="${p}">${esc(c.rules[p][0].from)}</span>` : esc(p)).join("");
+    await run.wait(1400);
+    for (const term of $$(".term", vocabOut)) {
+      const list = c.rules[term.dataset.k], rule = pickRule(list);
+      if (!rule) { term.classList.add("keep"); await run.wait(500); continue; }
+      await morph(run, term, list[0].from, rule.to, { frames: reduce ? 1 : 12, delay: 40 });
+      term.classList.add("hit");
+      await run.wait(350);
+    }
+    await run.wait(3200);
+    vocabApp = apps[(apps.indexOf(vocabApp) + 1) % apps.length];
+  }, { pause: 300 });
+  bindTabs($("#vocab-app"), "app", a => { vocabApp = a; vocabDemo.restart(); });
 
   /* ---------------- Chain ---------------- */
   const chainNotch = new Notch($("#chain-notch"));
   const chainStage = $("#chain-stage");
+  chainStage.insertAdjacentHTML("afterbegin", '<div class="agent-spill" aria-hidden="true"></div>');
   let chainFrom = 0;
   const outline = () => T(
-    "- Проблема: команды тратят часы на рутинный текст\n- Решение: any — голос, задачи и перевод прямо в челке Mac\n- Как работает: Fn — диктовка, Fn + ⌃ — команды\n- Приватность: локальные Whisper и Qwen на Apple Silicon\n- Запуск: 30 дней бесплатно, затем одна покупка",
-    "- Problem: teams spend hours on routine text\n- Solution: any — voice, tasks and translation right in the Mac’s notch\n- How it works: Fn for dictation, Fn + ⌃ for commands\n- Privacy: local Whisper and Qwen on Apple Silicon\n- Launch: 30 days free, then a single purchase");
-  const german = "- Problem: Teams verbringen Stunden mit Routinetexten\n- Lösung: any — Stimme, Aufgaben und Übersetzung direkt in der Notch des Mac\n- So funktioniert es: Fn für Diktat, Fn + ⌃ für Befehle\n- Datenschutz: lokale Whisper- und Qwen-Modelle auf Apple Silicon\n- Start: 30 Tage kostenlos, danach ein einmaliger Kauf";
-  function markStep(i) { $$("#chain-steps .step").forEach(s => { if (Number(s.dataset.step) === i) s.setAttribute("aria-current", "step"); else s.removeAttribute("aria-current"); }); }
-  const nl = s => esc(s);
+    "- Проблема: команды тратят часы на рутинный текст\n- Решение: голос, задачи и перевод в челке Mac\n- Приватность: локальные Whisper и Qwen\n- Запуск: 30 дней бесплатно",
+    "- Problem: teams spend hours on routine text\n- Solution: voice, tasks and translation in the Mac’s notch\n- Privacy: local Whisper and Qwen\n- Launch: 30 days free");
+  const german = "- Problem: Teams verbringen Stunden mit Routinetexten\n- Lösung: Stimme, Aufgaben und Übersetzung in der Notch\n- Datenschutz: lokale Whisper- und Qwen-Modelle\n- Start: 30 Tage kostenlos";
+  function markStep(i) {
+    $$("#chain-steps .node").forEach(s => {
+      const n = Number(s.dataset.step);
+      if (n === i) s.setAttribute("aria-current", "step"); else s.removeAttribute("aria-current");
+      s.classList.toggle("done", n < i);
+    });
+    $("#chain-steps .track-beam").style.setProperty("--p", i / 2);
+  }
   const chainDemo = demo(chainStage, async run => {
     const el = $("#chain-text");
     const from = chainFrom; chainFrom = 0;
@@ -537,38 +567,142 @@
       await run.wait(800);
       chainNotch.recording({ command: "task" });
       await run.wait(400);
-      said(chainStage, T("«Напиши тезисный план презентации нового продукта»", "“Write a bullet outline for the new product presentation”"));
-      await run.wait(2200);
+      said(chainStage, T("«Напиши тезисный план презентации»", "“Write a bullet outline for the presentation”"));
+      await run.wait(2100);
       chainNotch.speaking = false; said(chainStage, "");
+      chainStage.classList.add("agent");
       chainNotch.task(T("Работаю над задачей", "Working on it"));
-      await run.wait(1700);
+      await run.wait(1600);
       chainNotch.task(T("Вставляю ответ", "Inserting the answer"));
-      await type(run, el, outline(), { step: 4, delay: 14 });
+      await type(run, el, outline());
+      chainStage.classList.remove("agent");
       chainNotch.done(outline().split("\n")[0]);
-      await run.wait(2200);
+      await run.wait(2000);
       chainNotch.idle();
-    } else renderText(el, nl(outline()));
+    } else el.innerHTML = esc(outline());
+    markStep(1);
     if (from <= 1) {
-      markStep(1);
       await run.wait(700);
-      el.innerHTML = `<span class="sel">${nl(outline())}</span>`;
+      el.innerHTML = `<span class="sel">${esc(outline())}</span>`;
       await run.wait(700);
       chainNotch.recording({ command: "selection" });
       await run.wait(400);
       said(chainStage, T("«на немецкий»", "“to German”"));
       await run.wait(1500);
       chainNotch.speaking = false; said(chainStage, "");
-    } else el.innerHTML = `<span class="sel">${nl(outline())}</span>`;
+    } else el.innerHTML = `<span class="sel">${esc(outline())}</span>`;
     markStep(2);
     chainNotch.processing(T("Перевод → Немецкий", "Translation → German"), true);
-    await run.wait(1400);
-    el.innerHTML = nl(german) + caret;
-    el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    await run.wait(600);
+    await morph(run, el, outline(), german, { frames: reduce ? 1 : 24 });
     chainNotch.done(T("Выделение заменено переводом", "Selection replaced with translation"));
     await run.wait(3600);
     chainNotch.idle();
   });
-  $$("#chain-steps .step").forEach(s => s.addEventListener("click", () => { chainFrom = Number(s.dataset.step); markStep(chainFrom); chainDemo.restart(); }));
+  $$("#chain-steps .node").forEach(s => s.addEventListener("click", () => { chainFrom = Number(s.dataset.step); markStep(chainFrom); chainDemo.restart(); }));
+
+  /* ---------------- Local vs cloud: where your voice travels ---------------- */
+  let flowMode = "local";
+  function syncFlowMeta() {
+    $("#flow-meta").textContent = flowMode === "local"
+      ? "WhisperKit · Qwen3-4B · Apple Translation"
+      : "whisper-large-v3-turbo · gpt-oss-120b · Exa";
+    $("#flow-desc").textContent = flowMode === "local"
+      ? T("Голос, распознавание, текстовая модель и перевод — всё на Mac.", "Voice, recognition, the text model and translation all stay on the Mac.")
+      : T("Аудио и текст уходят в Groq с вашим ключом; история и словарь остаются на Mac.", "Audio and text go to Groq with your key; history and vocabulary stay on the Mac.");
+  }
+  bindTabs($("#flow-mode"), "mode", m => { flowMode = m; syncFlowMeta(); flow.kick(); });
+  const flow = (() => {
+    const canvas = $("#flow"), ctx = canvas.getContext("2d");
+    let W = 0, H = 0, dpr = 1, mix = 0, frame = 0, running = false;
+    const ring = Array.from({ length: 150 }, () => ({ a: Math.random() * Math.PI * 2, s: 0.0035 + Math.random() * 0.004, r: (Math.random() - 0.5) * 22, z: Math.random() }));
+    const bridge = Array.from({ length: 28 }, (_, i) => ({ t: i / 28, s: 0.0028 + Math.random() * 0.0016, j: (Math.random() - 0.5) * 16 }));
+    function size() {
+      dpr = Math.min(devicePixelRatio || 1, 2);
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    }
+    const lerp = (a, b, t) => a + (b - a) * t;
+    function bez(p0, p1, p2, t) { const u = 1 - t; return { x: u * u * p0.x + 2 * u * t * p1.x + t * t * p2.x, y: u * u * p0.y + 2 * u * t * p1.y + t * t * p2.y }; }
+    function glow(x, y, r, color, a) {
+      const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+      g.addColorStop(0, `rgba(${color},${a})`); g.addColorStop(1, `rgba(${color},0)`);
+      ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2); ctx.fill();
+    }
+    function label(text, x, y, alpha, align = "center") {
+      if (alpha < 0.02) return;
+      ctx.globalAlpha = alpha; ctx.fillStyle = "rgba(255,255,255,.72)"; ctx.textAlign = align;
+      ctx.font = `500 ${W < 520 ? 11 : 12.5}px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+      ctx.fillText(text, x, y); ctx.globalAlpha = 1;
+    }
+    function draw() {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+      const narrow = W < 560;
+      const mac = { x: lerp(W * 0.5, W * (narrow ? 0.3 : 0.34), mix), y: H * (narrow ? lerp(0.5, 0.6, mix) : 0.54) };
+      const R = Math.min(W * (narrow ? 0.3 : 0.24), H * 0.34) * lerp(1, 0.8, mix);
+      const cl = { x: W * (narrow ? 0.76 : 0.76), y: H * (narrow ? 0.2 : 0.3) };
+      ctx.globalCompositeOperation = "lighter";
+      // The Mac: a warm core with the boundary your data never crosses in local mode.
+      glow(mac.x, mac.y, R * 1.55, "155,231,185", 0.07 * (1 - mix) + 0.04);
+      glow(mac.x, mac.y, R * 0.42, "255,255,255", 0.28);
+      glow(mac.x, mac.y, R * 0.2, "255,255,255", 0.9);
+      ctx.strokeStyle = "rgba(155,231,185,.12)"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.ellipse(mac.x, mac.y, R, R * 0.62, 0, 0, Math.PI * 2); ctx.stroke();
+      // Orbiting particles: everything that stays on the Mac.
+      for (const p of ring) {
+        if (!reduce) p.a += p.s;
+        const rr = R + p.r;
+        const x = mac.x + Math.cos(p.a) * rr, y = mac.y + Math.sin(p.a) * rr * 0.62;
+        const front = Math.sin(p.a) > 0;
+        ctx.fillStyle = `rgba(155,231,185,${(front ? 0.75 : 0.35) * (0.5 + p.z * 0.5)})`;
+        ctx.beginPath(); ctx.arc(x, y, front ? 1.6 + p.z : 1 + p.z * 0.6, 0, Math.PI * 2); ctx.fill();
+      }
+      // Cloud mode: a bridge out to Groq and back.
+      if (mix > 0.01) {
+        glow(cl.x, cl.y, 90, "188,214,255", 0.16 * mix);
+        for (const [dx, dy, r] of [[-24, 6, 26], [0, -8, 32], [26, 4, 24], [6, 14, 26]]) glow(cl.x + dx, cl.y + dy, r * 1.4, "188,214,255", 0.22 * mix);
+        const out0 = { x: mac.x + R * 0.5, y: mac.y - R * 0.2 }, in0 = { x: mac.x + R * 0.5, y: mac.y + R * 0.1 };
+        const c1 = { x: lerp(out0.x, cl.x, 0.5), y: Math.min(out0.y, cl.y) - H * 0.16 };
+        const c2 = { x: lerp(in0.x, cl.x, 0.6), y: Math.max(in0.y, cl.y) + H * 0.12 };
+        for (const p of bridge) {
+          if (!reduce) p.t = (p.t + p.s) % 1;
+          const going = p.t < 0.5, t = going ? p.t * 2 : (p.t - 0.5) * 2;
+          const pt = going ? bez(out0, c1, cl, t) : bez(cl, c2, in0, t);
+          const a = Math.sin(t * Math.PI) * mix;
+          ctx.fillStyle = going ? `rgba(188,214,255,${0.85 * a})` : `rgba(255,255,255,${0.7 * a})`;
+          ctx.beginPath(); ctx.arc(pt.x, pt.y + p.j * Math.sin(t * Math.PI) * 0.3, 1.8, 0, Math.PI * 2); ctx.fill();
+        }
+      }
+      ctx.globalCompositeOperation = "source-over";
+      // Labels: what runs where.
+      ctx.fillStyle = "rgba(0,0,0,.75)"; ctx.textAlign = "center"; ctx.font = "700 11px -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.fillText("Mac", mac.x, mac.y + 4);
+      const local = [T("Голос", "Voice"), "Whisper", "Qwen3-4B", T("Перевод", "Translation")];
+      const stays = [T("Голос", "Voice"), T("История", "History"), T("Словарь", "Vocabulary"), "Keychain"];
+      const spots = [[-1, 0], [0, -1], [1, 0], [0, 1]];
+      spots.forEach(([sx, sy], i) => {
+        const x = mac.x + sx * (R + 22), y = mac.y + sy * (R * 0.62 + 24) + 4 + (sy > 0 ? 8 : 0);
+        const align = sx < -0.5 ? "right" : sx > 0.5 ? "left" : "center";
+        label(local[i], x, y, 1 - mix, align);
+        label(stays[i], x, y, mix, align);
+      });
+      label("Groq", cl.x, cl.y + 62, mix);
+      label("Whisper · gpt-oss", cl.x, cl.y + 80, mix * 0.6);
+    }
+    function loop() {
+      const target = flowMode === "cloud" ? 1 : 0;
+      mix += (target - mix) * (reduce ? 1 : 0.05);
+      draw();
+      frame = running ? requestAnimationFrame(loop) : 0;
+    }
+    function start() { if (running) return; running = !reduce; loop(); }
+    function stop() { running = false; cancelAnimationFrame(frame); }
+    size();
+    addEventListener("resize", () => { size(); draw(); });
+    new IntersectionObserver(([e]) => { if (e.isIntersecting) start(); else stop(); }, { threshold: 0.1 }).observe(canvas);
+    return { kick() { if (reduce) loop(); else if (running) return; } };
+  })();
 
   /* ---------------- Recorded loops (optional) ---------------- */
   // A file listed in assets/video/manifest.json replaces the live simulation of the stage with the same data-video key.
@@ -592,9 +726,6 @@
   addEventListener("scroll", onScroll, { passive: true }); onScroll();
   const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
   $$(".reveal").forEach(el => io.observe(el));
-  const clock = $("#hero-clock");
-  const tickClock = () => { const d = new Date(); clock.textContent = d.getHours() + ":" + String(d.getMinutes()).padStart(2, "0"); };
-  tickClock(); setInterval(tickClock, 30000);
 
   applyLanguage();
 })();

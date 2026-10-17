@@ -1,11 +1,11 @@
-// Starlight canvas: a quiet field of stars with slow parallax and rare twinkles.
+// Starlight canvas: a quiet field of stars with slow parallax, twinkles and the odd shooting star.
 "use strict";
 (function () {
   const canvas = document.getElementById("sky");
   if (!canvas) return;
   const ctx = canvas.getContext("2d");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  let stars = [], w = 0, h = 0, dpr = 1, scroll = 0, frame = 0;
+  let stars = [], w = 0, h = 0, dpr = 1, scroll = 0, frame = 0, meteor = null;
 
   function seed() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -42,6 +42,25 @@
       }
     }
     ctx.globalAlpha = 1;
+    if (!reduce) drawMeteor();
+  }
+
+  function drawMeteor() {
+    if (!meteor && Math.random() < 0.0025) {
+      const angle = Math.PI * (0.12 + Math.random() * 0.12);
+      meteor = { x: w * (0.15 + Math.random() * 0.7), y: h * Math.random() * 0.4, vx: Math.cos(angle) * 9, vy: Math.sin(angle) * 9, life: 0 };
+    }
+    if (!meteor) return;
+    const m = meteor;
+    m.x += m.vx; m.y += m.vy; m.life += 1;
+    const fade = Math.sin(Math.min(m.life / 60, 1) * Math.PI);
+    const tail = 16;
+    const g = ctx.createLinearGradient(m.x, m.y, m.x - m.vx * tail, m.y - m.vy * tail);
+    g.addColorStop(0, `rgba(255,255,255,${0.85 * fade})`);
+    g.addColorStop(1, "rgba(156,199,255,0)");
+    ctx.strokeStyle = g; ctx.lineWidth = 1.4; ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(m.x, m.y); ctx.lineTo(m.x - m.vx * tail, m.y - m.vy * tail); ctx.stroke();
+    if (m.life > 60) meteor = null;
   }
 
   function loop(t) { draw(t); frame = requestAnimationFrame(loop); }

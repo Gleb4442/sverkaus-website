@@ -315,11 +315,12 @@ button.sbtn:hover { background: rgba(255, 255, 255, .14); }
 .bytes-bar { position: relative; width: 100%; max-width: 520px; height: 4px; margin-top: 26px; border-radius: 999px; background: rgba(255, 255, 255, .06); overflow: hidden; }
 .bytes-bar i { position: absolute; inset: 0 auto 0 0; width: 0; border-radius: inherit; background: linear-gradient(90deg, rgba(156, 199, 255, .3), #fff); box-shadow: 0 0 16px #9cc7ff; transition: width .5s var(--ease); }
 .bytes-count { margin-top: 12px; font: 500 12.5px/1 var(--font-mono); color: var(--text-3); font-variant-numeric: tabular-nums; }
-.apps { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; margin-bottom: 28px; }
-.apps button { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px; border-radius: 999px; font-size: 14px; color: var(--text-3); transition: color .25s, background .25s; }
-.apps button .app-dot { opacity: .45; transition: opacity .25s, box-shadow .25s; }
-.apps button[aria-selected="true"] { color: #fff; background: rgba(255, 255, 255, .07); }
-.apps button[aria-selected="true"] .app-dot { opacity: 1; box-shadow: 0 0 18px rgba(80, 150, 255, .7); }
+.apps { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 10px; margin-bottom: 34px; }
+.apps button { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; transition: transform .4s var(--spring), background .3s; }
+.apps button img { width: 30px; height: 30px; object-fit: contain; filter: grayscale(.7); opacity: .45; transition: filter .4s, opacity .4s; }
+.apps button:hover img { opacity: .8; filter: none; }
+.apps button[aria-selected="true"] { transform: scale(1.18); background: radial-gradient(closest-side, rgba(255, 255, 255, .12), transparent); }
+.apps button[aria-selected="true"] img { filter: drop-shadow(0 4px 14px rgba(255, 255, 255, .25)); opacity: 1; }
 .vline { min-height: 3.1em; font-size: clamp(19px, 2.4vw, 26px); line-height: 1.55; letter-spacing: -.015em; max-width: 720px; color: rgba(255, 255, 255, .78); }
 .vline .term { position: relative; color: var(--text-3); transition: color .4s; }
 .vline .term::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; border-radius: 2px; background: var(--ok); box-shadow: 0 0 10px var(--ok); transform: scaleX(0); transform-origin: left; transition: transform .6s var(--ease); }
@@ -379,6 +380,9 @@ button.sbtn:hover { background: rgba(255, 255, 255, .14); }
   .screen { min-height: 440px; }
   .said { top: 88px; font-size: 13px; }
   .beacon { top: 150px; right: 0; }
+  .apps { gap: 2px; }
+  .apps button { width: 40px; height: 44px; }
+  .apps button img { width: 26px; height: 26px; }
 }
 @media (max-width: 420px) {
   .notch .gbtn:not(.finish):not(:last-child) { display: none; }

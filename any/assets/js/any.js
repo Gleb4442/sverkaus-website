@@ -475,7 +475,7 @@
 
   /* ---------------- Vocabulary, level 1: recognizer hints ---------------- */
   // Fills the 224-byte prompt budget the way Vocabulary.selectHints does (≤224 UTF-8 bytes, ≤32 terms).
-  const hintTerms = ["Supabase", "PostgreSQL", "Claude Code", "Notion", "GitHub", "kubectl", "OAuth", "SwiftUI", "TestFlight", "Xcode", "Figma", "Linear", "Vercel", "Tailwind", "Kubernetes", "Grafana", "Terraform", "Cloudflare", "Sentry", "Redis", "Prisma", "Webflow", "Miro", "Jira", "Confluence", "Postman", "Docker", "Nginx"];
+  const hintTerms = ["Ксения", "sverkaus", "Notion", "Slack", "Zoom", "Figma", "Jira", "ChatGPT", "Claude", "Perplexity", "Midjourney", "Linear", "GitHub", "Miro", "Raycast", "ElevenLabs", "OpenAI", "Cursor", "Obsidian", "Discord", "WhatsApp", "Telegram", "Microsoft Teams", "Supabase", "Vercel", "Docker", "Webflow", "Trello"];
   const cloud = $("#hint-cloud"), bar = $("#bytes .bytes-bar i"), count = $("#bytes-count");
   demo($("#bytes"), async run => {
     cloud.innerHTML = hintTerms.map(t => `<span>${esc(t)}</span>`).join("");
@@ -499,34 +499,49 @@
   }, { pause: 200 });
 
   /* ---------------- Vocabulary, level 2: local replacement engine ---------------- */
-  // Example rules in the shape of VocabularyEntry; scoped rules win over global ones (Vocabulary.swift:241-247).
-  const apps = ["xcode", "vscode", "telegram"];
-  const bundles = { xcode: "com.apple.dt.Xcode", vscode: "com.microsoft.VSCode", telegram: "ru.keepcoder.Telegram" };
-  let vocabApp = "xcode";
+  // Example rules in the shape of VocabularyEntry. Brand spellings come from the starter packs
+  // (StarterBrands.swift; "зум" needs a cue such as "ссылку"); the name rule is a personal entry
+  // scoped to Slack's bundle ID, so it wins there and is skipped elsewhere (Vocabulary.swift:241-247).
+  const apps = ["telegram", "slack", "whatsapp", "notion", "discord", "zoom", "teams", "obsidian"];
+  const appInfo = {
+    telegram: ["Telegram", "ru.keepcoder.Telegram"], slack: ["Slack", "com.tinyspeck.slackmacgap"],
+    whatsapp: ["WhatsApp", "net.whatsapp.WhatsApp"], notion: ["Notion", "notion.id"],
+    discord: ["Discord", "com.hnc.Discord"], zoom: ["Zoom", "us.zoom.xos"],
+    teams: ["Microsoft Teams", "com.microsoft.teams2"], obsidian: ["Obsidian", "md.obsidian"]
+  };
+  let vocabApp = "telegram";
   function vocabCase() {
-    if (lang === "ru") return {
-      parts: ["Открой ", "pr", " про ", "supa", " и проверь миграцию в ", "pg", "."],
-      rules: {
-        pr: [{ from: "пул реквест", to: "pull request", scope: ["xcode", "vscode"] }, { from: "пул реквест", to: "пул-реквест", scope: null }],
-        supa: [{ from: "супабейс", to: "Supabase", scope: null }],
-        pg: [{ from: "постгрес", to: "PostgreSQL", scope: null }]
-      }
+    const ru = lang === "ru";
+    const name = ru ? [{ from: "Ксюша", to: "Ксения", scope: ["slack"] }] : [{ from: "Kate", to: "Katherine", scope: ["slack"] }];
+    const r = (from, to) => [{ from, to, scope: null }];
+    const cases = ru ? {
+      telegram: [["name", ", кинь ссылку на ", "zoom", ", план в ", "notion", "."], { name, zoom: r("зум", "Zoom"), notion: r("ноушене", "Notion") }],
+      slack: [["name", ", макеты в ", "figma", ", тикет завёл в ", "jira", "."], { name, figma: r("фигме", "Figma"), jira: r("джире", "Jira") }],
+      whatsapp: [["Купил подписку на ", "gpt", ", вечером расскажу."], { gpt: r("чат гпт", "ChatGPT") }],
+      notion: [["Сравнить ", "claude", " и ", "perplexity", " для поддержки."], { claude: r("клод", "Claude"), perplexity: r("перплексити", "Perplexity") }],
+      discord: [["Сделал обложку в ", "mj", ", кидаю сюда."], { mj: r("миджорни", "Midjourney") }],
+      zoom: [["Запись созвона выложу в ", "slack", " после встречи."], { slack: r("слак", "Slack") }],
+      teams: [["Отчёт по ", "sv", " пришлю до пятницы."], { sv: r("сфера хаос", "sverkaus") }],
+      obsidian: [["Сведу сюда заметки по ", "linear", " и ", "github", "."], { linear: r("линеар", "Linear"), github: r("гитхаб", "GitHub") }]
+    } : {
+      telegram: [["name", ", the plan is in ", "notion", "."], { name, notion: r("noshen", "Notion") }],
+      slack: [["name", ", mockups are in ", "figma", ", the ticket is in ", "jira", "."], { name, figma: r("fygma", "Figma"), jira: r("geera", "Jira") }],
+      whatsapp: [["Got a ", "gpt", " subscription, tell you tonight."], { gpt: r("chat gpt", "ChatGPT") }],
+      notion: [["Compare ", "claude", " and ", "perplexity", " for support."], { claude: r("claud", "Claude"), perplexity: r("perplexety", "Perplexity") }],
+      discord: [["Made the cover in ", "mj", ", dropping it here."], { mj: r("midjourny", "Midjourney") }],
+      zoom: [["I’ll post the recording to ", "slack", " after the call."], { slack: r("slak", "Slack") }],
+      teams: [["The ", "sv", " report lands by Friday."], { sv: r("sphere chaos", "sverkaus") }],
+      obsidian: [["Merging my notes on ", "linear", " and ", "github", " here."], { linear: r("lineer", "Linear"), github: r("git hub", "GitHub") }]
     };
-    return {
-      parts: ["Rename ", "uid", " in the ", "supa", " client and check the ", "pg", " migration."],
-      rules: {
-        uid: [{ from: "user ID", to: "userId", scope: ["xcode", "vscode"] }],
-        supa: [{ from: "super base", to: "Supabase", scope: null }],
-        pg: [{ from: "post gress", to: "PostgreSQL", scope: null }]
-      }
-    };
+    const [parts, rules] = cases[vocabApp];
+    return { parts, rules };
   }
   function pickRule(list) { return list.find(r => r.scope && r.scope.includes(vocabApp)) || list.find(r => !r.scope) || null; }
   const vocabOut = $("#vocab-out");
   const vocabDemo = demo(vocabOut, async run => {
     const c = vocabCase();
     $$("#vocab-app button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.app === vocabApp)));
-    $("#vocab-bundle").textContent = "frontmost · " + bundles[vocabApp];
+    $("#vocab-bundle").textContent = appInfo[vocabApp].join(" · ");
     vocabOut.innerHTML = c.parts.map(p => c.rules[p] ? `<span class="term" data-k="${p}">${esc(c.rules[p][0].from)}</span>` : esc(p)).join("");
     await run.wait(1400);
     for (const term of $$(".term", vocabOut)) {

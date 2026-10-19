@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru" data-title-en="DiskPulse — privacy">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>DiskPulse — конфиденциальность</title>
+  <meta name="description" content="DiskPulse ничего не отправляет о вас. Единственный сетевой запрос — проверка обновлений на GitHub, и только с вашего согласия.">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="stylesheet" href="assets/css/diskpulse.css">
+  <script id="release-config" type="application/json">{"released": false, "repoPublic": false, "repoURL": "https://github.com/Gleb4442/diskpulse"}</script>
+  <script defer src="assets/js/diskpulse.js"></script>
+</head>
+<body>
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="./"><img src="assets/img/diskpulse-icon-128.png" alt="" width="28" height="28">DiskPulse</a>
+  <div class="nav-spacer"></div>
+  <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="ru" aria-pressed="true">RU</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+</div></nav>
+<main class="wrap doc">
+  <h1 data-en="Privacy">Конфиденциальность</h1>
+  <p data-en="Short version: DiskPulse never sends anything about you anywhere. No accounts, no analytics, no crash reports.">Коротко: DiskPulse никуда не отправляет ничего о вас. Без аккаунтов, аналитики и отчётов о сбоях.</p>
+
+  <h2 data-en="The app">Приложение</h2>
+  <ul>
+    <li data-en="Disk space, cache sizes, the process list and (only while the panel is open, with your permission) browser tab titles are read on your Mac and stay there.">Свободное место, размеры кэшей, список процессов и — только пока открыта панель и с вашего разрешения — названия вкладок браузера читаются на Mac и остаются на нём.</li>
+    <li data-en="Settings, history and logs are stored in your Library folder and removed by uninstalling.">Настройки, история и логи хранятся в папке «Библиотеки» и удаляются вместе с приложением.</li>
+    <li data-en="The only network request: if you allow it, once a day DiskPulse downloads two small public files from GitHub to see whether a new version exists, and the new version when you press «Update». The request carries no identifiers or data about your Mac; GitHub sees your IP address, as with any website.">Единственный сетевой запрос: если вы разрешили, раз в день DiskPulse скачивает с GitHub два небольших публичных файла, чтобы узнать о новой версии, и саму версию — когда вы нажмёте «Обновить». В запросе нет идентификаторов и данных о вашем Mac; GitHub видит IP-адрес, как и любой сайт.</li>
+  </ul>
+
+  <h2 data-en="This website">Этот сайт</h2>
+  <p data-en="No cookies, no trackers, no external fonts or scripts. The language you pick is remembered in your browser only. Downloads are served by GitHub Releases.">Без cookies, трекеров, внешних шрифтов и скриптов. Выбранный язык запоминается только в вашем браузере. Файлы раздаёт GitHub Releases.</p>
+
+  <p data-en-html="The full, technical version lives next to the source code: <a class=&quot;js-gh&quot; href=&quot;#&quot; data-gh-path=&quot;/blob/main/docs/PRIVACY.md&quot;>docs/PRIVACY.md</a>.">Полная техническая версия лежит рядом с исходным кодом: <a class="js-gh" href="#" data-gh-path="/blob/main/docs/PRIVACY.md">docs/PRIVACY.md</a>.</p>
+  <p style="margin-top:44px"><a href="./" data-en="← Back to DiskPulse">← К DiskPulse</a></p>
+</main>
+</body>
+</html>

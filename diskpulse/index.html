@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="ru" data-title-en="DiskPulse — your disk never runs out mid-build again">
+<head>
+  <meta charset="utf-8">
+  <!-- Relative URLs need the trailing slash: /diskpulse → /diskpulse/ (only this exact path). -->
+  <script>if (location.pathname === "/diskpulse") location.replace("/diskpulse/" + location.search + location.hash);</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>DiskPulse — диск больше не заканчивается посреди сборки</title>
+  <meta name="description" content="DiskPulse — бесплатное приложение для строки меню macOS. Показывает, что съедает диск, и безопасно убирает кэши Xcode, симуляторов, npm и AI-агентов. Локально, открытый код.">
+  <meta name="theme-color" content="#f2f2f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#131315" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="DiskPulse — диск больше не заканчивается посреди сборки">
+  <meta property="og:description" content="Приложение для строки меню macOS: следит за свободным местом и безопасно убирает кэши Xcode, симуляторов, npm и AI-агентов.">
+  <meta property="og:image" content="assets/img/diskpulse-icon-512.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="assets/css/diskpulse.css">
+  <!-- Release contract (see README.md): while "released" is false, download buttons read «Релиз готовится»
+       and GitHub links stay hidden. After the first public release set both flags to true. -->
+  <script id="release-config" type="application/json">{
+    "released": false,
+    "repoPublic": false,
+    "dmgURL": "https://github.com/Gleb4442/diskpulse/releases/latest/download/DiskPulse.dmg",
+    "repoURL": "https://github.com/Gleb4442/diskpulse",
+    "brew": "brew install --cask gleb4442/tap/diskpulse",
+    "curl": "curl -fsSL https://github.com/Gleb4442/diskpulse/releases/latest/download/get.sh | bash"
+  }</script>
+  <script defer src="assets/js/diskpulse.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24" fill="currentColor"><path d="M16.37 12.62c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.87-.76-1.47.02-2.83.86-3.59 2.17-1.54 2.66-.39 6.59 1.1 8.75.73 1.05 1.6 2.24 2.73 2.2 1.1-.05 1.51-.71 2.84-.71 1.32 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.13.84-1.22 1.18-2.41 1.2-2.47-.03-.01-2.3-.88-2.32-3.5zM14.2 6.16c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.64-1.05 1.67-.92 2.66.97.07 1.96-.49 2.56-1.21z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></symbol>
+  <symbol id="i-drive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13.5l2.3-7A2 2 0 0 1 8.2 5h7.6a2 2 0 0 1 1.9 1.5l2.3 7"/><rect x="3.5" y="13.5" width="17" height="5.5" rx="2"/><path d="M8 16.25h.01M11 16.25h.01"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 7h11M9 12h11M9 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l7 2.8v5.4c0 4.3-3 7.6-7 8.8-4-1.2-7-4.5-7-8.8V6.3z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12a7.5 7.5 0 0 1-13 5.1M4.5 12a7.5 7.5 0 0 1 13-5.1"/><path d="M17.5 3.5v3.4h-3.4M6.5 20.5v-3.4h3.4"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7.5L4 12l4.5 4.5M15.5 7.5L20 12l-4.5 4.5M13.5 5l-3 14"/></symbol>
+  <symbol id="i-apps" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5l-5 9.5M12 5.5l5 9.5M5.5 15h13M9 11h6"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c.5 4.6 2.4 6.5 7 7-4.6.5-6.5 2.4-7 7-.5-4.6-2.4-6.5-7-7 4.6-.5 6.5-2.4 7-7z"/></symbol>
+</defs></svg>
+
+<nav class="nav" aria-label="DiskPulse">
+  <div class="wrap">
+    <a class="brand" href="./"><img src="assets/img/diskpulse-icon-128.png" alt="" width="28" height="28">DiskPulse</a>
+    <div class="nav-links">
+      <a href="#how" data-en="How it works">Как работает</a>
+      <a href="#safety" data-en="Safety">Безопасность</a>
+      <a href="#install" data-en="Install">Установка</a>
+      <a href="#faq" data-en="FAQ">Вопросы</a>
+      <a href="help" data-en="Help">Помощь</a>
+    </div>
+    <div class="nav-spacer"></div>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn btn-primary btn-small js-download" href="#install"><svg><use href="#i-download"/></svg><span class="js-download-label" data-en="Download">Скачать</span></a>
+  </div>
+</nav>
+
+<main>
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <div class="wrap">
+      <img class="hero-icon" src="assets/img/diskpulse-icon-512.png" alt="DiskPulse" width="92" height="92">
+      <h1 data-en="Your disk never runs out mid-build again.">Диск больше не заканчивается посреди сборки.</h1>
+      <p class="lead" data-en="DiskPulse lives in the menu bar, shows what is eating your disk and safely clears what Xcode, simulators, npm and AI agents leave behind. Free, open source, entirely on your Mac.">DiskPulse живёт в строке меню, показывает, что съедает диск, и безопасно убирает то, что оставляют Xcode, симуляторы, npm и AI-агенты. Бесплатно, с открытым кодом и целиком на вашем Mac.</p>
+      <div class="cta">
+        <a class="btn btn-primary js-download" href="#install"><svg><use href="#i-apple"/></svg><span class="js-download-label" data-en="Download for Mac">Скачать для Mac</span></a>
+        <div class="copy-chip" data-copy-key="brew"><span class="prompt">$</span><code class="js-cmd" data-cmd="brew">brew install --cask gleb4442/tap/diskpulse</code><button class="copy-btn" type="button" aria-label="Copy"><svg><use href="#i-copy"/></svg></button></div>
+      </div>
+      <div class="cta-meta"><span data-en="macOS 15 or newer">macOS 15 и новее</span><span>Apple Silicon &amp; Intel</span><span data-en="Free · MIT">Бесплатно · MIT</span><span class="js-version"></span></div>
+      <div class="platform-note js-platform-note" data-en="DiskPulse is a Mac app — open this page on your Mac to download it.">DiskPulse — приложение для Mac. Откройте эту страницу на Mac, чтобы скачать.</div>
+
+      <div class="stage reveal" aria-hidden="true">
+        <div class="desktop">
+          <div class="menubar">
+            <span class="apple"><svg width="14" height="14"><use href="#i-apple"/></svg></span>
+            <b>Xcode</b><span class="extra">File</span><span class="extra">Edit</span><span class="extra">Product</span>
+            <span class="spacer"></span>
+            <span class="mb-item"><svg><use href="#i-drive"/></svg><span class="js-mb-free">8 GB</span></span>
+            <span class="extra">⌃⌥D</span><span class="extra js-clock">9:41</span>
+          </div>
+          <div class="term">
+            <div class="term-bar"><i></i><i></i><i></i><span>zsh — 3 builds</span></div>
+            <pre><span class="c">$</span> xcodebuild -scheme App -destination 'platform=iOS Simulator'
+<span class="d">▸ Compiling 1 284 Swift files · DerivedData +6,2 GB</span>
+<span class="c">$</span> npm install
+<span class="d">added 1 942 packages · node_modules +1,1 GB</span>
+<span class="c">agent</span> running tests in 3 worktrees…
+<span class="d">▸ Booting iPhone 16 Pro (agent-7f3a) · +4,8 GB</span>
+<span class="c">agent</span> <span class="cur"></span></pre>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><svg width="15" height="15"><use href="#i-drive"/></svg>DiskPulse
+              <span class="chip attention js-chip"><i></i><span class="js-chip-text" data-en="Low on space">Места мало</span></span></div>
+            <div class="plate">
+              <div class="free"><span class="js-free">8,2 ГБ</span><small data-en="Free">Свободно</small></div>
+              <div class="bar"><b class="js-bar"></b></div>
+            </div>
+            <div class="plate">
+              <div class="auto">
+                <div><div class="title" data-en="Automatic cleanup">Автоуборка</div><div class="sub js-auto-sub" data-en="Watching every 5 minutes">Следит каждые 5 минут</div></div>
+                <span class="switch"></span>
+              </div>
+              <div class="rows">
+                <div class="row js-r1"><span class="dot"></span><span data-en="Build data of deleted projects">Сборки удалённых проектов</span><span class="num" data-en="9.4 GB">9,4 ГБ</span></div>
+                <div class="row js-r2"><span class="dot"></span><span data-en="Simulators of finished agent jobs">Симуляторы завершённых задач</span><span class="num" data-en="6.1 GB">6,1 ГБ</span></div>
+                <div class="row js-r3"><span class="dot"></span><span data-en="npm / VS Code caches">Кэши npm / VS Code</span><span class="num" data-en="3.8 GB">3,8 ГБ</span></div>
+                <div class="row"><span class="dot"></span><span data-en="Your projects, git, agent sessions">Ваши проекты, git, сессии агентов</span><span class="num" data-en="never">никогда</span></div>
+              </div>
+            </div>
+            <div class="toast js-toast"><svg><use href="#i-check"/></svg><span data-en="Cleaned 19.3 GB of rebuildable caches. Nothing of yours was touched.">Убрано 19,3 ГБ пересоздаваемых кэшей. Ваше не тронуто.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="eaters">
+        <span data-en="Built for Macs where these quietly eat the disk:">Для Mac, где диск незаметно съедают:</span>
+        <b>Xcode DerivedData</b><b data-en="iOS simulators">симуляторы iOS</b><b>node_modules</b><b>npm · pnpm · uv</b><b>Claude Code · Codex</b><b>Docker</b>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HOW ============ -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="eyebrow reveal" data-en="How it works">Как это работает</div>
+      <h2 class="reveal" data-en="Watches. Explains. Cleans only what rebuilds itself.">Следит. Объясняет. Убирает только то, что пересоздаётся само.</h2>
+      <p class="lead reveal" data-en="Three parallel builds and an AI agent can burn 20 GB in under an hour. DiskPulse sees the trend before the disk hits zero.">Три параллельные сборки и AI-агент сжигают 20 ГБ меньше чем за час. DiskPulse видит тренд раньше, чем диск дойдёт до нуля.</p>
+      <div class="grid-3">
+        <div class="card reveal"><div class="glyph"><svg><use href="#i-eye"/></svg></div><div class="step-num" style="margin-top:18px">01</div>
+          <h3 data-en="Always in sight">Всегда на виду</h3>
+          <p data-en="Free space sits in the menu bar. The panel opens with a click or ⌃⌥D from any app.">Свободное место — прямо в строке меню. Панель открывается кликом или ⌃⌥D из любого приложения.</p></div>
+        <div class="card reveal"><div class="glyph"><svg><use href="#i-list"/></svg></div><div class="step-num" style="margin-top:18px">02</div>
+          <h3 data-en="Explains where it went">Объясняет, куда ушло</h3>
+          <p data-en="Which caches grew, which builds and simulators are running, how much memory and swap apps use — in plain words.">Какие кэши выросли, какие сборки и симуляторы запущены, сколько памяти и свопа заняли приложения — простыми словами.</p></div>
+        <div class="card reveal"><div class="glyph"><svg><use href="#i-sparkle"/></svg></div><div class="step-num" style="margin-top:18px">03</div>
+          <h3 data-en="Cleans safely, on its own">Убирает безопасно и сам</h3>
+          <p data-en="Every 5 minutes in the background, only when space runs low. Before anything is deleted you can always see the plan.">Раз в 5 минут в фоне и только когда места мало. Перед удалением всегда можно посмотреть план.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SAFETY ============ -->
+  <section class="section" id="safety" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow reveal" data-en="Safety">Безопасность</div>
+      <h2 class="reveal" data-en="When in doubt, it keeps it.">Сомневается — оставляет.</h2>
+      <p class="lead reveal" data-en="A cleanup tool is only useful if you never wonder what it took. Every check fails closed: if DiskPulse cannot prove something is safe, it stays.">Инструмент уборки полезен, только если не приходится гадать, что он удалил. Каждая проверка работает «на закрытие»: не удалось доказать безопасность — файл остаётся.</p>
+      <div class="grid-2">
+        <div class="card reveal">
+          <h3 style="margin-top:0" data-en="What gets cleaned">Что убирается</h3>
+          <ul class="list yes">
+            <li><svg><use href="#i-check"/></svg><span data-en-html="Xcode build data of deleted projects, old ModuleCache and PIFCache">Сборки Xcode удалённых проектов, старые ModuleCache и PIFCache</span></li>
+            <li><svg><use href="#i-check"/></svg><span data-en="Temp files of finished Claude Code jobs (2 hours after the session ends)">Временные файлы завершённых задач Claude Code (через 2 часа после конца сессии)</span></li>
+            <li><svg><use href="#i-check"/></svg><span data-en="npm, npx, VS Code and headless-Chrome caches, brew / pnpm / uv cleanup">Кэши npm, npx, VS Code, headless-Chrome, уборка brew / pnpm / uv</span></li>
+            <li><svg><use href="#i-check"/></svg><span data-en-html="Simulators of finished agent jobs, idle worktree builds <span class=&quot;tag&quot;>deep</span>">Симуляторы завершённых задач, сборки неактивных worktree <span class="tag">глубже</span></span></li>
+          </ul>
+        </div>
+        <div class="card reveal">
+          <h3 style="margin-top:0" data-en="Never touched">Никогда не трогается</h3>
+          <ul class="list no">
+            <li><svg><use href="#i-x"/></svg><span data-en="Documents, Desktop, Photos, Mail, keychains">Документы, рабочий стол, фото, почта, связки ключей</span></li>
+            <li><svg><use href="#i-x"/></svg><span data-en="Git repositories with uncommitted or unpushed work">Git-репозитории с незакоммиченной или неотправленной работой</span></li>
+            <li><svg><use href="#i-x"/></svg><span data-en="Open AI-agent sessions, their memory and history">Открытые сессии AI-агентов, их память и история</span></li>
+            <li><svg><use href="#i-x"/></svg><span data-en="Anything a running program has open">Всё, что открыто у работающей программы</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="layers reveal">
+        <div class="layer"><b data-en="Allow-list">Список разрешённого</b><span data-en="Only known cache patterns can ever be deleted.">Удалить можно только известные виды кэшей.</span></div>
+        <div class="layer"><b data-en="Second key">Второй ключ</b><span data-en="Never home, never outside it, never a folder with .git.">Никогда домашняя папка, ничего вне её, ничего с .git.</span></div>
+        <div class="layer"><b data-en="Is anyone using it?">Кто-то пользуется?</b><span data-en="Fresh lsof / ps right before deleting. No answer — no deletion.">Свежие lsof / ps прямо перед удалением. Нет ответа — нет удаления.</span></div>
+        <div class="layer"><b data-en="Self-test">Самопроверка</b><span data-en="Before every real cleanup the rules check themselves.">Перед каждой настоящей уборкой правила проверяют сами себя.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRIVACY ============ -->
+  <section class="section" id="privacy" style="padding-top:0">
+    <div class="wrap">
+      <div class="grid-3" style="margin-top:0">
+        <div class="card reveal"><div class="glyph"><svg><use href="#i-lock"/></svg></div>
+          <h3 data-en="Nothing leaves your Mac">Ничего не уходит с Mac</h3>
+          <p data-en="No accounts, no analytics, no crash reporter. Paths, processes and tabs stay on this computer.">Без аккаунтов, аналитики и отчётов о сбоях. Пути, процессы и вкладки остаются на этом компьютере.</p></div>
+        <div class="card reveal"><div class="glyph"><svg><use href="#i-refresh"/></svg></div>
+          <h3 data-en="Signed updates, if you want them">Подписанные обновления — по желанию</h3>
+          <p data-en="One request to GitHub a day, only if you allow it. Every update is checked by signature before it installs.">Один запрос к GitHub в день и только с вашего согласия. Каждое обновление проверяется подписью перед установкой.</p></div>
+        <div class="card reveal"><div class="glyph"><svg><use href="#i-code"/></svg></div>
+          <h3 data-en="Open source">Открытый код</h3>
+          <p data-en="MIT license. Read every rule that decides what may be deleted — and the tests that guard them.">Лицензия MIT. Каждое правило, которое решает, что можно удалить, открыто — как и тесты, которые его охраняют.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INSTALL ============ -->
+  <section class="section" id="install" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow reveal" data-en="Install">Установка</div>
+      <h2 class="reveal" data-en="Two minutes from click to menu bar.">Две минуты от клика до строки меню.</h2>
+      <p class="lead reveal" data-en="The same notarized app in every way — pick what feels natural.">Одно и то же нотаризованное приложение — выберите удобный способ.</p>
+
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" aria-selected="true" data-tab="dmg" data-en="Download">Скачать</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="brew">Homebrew</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="curl" data-en="Terminal">Терминал</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="source" data-en="From source">Из исходников</button>
+      </div>
+
+      <div class="tabpanel active" data-panel="dmg" role="tabpanel">
+        <div class="flow">
+          <div class="card">
+            <div class="mini"><div class="mini-dl"><div class="file"><img src="assets/img/favicon-32.png" alt="">DiskPulse.dmg</div><div class="prog"><b></b></div></div></div>
+            <div class="step-num" style="margin-top:14px">01</div>
+            <h3 data-en="Download">Скачайте</h3>
+            <p data-en="One click — a 3 MB disk image, signed and notarized by Apple.">Один клик — образ диска на 3 МБ, подписан и нотаризован Apple.</p>
+          </div>
+          <div class="card">
+            <div class="mini"><div class="mini-dmg"><img class="drag" src="assets/img/diskpulse-icon-128.png" alt=""><span class="arrow">→</span><span class="apps"><svg><use href="#i-apps"/></svg></span></div></div>
+            <div class="step-num" style="margin-top:14px">02</div>
+            <h3 data-en="Drag to Applications">Перетащите в «Программы»</h3>
+            <p data-en="Open the file: a window with an arrow shows where DiskPulse goes.">Откройте файл: окно со стрелкой покажет, куда положить DiskPulse.</p>
+          </div>
+          <div class="card">
+            <div class="mini"><div class="mini-move"><div class="t" data-en="Welcome to DiskPulse">Добро пожаловать в DiskPulse</div><span data-en="Cleanup · notifications · updates · open at login">Уборка · уведомления · обновления · запуск при входе</span><div class="b"><span data-en="Back">Назад</span><span class="p" data-en="Continue">Дальше</span></div></div></div>
+            <div class="step-num" style="margin-top:14px">03</div>
+            <h3 data-en="Open it">Откройте</h3>
+            <p data-en="macOS asks once to confirm a downloaded app. A short welcome sets up the rest.">macOS один раз спросит про скачанное приложение. Короткое приветствие настроит остальное.</p>
+          </div>
+          <div class="card">
+            <div class="mini"><div class="mini-menu"><div class="bar2"><span>Wi‑Fi</span><span class="hi">⛁ 128 GB</span><span>9:41</span></div><div class="center"><kbd>⌃ ⌥ D</kbd></div></div></div>
+            <div class="step-num" style="margin-top:14px">04</div>
+            <h3 data-en="It lives in the menu bar">Живёт в строке меню</h3>
+            <p data-en="Free space at a glance; the panel opens with a click or ⌃⌥D.">Свободное место всегда на виду; панель — кликом или ⌃⌥D.</p>
+          </div>
+        </div>
+        <div class="cta" style="justify-content:flex-start;margin-top:26px">
+          <a class="btn btn-primary js-download" href="#install"><svg><use href="#i-download"/></svg><span class="js-download-label" data-en="Download for Mac">Скачать для Mac</span></a>
+          <span class="muted" style="font-size:14px" data-en-html="Opened it from the disk image by mistake? DiskPulse offers to move itself to Applications. <a href=&quot;help&quot;>Install help →</a>">Открыли прямо из образа? DiskPulse сам предложит переместиться в «Программы». <a href="help">Помощь с установкой →</a></span>
+        </div>
+      </div>
+
+      <div class="tabpanel" data-panel="brew" role="tabpanel">
+        <div class="cmd-card">
+          <p data-en="If you already use Homebrew. Updates come with brew upgrade or from DiskPulse itself.">Если вы уже пользуетесь Homebrew. Обновления — через brew upgrade или в самом DiskPulse.</p>
+          <div class="cmd"><span class="prompt">$</span><code class="js-cmd" data-cmd="brew">brew install --cask gleb4442/tap/diskpulse</code><button class="copy-btn" type="button"><svg><use href="#i-copy"/></svg><span data-en="Copy">Копировать</span></button></div>
+          <div class="cmd-note" data-en="Uninstall: brew uninstall --cask diskpulse (add --zap to remove settings and logs).">Удалить: brew uninstall --cask diskpulse (с --zap — вместе с настройками и логами).</div>
+        </div>
+      </div>
+
+      <div class="tabpanel" data-panel="curl" role="tabpanel">
+        <div class="cmd-card">
+          <p data-en="One line, no Homebrew. The script downloads the same notarized app, checks its checksum, developer signature and Apple notarization, then puts it into Applications. No sudo.">Одна строка, без Homebrew. Скрипт скачивает то же нотаризованное приложение, проверяет контрольную сумму, подпись разработчика и нотаризацию Apple и кладёт его в «Программы». Без sudo.</p>
+          <div class="cmd"><span class="prompt">$</span><code class="js-cmd" data-cmd="curl">curl -fsSL https://github.com/Gleb4442/diskpulse/releases/latest/download/get.sh | bash</code><button class="copy-btn" type="button"><svg><use href="#i-copy"/></svg><span data-en="Copy">Копировать</span></button></div>
+          <div class="cmd-note" data-en-html="Prefer to read it first? <a class=&quot;js-gh&quot; href=&quot;#&quot; data-gh-path=&quot;/blob/main/Packaging/get.sh&quot;>The script on GitHub</a>.">Хотите сначала прочитать? <a class="js-gh" href="#" data-gh-path="/blob/main/Packaging/get.sh">Скрипт на GitHub</a>.</div>
+        </div>
+      </div>
+
+      <div class="tabpanel" data-panel="source" role="tabpanel">
+        <div class="cmd-card">
+          <p data-en="Build it yourself with Apple's free Command Line Tools. Source builds see updates and install them with git pull.">Соберите сами с бесплатными Command Line Tools от Apple. Сборка из исходников видит обновления и ставит их через git pull.</p>
+          <div class="cmd"><code>xcode-select --install
+git clone https://github.com/Gleb4442/diskpulse.git
+cd diskpulse &amp;&amp; ./install.sh</code><button class="copy-btn" type="button" data-copy-text="git clone https://github.com/Gleb4442/diskpulse.git &amp;&amp; cd diskpulse &amp;&amp; ./install.sh"><svg><use href="#i-copy"/></svg></button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section" id="faq" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow reveal" data-en="Questions">Вопросы</div>
+      <h2 class="reveal" data-en="Before you install">Перед установкой</h2>
+      <div class="faq">
+        <details class="reveal"><summary data-en="Is it really free?">Это правда бесплатно?</summary>
+          <p data-en="Yes. DiskPulse is open source under the MIT license. No trial, no subscription, no account.">Да. DiskPulse — открытый код под лицензией MIT. Без пробного периода, подписки и аккаунта.</p></details>
+        <details class="reveal"><summary data-en="Do I need Xcode?">Нужен ли Xcode?</summary>
+          <p data-en="No. Cleanup uses Apple's free Command Line Tools (most developer Macs already have them). If they are missing, the welcome window installs them with one click; without them DiskPulse still shows your space.">Нет. Уборке нужны бесплатные Command Line Tools от Apple — на большинстве Mac разработчиков они уже стоят. Если их нет, окно приветствия поставит их в один клик; без них DiskPulse всё равно показывает место.</p></details>
+        <details class="reveal"><summary data-en="What if it deletes something it shouldn't?">А если удалит не то?</summary>
+          <p data-en="It only removes caches that rebuild themselves, re-checks everything right before deleting, and refuses whenever a check has no answer. Automatic cleanup is off until you turn it on, and you can always look at the plan first. If something important ever disappears, report it privately on GitHub — we treat it as a security issue.">Удаляются только кэши, которые пересоздаются сами. Всё перепроверяется прямо перед удалением, а если проверка не дала ответа — отказ. Автоуборка выключена, пока вы её не включите, и план всегда можно посмотреть заранее. Если что-то важное всё же пропадёт, сообщите закрыто на GitHub — для нас это проблема безопасности.</p></details>
+        <details class="reveal"><summary data-en="Why not the Mac App Store?">Почему не в Mac App Store?</summary>
+          <p data-en="App Store apps run in a sandbox that cannot see build caches, simulators or running processes — exactly what DiskPulse needs. Instead it is signed with an Apple Developer ID and notarized by Apple.">Приложения из App Store работают в песочнице и не видят кэши сборок, симуляторы и процессы — то, что нужно DiskPulse. Поэтому он подписан Apple Developer ID и нотаризован Apple.</p></details>
+        <details class="reveal"><summary data-en="How do updates work?">Как приходят обновления?</summary>
+          <p data-en="If you allow it, DiskPulse asks GitHub once a day whether a new version exists, shows what's new and installs it with one click after checking two signatures. You can also update with Homebrew or simply download again.">Если разрешите, DiskPulse раз в день спрашивает GitHub о новой версии, показывает, что нового, и ставит её в один клик после проверки двух подписей. Можно обновляться и через Homebrew или просто скачать заново.</p></details>
+        <details class="reveal"><summary data-en="How do I uninstall it?">Как удалить?</summary>
+          <p data-en-html="Turn off automatic cleanup in Settings, quit DiskPulse and move it to the Trash. Settings and logs live in ~/Library/Application Support/diskcare — <a href=&quot;help#uninstall&quot;>full steps</a>.">Выключите автоуборку в настройках, закройте DiskPulse и перетащите его в Корзину. Настройки и логи лежат в ~/Library/Application Support/diskcare — <a href="help#uninstall">подробная инструкция</a>.</p></details>
+        <details class="reveal"><summary data-en="Which Macs are supported?">Какие Mac поддерживаются?</summary>
+          <p data-en="Any Mac with macOS 15 Sequoia or newer, Apple Silicon or Intel.">Любой Mac с macOS 15 Sequoia или новее — Apple Silicon или Intel.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <img src="assets/img/diskpulse-icon-512.png" alt="" width="72" height="72">
+      <h2 data-en="Keep building. DiskPulse keeps the room.">Собирайте спокойно. Место за DiskPulse.</h2>
+      <div class="cta">
+        <a class="btn btn-primary js-download" href="#install"><svg><use href="#i-apple"/></svg><span class="js-download-label" data-en="Download for Mac">Скачать для Mac</span></a>
+        <a class="btn btn-secondary js-gh" href="#" data-gh-path=""><svg><use href="#i-code"/></svg><span data-en="Source on GitHub">Код на GitHub</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="./"><img src="assets/img/diskpulse-icon-128.png" alt="" width="22" height="22" style="width:22px;height:22px">DiskPulse</a>
+    <a href="help" data-en="Help">Помощь</a>
+    <a href="privacy" data-en="Privacy">Конфиденциальность</a>
+    <a class="js-gh" href="#" data-gh-path="/blob/main/CHANGELOG.md" data-en="What's new">Что нового</a>
+    <a class="js-gh" href="#" data-gh-path="" >GitHub</a>
+    <span class="spacer"></span>
+    <span>MIT · <a href="/">sverkaus.com</a></span>
+  </div>
+</footer>
+</body>
+</html>

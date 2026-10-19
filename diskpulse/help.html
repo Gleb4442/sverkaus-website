@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ru" data-title-en="DiskPulse — installation help">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>DiskPulse — помощь с установкой</title>
+  <meta name="description" content="Как установить DiskPulse на Mac: DMG, Homebrew, терминал. Что делать, если macOS не открывает приложение, как найти значок в строке меню и как удалить DiskPulse.">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="stylesheet" href="assets/css/diskpulse.css">
+  <script id="release-config" type="application/json">{"released": false, "repoPublic": false, "repoURL": "https://github.com/Gleb4442/diskpulse"}</script>
+  <script defer src="assets/js/diskpulse.js"></script>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2"/></symbol>
+</defs></svg>
+<nav class="nav"><div class="wrap">
+  <a class="brand" href="./"><img src="assets/img/diskpulse-icon-128.png" alt="" width="28" height="28">DiskPulse</a>
+  <div class="nav-spacer"></div>
+  <div class="lang" role="group" aria-label="Language"><button type="button" data-lang="ru" aria-pressed="true">RU</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+</div></nav>
+
+<main class="wrap doc">
+  <h1 data-en="Installing DiskPulse">Установка DiskPulse</h1>
+  <p data-en="Everything that happens between the download button and the menu bar, and what to do if a step looks different.">Всё, что происходит между кнопкой «Скачать» и строкой меню, и что делать, если какой-то шаг выглядит иначе.</p>
+
+  <h2 data-en="1. Download and open the disk image">1. Скачайте и откройте образ диска</h2>
+  <ol>
+    <li data-en="Press «Download for Mac». The file DiskPulse.dmg (about 3 MB) lands in Downloads.">Нажмите «Скачать для Mac». Файл DiskPulse.dmg (около 3 МБ) появится в «Загрузках».</li>
+    <li data-en="Double-click it. macOS checks Apple's notarization and opens a window with an arrow.">Откройте его двойным кликом. macOS проверит нотаризацию Apple и покажет окно со стрелкой.</li>
+    <li data-en="Drag the DiskPulse icon onto the Applications folder in that window.">Перетащите значок DiskPulse на папку «Программы» в этом окне.</li>
+    <li data-en="Eject the disk image (the ⏏ button next to DiskPulse in Finder's sidebar) and delete the .dmg if you like.">Извлеките образ (кнопка ⏏ рядом с DiskPulse в боковой панели Finder) и при желании удалите .dmg.</li>
+  </ol>
+
+  <h2 data-en="2. First launch">2. Первый запуск</h2>
+  <ol>
+    <li data-en="Open DiskPulse from Applications, Launchpad or Spotlight (⌘ Space → «DiskPulse»).">Откройте DiskPulse из «Программ», Launchpad или Spotlight (⌘ Пробел → «DiskPulse»).</li>
+    <li data-en="macOS asks once: «DiskPulse is an app downloaded from the Internet. Are you sure you want to open it?» — press Open. This is the normal check for every downloaded app.">macOS спросит один раз: «DiskPulse — это приложение, загруженное из интернета. Открыть?» — нажмите «Открыть». Это обычная проверка для любого скачанного приложения.</li>
+    <li data-en="If you started DiskPulse straight from the disk image or Downloads, it offers to move itself into Applications and reopen — press «Move and open». It ejects the disk image for you.">Если вы запустили DiskPulse прямо из образа или «Загрузок», он предложит переместиться в «Программы» и открыться заново — нажмите «Переместить и открыть». Образ он извлечёт сам.</li>
+    <li data-en="A short welcome sets up automatic cleanup, notifications, update checks and «Open at login». Everything can be changed later in Settings.">Короткое приветствие настроит автоуборку, уведомления, проверку обновлений и запуск при входе. Всё это можно поменять позже в настройках.</li>
+    <li data-en="macOS may ask to allow notifications — allow them if you want a warning when space runs low.">macOS может спросить про уведомления — разрешите, если хотите получать предупреждение, когда места мало.</li>
+  </ol>
+
+  <h2 data-en="3. Where to find it">3. Где его найти</h2>
+  <p data-en-html="DiskPulse lives in the menu bar (top right) and shows free space there. Press <kbd>Control</kbd> + <kbd>Option</kbd> + <kbd>D</kbd> to open the panel from any app.">DiskPulse живёт в строке меню (справа вверху) и показывает там свободное место. Панель открывается сочетанием <kbd>Control</kbd> + <kbd>Option</kbd> + <kbd>D</kbd> из любого приложения.</p>
+  <p data-en="On MacBooks with a notch a crowded menu bar can hide icons behind it. Use the shortcut, or hold ⌘ and drag the DiskPulse item further right.">На MacBook с «чёлкой» переполненная строка меню может спрятать значок за ней. Используйте сочетание клавиш или, удерживая ⌘, перетащите значок DiskPulse правее.</p>
+
+  <h2 data-en="Other ways to install">Другие способы установки</h2>
+  <p>Homebrew:</p>
+  <div class="cmd"><span class="prompt">$</span><code>brew install --cask gleb4442/tap/diskpulse</code><button class="copy-btn" type="button"><svg><use href="#i-copy"/></svg></button></div>
+  <p data-en="Terminal, without Homebrew (checks checksum, developer signature and notarization; no sudo):">Терминал без Homebrew (проверяет контрольную сумму, подпись разработчика и нотаризацию; без sudo):</p>
+  <div class="cmd"><span class="prompt">$</span><code>curl -fsSL https://github.com/Gleb4442/diskpulse/releases/latest/download/get.sh | bash</code><button class="copy-btn" type="button"><svg><use href="#i-copy"/></svg></button></div>
+
+  <h2 data-en="If something goes wrong">Если что-то пошло не так</h2>
+  <ul>
+    <li data-en-html="<b>«DiskPulse can't be opened»</b> — the download was probably damaged. Delete it and download again. If it repeats, open System Settings → Privacy &amp; Security and press «Open Anyway» next to DiskPulse, then tell us on GitHub.">
+      <b>«Не удаётся открыть DiskPulse»</b> — скорее всего, загрузка повредилась. Удалите файл и скачайте снова. Если повторяется, откройте «Системные настройки» → «Конфиденциальность и безопасность», нажмите «Всё равно открыть» рядом с DiskPulse и напишите нам на GitHub.</li>
+    <li data-en-html="<b>«Cleanup needs Apple's Command Line Tools»</b> — press «Install» in the welcome window or run <code>xcode-select --install</code>. It is a free Apple component; until it is installed DiskPulse only shows your space.">
+      <b>«Для уборки нужны инструменты Apple»</b> — нажмите «Установить» в окне приветствия или выполните <code>xcode-select --install</code>. Это бесплатный компонент Apple; пока его нет, DiskPulse только показывает место.</li>
+    <li data-en-html="<b>No icon in the menu bar</b> — press <kbd>⌃⌥D</kbd>. If the panel opens, the icon is hidden by the notch or another menu-bar app.">
+      <b>Нет значка в строке меню</b> — нажмите <kbd>⌃⌥D</kbd>. Если панель открылась, значок спрятан «чёлкой» или другим приложением в строке меню.</li>
+    <li data-en-html="<b>An update failed</b> — press «Download manually» in the update window, or simply download again from this site: your settings stay.">
+      <b>Не установилось обновление</b> — нажмите «Скачать вручную» в окне обновления или просто скачайте заново с этого сайта: настройки сохранятся.</li>
+  </ul>
+
+  <h2 id="uninstall" data-en="Uninstall">Удаление</h2>
+  <ol>
+    <li data-en="In DiskPulse Settings turn off «Clean in the background».">В настройках DiskPulse выключите «Убирать в фоне».</li>
+    <li data-en="Quit DiskPulse (panel → Quit) and move it from Applications to the Trash.">Закройте DiskPulse (панель → «Выйти») и перетащите его из «Программ» в Корзину.</li>
+    <li data-en="Optional — remove settings and logs:">По желанию — удалите настройки и логи:</li>
+  </ol>
+  <div class="cmd"><code>rm -rf ~/Library/Application\ Support/diskcare ~/Library/Caches/com.sverkaus.diskpulse ~/Library/Logs/diskcare*
+defaults delete com.sverkaus.diskpulse</code><button class="copy-btn" type="button"><svg><use href="#i-copy"/></svg></button></div>
+  <p data-en="With Homebrew: brew uninstall --cask --zap diskpulse does all of it.">С Homebrew всё это делает команда brew uninstall --cask --zap diskpulse.</p>
+
+  <p style="margin-top:44px"><a href="./" data-en="← Back to DiskPulse">← К DiskPulse</a></p>
+</main>
+</body>
+</html>

@@ -403,3 +403,47 @@ button.sbtn:hover { background: rgba(255, 255, 255, .14); }
 .document p + p { margin-top: 12px; }
 .document ol { padding-left: 22px; display: grid; gap: 12px; }
 .document a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, .3); text-underline-offset: 3px; }
+
+/* ---------------- After «Download»: three steps to the first launch ---------------- */
+.next-steps {
+  width: min(880px, calc(100vw - 32px)); max-height: calc(100vh - 32px);
+  border: 0; border-radius: 28px; padding: 44px 48px 34px;
+  background: radial-gradient(120% 80% at 50% -20%, rgba(156, 199, 255, .10), transparent 60%), var(--space-2);
+  color: var(--text); box-shadow: 0 40px 140px rgba(0, 0, 0, .7), 0 0 0 .5px rgba(255, 255, 255, .06);
+}
+.next-steps::backdrop { background: rgba(3, 4, 8, .72); backdrop-filter: blur(6px); }
+.next-eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--text-3); }
+.next-steps h2 { margin: 12px 0 32px; font-size: 34px; line-height: 1.12; letter-spacing: -.03em; font-weight: 650; }
+.install-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; counter-reset: step; }
+.install-steps li { counter-increment: step; }
+.install-steps h3 { margin: 18px 0 6px; font-size: 17px; font-weight: 620; letter-spacing: -.01em; }
+.install-steps h3::before { content: counter(step); display: inline-grid; place-items: center; width: 22px; height: 22px; margin-right: 10px; border-radius: 50%; background: var(--app-control); color: var(--text-2); font-size: 12px; font-weight: 600; vertical-align: 2px; }
+.install-steps p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--text-2); }
+.step-picture { height: 104px; border-radius: 18px; background: var(--app-card); display: flex; align-items: center; justify-content: center; gap: 16px; }
+.step-picture img { border-radius: 10px; }
+.dmg-file { background: #f2f2f4; color: #111; border-radius: 7px; padding: 20px 12px 7px; font-size: 11px; font-weight: 650; }
+.step-arrow { width: 26px; height: 2px; background: var(--text-3); position: relative; }
+.step-arrow::after { content: ""; position: absolute; right: -1px; top: -4px; width: 8px; height: 8px; border-top: 2px solid var(--text-3); border-right: 2px solid var(--text-3); transform: rotate(45deg); }
+.folder { flex: none; width: 46px; height: 34px; border-radius: 6px; background: linear-gradient(#5aa2f8, #3a85ea); position: relative; }
+.folder::before { content: ""; position: absolute; left: 3px; top: -6px; width: 18px; height: 8px; border-radius: 4px 4px 0 0; background: #5aa2f8; }
+.system-button { background: #3a85ea; color: #fff; border-radius: 8px; padding: 6px 20px; font-size: 13px; font-weight: 600; }
+.next-note { margin: 28px 0 0; font-size: 13px; color: var(--text-3); }
+.next-actions { display: flex; align-items: center; justify-content: flex-end; gap: 22px; margin-top: 18px; }
+.next-again { font-size: 13px; color: var(--text-3); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.next-again:hover { color: var(--text-2); }
+.next-actions .btn { border: 0; min-width: 132px; cursor: pointer; }
+@media (max-width: 760px) {
+  .next-steps { padding: 30px 22px 24px; border-radius: 24px; }
+  .next-steps h2 { font-size: 26px; margin-bottom: 22px; }
+  .install-steps { grid-template-columns: 1fr; gap: 16px; }
+  .install-steps li { display: grid; grid-template-columns: 92px 1fr; column-gap: 16px; align-items: start; }
+  .step-picture { grid-row: 1 / span 2; height: 72px; gap: 8px; border-radius: 14px; }
+  .step-picture img { width: 26px; height: 26px; }
+  .step-picture .folder { width: 30px; height: 23px; }
+  .step-arrow { width: 12px; }
+  .dmg-file { padding: 14px 8px 5px; font-size: 9px; }
+  .system-button { padding: 5px 10px; font-size: 11px; border-radius: 6px; }
+  .install-steps h3 { margin-top: 2px; }
+  .next-actions { flex-direction: column-reverse; align-items: stretch; gap: 14px; }
+  .next-again { text-align: center; }
+}

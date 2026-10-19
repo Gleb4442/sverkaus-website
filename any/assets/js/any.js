@@ -43,6 +43,8 @@
         ? (short ? T("Скачать", "Download") : T("Скачать для Mac", "Download for Mac"))
         : (short ? T("Скоро", "Soon") : T("Релиз готовится", "Release in preparation"));
     }
+    const again = $("#download-again");
+    if (config.downloadURL) again.href = config.downloadURL; else again.removeAttribute("href");
     const support = $("#support");
     if (support && config.supportURL) { support.href = config.supportURL; support.hidden = false; }
     syncTranslationMeta();
@@ -741,6 +743,15 @@
   addEventListener("scroll", onScroll, { passive: true }); onScroll();
   const io = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -8% 0px" });
   $$(".reveal").forEach(el => io.observe(el));
+
+  /* ---------------- After «Download» ---------------- */
+  // The browser keeps the download; the dialog says what to do once it lands.
+  const steps = $("#next-steps");
+  for (const link of $$(".download")) {
+    link.addEventListener("click", () => { if (config.downloadURL && typeof steps.showModal === "function") steps.showModal(); });
+  }
+  $("#next-close").addEventListener("click", () => steps.close());
+  steps.addEventListener("click", event => { if (event.target === steps) steps.close(); });
 
   applyLanguage();
 })();

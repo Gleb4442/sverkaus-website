@@ -572,7 +572,7 @@
 
   /* ---------------- Vocabulary, level 1: recognizer hints ---------------- */
   // Fills the 224-byte prompt budget the way Vocabulary.selectHints does (≤224 UTF-8 bytes, ≤32 terms).
-  const hintTerms = ["Ксения", "sverkaus", "Notion", "Slack", "Zoom", "Figma", "Jira", "ChatGPT", "Claude", "Perplexity", "Midjourney", "Linear", "GitHub", "Miro", "Raycast", "ElevenLabs", "OpenAI", "Cursor", "Obsidian", "Discord", "WhatsApp", "Telegram", "Microsoft Teams", "Supabase", "Vercel", "Docker", "Webflow", "Trello"];
+  const hintTerms = ["Codex", "Claude Code", "Cursor", "Linear", "Raycast", "Figma", "Notion", "Slack", "sverkaus", "Ксения", "GitHub", "ChatGPT", "Perplexity", "Supabase", "Vercel", "Docker", "Tailwind", "Postgres", "Python", "Swift", "TypeScript", "Ollama", "Whisper", "Obsidian"];
   const cloud = $("#hint-cloud"), bar = $("#bytes .bytes-bar i"), count = $("#bytes-count");
   demo($("#bytes"), async run => {
     cloud.innerHTML = hintTerms.map(t => `<span>${esc(t)}</span>`).join("");
@@ -596,41 +596,42 @@
   }, { pause: 200 });
 
   /* ---------------- Vocabulary, level 2: local replacement engine ---------------- */
-  // Example rules in the shape of VocabularyEntry. Brand spellings come from the starter packs
-  // (StarterBrands.swift; "зум" needs a cue such as "ссылку"); the name rule is a personal entry
-  // scoped to Slack's bundle ID, so it wins there and is skipped elsewhere (Vocabulary.swift:241-247).
-  const apps = ["telegram", "slack", "whatsapp", "notion", "discord", "zoom", "teams", "obsidian"];
+  const apps = ["claudecode", "codex", "cursor", "linear", "raycast", "figma", "notion", "slack"];
   const appInfo = {
-    telegram: ["Telegram", "ru.keepcoder.Telegram"], slack: ["Slack", "com.tinyspeck.slackmacgap"],
-    whatsapp: ["WhatsApp", "net.whatsapp.WhatsApp"], notion: ["Notion", "notion.id"],
-    discord: ["Discord", "com.hnc.Discord"], zoom: ["Zoom", "us.zoom.xos"],
-    teams: ["Microsoft Teams", "com.microsoft.teams2"], obsidian: ["Obsidian", "md.obsidian"]
+    claudecode: ["Claude Code", "com.anthropic.claudecode"],
+    codex: ["Codex", "com.openai.codex"],
+    cursor: ["Cursor", "com.todesktop.230313mzl4w4u92"],
+    linear: ["Linear", "com.linear"],
+    raycast: ["Raycast", "com.raycast.macos"],
+    figma: ["Figma", "com.figma.Desktop"],
+    notion: ["Notion", "notion.id"],
+    slack: ["Slack", "com.tinyspeck.slackmacgap"]
   };
-  let vocabApp = "telegram";
+  let vocabApp = "claudecode";
   function vocabCase() {
     const ru = lang === "ru";
-    const name = ru ? [{ from: "Ксюша", to: "Ксения", scope: ["slack"] }] : [{ from: "Kate", to: "Katherine", scope: ["slack"] }];
+    const name = ru ? [{ from: "Ксюша", to: "Ксения", scope: ["slack", "linear"] }] : [{ from: "Kate", to: "Katherine", scope: ["slack", "linear"] }];
     const r = (from, to) => [{ from, to, scope: null }];
     const cases = ru ? {
-      telegram: [["name", ", кинь ссылку на ", "zoom", ", план в ", "notion", "."], { name, zoom: r("зум", "Zoom"), notion: r("ноушене", "Notion") }],
-      slack: [["name", ", макеты в ", "figma", ", тикет завёл в ", "jira", "."], { name, figma: r("фигме", "Figma"), jira: r("джире", "Jira") }],
-      whatsapp: [["Купил подписку на ", "gpt", ", вечером расскажу."], { gpt: r("чат гпт", "ChatGPT") }],
-      notion: [["Сравнить ", "claude", " и ", "perplexity", " для поддержки."], { claude: r("клод", "Claude"), perplexity: r("перплексити", "Perplexity") }],
-      discord: [["Сделал обложку в ", "mj", ", кидаю сюда."], { mj: r("миджорни", "Midjourney") }],
-      zoom: [["Запись созвона выложу в ", "slack", " после встречи."], { slack: r("слак", "Slack") }],
-      teams: [["Отчёт по ", "sv", " пришлю до пятницы."], { sv: r("сфера хаос", "sverkaus") }],
-      obsidian: [["Сведу сюда заметки по ", "linear", " и ", "github", "."], { linear: r("линеар", "Linear"), github: r("гитхаб", "GitHub") }]
+      claudecode: [["Запусти тесты через ", "claude", " и проверь ошибки."], { claude: r("клод код", "Claude Code") }],
+      codex: [["Сделай рефакторинг в ", "codex", " для нового модуля."], { codex: r("кодекс", "Codex") }],
+      cursor: [["Открой репозиторий в ", "cursor", " и поправь стили."], { cursor: r("курсор", "Cursor") }],
+      linear: [["name", ", заведи тикет в ", "linear", " на спринт."], { name, linear: r("линеар", "Linear") }],
+      raycast: [["Вызови скрипт в ", "raycast", " по горячей клавише."], { raycast: r("рейкаст", "Raycast") }],
+      figma: [["name", ", макеты в ", "figma", ", обнови компоненты."], { name, figma: r("фигме", "Figma") }],
+      notion: [["План архитектуры расписал в ", "notion", "."], { notion: r("ноушене", "Notion") }],
+      slack: [["name", ", кинь ссылку на пуллреквест в ", "slack", "."], { name, slack: r("слак", "Slack") }]
     } : {
-      telegram: [["name", ", the plan is in ", "notion", "."], { name, notion: r("noshen", "Notion") }],
-      slack: [["name", ", mockups are in ", "figma", ", the ticket is in ", "jira", "."], { name, figma: r("fygma", "Figma"), jira: r("geera", "Jira") }],
-      whatsapp: [["Got a ", "gpt", " subscription, tell you tonight."], { gpt: r("chat gpt", "ChatGPT") }],
-      notion: [["Compare ", "claude", " and ", "perplexity", " for support."], { claude: r("claud", "Claude"), perplexity: r("perplexety", "Perplexity") }],
-      discord: [["Made the cover in ", "mj", ", dropping it here."], { mj: r("midjourny", "Midjourney") }],
-      zoom: [["I’ll post the recording to ", "slack", " after the call."], { slack: r("slak", "Slack") }],
-      teams: [["The ", "sv", " report lands by Friday."], { sv: r("sphere chaos", "sverkaus") }],
-      obsidian: [["Merging my notes on ", "linear", " and ", "github", " here."], { linear: r("lineer", "Linear"), github: r("git hub", "GitHub") }]
+      claudecode: [["Run test suite in ", "claude", " and fix errors."], { claude: r("claud code", "Claude Code") }],
+      codex: [["Run the refactor in ", "codex", " for new endpoints."], { codex: r("codecks", "Codex") }],
+      cursor: [["Open workspace in ", "cursor", " and review pr."], { cursor: r("curser", "Cursor") }],
+      linear: [["name", ", track the bug in ", "linear", " today."], { name, linear: r("lineer", "Linear") }],
+      raycast: [["Trigger extension in ", "raycast", " via shortcut."], { raycast: r("ray cast", "Raycast") }],
+      figma: [["name", ", design tokens are in ", "figma", "."], { name, figma: r("fygma", "Figma") }],
+      notion: [["Roadmap and specs are synced to ", "notion", "."], { notion: r("noshen", "Notion") }],
+      slack: [["name", ", post the release build into ", "slack", "."], { name, slack: r("slak", "Slack") }]
     };
-    const [parts, rules] = cases[vocabApp];
+    const [parts, rules] = cases[vocabApp] || cases.claudecode;
     return { parts, rules };
   }
   function pickRule(list) { return list.find(r => r.scope && r.scope.includes(vocabApp)) || list.find(r => !r.scope) || null; }
@@ -847,15 +848,15 @@
 
   let lastScrollY = window.scrollY;
   let scrollAccumulator = 0;
-  const HIDE_SCROLL_AMOUNT = 26;
+  const HIDE_SCROLL_AMOUNT = 45;
 
   function handleNavScroll() {
     const currentY = Math.max(0, window.scrollY);
     const delta = currentY - lastScrollY;
 
     if (nav) {
-      // Compact at very top, expands when scrolled
-      nav.classList.toggle("is-scrolled", currentY > 10);
+      // Smoothly expand dock when scrolled past initial view
+      nav.classList.toggle("is-scrolled", currentY > 35);
 
       // Reset accumulator if scroll direction reverses
       if ((delta > 0 && scrollAccumulator < 0) || (delta < 0 && scrollAccumulator > 0)) {
@@ -863,18 +864,18 @@
       }
       scrollAccumulator += delta;
 
-      if (currentY <= 15) {
-        // At top of page: always visible
+      if (currentY <= 25) {
+        // At top of page: always visible and compact
         nav.classList.remove("nav-hidden");
-      } else if (scrollAccumulator > HIDE_SCROLL_AMOUNT && currentY > 50) {
-        // Scrolled down sufficiently -> smoothly hide
+      } else if (scrollAccumulator > HIDE_SCROLL_AMOUNT && currentY > 100) {
+        // Scrolled down deliberately -> smoothly hide
         nav.classList.add("nav-hidden");
         if (langMenu && !langMenu.hidden) {
           langMenu.hidden = true;
           if (langBtn) langBtn.setAttribute("aria-expanded", "false");
         }
-      } else if (scrollAccumulator < -HIDE_SCROLL_AMOUNT) {
-        // Scrolled up sufficiently -> smoothly reveal
+      } else if (scrollAccumulator < -HIDE_SCROLL_AMOUNT || (delta < -12 && currentY > 25)) {
+        // Scrolled up -> smoothly reveal
         nav.classList.remove("nav-hidden");
       }
     }

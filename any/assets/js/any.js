@@ -111,18 +111,42 @@
   const langBtn = $("#lang-btn");
   const langMenu = $("#lang-menu");
 
+  function closeLangMenu() {
+    if (!langBtn || !langMenu) return;
+    langBtn.setAttribute("aria-expanded", "false");
+    langMenu.classList.remove("is-open");
+  }
+
+  function openLangMenu() {
+    if (!langBtn || !langMenu) return;
+    langBtn.setAttribute("aria-expanded", "true");
+    langMenu.classList.add("is-open");
+  }
+
   if (langBtn && langMenu) {
+    // Remove the HTML 'hidden' attribute so CSS transitions handle visibility smoothly
+    langMenu.removeAttribute("hidden");
+
     langBtn.addEventListener("click", e => {
       e.stopPropagation();
       const expanded = langBtn.getAttribute("aria-expanded") === "true";
-      langBtn.setAttribute("aria-expanded", String(!expanded));
-      langMenu.hidden = expanded;
+      if (expanded) {
+        closeLangMenu();
+      } else {
+        openLangMenu();
+      }
     });
 
     document.addEventListener("click", e => {
       if (langSelector && !langSelector.contains(e.target)) {
-        langBtn.setAttribute("aria-expanded", "false");
-        langMenu.hidden = true;
+        closeLangMenu();
+      }
+    });
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && langBtn.getAttribute("aria-expanded") === "true") {
+        closeLangMenu();
+        langBtn.focus();
       }
     });
 
@@ -130,8 +154,7 @@
       opt.addEventListener("click", () => {
         lang = opt.dataset.lang;
         store.set("any-site-language", lang);
-        langBtn.setAttribute("aria-expanded", "false");
-        langMenu.hidden = true;
+        closeLangMenu();
         applyLanguage();
         demos.forEach(d => d.restart());
       });
@@ -878,10 +901,7 @@
 
         if (scrollDownAccum > HIDE_THRESHOLD && currentY > HERO_SAFE_ZONE) {
           nav.classList.add("nav-hidden");
-          if (langMenu && !langMenu.hidden) {
-            langMenu.hidden = true;
-            if (langBtn) langBtn.setAttribute("aria-expanded", "false");
-          }
+          closeLangMenu();
         }
       } else if (delta < 0) {
         // Scrolling up

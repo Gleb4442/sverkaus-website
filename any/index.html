@@ -45,10 +45,10 @@
       </a>
 
       <nav class="nav-toc" id="nav-toc" aria-label="Разделы" data-en-aria="Sections">
+        <a href="#ecosystem" class="toc-link" data-section="ecosystem"><span data-en="10x">10x</span></a>
         <a href="#tasks" class="toc-link" data-section="tasks"><span data-en="Tasks">Задачи</span></a>
         <a href="#translate" class="toc-link" data-section="translate"><span data-en="Translate">Перевод</span></a>
         <a href="#vocabulary" class="toc-link" data-section="vocabulary"><span data-en="Vocabulary">Словарь</span></a>
-        <a href="#chain" class="toc-link" data-section="chain"><span data-en="Workflow">Связка</span></a>
         <a href="#price" class="toc-link" data-section="price"><span data-en="Pricing">Тарифы</span></a>
       </nav>
 
@@ -99,101 +99,237 @@
       <div class="hero-cta reveal" id="download">
         <a class="btn btn-primary download" aria-disabled="true"><svg><use href="#i-arrow-up-right"/></svg><span class="dl-label" data-en="Release in preparation">Релиз готовится</span></a>
       </div>
+      <p class="hero-sub-meta reveal" data-en="30-day free trial · No card required · 100% on-device">30 дней бесплатно · Без привязки карты · 100% на Mac</p>
     </div>
   </section>
 
-  <!-- 2. TASK ASSISTANT + EXA -->
-  <section class="section" id="tasks">
-    <div class="wrap center">
-      <div class="keys-line reveal"><span class="kbd">fn</span><span class="plus">+</span><span class="kbd">⌃</span></div>
-      <h2 class="title reveal" data-en="Say the task. Get the answer.">Скажите задачу. Получите ответ.</h2>
-
-      <div class="screen reveal" id="task-stage" data-video="task">
-        <div class="notch-host"><div class="notch" id="task-notch" data-state="idle"></div></div>
-        <div class="beacon" id="task-beacon" aria-hidden="true"><i></i><i></i><i></i><svg><use href="#i-globe"/></svg><b>Exa</b></div>
-        <div class="canvas-text">
-          <div class="app-tag"><img src="/any/assets/img/apps/apple-mail.png" class="app-icon" id="task-icon" alt="Mail" width="24" height="24"><span id="task-to">anna@studio.design</span></div>
-          <div class="typed" id="task-text"></div>
-        </div>
+  <!-- 2. ECOSYSTEM & 10x PRODUCTIVITY -->
+  <section class="section ecosystem-section" id="ecosystem">
+    <div class="wrap">
+      <div class="ecosystem-header center reveal">
+        <span class="badge-subtle" data-en="Productivity Multiplier">Умножитель продуктивности</span>
+        <h2 class="title grad-text" data-en-html="Not just another<br>dictation app.">Не просто диктовка.<br>Ускорение работы в 10 раз.</h2>
+        <p class="sub" data-en="Dictation only speeds up your typing. any multiplies the speed of your entire workflow across every app on your Mac.">Обычная диктовка лишь ускоряет набор букв. any умножает скорость вашей работы во всех приложениях на Mac.</p>
       </div>
 
-      <div class="prompts reveal" role="group" aria-label="Примеры задач" data-en-aria="Example tasks" id="task-prompts">
-        <button type="button" data-task="0" aria-pressed="true" data-en="Rejection letter">Письмо-отказ</button>
-        <button type="button" data-task="1" aria-pressed="false" data-en="Interview questions">Вопросы к собеседованию</button>
-        <button type="button" data-task="2" aria-pressed="false"><svg><use href="#i-globe"/></svg><span data-en="Supabase vs Firebase">Supabase vs Firebase</span></button>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. DUAL TRANSLATION -->
-  <section class="section" id="translate">
-    <div class="wrap center">
-      <h2 class="title reveal" data-en="Select. Name the language.">Выделите. Назовите язык.</h2>
-
-      <div class="tabs reveal" role="tablist" aria-label="Режим перевода" data-en-aria="Translation mode" id="tr-mode">
-        <button type="button" role="tab" aria-selected="true" data-mode="editable" data-en="In a field">В поле</button>
-        <button type="button" role="tab" aria-selected="false" data-mode="readonly" data-en="On a page">На странице</button>
-        <button type="button" role="tab" aria-selected="false" data-mode="speech" data-en="Speech → EN">Речь → EN</button>
-      </div>
-
-      <div class="screen reveal" id="tr-stage" data-video="translate">
-        <div class="notch-host"><div class="notch" id="tr-notch" data-state="idle"></div></div>
-        <div class="canvas-text" id="tr-body"></div>
-      </div>
-
-      <div class="langs reveal" id="tr-langs" aria-label="10 языков перевода" data-en-aria="10 target languages">
-        <span>EN</span><span>RU</span><span>ES</span><span>DE</span><span>FR</span><span>IT</span><span>UK</span><span>ZH</span><span>JA</span><span>PT</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4. TWO-LEVEL VOCABULARY -->
-  <section class="section" id="vocabulary">
-    <div class="wrap center">
-      <h2 class="title reveal" data-en="Your words. Two layers deep.">Ваши слова. На двух уровнях.</h2>
-
-      <div class="vocab reveal">
-        <div class="layer" id="bytes">
-          <span class="layer-num" data-en="1 · before recognition">1 · до распознавания</span>
-          <div class="hint-cloud" id="hint-cloud" aria-hidden="true"></div>
-          <div class="bytes-bar"><i></i></div>
-        </div>
-
-        <div class="layer">
-          <span class="layer-num" data-en="2 · after recognition">2 · после распознавания</span>
-          <div class="apps" role="tablist" aria-label="Приложение" data-en-aria="App" id="vocab-app">
-            <button type="button" role="tab" aria-selected="true" data-app="claudecode" aria-label="Claude Code" title="Claude Code"><img src="/any/assets/img/apps/claudecode.svg" alt="" width="34" height="34"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="codex" aria-label="Codex" title="Codex"><img src="/any/assets/img/apps/codex.svg" alt="" width="34" height="34"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="cursor" aria-label="Cursor" title="Cursor"><img src="/any/assets/img/apps/cursor.svg" alt="" width="34" height="34"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="linear" aria-label="Linear" title="Linear"><img src="/any/assets/img/apps/linear.svg" alt="" width="34" height="34"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="raycast" aria-label="Raycast" title="Raycast"><img src="/any/assets/img/apps/raycast.svg" alt="" width="34" height="34"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="figma" aria-label="Figma" title="Figma"><img src="/any/assets/img/apps/figma.svg" alt="" width="34" height="34"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="notion" aria-label="Notion" title="Notion"><img src="/any/assets/img/apps/notion.svg" alt="" width="34" height="34"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="slack" aria-label="Slack" title="Slack"><img src="/any/assets/img/apps/slack.svg" alt="" width="34" height="34"></button>
+      <div class="ecosystem-card hardware-card reveal">
+        <!-- The Parabolic App Arc -->
+        <div class="app-arc-container" aria-label="Поддерживаемые приложения" data-en-aria="Supported macOS applications">
+          <div class="app-arc-track">
+            <div class="app-arc-item" data-app="mail" title="Apple Mail">
+              <img src="/any/assets/img/apps/apple-mail.png" alt="Mail" width="56" height="56">
+              <span>Mail</span>
+            </div>
+            <div class="app-arc-item" data-app="finder" title="Finder">
+              <img src="/any/assets/img/apps/apple-finder.png" alt="Finder" width="56" height="56">
+              <span>Finder</span>
+            </div>
+            <div class="app-arc-item" data-app="notes" title="Notes">
+              <img src="/any/assets/img/apps/apple-notes.png" alt="Notes" width="56" height="56">
+              <span>Notes</span>
+            </div>
+            <div class="app-arc-item" data-app="telegram" title="Telegram">
+              <img src="/any/assets/img/apps/telegram.png" alt="Telegram" width="56" height="56">
+              <span>Telegram</span>
+            </div>
+            <div class="app-arc-item" data-app="slack" title="Slack">
+              <img src="/any/assets/img/apps/slack.svg" alt="Slack" width="56" height="56">
+              <span>Slack</span>
+            </div>
+            <div class="app-arc-item" data-app="linear" title="Linear">
+              <img src="/any/assets/img/apps/linear.svg" alt="Linear" width="56" height="56">
+              <span>Linear</span>
+            </div>
+            <div class="app-arc-item" data-app="claudecode" title="Claude Code">
+              <img src="/any/assets/img/apps/claudecode.svg" alt="Claude Code" width="56" height="56">
+              <span>Claude</span>
+            </div>
+            <div class="app-arc-item" data-app="cursor" title="Cursor">
+              <img src="/any/assets/img/apps/cursor.svg" alt="Cursor" width="56" height="56">
+              <span>Cursor</span>
+            </div>
+            <div class="app-arc-item" data-app="raycast" title="Raycast">
+              <img src="/any/assets/img/apps/raycast.svg" alt="Raycast" width="56" height="56">
+              <span>Raycast</span>
+            </div>
+            <div class="app-arc-item" data-app="figma" title="Figma">
+              <img src="/any/assets/img/apps/figma.svg" alt="Figma" width="56" height="56">
+              <span>Figma</span>
+            </div>
+            <div class="app-arc-item" data-app="notion" title="Notion">
+              <img src="/any/assets/img/apps/notion.svg" alt="Notion" width="56" height="56">
+              <span>Notion</span>
+            </div>
+            <div class="app-arc-item" data-app="calendar" title="Calendar">
+              <img src="/any/assets/img/apps/apple-calendar.png" alt="Calendar" width="56" height="56">
+              <span>Calendar</span>
+            </div>
           </div>
-          <p class="vline" id="vocab-out" aria-live="polite"></p>
+        </div>
+
+        <!-- 1x / 4x / 10x Comparison Pillars -->
+        <div class="productivity-pillars">
+          <div class="pillar pillar-1x">
+            <div class="pillar-col"><span class="pillar-mult">1x</span></div>
+            <span class="pillar-name" data-en="Typing">Печать</span>
+          </div>
+          <div class="pillar pillar-4x">
+            <div class="pillar-col"><span class="pillar-mult">4x</span></div>
+            <span class="pillar-name" data-en="Dictation">Диктовка</span>
+          </div>
+          <div class="pillar pillar-10x">
+            <span class="pillar-tag" data-en="10x PRODUCTIVITY">10x УСКОРЕНИЕ</span>
+            <div class="pillar-col featured">
+              <img src="/any/assets/img/any-wordmark.svg" class="pillar-brand" alt="any" width="52" height="22">
+              <span class="pillar-mult">10x</span>
+            </div>
+            <span class="pillar-name featured" data-en="any with AI">any с AI</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 5. CHAINED WORKFLOW -->
+  <!-- 3. USE CASE 1: VOICE-TO-ACTION -->
+  <section class="section usecase-section" id="tasks">
+    <div class="wrap">
+      <div class="usecase-grid">
+        <div class="usecase-copy reveal">
+          <span class="strikethrough-tag" data-en="Speech-to-text">Распознавание речи</span>
+          <h2 class="title grad-text" data-en="Voice-to-action.">Голос в действие.</h2>
+          <p class="usecase-desc" data-en="Send the email, answer the team, compare technologies. Say it once, and any executes the task in the right app with AI web grounding.">Отправьте письмо, ответьте команде, сравните технологии. Сформулируйте мысль вслух — any выполнит действие в нужной программе с доступом к живому вебу.</p>
+          
+          <div class="quick-action-stack" role="group" aria-label="Примеры задач" data-en-aria="Example tasks" id="task-prompts">
+            <button type="button" class="quick-action-pill" data-task="0" aria-pressed="true">
+              <img src="/any/assets/img/apps/apple-mail.png" alt="" width="22" height="22">
+              <span data-en="Rejection letter to candidate">Письмо-отказ кандидату</span>
+              <svg class="pill-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <button type="button" class="quick-action-pill" data-task="1" aria-pressed="false">
+              <img src="/any/assets/img/apps/telegram.png" alt="" width="22" height="22">
+              <span data-en="Interview questions for Swift">Вопросы для собеседования</span>
+              <svg class="pill-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <button type="button" class="quick-action-pill" data-task="2" aria-pressed="false">
+              <svg class="pill-web-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+              <span data-en="Supabase vs Firebase (Exa AI)">Supabase vs Firebase (Exa AI)</span>
+              <svg class="pill-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="usecase-visual hardware-card reveal">
+          <div class="screen" id="task-stage" data-video="task">
+            <div class="notch-host"><div class="notch" id="task-notch" data-state="idle"></div></div>
+            <div class="beacon" id="task-beacon" aria-hidden="true"><i></i><i></i><i></i><svg><use href="#i-globe"/></svg><b>Exa</b></div>
+            <div class="canvas-text">
+              <div class="app-tag"><img src="/any/assets/img/apps/apple-mail.png" class="app-icon" id="task-icon" alt="Mail" width="24" height="24"><span id="task-to">anna@studio.design</span></div>
+              <div class="typed" id="task-text"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. USE CASE 2: DIRECT IN-PLACE TRANSLATION -->
+  <section class="section usecase-section" id="translate">
+    <div class="wrap">
+      <div class="usecase-grid reversed">
+        <div class="usecase-visual hardware-card reveal">
+          <div class="tabs" role="tablist" aria-label="Режим перевода" data-en-aria="Translation mode" id="tr-mode">
+            <button type="button" role="tab" aria-selected="true" data-mode="editable" data-en="In a field">В поле</button>
+            <button type="button" role="tab" aria-selected="false" data-mode="readonly" data-en="On a page">На странице</button>
+            <button type="button" role="tab" aria-selected="false" data-mode="speech" data-en="Speech → EN">Речь → EN</button>
+          </div>
+
+          <div class="screen" id="tr-stage" data-video="translate">
+            <div class="notch-host"><div class="notch" id="tr-notch" data-state="idle"></div></div>
+            <div class="canvas-text" id="tr-body"></div>
+          </div>
+
+          <div class="langs" id="tr-langs" aria-label="10 языков перевода" data-en-aria="10 target languages">
+            <span>EN</span><span>RU</span><span>ES</span><span>DE</span><span>FR</span><span>IT</span><span>UK</span><span>ZH</span><span>JA</span><span>PT</span>
+          </div>
+        </div>
+
+        <div class="usecase-copy reveal">
+          <span class="badge-subtle" data-en="Universal Translation">Универсальный перевод</span>
+          <h2 class="title grad-text" data-en-html="Select.<br>Name the language.">Выделите.<br>Назовите язык.</h2>
+          <p class="usecase-desc" data-en="Translate directly inside any text field, document, or developer tool without copy-pasting. Highlight text, hold fn, and speak the language — any replaces it in place.">Переводите прямо в поле ввода, документе или редакторе кода без копирования туда-обратно. Выделите фразу, зажмите fn и назовите язык — any заменит текст на месте.</p>
+          <div class="voice-pill">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/><path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/></svg>
+            <span data-en="“Translate to German”">«Переведи на немецкий»</span>
+            <div class="mini-wave"><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. USE CASE 3: TWO-LEVEL VOCABULARY -->
+  <section class="section usecase-section" id="vocabulary">
+    <div class="wrap">
+      <div class="usecase-grid">
+        <div class="usecase-copy reveal">
+          <span class="badge-subtle" data-en="Context-Aware Engine">Контекстный движок</span>
+          <h2 class="title grad-text" data-en-html="Your words.<br>Two layers deep.">Ваши слова.<br>На двух уровнях.</h2>
+          <p class="usecase-desc" data-en="Layer 1 fixes acoustic phonetic hints before recognition runs. Layer 2 detects the active app and automatically shapes terminal syntax for Claude Code, Cursor, Figma, or Linear.">Уровень 1 корректирует фонетические байты до распознавания. Уровень 2 определяет открытую программу и форматирует термины под синтаксис Claude Code, Cursor, Figma или Linear.</p>
+          <div class="voice-pill">
+            <img src="/any/assets/img/apps/claudecode.svg" alt="" width="18" height="18">
+            <span data-en="Context syntax routing">Автоматический синтаксис под приложение</span>
+          </div>
+        </div>
+
+        <div class="usecase-visual hardware-card reveal">
+          <div class="vocab">
+            <div class="layer" id="bytes">
+              <span class="layer-num" data-en="1 · before recognition">1 · до распознавания</span>
+              <div class="hint-cloud" id="hint-cloud" aria-hidden="true"></div>
+              <div class="bytes-bar"><i></i></div>
+            </div>
+
+            <div class="layer">
+              <span class="layer-num" data-en="2 · after recognition">2 · после распознавания</span>
+              <div class="apps" role="tablist" aria-label="Приложение" data-en-aria="App" id="vocab-app">
+                <button type="button" role="tab" aria-selected="true" data-app="claudecode" aria-label="Claude Code" title="Claude Code"><img src="/any/assets/img/apps/claudecode.svg" alt="" width="34" height="34"></button>
+                <button type="button" role="tab" aria-selected="false" data-app="codex" aria-label="Codex" title="Codex"><img src="/any/assets/img/apps/codex.svg" alt="" width="34" height="34"></button>
+                <button type="button" role="tab" aria-selected="false" data-app="cursor" aria-label="Cursor" title="Cursor"><img src="/any/assets/img/apps/cursor.svg" alt="" width="34" height="34"></button>
+                <button type="button" role="tab" aria-selected="false" data-app="linear" aria-label="Linear" title="Linear"><img src="/any/assets/img/apps/linear.svg" alt="" width="34" height="34"></button>
+                <button type="button" role="tab" aria-selected="false" data-app="raycast" aria-label="Raycast" title="Raycast"><img src="/any/assets/img/apps/raycast.svg" alt="" width="34" height="34"></button>
+                <button type="button" role="tab" aria-selected="false" data-app="figma" aria-label="Figma" title="Figma"><img src="/any/assets/img/apps/figma.svg" alt="" width="34" height="34"></button>
+                <button type="button" role="tab" aria-selected="false" data-app="notion" aria-label="Notion" title="Notion"><img src="/any/assets/img/apps/notion.svg" alt="" width="34" height="34"></button>
+                <button type="button" role="tab" aria-selected="false" data-app="slack" aria-label="Slack" title="Slack"><img src="/any/assets/img/apps/slack.svg" alt="" width="34" height="34"></button>
+              </div>
+              <p class="vline" id="vocab-out" aria-live="polite"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. CHAINED WORKFLOW -->
   <section class="section" id="chain">
     <div class="wrap center">
-      <h2 class="title reveal" data-en="Three gestures. Draft to German.">Три жеста. От черновика до немецкого.</h2>
+      <span class="badge-subtle reveal" data-en="Gesture Pipeline">Цепочка жестов</span>
+      <h2 class="title grad-text reveal" data-en="Three gestures. Draft to German.">Три жеста. От черновика до немецкого.</h2>
+      <p class="sub reveal" data-en="Chain voice dictation into selection and translation in a single uninterrupted motion.">Объединяйте диктовку, выделение и перевод в единый непрерывный жест.</p>
 
-      <div class="track reveal" id="chain-steps">
-        <div class="track-beam"><i></i></div>
-        <button class="node" type="button" data-step="0" aria-current="step"><span class="node-dot"><span class="orb"></span></span><span class="node-label" data-en="Task">Задача</span></button>
-        <button class="node" type="button" data-step="1"><span class="node-dot">⌘A</span><span class="node-label" data-en="Select">Выделить</span></button>
-        <button class="node" type="button" data-step="2"><span class="node-dot">DE</span><span class="node-label" data-en="German">Немецкий</span></button>
-      </div>
+      <div class="hardware-card reveal" style="width: 100%; max-width: 960px; margin-top: 48px;">
+        <div class="track" id="chain-steps">
+          <div class="track-beam"><i></i></div>
+          <button class="node" type="button" data-step="0" aria-current="step"><span class="node-dot"><span class="orb"></span></span><span class="node-label" data-en="Task">Задача</span></button>
+          <button class="node" type="button" data-step="1"><span class="node-dot">⌘A</span><span class="node-label" data-en="Select">Выделить</span></button>
+          <button class="node" type="button" data-step="2"><span class="node-dot">DE</span><span class="node-label" data-en="German">Немецкий</span></button>
+        </div>
 
-      <div class="screen reveal" id="chain-stage" data-video="chain">
-        <div class="notch-host"><div class="notch" id="chain-notch" data-state="idle"></div></div>
-        <div class="canvas-text">
-          <div class="app-tag"><img src="/any/assets/img/apps/apple-keynote.png" class="app-icon" alt="Keynote" width="24" height="24"><span data-en="Launch deck">Презентация запуска</span></div>
-          <div class="typed" id="chain-text"></div>
+        <div class="screen" id="chain-stage" data-video="chain" style="margin-top: 24px;">
+          <div class="notch-host"><div class="notch" id="chain-notch" data-state="idle"></div></div>
+          <div class="canvas-text">
+            <div class="app-tag"><img src="/any/assets/img/apps/apple-keynote.png" class="app-icon" alt="Keynote" width="24" height="24"><span data-en="Launch deck">Презентация запуска</span></div>
+            <div class="typed" id="chain-text"></div>
+          </div>
         </div>
       </div>
     </div>

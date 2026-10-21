@@ -838,10 +838,10 @@
   /* ---------------- Page chrome & Floating Header Dock ---------------- */
   const nav = $("#nav");
   const tocSections = [
+    { id: "ecosystem", el: $("#ecosystem") },
     { id: "tasks", el: $("#tasks") },
     { id: "translate", el: $("#translate") },
     { id: "vocabulary", el: $("#vocabulary") },
-    { id: "chain", el: $("#chain") },
     { id: "price", el: $("#price") }
   ].filter(item => item.el);
   const tocLinks = $$(".toc-link");

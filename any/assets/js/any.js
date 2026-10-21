@@ -466,7 +466,8 @@
     $$("#tr-langs span").forEach(s => { s.classList.toggle("from", Boolean(pair) && s.textContent === pair[0]); s.classList.toggle("on", Boolean(pair) && s.textContent === pair[1]); });
   }
   function syncTranslationMeta() {
-    $("#tr-meta").textContent = trMode === "speech" ? "Whisper large-v3 · Groq" : "Apple Translation · " + T("на устройстве", "on device");
+    const el = $("#tr-meta");
+    if (el) el.textContent = trMode === "speech" ? "Whisper large-v3 · Groq" : "Apple Translation · " + T("на устройстве", "on device");
   }
   function trLayout() {
     const d = trData();
@@ -575,7 +576,7 @@
   const cloud = $("#hint-cloud"), bar = $("#bytes .bytes-bar i"), count = $("#bytes-count");
   demo($("#bytes"), async run => {
     cloud.innerHTML = hintTerms.map(t => `<span>${esc(t)}</span>`).join("");
-    bar.style.width = "0%"; count.textContent = "0 / 224 B";
+    bar.style.width = "0%"; if (count) count.textContent = "0 / 224 B";
     const enc = new TextEncoder();
     let used = 0, n = 0;
     await run.wait(400);
@@ -585,7 +586,7 @@
         used += size; n += 1;
         chip.className = "in";
         bar.style.width = (used / 224 * 100) + "%";
-        count.textContent = `${used} / 224 B · ${n}`;
+        if (count) count.textContent = `${used} / 224 B · ${n}`;
       } else chip.className = "out";
       await run.wait(reduce ? 0 : 120);
     }
@@ -637,7 +638,8 @@
   const vocabDemo = demo(vocabOut, async run => {
     const c = vocabCase();
     $$("#vocab-app button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.app === vocabApp)));
-    $("#vocab-bundle").textContent = appInfo[vocabApp].join(" · ");
+    const vb = $("#vocab-bundle");
+    if (vb) vb.textContent = appInfo[vocabApp].join(" · ");
     vocabOut.innerHTML = c.parts.map(p => c.rules[p] ? `<span class="term" data-k="${p}">${esc(c.rules[p][0].from)}</span>` : esc(p)).join("");
     await run.wait(1400);
     for (const term of $$(".term", vocabOut)) {
@@ -715,7 +717,8 @@
   /* ---------------- Local vs cloud: where your voice travels ---------------- */
   let flowMode = "local";
   function syncFlowMeta() {
-    $("#flow-meta").textContent = flowMode === "local"
+    const fm = $("#flow-meta");
+    if (fm) fm.textContent = flowMode === "local"
       ? "WhisperKit · Qwen3-4B · Apple Translation"
       : "whisper-large-v3-turbo · gpt-oss-120b · Exa";
     $("#flow-desc").textContent = flowMode === "local"
@@ -843,31 +846,39 @@
   const tocLinks = $$(".toc-link");
 
   let lastScrollY = window.scrollY;
-  const SCROLL_THRESHOLD = 6;
-  const HIDE_THRESHOLD = 90;
+  let scrollAccumulator = 0;
+  const HIDE_SCROLL_AMOUNT = 26;
 
   function handleNavScroll() {
-    const currentY = window.scrollY;
-    const diff = currentY - lastScrollY;
+    const currentY = Math.max(0, window.scrollY);
+    const delta = currentY - lastScrollY;
 
     if (nav) {
-      nav.classList.toggle("is-scrolled", currentY > 20);
+      // Compact at very top, expands when scrolled
+      nav.classList.toggle("is-scrolled", currentY > 10);
 
-      if (currentY <= HIDE_THRESHOLD) {
+      // Reset accumulator if scroll direction reverses
+      if ((delta > 0 && scrollAccumulator < 0) || (delta < 0 && scrollAccumulator > 0)) {
+        scrollAccumulator = 0;
+      }
+      scrollAccumulator += delta;
+
+      if (currentY <= 15) {
+        // At top of page: always visible
         nav.classList.remove("nav-hidden");
-      } else if (Math.abs(diff) >= SCROLL_THRESHOLD) {
-        if (diff > 0) {
-          nav.classList.add("nav-hidden");
-          if (langMenu && !langMenu.hidden) {
-            langMenu.hidden = true;
-            if (langBtn) langBtn.setAttribute("aria-expanded", "false");
-          }
-        } else {
-          nav.classList.remove("nav-hidden");
+      } else if (scrollAccumulator > HIDE_SCROLL_AMOUNT && currentY > 50) {
+        // Scrolled down sufficiently -> smoothly hide
+        nav.classList.add("nav-hidden");
+        if (langMenu && !langMenu.hidden) {
+          langMenu.hidden = true;
+          if (langBtn) langBtn.setAttribute("aria-expanded", "false");
         }
+      } else if (scrollAccumulator < -HIDE_SCROLL_AMOUNT) {
+        // Scrolled up sufficiently -> smoothly reveal
+        nav.classList.remove("nav-hidden");
       }
     }
-    lastScrollY = Math.max(0, currentY);
+    lastScrollY = currentY;
 
     // Active TOC section indicator
     const scrollPos = currentY + 180;

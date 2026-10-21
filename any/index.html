@@ -9,13 +9,13 @@
   <meta property="og:title" content="any — голос в челке вашего Mac">
   <meta property="og:description" content="Диктовка, задачи, перевод и личный словарь для macOS. Локальные модели на Apple Silicon.">
   <meta property="og:image" content="assets/img/any-icon-512.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
-  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/css/any.css">
+  <link rel="icon" type="image/png" sizes="32x32" href="/any/assets/img/favicon-32.png">
+  <link rel="apple-touch-icon" href="/any/assets/img/apple-touch-icon.png">
+  <link rel="stylesheet" href="/any/assets/css/any.css">
   <!-- Release contract: download buttons stay disabled until downloadURL is a verified build (see README.md). -->
   <script id="release-config" type="application/json">{"downloadURL": null, "supportURL": "https://t.me/gennetysupport"}</script>
-  <script defer src="assets/js/sky.js"></script>
-  <script defer src="assets/js/any.js"></script>
+  <script defer src="/any/assets/js/sky.js"></script>
+  <script defer src="/any/assets/js/any.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
@@ -37,7 +37,7 @@
 
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a class="brand" href="#top" aria-label="any"><img src="assets/img/any-icon-64.png" alt="" width="30" height="30"><span>any</span></a>
+    <a class="brand" href="#top" aria-label="any"><img src="/any/assets/img/any-icon-64.png" alt="" width="30" height="30"><span>any</span></a>
     <div class="nav-actions">
       <button class="lang" id="lang" type="button" aria-label="Switch to English">EN</button>
       <a class="btn btn-primary btn-sm download" aria-disabled="true"><span class="dl-label" data-en="Soon">Скоро</span></a>
@@ -65,7 +65,7 @@
         </div>
       </div>
 
-      <div class="hero-cta reveal">
+      <div class="hero-cta reveal" id="download">
         <a class="btn btn-primary download" aria-disabled="true"><svg><use href="#i-arrow-up-right"/></svg><span class="dl-label" data-en="Release in preparation">Релиз готовится</span></a>
       </div>
     </div>
@@ -134,14 +134,14 @@
         <div class="layer">
           <span class="layer-num" data-en="2 · after recognition">2 · после распознавания</span>
           <div class="apps" role="tablist" aria-label="Приложение" data-en-aria="App" id="vocab-app">
-            <button type="button" role="tab" aria-selected="true" data-app="telegram" aria-label="Telegram" title="Telegram"><img src="assets/img/apps/telegram.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="slack" aria-label="Slack" title="Slack"><img src="assets/img/apps/slack.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="whatsapp" aria-label="WhatsApp" title="WhatsApp"><img src="assets/img/apps/whatsapp.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="notion" aria-label="Notion" title="Notion"><img src="assets/img/apps/notion.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="discord" aria-label="Discord" title="Discord"><img src="assets/img/apps/discord.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="zoom" aria-label="Zoom" title="Zoom"><img src="assets/img/apps/zoom.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="teams" aria-label="Microsoft Teams" title="Microsoft Teams"><img src="assets/img/apps/teams.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="obsidian" aria-label="Obsidian" title="Obsidian"><img src="assets/img/apps/obsidian.svg" alt="" width="30" height="30"></button>
+            <button type="button" role="tab" aria-selected="true" data-app="telegram" aria-label="Telegram" title="Telegram"><img src="/any/assets/img/apps/telegram.svg" alt="" width="30" height="30"></button>
+            <button type="button" role="tab" aria-selected="false" data-app="slack" aria-label="Slack" title="Slack"><img src="/any/assets/img/apps/slack.svg" alt="" width="30" height="30"></button>
+            <button type="button" role="tab" aria-selected="false" data-app="whatsapp" aria-label="WhatsApp" title="WhatsApp"><img src="/any/assets/img/apps/whatsapp.svg" alt="" width="30" height="30"></button>
+            <button type="button" role="tab" aria-selected="false" data-app="notion" aria-label="Notion" title="Notion"><img src="/any/assets/img/apps/notion.svg" alt="" width="30" height="30"></button>
+            <button type="button" role="tab" aria-selected="false" data-app="discord" aria-label="Discord" title="Discord"><img src="/any/assets/img/apps/discord.svg" alt="" width="30" height="30"></button>
+            <button type="button" role="tab" aria-selected="false" data-app="zoom" aria-label="Zoom" title="Zoom"><img src="/any/assets/img/apps/zoom.svg" alt="" width="30" height="30"></button>
+            <button type="button" role="tab" aria-selected="false" data-app="teams" aria-label="Microsoft Teams" title="Microsoft Teams"><img src="/any/assets/img/apps/teams.svg" alt="" width="30" height="30"></button>
+            <button type="button" role="tab" aria-selected="false" data-app="obsidian" aria-label="Obsidian" title="Obsidian"><img src="/any/assets/img/apps/obsidian.svg" alt="" width="30" height="30"></button>
           </div>
           <p class="vline" id="vocab-out" aria-live="polite"></p>
           <p class="bundle" id="vocab-bundle"></p>
@@ -193,9 +193,40 @@
   <!-- 7. PRICE -->
   <section class="section price" id="price">
     <div class="wrap center">
-      <p class="price-days reveal"><b>30</b><span data-en="days free">дней бесплатно</span></p>
-      <p class="price-once reveal"><span data-en="then">затем</span> 385 Stars <span data-en="once">один раз</span></p>
-      <a class="btn btn-primary download reveal" aria-disabled="true"><svg><use href="#i-arrow-up-right"/></svg><span class="dl-label" data-en="Release in preparation">Релиз готовится</span></a>
+      <p class="price-days reveal"><b>30</b><span data-en="days free trial">дней бесплатно</span></p>
+      <p class="price-sub reveal" data-en="Full functionality on your Mac. No card required to try.">Полный доступ на вашем Mac. Для старта карта не нужна.</p>
+
+      <div class="pricing-grid reveal">
+        <div class="price-card featured">
+          <span class="price-card-badge" data-en="Best value">Выгоднее всего</span>
+          <h3 class="price-card-title">Lifetime</h3>
+          <div class="price-card-amount">$11.99</div>
+          <div class="price-card-billing" data-en="One-time payment · perpetual license">Разовый платёж · лицензия навсегда</div>
+          <ul class="price-card-features">
+            <li><svg><use href="#i-check"/></svg><span data-en="Perpetual license for 1 Mac">Лицензия навсегда на 1 Mac</span></li>
+            <li><svg><use href="#i-check"/></svg><span data-en="All updates included">Все обновления включены</span></li>
+            <li><svg><use href="#i-check"/></svg><span data-en="100% on-device speech & text">100% локальное распознавание</span></li>
+            <li><svg><use href="#i-check"/></svg><span data-en="14-day money-back guarantee">14 дней гарантия возврата</span></li>
+          </ul>
+          <a class="btn btn-primary plan-btn" href="#download"><span data-en="Get Lifetime — $11.99">Купить Lifetime — $11.99</span></a>
+        </div>
+
+        <div class="price-card">
+          <span class="price-card-badge" data-en="Flexible">Гибкий</span>
+          <h3 class="price-card-title">Monthly</h3>
+          <div class="price-card-amount">$1.99<span class="period" data-en="/mo">/мес</span></div>
+          <div class="price-card-billing" data-en="Monthly subscription · cancel anytime">Ежемесячная подписка · отмена в любой момент</div>
+          <ul class="price-card-features">
+            <li><svg><use href="#i-check"/></svg><span data-en="Full access on 1 Mac">Полный доступ на 1 Mac</span></li>
+            <li><svg><use href="#i-check"/></svg><span data-en="Cancel anytime with one click">Отмена в любой момент в 1 клик</span></li>
+            <li><svg><use href="#i-check"/></svg><span data-en="Access through end of paid period">Доступ до конца оплаченного периода</span></li>
+            <li><svg><use href="#i-check"/></svg><span data-en="14-day refund on any renewal">14 дней на возврат списания</span></li>
+          </ul>
+          <a class="btn btn-ghost plan-btn" href="#download"><span data-en="Subscribe — $1.99/mo">Подписка — $1.99/мес</span></a>
+        </div>
+      </div>
+
+      <p class="price-note reveal" data-en-html="Orders & billing are processed securely by <a href='https://creem.io' target='_blank' rel='noopener'>Creem</a> (Merchant of Record). See <a href='/terms'>Terms</a> and <a href='/refund'>Refund Policy</a>.">Платежи и счета безопасно обрабатывает <a href="https://creem.io" target="_blank" rel="noopener">Creem</a> (Merchant of Record). См. <a href="/terms">Условия</a> и <a href="/refund">Правила возврата</a>.</p>
       <p class="meta reveal">macOS 14+ · Apple Silicon</p>
     </div>
   </section>
@@ -203,12 +234,14 @@
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <a class="brand" href="#top"><img src="assets/img/any-icon-64.png" alt="" width="24" height="24"><span>any</span></a>
-    <a href="help.html" data-en="Help">Помощь</a>
-    <a href="privacy.html" data-en="Privacy">Конфиденциальность</a>
-    <a href="third-party-notices.txt" data-en="Licenses">Лицензии</a>
-    <a id="support" hidden data-en="Support">Поддержка</a>
-    <span class="footer-note" data-en="Animations on this page are illustrations.">Анимации на странице — иллюстрации.</span>
+    <a class="brand" href="#top"><img src="/any/assets/img/any-icon-64.png" alt="" width="24" height="24"><span>any</span></a>
+    <a href="/terms" data-en="Terms">Условия</a>
+    <a href="/refund" data-en="Refund">Возврат</a>
+    <a href="/any/privacy" data-en="Privacy">Конфиденциальность</a>
+    <a href="/any/help" data-en="Help">Помощь</a>
+    <a href="/any/third-party-notices.txt" data-en="Licenses">Лицензии</a>
+    <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>
+    <span class="footer-note" data-en="Sverkaus Labs is the trading name of Gleb, an individual developer based in Ukraine.">Sverkaus Labs — торговое наименование Глеба, индивидуального разработчика из Украины.</span>
   </div>
 </footer>
 </body>

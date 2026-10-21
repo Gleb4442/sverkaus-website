@@ -721,13 +721,13 @@
 
   /* ---------------- Recorded loops (optional) ---------------- */
   // A file listed in assets/video/manifest.json replaces the live simulation of the stage with the same data-video key.
-  fetch("assets/video/manifest.json").then(r => (r.ok ? r.json() : null)).then(m => {
+  fetch("/any/assets/video/manifest.json").then(r => (r.ok ? r.json() : null)).then(m => {
     const videos = (m && m.videos) || {};
     for (const stage of $$("[data-video]")) {
       const file = videos[stage.dataset.video];
       if (!file) continue;
       const v = document.createElement("video");
-      Object.assign(v, { autoplay: true, loop: true, muted: true, playsInline: true, src: "assets/video/" + file });
+      Object.assign(v, { autoplay: true, loop: true, muted: true, playsInline: true, src: "/any/assets/video/" + file });
       v.className = "stage-video";
       v.setAttribute("aria-hidden", "true");
       v.addEventListener("canplay", () => stage.classList.add("has-video"), { once: true });

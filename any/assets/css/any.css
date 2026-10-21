@@ -491,17 +491,162 @@ button.sbtn:hover { background: rgba(255, 255, 255, .14); }
 .bundle { margin-top: 18px; font: 500 12px/1 var(--font-mono); color: var(--text-4); }
 
 /* ---------- Chain: three nodes on a beam of light ---------- */
-.track { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; max-width: 560px; margin-top: clamp(40px, 6vw, 60px); }
-.track-beam { position: absolute; top: 25px; left: 16.66%; right: 16.66%; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, .07); }
-.track-beam i { position: absolute; inset: 0 auto 0 0; width: calc(var(--p, 0) * 100%); border-radius: inherit; background: linear-gradient(90deg, var(--agent-violet), var(--selection)); box-shadow: 0 0 14px rgba(100, 210, 255, .8); transition: width .9s var(--ease); }
-.node { position: relative; display: flex; flex-direction: column; align-items: center; gap: 12px; color: var(--text-3); transition: color .3s; }
-.node-dot { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: #0b0e15; font: 600 13px/1 var(--font-rounded); color: var(--text-3); box-shadow: 0 0 0 6px var(--space-1); transition: background .4s, color .4s, box-shadow .4s, transform .4s var(--spring); }
-.node-dot .orb { width: 16px; height: 16px; opacity: .45; transition: opacity .3s; }
-.node-label { font-size: 13.5px; font-weight: 500; }
-.node[aria-current="step"], .node.done { color: #fff; }
-.node[aria-current="step"] .node-dot { background: #fff; color: #000; transform: scale(1.08); box-shadow: 0 0 0 6px var(--space-1), 0 0 40px rgba(156, 199, 255, .6); }
-.node.done .node-dot { background: rgba(255, 255, 255, .14); color: #fff; }
-.node[aria-current="step"] .orb, .node.done .orb { opacity: 1; }
+.track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+  max-width: 520px;
+  margin: clamp(36px, 5vw, 54px) auto 0;
+  padding: 12px 14px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(14, 18, 28, 0.55) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow:
+    0 20px 48px -12px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+}
+.track-beam {
+  position: absolute;
+  top: 35px;
+  left: calc(16.66% + 14px);
+  right: calc(16.66% + 14px);
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.07);
+  z-index: 1;
+  pointer-events: none;
+}
+.track-beam i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: calc(var(--p, 0) * 100%);
+  border-radius: inherit;
+  background: linear-gradient(90deg, #9e73ff 0%, #64d2ff 100%);
+  box-shadow: 0 0 14px rgba(100, 210, 255, 0.75), 0 0 4px #64d2ff;
+  transition: width 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  background: none;
+  border: none;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.42);
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.25s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+.node:hover {
+  color: rgba(255, 255, 255, 0.85);
+  transform: translateY(-2px);
+}
+.node:active {
+  transform: translateY(0);
+}
+.node-dot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #151a26 0%, #0b0e16 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    0 4px 14px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  font: 600 13px/1 -apple-system, BlinkMacSystemFont, "SF Pro Rounded", ui-monospace, sans-serif;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.55);
+  transition:
+    background 0.4s var(--ease),
+    border-color 0.4s var(--ease),
+    color 0.4s var(--ease),
+    box-shadow 0.4s var(--ease),
+    transform 0.4s var(--spring);
+}
+.node-dot .orb {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  opacity: 0.45;
+  transition: opacity 0.35s ease, transform 0.35s var(--spring), box-shadow 0.35s ease;
+}
+.node-label {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: color 0.3s ease, font-weight 0.3s ease, text-shadow 0.3s ease;
+}
+.node.done {
+  color: rgba(255, 255, 255, 0.82);
+}
+.node.done .node-dot {
+  background: linear-gradient(180deg, rgba(100, 210, 255, 0.14) 0%, rgba(14, 22, 36, 0.95) 100%);
+  border-color: rgba(100, 210, 255, 0.45);
+  color: #64d2ff;
+  box-shadow:
+    0 0 16px rgba(100, 210, 255, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+.node.done .node-dot .orb {
+  opacity: 1;
+  box-shadow: 0 0 10px rgba(100, 210, 255, 0.4);
+}
+.node[aria-current="step"] {
+  color: #ffffff;
+}
+.node[aria-current="step"] .node-dot {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(18, 26, 44, 0.96) 100%);
+  border-color: rgba(160, 205, 255, 0.65);
+  color: #ffffff;
+  transform: scale(1.1);
+  box-shadow:
+    0 0 28px rgba(100, 210, 255, 0.5),
+    0 0 8px rgba(158, 115, 255, 0.3),
+    0 6px 18px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 0 12px rgba(100, 210, 255, 0.2);
+}
+.node[aria-current="step"] .node-dot .orb {
+  opacity: 1;
+  transform: scale(1.1);
+  box-shadow: 0 0 14px rgba(158, 115, 255, 0.7);
+}
+.node[aria-current="step"] .node-label {
+  font-weight: 600;
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(100, 210, 255, 0.35);
+}
+
+@media (max-width: 560px) {
+  .track {
+    max-width: calc(100% - 24px);
+    padding: 10px 8px;
+  }
+  .track-beam {
+    top: 31px;
+    left: calc(16.66% + 8px);
+    right: calc(16.66% + 8px);
+  }
+  .node-dot {
+    width: 42px;
+    height: 42px;
+    font-size: 12px;
+  }
+  .node-label {
+    font-size: 12px;
+  }
+}
 
 /* ---------- Local vs cloud flow ---------- */
 .flow { position: relative; width: 100%; max-width: 900px; margin-top: 12px; }

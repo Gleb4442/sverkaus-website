@@ -377,19 +377,28 @@
   const tasks = () => [
     {
       q: T("Напиши вежливый отказ кандидату на вакансию дизайнера", "Write a polite rejection to the designer candidate"),
-      to: "anna@studio.design", web: false,
+      to: "anna@studio.design",
+      icon: "/any/assets/img/apps/apple-mail.png",
+      alt: "Mail",
+      web: false,
       a: T("Анна, здравствуйте!\n\nСпасибо за отклик на вакансию дизайнера и за время, которое вы уделили тестовому заданию. Мы решили продолжить с кандидатом, чей опыт ближе к нашим текущим задачам.\n\nБудем рады вернуться к вашей кандидатуре, когда откроем новые позиции.",
         "Hi Anna,\n\nThank you for applying for the designer role and for the time you spent on the test assignment. We decided to move forward with a candidate whose experience is closer to our current work.\n\nWe’d be glad to reconnect when new positions open.")
     },
     {
       q: T("Составь список вопросов для собеседования по Swift", "List interview questions for a Swift developer"),
-      to: "team@studio.dev", web: false,
+      to: T("Telegram · Команда iOS", "Telegram · iOS Team"),
+      icon: "/any/assets/img/apps/telegram.png",
+      alt: "Telegram",
+      web: false,
       a: T("- Чем struct отличается от class?\n- Как работает ARC и откуда берутся циклы ссылок?\n- Какую проблему решает actor?\n- Как устроены async/await и отмена Task?\n- Как вы тестируете сетевой код?",
         "- How does a struct differ from a class?\n- How does ARC work, and where do retain cycles come from?\n- Which problem does an actor solve?\n- How do async/await and Task cancellation work?\n- How do you test networking code?")
     },
     {
       q: T("Коротко объясни, чем Supabase отличается от Firebase", "Explain briefly how Supabase differs from Firebase"),
-      to: "cto@studio.dev", web: true,
+      to: "cto@studio.dev",
+      icon: "/any/assets/img/apps/apple-mail.png",
+      alt: "Mail",
+      web: true,
       a: T("Supabase — открытая платформа поверх PostgreSQL. Firebase от Google построен на NoSQL-базах.\n- Данные: таблицы и связи против документов и коллекций.\n- Хостинг: Supabase можно развернуть у себя, Firebase — только Google Cloud.\n- Доступ: row-level security в Postgres против правил Firebase.",
         "Supabase is an open-source platform on PostgreSQL. Google’s Firebase is built on NoSQL databases.\n- Data: tables and relations versus documents and collections.\n- Hosting: Supabase can be self-hosted, Firebase runs on Google Cloud.\n- Access: Postgres row-level security versus Firebase rules.")
     }
@@ -402,6 +411,11 @@
   const taskDemo = demo(taskStage, async run => {
     const t = tasks()[taskIndex];
     const out = $("#task-text");
+    const iconEl = $("#task-icon");
+    if (iconEl && t.icon) {
+      iconEl.src = t.icon;
+      iconEl.alt = t.alt || "";
+    }
     $("#task-to").textContent = t.to;
     renderText(out, "");
     taskNotch.idle(); said(taskStage, ""); beacon.classList.remove("on"); taskStage.classList.remove("agent");
@@ -457,11 +471,11 @@
   function trLayout() {
     const d = trData();
     if (trMode === "speech") {
-      trBody.innerHTML = `<div class="app-tag"><img src="/any/assets/img/apps/apple-notes.png" class="apple-notes-icon" alt="" width="18" height="18">${T("Заметки", "Notes")}</div><div class="typed big" id="tr-text"></div>`;
+      trBody.innerHTML = `<div class="app-tag"><img src="/any/assets/img/apps/apple-notes.png" class="app-icon" alt="" width="24" height="24">${T("Заметки", "Notes")}</div><div class="typed big" id="tr-text"></div>`;
     } else if (trMode === "editable") {
-      trBody.innerHTML = `<div class="app-tag"><span class="app-dot" style="background:#2aabee">T</span>Telegram · Maria</div><div class="typed big"><span class="chat-bubble" id="tr-text"></span></div>`;
+      trBody.innerHTML = `<div class="app-tag"><img src="/any/assets/img/apps/telegram.png" class="app-icon" alt="" width="24" height="24">Telegram · Maria</div><div class="typed big"><span class="chat-bubble" id="tr-text"></span></div>`;
     } else {
-      trBody.innerHTML = `<div class="app-tag"><span class="app-dot" style="background:#1e90ff">S</span>developer.apple.com</div><div class="article"><h4>Machine learning on Apple Silicon</h4><p class="typed" id="tr-text">${esc(d.article)}</p></div>`;
+      trBody.innerHTML = `<div class="app-tag"><img src="/any/assets/img/apps/apple-safari.png" class="app-icon" alt="" width="24" height="24">developer.apple.com</div><div class="article"><h4>Machine learning on Apple Silicon</h4><p class="typed" id="tr-text">${esc(d.article)}</p></div>`;
     }
   }
   async function selectWords(run, el, text) {

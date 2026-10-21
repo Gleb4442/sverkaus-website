@@ -229,14 +229,15 @@ h1, h2, h3, p { margin: 0; }
   color: var(--horizon);
 }
 
-.apple-notes-icon {
-  width: 18px;
-  height: 18px;
-  border-radius: 4px;
+.app-icon, .apple-notes-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 5.5px;
   vertical-align: middle;
   object-fit: contain;
   flex-shrink: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  display: inline-block;
 }
 
 /* ---------- Sections ---------- */
@@ -255,8 +256,8 @@ section { position: relative; }
   background: radial-gradient(60% 100% at 50% 0%, rgba(120, 160, 255, .12), transparent 70%); }
 .hero-screen { max-width: 940px; min-height: 380px; }
 .canvas-text { position: relative; max-width: 620px; margin: 0 auto; padding: clamp(110px, 13vw, 128px) 4px 0; text-align: left; }
-.app-tag { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px; font-size: 12.5px; color: var(--text-3); }
-.app-dot { width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; font: 700 10px/1 var(--font); color: #fff; }
+.app-tag { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 14px; font-size: 13.5px; font-weight: 500; color: var(--text-2); }
+.app-dot { width: 24px; height: 24px; border-radius: 5.5px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; font: 700 12px/1 var(--font); color: #fff; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35); }
 .typed { white-space: pre-wrap; min-height: 1.7em; font-size: 16.5px; line-height: 1.7; color: rgba(255, 255, 255, .9); }
 .typed.big { font-size: clamp(20px, 2.4vw, 26px); line-height: 1.5; letter-spacing: -.015em; color: #fff; }
 .caret { display: inline-block; width: 2px; height: 1.15em; margin-left: 1px; vertical-align: -0.18em; background: #fff; animation: blink 1.05s steps(1) infinite; }

@@ -855,8 +855,9 @@
     const delta = currentY - lastScrollY;
 
     if (nav) {
-      // Smoothly expand dock when scrolled past initial view
-      nav.classList.toggle("is-scrolled", currentY > 35);
+      // Morph between wide top bar (scrollY <= 25) and liquid glass floating dock (scrollY > 25)
+      const isScrolled = currentY > 25;
+      nav.classList.toggle("is-scrolled", isScrolled);
 
       // Reset accumulator if scroll direction reverses
       if ((delta > 0 && scrollAccumulator < 0) || (delta < 0 && scrollAccumulator > 0)) {
@@ -865,17 +866,18 @@
       scrollAccumulator += delta;
 
       if (currentY <= 25) {
-        // At top of page: always visible and compact
+        // At top of page: always visible and wide top bar
         nav.classList.remove("nav-hidden");
-      } else if (scrollAccumulator > HIDE_SCROLL_AMOUNT && currentY > 100) {
-        // Scrolled down deliberately -> smoothly hide
+        nav.classList.remove("is-scrolled");
+      } else if (scrollAccumulator > HIDE_SCROLL_AMOUNT && currentY > 220) {
+        // Scrolled down deliberately past hero -> smoothly hide
         nav.classList.add("nav-hidden");
         if (langMenu && !langMenu.hidden) {
           langMenu.hidden = true;
           if (langBtn) langBtn.setAttribute("aria-expanded", "false");
         }
-      } else if (scrollAccumulator < -HIDE_SCROLL_AMOUNT || (delta < -12 && currentY > 25)) {
-        // Scrolled up -> smoothly reveal
+      } else if (scrollAccumulator < -HIDE_SCROLL_AMOUNT || (delta < -10 && currentY > 25) || currentY <= 220) {
+        // Scrolled up or in upper hero area -> smoothly reveal floating dock
         nav.classList.remove("nav-hidden");
       }
     }

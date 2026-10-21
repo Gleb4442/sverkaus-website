@@ -37,24 +37,37 @@
 
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a class="brand brand-text" href="#top" aria-label="any"><img src="/any/assets/img/any-wordmark.svg" class="brand-wordmark" alt="any" width="58" height="24"></a>
-    <div class="nav-actions">
-      <div class="lang-selector" id="lang-selector">
-        <button class="lang-btn" id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
-          <span class="lang-current" id="lang-current">RU</span>
-          <svg class="lang-arrow" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div class="lang-menu" id="lang-menu" role="listbox" aria-label="Select language" hidden>
-          <button type="button" role="option" class="lang-option active" data-lang="ru"><span>RU</span><small>Русский</small></button>
-          <button type="button" role="option" class="lang-option" data-lang="en"><span>EN</span><small>English</small></button>
-          <button type="button" role="option" class="lang-option" data-lang="es"><span>ES</span><small>Español</small></button>
-          <button type="button" role="option" class="lang-option" data-lang="fr"><span>FR</span><small>Français</small></button>
-          <button type="button" role="option" class="lang-option" data-lang="de"><span>DE</span><small>Deutsch</small></button>
-          <button type="button" role="option" class="lang-option" data-lang="zh"><span>ZH</span><small>中文</small></button>
-          <button type="button" role="option" class="lang-option" data-lang="hi"><span>HI</span><small>हिन्दी</small></button>
+    <div class="nav-bar">
+      <a class="brand brand-liquid" href="#top" aria-label="any">
+        <img src="/any/assets/img/any-wordmark.svg" class="brand-wordmark" alt="any" width="46" height="20">
+      </a>
+
+      <nav class="nav-toc" id="nav-toc" aria-label="Разделы" data-en-aria="Sections">
+        <a href="#tasks" class="toc-link" data-section="tasks"><span data-en="Tasks">Задачи</span></a>
+        <a href="#translate" class="toc-link" data-section="translate"><span data-en="Translate">Перевод</span></a>
+        <a href="#vocabulary" class="toc-link" data-section="vocabulary"><span data-en="Vocabulary">Словарь</span></a>
+        <a href="#chain" class="toc-link" data-section="chain"><span data-en="Workflow">Связка</span></a>
+        <a href="#price" class="toc-link" data-section="price"><span data-en="Pricing">Тарифы</span></a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="lang-selector" id="lang-selector">
+          <button class="lang-btn" id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
+            <span class="lang-current" id="lang-current">RU</span>
+            <svg class="lang-arrow" viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="lang-menu" id="lang-menu" role="listbox" aria-label="Select language" hidden>
+            <button type="button" role="option" class="lang-option active" data-lang="ru"><span>RU</span><small>Русский</small></button>
+            <button type="button" role="option" class="lang-option" data-lang="en"><span>EN</span><small>English</small></button>
+            <button type="button" role="option" class="lang-option" data-lang="es"><span>ES</span><small>Español</small></button>
+            <button type="button" role="option" class="lang-option" data-lang="fr"><span>FR</span><small>Français</small></button>
+            <button type="button" role="option" class="lang-option" data-lang="de"><span>DE</span><small>Deutsch</small></button>
+            <button type="button" role="option" class="lang-option" data-lang="zh"><span>ZH</span><small>中文</small></button>
+            <button type="button" role="option" class="lang-option" data-lang="hi"><span>HI</span><small>हिन्दी</small></button>
+          </div>
         </div>
+        <a class="btn btn-primary btn-sm download" href="#price" aria-disabled="true"><span class="dl-label" data-en="Soon">Скоро</span></a>
       </div>
-      <a class="btn btn-primary btn-sm download" aria-disabled="true"><span class="dl-label" data-en="Soon">Скоро</span></a>
     </div>
   </div>
 </header>

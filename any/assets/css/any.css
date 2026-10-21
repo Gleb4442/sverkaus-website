@@ -140,33 +140,156 @@ h1, h2, h3, p { margin: 0; }
 .btn-sm { height: 36px; padding: 0 16px; font-size: 13px; }
 .btn:active { transform: scale(.97); }
 
-/* ---------- Navigation ---------- */
-.nav { position: sticky; top: 0; z-index: 50; padding: 14px 0; transition: background .3s; }
-.nav.is-scrolled { background: rgba(6, 7, 11, .55); -webkit-backdrop-filter: blur(18px) saturate(140%); backdrop-filter: blur(18px) saturate(140%); }
-.nav-inner { display: flex; align-items: center; gap: 24px; }
-.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -.02em; }
-.brand img { width: 30px; height: 30px; border-radius: 7px; flex-shrink: 0; }
-.brand-text { display: inline-flex; align-items: center; text-decoration: none; }
-.brand-wordmark {
-  display: block;
-  height: 24px;
+/* ---------- Navigation Dock ---------- */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
+  padding: 12px 16px;
+  pointer-events: none;
+  transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  transform: translateY(0);
+  opacity: 1;
+}
+.nav.nav-hidden {
+  transform: translateY(-120%);
+  opacity: 0;
+}
+.nav-inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  pointer-events: auto;
+}
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 10px 6px 8px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(12, 16, 26, 0.72) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+  box-shadow: 
+    0 16px 40px -10px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.nav.is-scrolled .nav-bar {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.07) 0%, rgba(8, 11, 18, 0.85) 100%);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 
+    0 20px 48px -10px rgba(0, 0, 0, 0.8),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Liquid Glass Brand Logo */
+.brand { display: inline-flex; align-items: center; text-decoration: none; }
+.brand-liquid {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px 6px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.04) 45%, rgba(100, 210, 255, 0.12) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: 
+    0 4px 16px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4),
+    0 0 14px rgba(100, 210, 255, 0.22);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.brand-liquid::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -60%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at 35% 30%, rgba(255, 255, 255, 0.5), transparent 45%);
+  pointer-events: none;
+  transition: transform 0.5s ease;
+}
+.brand-liquid:hover {
+  transform: translateY(-1px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.45),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(100, 210, 255, 0.4);
+}
+.brand-liquid:hover::before {
+  transform: translate(15%, 5%);
+}
+.brand-liquid .brand-wordmark {
+  position: relative;
+  z-index: 1;
+  height: 20px;
   width: auto;
-  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
   transition: opacity 0.2s ease;
 }
-.brand-text:hover .brand-wordmark { opacity: 0.82; }
-.brand-letters {
-  font-family: var(--font);
-  font-size: 20px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+
+/* Nav Table of Contents: Page Stages */
+.nav-toc {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.toc-link {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.22s ease;
+}
+.toc-link:hover {
   color: #ffffff;
-  line-height: 1;
-  transition: opacity 0.2s ease;
+  background: rgba(255, 255, 255, 0.06);
 }
-.brand-text:hover .brand-letters { opacity: 0.85; }
-.nav-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.toc-link.active {
+  color: #ffffff;
+  font-weight: 600;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.06) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 12px rgba(100, 210, 255, 0.2);
+}
+
+/* Nav Actions */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
 .lang { display: inline-flex; align-items: center; justify-content: center; height: 36px; min-width: 44px; padding: 0 12px; border-radius: 999px; font-size: 12px; font-weight: 600; color: var(--text-3); transition: color .2s, background .2s; }
 .lang:hover { color: #fff; background: rgba(255, 255, 255, .06); }
 
@@ -268,7 +391,7 @@ h1, h2, h3, p { margin: 0; }
 /* ---------- Sections ---------- */
 section { position: relative; }
 .section { padding: clamp(96px, 15vw, 180px) 0; }
-.hero { padding: clamp(56px, 10vw, 120px) 0 clamp(140px, 18vw, 240px); text-align: center; }
+.hero { padding: clamp(80px, 12vw, 136px) 0 clamp(140px, 18vw, 240px); text-align: center; }
 .hero .display { margin: 0 auto; max-width: 1000px; }
 .hero-cta { display: flex; justify-content: center; margin-top: 8px; }
 
@@ -814,6 +937,53 @@ button.sbtn:hover { background: rgba(255, 255, 255, .14); }
 .price-note a:hover {
   text-decoration-color: #fff;
 }
+@media (max-width: 860px) {
+  .nav {
+    padding: 8px 12px;
+  }
+  .nav-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 6px 8px;
+    border-radius: 24px;
+  }
+  .brand-liquid {
+    order: 1;
+    padding: 5px 12px;
+  }
+  .brand-liquid .brand-wordmark {
+    height: 18px;
+  }
+  .nav-actions {
+    order: 2;
+    margin-left: auto;
+  }
+  .nav-toc {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    padding: 3px 2px;
+    background: rgba(255, 255, 255, 0.025);
+    border-radius: 999px;
+  }
+  .nav-toc::-webkit-scrollbar { display: none; }
+  .toc-link {
+    height: 28px;
+    padding: 0 9px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+}
+@media (max-width: 380px) {
+  .toc-link {
+    padding: 0 7px;
+    font-size: 11.5px;
+  }
+}
 @media (max-width: 680px) {
   .pricing-grid {
     grid-template-columns: 1fr;
@@ -832,9 +1002,6 @@ button.sbtn:hover { background: rgba(255, 255, 255, .14); }
   .display {
     font-size: clamp(28px, 8.5vw, 42px);
     word-break: break-word;
-  }
-  .nav-inner {
-    gap: 12px;
   }
 }
 

@@ -84,12 +84,12 @@ h1, h2, h3, p { margin: 0; }
 @keyframes breathe { 50% { box-shadow: 0 -2px 0 rgba(156, 199, 255, 0.7), 0 -24px 80px rgba(156, 199, 255, 0.3), 0 -110px 220px rgba(80, 130, 220, 0.24), 0 -10px 30px rgba(255, 184, 119, 0.14); } }
 
 /* ---------- Typography ---------- */
-.display { font-size: clamp(42px, 7.4vw, 96px); line-height: 1; letter-spacing: -0.05em; font-weight: 600; }
-.title { font-size: clamp(32px, 5vw, 60px); line-height: 1.05; letter-spacing: -0.04em; font-weight: 600; max-width: 900px; }
+.display { font-size: clamp(42px, 7.4vw, 96px); line-height: 1.12; letter-spacing: -0.05em; font-weight: 600; padding-bottom: 0.12em; }
+.title { font-size: clamp(32px, 5vw, 60px); line-height: 1.12; letter-spacing: -0.04em; font-weight: 600; max-width: 900px; padding-bottom: 0.08em; }
 .sub { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; font-size: clamp(17px, 1.8vw, 21px); color: var(--text-2); }
 .meta { margin-top: 22px; font: 500 12.5px/1.6 var(--font-mono); color: var(--text-3); letter-spacing: .02em; }
 .meta .dot { display: inline-block; width: 3px; height: 3px; margin: 0 10px; border-radius: 50%; background: var(--text-3); vertical-align: middle; }
-.grad-text { background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, .5)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.grad-text { background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, .5)); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .br-wide { display: none; }
 @media (min-width: 760px) { .br-wide { display: inline; } }
 

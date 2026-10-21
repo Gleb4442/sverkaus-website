@@ -847,40 +847,55 @@
   const tocLinks = $$(".toc-link");
 
   let lastScrollY = window.scrollY;
-  let scrollAccumulator = 0;
-  const HIDE_SCROLL_AMOUNT = 45;
+  let scrollDownAccum = 0;
+  let scrollUpAccum = 0;
+  let isTicking = false;
 
-  function handleNavScroll() {
+  const SCROLL_MORPH_DOWN = 48; // Scroll down past 48px -> morph into floating liquid glass dock
+  const SCROLL_MORPH_UP = 18;   // Scroll back to top (< 18px) -> morph back into wide classic bar
+  const HIDE_THRESHOLD = 32;    // Deliberate downward scroll distance to hide dock
+  const REVEAL_THRESHOLD = 12;  // Deliberate upward scroll distance to reveal dock
+  const HERO_SAFE_ZONE = 240;   // Keep header visible within hero area
+
+  function updateNav() {
+    isTicking = false;
     const currentY = Math.max(0, window.scrollY);
     const delta = currentY - lastScrollY;
 
     if (nav) {
-      // Morph between wide top bar (scrollY <= 25) and liquid glass floating dock (scrollY > 25)
-      const isScrolled = currentY > 25;
-      nav.classList.toggle("is-scrolled", isScrolled);
-
-      // Reset accumulator if scroll direction reverses
-      if ((delta > 0 && scrollAccumulator < 0) || (delta < 0 && scrollAccumulator > 0)) {
-        scrollAccumulator = 0;
-      }
-      scrollAccumulator += delta;
-
-      if (currentY <= 25) {
-        // At top of page: always visible and wide top bar
-        nav.classList.remove("nav-hidden");
+      // 1. Two-phase morphing with hysteresis (avoids twitching at the boundary)
+      if (currentY > SCROLL_MORPH_DOWN) {
+        nav.classList.add("is-scrolled");
+      } else if (currentY <= SCROLL_MORPH_UP) {
         nav.classList.remove("is-scrolled");
-      } else if (scrollAccumulator > HIDE_SCROLL_AMOUNT && currentY > 220) {
-        // Scrolled down deliberately past hero -> smoothly hide
-        nav.classList.add("nav-hidden");
-        if (langMenu && !langMenu.hidden) {
-          langMenu.hidden = true;
-          if (langBtn) langBtn.setAttribute("aria-expanded", "false");
+      }
+
+      // 2. Smooth directional hide/reveal
+      if (delta > 0) {
+        // Scrolling down
+        scrollUpAccum = 0;
+        scrollDownAccum += delta;
+
+        if (scrollDownAccum > HIDE_THRESHOLD && currentY > HERO_SAFE_ZONE) {
+          nav.classList.add("nav-hidden");
+          if (langMenu && !langMenu.hidden) {
+            langMenu.hidden = true;
+            if (langBtn) langBtn.setAttribute("aria-expanded", "false");
+          }
         }
-      } else if (scrollAccumulator < -HIDE_SCROLL_AMOUNT || (delta < -10 && currentY > 25) || currentY <= 220) {
-        // Scrolled up or in upper hero area -> smoothly reveal floating dock
+      } else if (delta < 0) {
+        // Scrolling up
+        scrollDownAccum = 0;
+        scrollUpAccum += -delta;
+
+        if (scrollUpAccum > REVEAL_THRESHOLD || currentY <= HERO_SAFE_ZONE) {
+          nav.classList.remove("nav-hidden");
+        }
+      } else if (currentY <= HERO_SAFE_ZONE) {
         nav.classList.remove("nav-hidden");
       }
     }
+
     lastScrollY = currentY;
 
     // Active TOC section indicator
@@ -901,8 +916,15 @@
     });
   }
 
+  function handleNavScroll() {
+    if (!isTicking) {
+      isTicking = true;
+      requestAnimationFrame(updateNav);
+    }
+  }
+
   window.addEventListener("scroll", handleNavScroll, { passive: true });
-  handleNavScroll();
+  updateNav();
 
   tocLinks.forEach(link => {
     link.addEventListener("click", e => {

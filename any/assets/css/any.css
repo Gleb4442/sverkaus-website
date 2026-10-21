@@ -147,6 +147,14 @@ h1, h2, h3, p { margin: 0; }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -.02em; }
 .brand img { width: 30px; height: 30px; border-radius: 7px; flex-shrink: 0; }
 .brand-text { display: inline-flex; align-items: center; text-decoration: none; }
+.brand-wordmark {
+  display: block;
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
+}
+.brand-text:hover .brand-wordmark { opacity: 0.82; }
 .brand-letters {
   font-family: var(--font);
   font-size: 20px;

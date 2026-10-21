@@ -212,31 +212,17 @@ h1, h2, h3, p { margin: 0; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 14px;
-  border-radius: 999px;
+  padding: 6px 12px 6px 4px;
   border: none;
   background: transparent;
   box-shadow: none;
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  overflow: hidden;
   flex-shrink: 0;
-  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.brand-liquid::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -60%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(ellipse at 35% 30%, rgba(255, 255, 255, 0.5), transparent 45%);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease, transform 0.5s ease;
+  transition: opacity 0.25s ease;
 }
 .brand-liquid:hover {
-  transform: translateY(-1px) scale(1.02);
+  opacity: 0.82;
 }
 .brand-liquid .brand-wordmark {
   position: relative;
@@ -245,7 +231,7 @@ h1, h2, h3, p { margin: 0; }
   width: auto;
   display: block;
   filter: none;
-  transition: all 0.3s ease;
+  transition: height 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
 }
 
 /* Nav Links */
@@ -355,22 +341,16 @@ h1, h2, h3, p { margin: 0; }
     inset 0 -1px 0 rgba(0, 0, 0, 0.45);
 }
 .nav.is-scrolled .brand-liquid {
-  padding: 5px 13px;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(100, 210, 255, 0.12) 100%);
-  box-shadow: 
-    0 4px 16px rgba(0, 0, 0, 0.3),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.6),
-    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.3),
-    0 0 14px rgba(100, 210, 255, 0.18);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-.nav.is-scrolled .brand-liquid::before {
-  opacity: 1;
+  padding: 4px 8px 4px 14px;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 .nav.is-scrolled .brand-liquid .brand-wordmark {
   height: 18px;
-  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+  filter: none;
 }
 .nav.is-scrolled .nav-toc {
   gap: 6px;
@@ -1629,7 +1609,10 @@ button.sbtn:hover { background: rgba(255, 255, 255, .14); }
     width: 100%;
   }
   .brand-liquid {
-    padding: 4px 10px;
+    padding: 4px 8px 4px 2px;
+  }
+  .nav.is-scrolled .brand-liquid {
+    padding: 3px 6px 3px 10px;
   }
   .brand-liquid .brand-wordmark {
     height: 16px;
@@ -1669,6 +1652,9 @@ button.sbtn:hover { background: rgba(255, 255, 255, .14); }
     gap: 6px;
     padding: 4px 8px 4px 6px;
     width: 100%;
+  }
+  .nav.is-scrolled .brand-liquid {
+    padding: 2px 4px 2px 8px;
   }
   .nav-toc {
     gap: 2px;

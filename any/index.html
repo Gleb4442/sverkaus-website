@@ -37,9 +37,23 @@
 
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a class="brand" href="#top" aria-label="any"><img src="/any/assets/img/any-icon-64.png" alt="" width="30" height="30"><span>any</span></a>
+    <a class="brand brand-text" href="#top" aria-label="ANY"><span class="brand-letters">ANY</span></a>
     <div class="nav-actions">
-      <button class="lang" id="lang" type="button" aria-label="Switch to English">EN</button>
+      <div class="lang-selector" id="lang-selector">
+        <button class="lang-btn" id="lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Language">
+          <span class="lang-current" id="lang-current">RU</span>
+          <svg class="lang-arrow" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="lang-menu" id="lang-menu" role="listbox" aria-label="Select language" hidden>
+          <button type="button" role="option" class="lang-option active" data-lang="ru"><span>RU</span><small>Русский</small></button>
+          <button type="button" role="option" class="lang-option" data-lang="en"><span>EN</span><small>English</small></button>
+          <button type="button" role="option" class="lang-option" data-lang="es"><span>ES</span><small>Español</small></button>
+          <button type="button" role="option" class="lang-option" data-lang="fr"><span>FR</span><small>Français</small></button>
+          <button type="button" role="option" class="lang-option" data-lang="de"><span>DE</span><small>Deutsch</small></button>
+          <button type="button" role="option" class="lang-option" data-lang="zh"><span>ZH</span><small>中文</small></button>
+          <button type="button" role="option" class="lang-option" data-lang="hi"><span>HI</span><small>हिन्दी</small></button>
+        </div>
+      </div>
       <a class="btn btn-primary btn-sm download" aria-disabled="true"><span class="dl-label" data-en="Soon">Скоро</span></a>
     </div>
   </div>
@@ -51,12 +65,11 @@
   <section class="hero horizon">
     <div class="wrap">
       <h1 class="display grad-text reveal" data-en="Voice at the speed of light.">Голос со скоростью света.</h1>
-      <p class="sub reveal"><span class="kbd sm">fn</span> <span data-en="— and the text is under your cursor.">— и текст уже под курсором.</span></p>
 
       <div class="screen hero-screen reveal" id="hero-stage" data-video="hero">
         <div class="notch-host"><div class="notch" id="hero-notch" data-state="idle"></div></div>
         <div class="canvas-text">
-          <div class="app-tag"><span class="app-dot" style="background:#e5b400">N</span><span data-en="Notes">Заметки</span></div>
+          <div class="app-tag"><img src="/any/assets/img/apps/apple-notes.png" class="apple-notes-icon" alt="" width="18" height="18"><span data-en="Notes">Заметки</span></div>
           <div class="typed big" id="hero-text"></div>
         </div>
         <div class="hero-keys">
@@ -234,7 +247,7 @@
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <a class="brand" href="#top"><img src="/any/assets/img/any-icon-64.png" alt="" width="24" height="24"><span>any</span></a>
+    <a class="brand brand-text" href="#top"><span class="brand-letters">ANY</span></a>
     <a href="/terms" data-en="Terms">Условия</a>
     <a href="/refund" data-en="Refund">Возврат</a>
     <a href="/any/privacy" data-en="Privacy">Конфиденциальность</a>

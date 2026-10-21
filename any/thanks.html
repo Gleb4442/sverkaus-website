@@ -11,13 +11,12 @@
   <link rel="stylesheet" href="/any/assets/css/any.css">
 </head>
 <body>
-<div class="sky" aria-hidden="true"></div>
+<div class="sky" aria-hidden="true"><canvas id="sky"></canvas></div>
 
 <header class="nav is-scrolled">
   <div class="wrap nav-inner">
-    <a class="brand" href="/any/" aria-label="any">
-      <img src="/any/assets/img/any-icon-64.png" alt="" width="34" height="34">
-      <span>any</span>
+    <a class="brand brand-text" href="/any/" aria-label="ANY">
+      <span>ANY</span>
     </a>
     <div class="nav-actions">
       <a class="btn btn-ghost" href="/any/">На главную / Home</a>
@@ -25,18 +24,43 @@
   </div>
 </header>
 
-<main class="document wrap">
-  <h1>Спасибо!<br>Thank you!</h1>
-  <p>Оплата прошла. Вернитесь в any — лицензия активируется сама в течение минуты, перезапуск не нужен. Чек от Creem придёт на вашу почту.</p>
-  <p>Your payment went through. Switch back to any — your license activates on its own within a minute, no relaunch needed. Creem will email you a receipt.</p>
-  <h2>Не активировалось? / Not activated?</h2>
-  <p>Убедитесь, что Mac в сети, и откройте меню any → «Активировать лицензию…». Если через несколько минут ничего не изменилось, напишите на <a href="mailto:main@sverkaus.com">main@sverkaus.com</a> и приложите номер заказа из письма Creem.</p>
-  <p>Make sure your Mac is online and open the any menu → Activate License. If nothing changes within a few minutes, email <a href="mailto:main@sverkaus.com">main@sverkaus.com</a> with the order ID from your Creem receipt.</p>
+<main class="thanks-main wrap">
+  <div class="thanks-stage">
+    <div class="thanks-aura" aria-hidden="true"></div>
+    <div class="thanks-logo-wrap animating" id="thanks-logo" role="button" tabindex="0" title="Нажмите, чтобы повторить анимацию / Click to replay" aria-label="Any logo animation">
+      <div class="thanks-logo-root">
+        <div class="thanks-logo-body">
+          <img class="thanks-icon-img" src="/any/assets/img/any-icon-512.png" alt="Any logo" width="130" height="130">
+          <div class="thanks-sheen" aria-hidden="true"></div>
+        </div>
+      </div>
+      <div class="thanks-badge" aria-hidden="true">
+        <svg viewBox="0 0 20 20" fill="none" width="18" height="18">
+          <path d="M4.5 10.5L8 14L15.5 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+    <div class="thanks-ring thanks-ring-1" aria-hidden="true"></div>
+    <div class="thanks-ring thanks-ring-2" aria-hidden="true"></div>
+  </div>
+
+  <div class="thanks-card">
+    <h1 class="thanks-title">Спасибо!<span class="thanks-title-sub">Thank you!</span></h1>
+    <div class="thanks-body">
+      <p class="thanks-lead">Оплата прошла. Вернитесь в any — лицензия активируется сама в течение минуты, перезапуск не нужен. Чек от Creem придёт на вашу почту.</p>
+      <p class="thanks-lead-en">Your payment went through. Switch back to any — your license activates on its own within a minute, no relaunch needed. Creem will email you a receipt.</p>
+    </div>
+    <div class="thanks-help">
+      <h2>Не активировалось? / Not activated?</h2>
+      <p>Убедитесь, что Mac в сети, и откройте меню any → «Активировать лицензию…». Если через несколько минут ничего не изменилось, напишите на <a href="mailto:main@sverkaus.com">main@sverkaus.com</a> и приложите номер заказа из письма Creem.</p>
+      <p class="thanks-help-en">Make sure your Mac is online and open the any menu → Activate License. If nothing changes within a few minutes, email <a href="mailto:main@sverkaus.com">main@sverkaus.com</a> with the order ID from your Creem receipt.</p>
+    </div>
+  </div>
 </main>
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <a class="brand" href="/any"><img src="/any/assets/img/any-icon-64.png" alt="" width="24" height="24"><span>any</span></a>
+    <a class="brand brand-text" href="/any" aria-label="ANY"><span>ANY</span></a>
     <a href="/terms">Terms</a>
     <a href="/refund">Refund</a>
     <a href="/any/privacy">Privacy</a>
@@ -46,5 +70,25 @@
     <span class="footer-note">Sverkaus Labs is the trading name of Gleb, an individual developer based in Ukraine.</span>
   </div>
 </footer>
+
+<script defer src="/any/assets/js/sky.js"></script>
+<script>
+  (function () {
+    const logo = document.getElementById('thanks-logo');
+    if (!logo) return;
+    function replay() {
+      logo.classList.remove('animating');
+      void logo.offsetWidth;
+      logo.classList.add('animating');
+    }
+    logo.addEventListener('click', replay);
+    logo.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        replay();
+      }
+    });
+  })();
+</script>
 </body>
 </html>

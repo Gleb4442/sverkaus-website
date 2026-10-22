@@ -104,7 +104,6 @@
     if (support && config.supportURL) { support.href = config.supportURL; support.hidden = false; }
     syncTranslationMeta();
     syncFlowMeta();
-    if (refreshBenchmarkNotes) refreshBenchmarkNotes();
   }
 
   // Language Dropdown wiring
@@ -943,64 +942,6 @@
       requestAnimationFrame(updateNav);
     }
   }
-
-  /* ---------------- Latency Benchmark Interactive Switcher ---------------- */
-  let refreshBenchmarkNotes = null;
-  function initLatencyBenchmark() {
-    const switchBtns = $$(".latency-switch-btn");
-    const rows = $$(".benchmark-row");
-    if (!switchBtns.length || !rows.length) return;
-
-    let currentMetric = "p50";
-
-    function updateMetric(metric) {
-      currentMetric = metric;
-      switchBtns.forEach(btn => {
-        const isActive = btn.dataset.metric === metric;
-        btn.classList.toggle("active", isActive);
-        btn.setAttribute("aria-selected", isActive ? "true" : "false");
-      });
-
-      const maxVal = metric === "p50" ? 900 : 2500;
-
-      rows.forEach(row => {
-        const valStr = row.dataset[metric + "Val"] || row.dataset[metric];
-        const valNum = parseFloat(row.dataset[metric]) || 0;
-        const valEl = row.querySelector(".benchmark-val");
-        const noteEl = row.querySelector(".benchmark-note");
-        const barEl = row.querySelector(".benchmark-bar");
-
-        if (valEl) valEl.textContent = valStr;
-
-        if (noteEl) {
-          const isEn = lang !== "ru";
-          const noteKey = metric === "p50" ? "P50" : "P95";
-          const noteText = isEn
-            ? (row.dataset["enNote" + noteKey] || "")
-            : (row.dataset["note" + noteKey] || "");
-          noteEl.textContent = noteText;
-        }
-
-        if (barEl) {
-          const pct = Math.min(100, Math.max(10, Math.round((valNum / maxVal) * 100)));
-          barEl.style.width = pct + "%";
-        }
-      });
-    }
-
-    refreshBenchmarkNotes = () => updateMetric(currentMetric);
-
-    switchBtns.forEach(btn => {
-      btn.addEventListener("click", () => {
-        updateMetric(btn.dataset.metric);
-      });
-    });
-
-    // Initialize with p50
-    updateMetric("p50");
-  }
-
-  initLatencyBenchmark();
 
   window.addEventListener("scroll", handleNavScroll, { passive: true });
   updateNav();

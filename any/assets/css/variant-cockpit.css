@@ -1,0 +1,292 @@
+/**
+ * Cyber-Cockpit Theme Stylesheet (variant-cockpit.css)
+ * 
+ * Aesthetic Archetype: Retro-futuristic operator deck, obsidian/aerospace navy palette,
+ * amber/cyan telemetry accents, wrap-around console environment.
+ * Complies with Milestone 3 (R1-R4) and 0px horizontal overflow (>= 375px).
+ */
+
+:root {
+  /* Cyber-Cockpit Design Tokens */
+  --horizon: #ff9f43;
+  --horizon-glow: rgba(255, 159, 67, 0.35);
+  --accent-cyan: #00d2d3;
+  --cyan-glow: rgba(0, 210, 211, 0.28);
+  --bg-cockpit: #06070a;
+  --cockpit-glass: rgba(10, 14, 22, 0.72);
+  --cockpit-rim: rgba(255, 159, 67, 0.24);
+  --cockpit-rim-cyan: rgba(0, 210, 211, 0.22);
+}
+
+/* ----------------------------------------------------
+   1. Background Environment & Layered Scrim
+   ---------------------------------------------------- */
+body.theme-cockpit {
+  background-color: #06070a;
+  background-image:
+    radial-gradient(80% 50% at 50% 20%, rgba(6, 7, 10, 0.45) 0%, rgba(6, 7, 10, 0.85) 100%),
+    linear-gradient(180deg, rgba(8, 10, 15, 0.50) 0%, rgba(10, 12, 18, 0.70) 40%, #06070a 100%),
+    url('/any/assets/img/cockpit-bg.webp');
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  color: var(--text);
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.cockpit-environment {
+  background-color: #06070a;
+  background-image:
+    radial-gradient(80% 50% at 50% 20%, rgba(6, 7, 10, 0.45) 0%, rgba(6, 7, 10, 0.85) 100%),
+    linear-gradient(180deg, rgba(8, 10, 15, 0.50) 0%, rgba(10, 12, 18, 0.70) 40%, #06070a 100%),
+    url('/any/assets/img/cockpit-bg.webp');
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* ----------------------------------------------------
+   2. Navigation & Variant Switcher Pill Overrides
+   ---------------------------------------------------- */
+.theme-cockpit .nav-bar {
+  /* Maintain frameless specification (border: none strictly enforced in any.css) */
+  box-shadow:
+    0 24px 60px -8px rgba(0, 0, 0, 0.88),
+    0 8px 20px -4px rgba(0, 0, 0, 0.55),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.38),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.6),
+    inset 1px 0 1px 0 rgba(255, 159, 67, 0.12),
+    inset -1px 0 1px 0 rgba(0, 210, 211, 0.1);
+}
+
+.theme-cockpit .variant-switcher-pill {
+  background: rgba(14, 18, 28, 0.7);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 159, 67, 0.16), 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.theme-cockpit .variant-tab {
+  color: rgba(220, 230, 245, 0.75);
+}
+
+.theme-cockpit .variant-tab:hover {
+  color: #fff;
+  background: rgba(255, 159, 67, 0.1);
+}
+
+.theme-cockpit .variant-tab.active {
+  background: rgba(255, 159, 67, 0.18);
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 0 rgba(255, 159, 67, 0.35), 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.theme-cockpit .variant-tab.active .variant-dot {
+  background: var(--horizon);
+  box-shadow: 0 0 8px var(--horizon);
+}
+
+/* ----------------------------------------------------
+   3. Hero Section & Operator Narrative
+   ---------------------------------------------------- */
+.theme-cockpit .hero {
+  padding-top: clamp(100px, 16vw, 150px);
+  padding-bottom: clamp(60px, 10vw, 100px);
+}
+
+.theme-cockpit .hero .display {
+  background: linear-gradient(180deg, #ffffff 25%, #e1e9f4 65%, #ff9f43 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  max-width: 900px;
+  margin: 0 auto 18px;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.theme-cockpit .hero-sub {
+  font-size: clamp(16px, 2.2vw, 19px);
+  line-height: 1.6;
+  color: rgba(220, 232, 245, 0.82);
+  max-width: 720px;
+  margin: 0 auto 36px;
+  text-align: center;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.theme-cockpit .hero-screen {
+  margin-top: 10px;
+}
+
+/* Primary CTA Download Button */
+.theme-cockpit .btn-primary {
+  background: linear-gradient(135deg, #ff9f43 0%, #ee7d11 100%);
+  color: #06070a;
+  font-weight: 600;
+  box-shadow: 0 10px 28px -4px rgba(255, 159, 67, 0.45);
+  border: none;
+}
+
+.theme-cockpit .btn-primary:hover {
+  background: linear-gradient(135deg, #ffab57 0%, #ff891e 100%);
+  box-shadow: 0 14px 34px -4px rgba(255, 159, 67, 0.6);
+  transform: translateY(-1px);
+}
+
+/* ----------------------------------------------------
+   4. Themed Card Glass & Telemetry Rim Lighting
+   ---------------------------------------------------- */
+.theme-cockpit .hardware-card {
+  background: rgba(10, 14, 22, 0.72);
+  box-shadow: 
+    0 32px 80px -24px rgba(0, 0, 0, 0.85),
+    inset 0 1px 1px 0 rgba(255, 159, 67, 0.22),
+    inset 0 -1px 1px 0 rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(255, 159, 67, 0.08);
+  backdrop-filter: blur(40px) saturate(190%);
+  -webkit-backdrop-filter: blur(40px) saturate(190%);
+}
+
+.theme-cockpit .hardware-card:hover {
+  box-shadow:
+    0 36px 90px -20px rgba(0, 0, 0, 0.9),
+    inset 0 1px 2px 0 rgba(255, 159, 67, 0.35),
+    0 0 24px -4px rgba(255, 159, 67, 0.15),
+    0 0 0 1px rgba(255, 159, 67, 0.16);
+}
+
+.theme-cockpit .screen {
+  background: rgba(8, 10, 16, 0.88);
+  border: 1px solid rgba(255, 159, 67, 0.14);
+  box-shadow: 
+    0 24px 64px -16px rgba(0, 0, 0, 0.9),
+    inset 0 1px 0 0 rgba(255, 159, 67, 0.2),
+    0 0 30px -10px rgba(255, 159, 67, 0.12);
+}
+
+.theme-cockpit .badge-subtle {
+  background: rgba(255, 159, 67, 0.12);
+  color: #ffb86c;
+  border: 1px solid rgba(255, 159, 67, 0.25);
+  box-shadow: 0 0 12px rgba(255, 159, 67, 0.15);
+}
+
+.theme-cockpit .quick-action-pill {
+  background: rgba(14, 18, 28, 0.65);
+  border: 1px solid rgba(255, 159, 67, 0.12);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+.theme-cockpit .quick-action-pill:hover {
+  border-color: rgba(255, 159, 67, 0.3);
+  box-shadow: 0 4px 16px rgba(255, 159, 67, 0.12);
+}
+
+.theme-cockpit .quick-action-pill[aria-pressed="true"] {
+  background: rgba(255, 159, 67, 0.15);
+  border-color: rgba(255, 159, 67, 0.4);
+  box-shadow: 0 0 16px rgba(255, 159, 67, 0.2);
+}
+
+.theme-cockpit .voice-pill {
+  background: rgba(14, 18, 28, 0.8);
+  border: 1px solid rgba(255, 159, 67, 0.2);
+  box-shadow: 0 0 20px rgba(255, 159, 67, 0.12);
+}
+
+.theme-cockpit .tabs button[aria-selected="true"] {
+  background: rgba(255, 159, 67, 0.18);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 159, 67, 0.4), 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.theme-cockpit .price-card {
+  background: rgba(10, 14, 22, 0.72);
+  border: 1px solid rgba(255, 159, 67, 0.12);
+  box-shadow: 0 24px 60px -16px rgba(0, 0, 0, 0.8);
+}
+
+.theme-cockpit .price-card.featured {
+  border-color: rgba(255, 159, 67, 0.35);
+  box-shadow: 
+    0 32px 80px -20px rgba(0, 0, 0, 0.9),
+    0 0 32px -8px rgba(255, 159, 67, 0.25),
+    inset 0 1px 1px 0 rgba(255, 159, 67, 0.4);
+}
+
+.theme-cockpit .price-card-badge {
+  background: linear-gradient(135deg, #ff9f43, #f38018);
+  color: #06070a;
+}
+
+.theme-cockpit .pillar-10x .pillar-col.featured {
+  background: linear-gradient(180deg, rgba(255, 159, 67, 0.24) 0%, rgba(255, 159, 67, 0.08) 100%);
+  border: 1px solid rgba(255, 159, 67, 0.35);
+  box-shadow: 0 0 24px rgba(255, 159, 67, 0.2);
+}
+
+.theme-cockpit .pillar-tag {
+  background: rgba(255, 159, 67, 0.15);
+  color: #ff9f43;
+}
+
+/* ----------------------------------------------------
+   5. Footer Native Language Dropdown Container
+   ---------------------------------------------------- */
+.theme-cockpit .footer {
+  position: relative;
+  border-top: 1px solid rgba(255, 159, 67, 0.08);
+}
+
+.theme-cockpit .footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 6px 0;
+  box-sizing: border-box;
+}
+
+.theme-cockpit .footer-select-shell {
+  background: rgba(14, 18, 28, 0.75);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 159, 67, 0.15);
+  border: 1px solid rgba(255, 159, 67, 0.12);
+}
+
+.theme-cockpit .footer-select-shell:hover {
+  background: rgba(22, 28, 42, 0.9);
+  border-color: rgba(255, 159, 67, 0.3);
+}
+
+.theme-cockpit .footer-select-shell:focus-within {
+  border-color: var(--horizon);
+  box-shadow: 0 0 0 2px var(--horizon);
+}
+
+/* ----------------------------------------------------
+   6. Mobile Responsiveness & Zero Horizontal Overflow
+   ---------------------------------------------------- */
+@media (max-width: 520px) {
+  .theme-cockpit .hero .display {
+    font-size: clamp(28px, 8.5vw, 40px);
+    margin-bottom: 14px;
+  }
+
+  .theme-cockpit .hero-sub {
+    font-size: 15px;
+    margin-bottom: 28px;
+    padding: 0 8px;
+  }
+
+  .theme-cockpit .footer-bottom {
+    margin: 4px 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .theme-cockpit .variant-tab {
+    padding: 0 6px;
+    font-size: 10.5px;
+  }
+}

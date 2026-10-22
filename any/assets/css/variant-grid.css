@@ -1,0 +1,196 @@
+/* ====================================================
+   SURREALIST GRID THEME (Variant 2)
+   Architectural perspective room, wireframe vanishing grid,
+   desert flora, dusk skies, lavender & rose palette,
+   gallery-grade frosted glass lighting.
+   ==================================================== */
+
+:root,
+body.theme-grid {
+  --horizon: #c084fc;
+  --accent-rose: #f472b6;
+  --bg-grid: #0b0b14;
+  --accent-glow: rgba(192, 132, 252, 0.28);
+  --accent-rose-glow: rgba(244, 114, 182, 0.22);
+  --grid-line: rgba(192, 132, 252, 0.12);
+  --selection: rgba(192, 132, 252, 0.42);
+}
+
+/* Background Environment Integration with Ethereal Scrim */
+body.theme-grid,
+.grid-environment {
+  background-color: #0b0b14;
+  background-image:
+    radial-gradient(75% 50% at 50% 25%, rgba(11, 11, 20, 0.40) 0%, rgba(11, 11, 20, 0.88) 100%),
+    linear-gradient(180deg, rgba(14, 14, 26, 0.50) 0%, rgba(12, 12, 22, 0.75) 45%, #090910 100%),
+    url('/any/assets/img/grid-bg.webp');
+  background-position: center top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+body.theme-grid::after {
+  background: linear-gradient(180deg, transparent 0%, rgba(11, 11, 20, 0.65) 60%, rgba(9, 9, 16, 0.98) 100%);
+}
+
+/* Typography & Hero Polish */
+body.theme-grid .hero .display {
+  background: linear-gradient(180deg, #ffffff 20%, #f3e8ff 65%, rgba(192, 132, 252, 0.75) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  text-shadow: 0 0 35px rgba(192, 132, 252, 0.18);
+  margin-bottom: 20px;
+}
+
+body.theme-grid .hero-sub {
+  font-size: clamp(16px, 1.85vw, 20px);
+  line-height: 1.62;
+  max-width: 740px;
+  margin: 0 auto clamp(28px, 4.5vh, 44px);
+  color: rgba(233, 213, 255, 0.85);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Frosted Lavender Gallery Cards */
+body.theme-grid .hardware-card,
+body.theme-grid .price-card,
+body.theme-grid .usecase-visual {
+  background: rgba(18, 16, 28, 0.68);
+  backdrop-filter: blur(32px) saturate(190%);
+  -webkit-backdrop-filter: blur(32px) saturate(190%);
+  border: 1px solid rgba(192, 132, 252, 0.16);
+  box-shadow: 
+    0 24px 60px -12px rgba(5, 5, 12, 0.7),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.14),
+    0 0 25px rgba(192, 132, 252, 0.06);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+body.theme-grid .hardware-card:hover,
+body.theme-grid .price-card:hover {
+  border-color: rgba(192, 132, 252, 0.32);
+  box-shadow: 
+    0 30px 70px -12px rgba(5, 5, 12, 0.85),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.22),
+    0 0 40px rgba(192, 132, 252, 0.15);
+}
+
+body.theme-grid .price-card.featured {
+  border: 1px solid rgba(192, 132, 252, 0.40);
+  box-shadow: 
+    0 24px 60px -10px rgba(5, 5, 12, 0.8),
+    inset 0 1px 2px 0 rgba(255, 255, 255, 0.25),
+    0 0 35px rgba(192, 132, 252, 0.20);
+}
+
+/* Surrealist Horizon Line on Screens */
+body.theme-grid .screen::before {
+  background: linear-gradient(90deg, transparent, rgba(192, 132, 252, 0.5) 30%, rgba(255, 255, 255, 0.85) 50%, rgba(244, 114, 182, 0.5) 70%, transparent);
+}
+
+body.theme-grid .screen::after {
+  background: radial-gradient(60% 100% at 50% 0%, rgba(192, 132, 252, 0.14), transparent 70%);
+}
+
+/* Dynamic Notch Aura in Grid Theme */
+body.theme-grid .notch {
+  filter: drop-shadow(0 6px calc(18px + var(--lvl, 0) * 40px) rgba(192, 132, 252, calc(0.18 + var(--lvl, 0) * 0.5)));
+}
+
+body.theme-grid .notch-body {
+  border: 1px solid rgba(192, 132, 252, 0.24);
+}
+
+body.theme-grid .notch .aura {
+  background: radial-gradient(ellipse at center, rgba(192, 132, 252, 0.45) 0%, rgba(244, 114, 182, 0.16) 55%, transparent 75%);
+}
+
+/* Badges, Accents, and Buttons */
+body.theme-grid .badge-subtle {
+  background: rgba(192, 132, 252, 0.12);
+  color: #e9d5ff;
+  border: 1px solid rgba(192, 132, 252, 0.24);
+  box-shadow: 0 0 14px rgba(192, 132, 252, 0.1);
+}
+
+body.theme-grid .btn-primary {
+  background: #ffffff;
+  color: #0b0b14;
+  box-shadow: 0 10px 40px rgba(192, 132, 252, 0.32);
+}
+
+body.theme-grid .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 50px rgba(192, 132, 252, 0.48);
+}
+
+body.theme-grid .btn-primary[aria-disabled="true"] {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(233, 213, 255, 0.6);
+  box-shadow: none;
+}
+
+body.theme-grid .pillar-col.featured {
+  background: linear-gradient(180deg, rgba(192, 132, 252, 0.28) 0%, rgba(192, 132, 252, 0.08) 100%);
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  box-shadow: 0 0 30px rgba(192, 132, 252, 0.18);
+}
+
+body.theme-grid .pillar-tag {
+  color: #f3e8ff;
+  background: rgba(192, 132, 252, 0.25);
+  border: 1px solid rgba(192, 132, 252, 0.35);
+}
+
+/* Nav Variant Switcher Active Tab (Grid) */
+body.theme-grid .variant-tab.active {
+  background: rgba(192, 132, 252, 0.24);
+  color: #ffffff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 10px rgba(192, 132, 252, 0.35);
+}
+
+body.theme-grid .variant-tab.active .variant-dot {
+  background: #c084fc;
+  box-shadow: 0 0 8px #c084fc;
+}
+
+/* Footer Native Select Shell in Grid Theme */
+body.theme-grid .footer-select-shell {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(192, 132, 252, 0.18);
+  box-shadow: inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+body.theme-grid .footer-select-shell:hover {
+  background: rgba(192, 132, 252, 0.12);
+  border-color: rgba(192, 132, 252, 0.35);
+  color: #ffffff;
+}
+
+body.theme-grid .footer-select-shell:focus-within {
+  border-color: var(--horizon);
+  box-shadow: 0 0 0 2px rgba(192, 132, 252, 0.4);
+}
+
+/* Responsive Containment down to 375px */
+@media (max-width: 768px) {
+  body.theme-grid {
+    background-size: cover;
+  }
+  body.theme-grid .hero .display {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  body.theme-grid .hero-sub {
+    font-size: 15px;
+    padding: 0 8px;
+  }
+}

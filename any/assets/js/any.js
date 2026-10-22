@@ -88,6 +88,9 @@
       btn.classList.toggle("active", btn.dataset.lang === lang);
     });
 
+    const footerLangSelect = $("#footer-lang-select");
+    if (footerLangSelect) footerLangSelect.value = lang;
+
     for (const link of $$(".download")) {
       link.setAttribute("aria-disabled", String(!config.downloadURL));
       if (config.downloadURL) link.href = config.downloadURL; else link.removeAttribute("href");
@@ -161,19 +164,41 @@
     });
   }
 
+  // Footer Native Language Dropdown wiring
+  const footerLangSelect = $("#footer-lang-select");
+  if (footerLangSelect) {
+    footerLangSelect.value = lang;
+    footerLangSelect.addEventListener("change", e => {
+      lang = e.target.value;
+      store.set("any-site-language", lang);
+      applyLanguage();
+      demos.forEach(d => d.restart());
+    });
+  }
+
   /* ---------------- Notch HUD ---------------- */
   // Widths/heights come from NotchHubViewModel.compactLayoutSize; see web_handoff/ui_blueprints.json.
   class Notch {
     constructor(el) {
       this.el = el;
-      el.innerHTML = '<div class="notch-body"><div class="aura"></div><div class="notch-row"></div></div>';
-      this.row = el.querySelector(".notch-row");
+      if (el) {
+        el.innerHTML = '<div class="notch-body"><div class="aura"></div><div class="notch-row"></div></div>';
+        this.row = el.querySelector(".notch-row");
+      } else {
+        this.row = null;
+      }
       this.levels = new Array(30).fill(0);
       this.speaking = false;
       this.timers = [];
     }
-    clear() { this.timers.forEach(clearInterval); this.timers = []; this.speaking = false; this.el.style.setProperty("--lvl", 0); }
+    clear() {
+      this.timers.forEach(clearInterval);
+      this.timers = [];
+      this.speaking = false;
+      if (this.el) this.el.style.setProperty("--lvl", 0);
+    }
     set(state, html = "") {
+      if (!this.el || !this.row) return;
       this.clear();
       this.el.dataset.state = state;
       this.row.className = "notch-row" + (state === "sheet" ? " sheet-mode" : "");
@@ -184,6 +209,7 @@
       if (timer) this.startTimer(timer);
     }
     startWave(wave) {
+      if (!this.el) return;
       wave.innerHTML = "<i></i>".repeat(30);
       const bars = [...wave.children];
       const max = this.el.dataset.state === "command" ? 18 : 20;
@@ -205,12 +231,13 @@
           bar.style.opacity = v < 0.04 ? 0.4 : 0.58 + 0.38 * v;
         });
         // The glow around the notch breathes with the voice.
-        this.el.style.setProperty("--lvl", (this.levels.slice(-4).reduce((a, b) => a + b, 0) / 4).toFixed(2));
+        if (this.el) this.el.style.setProperty("--lvl", (this.levels.slice(-4).reduce((a, b) => a + b, 0) / 4).toFixed(2));
       };
       tick();
       this.timers.push(setInterval(tick, reduce ? 400 : 95));
     }
     startTimer(el) {
+      if (!el) return;
       let s = 0;
       const show = () => { el.textContent = "00:" + String(Math.min(s, 59)).padStart(2, "0"); };
       show();
@@ -243,8 +270,10 @@
     done(snippet) {
       this.set("done",
         `<svg class="done-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="currentColor"/><path d="M7 12.5l3.2 3.2L17 9" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="snippet">${esc(snippet)}</span><span class="spacer"></span><button type="button" class="copy-pill">${icon("copy")}<span>${T("Скопировать", "Copy")}</span></button><span class="gbtn" aria-hidden="true">${icon("chevron-down")}</span><span class="gbtn" aria-hidden="true">${icon("xmark")}</span>`);
-      const pill = this.row.querySelector(".copy-pill");
-      pill.addEventListener("click", () => { pill.classList.add("copied"); pill.innerHTML = `${icon("check")}<span>${T("Скопировано", "Copied")}</span>`; });
+      const pill = this.row ? this.row.querySelector(".copy-pill") : null;
+      if (pill) {
+        pill.addEventListener("click", () => { pill.classList.add("copied"); pill.innerHTML = `${icon("check")}<span>${T("Скопировано", "Copied")}</span>`; });
+      }
     }
     idle() { this.set("idle"); }
   }
@@ -302,6 +331,7 @@
   // A demo loops its scenario while its element is on screen.
   const demos = [];
   function demo(el, scenario, { pause = 2600 } = {}) {
+    if (!el) return { run: null, visible: false, paused: false, start() {}, stop() {}, restart() {} };
     const d = {
       run: null, visible: false, paused: false,
       start() {
@@ -349,19 +379,19 @@
     await run.wait(850);
     // Dictation is pasted in one go; the words then condense into place.
     const before = heroDone;
-    heroText.innerHTML = (before ? esc(before) + "\n\n" : "") + words(line) + caret;
+    if (heroText) heroText.innerHTML = (before ? esc(before) + "\n\n" : "") + words(line) + caret;
     heroDone = heroCount % 2 === 0 ? "" : line;
     heroNotch.done(line);
     await run.wait(2800);
     heroNotch.idle();
   }
   const heroDemo = demo(heroStage, async run => {
-    if (!heroDone) renderText(heroText, "");
+    if (!heroDone && heroText) renderText(heroText, "");
     await run.wait(1000);
     heroNotch.recording();
-    fnKey.classList.add("is-down");
+    if (fnKey) fnKey.classList.add("is-down");
     await run.wait(2700);
-    fnKey.classList.remove("is-down");
+    if (fnKey) fnKey.classList.remove("is-down");
     heroNotch.speaking = false;
     await heroInsert(run);
   }, { pause: 1600 });
@@ -371,27 +401,29 @@
     if (holdRun) return;
     heroDemo.paused = true; heroDemo.stop(); clearTimeout(resumeTimer);
     holdRun = new Run();
-    fnKey.classList.add("is-down");
-    if (!heroDone) renderText(heroText, "");
+    if (fnKey) fnKey.classList.add("is-down");
+    if (!heroDone && heroText) renderText(heroText, "");
     heroNotch.recording();
   }
   async function holdEnd() {
     if (!holdRun) return;
     const run = holdRun;
-    fnKey.classList.remove("is-down");
+    if (fnKey) fnKey.classList.remove("is-down");
     heroNotch.speaking = false;
     try { await heroInsert(run); } catch (e) { if (e !== STOP) console.error(e); }
     if (holdRun === run) holdRun = null;
     resumeTimer = setTimeout(() => { heroDemo.paused = false; heroDemo.start(); }, 6000);
   }
-  fnKey.addEventListener("pointerdown", e => { e.preventDefault(); fnKey.setPointerCapture?.(e.pointerId); holdStart(); });
-  fnKey.addEventListener("pointerup", holdEnd);
-  fnKey.addEventListener("pointercancel", holdEnd);
-  fnKey.addEventListener("keydown", e => { if ((e.key === " " || e.key === "Enter") && !e.repeat) { e.preventDefault(); holdStart(); } });
-  fnKey.addEventListener("keyup", e => { if (e.key === " " || e.key === "Enter") holdEnd(); });
+  if (fnKey) {
+    fnKey.addEventListener("pointerdown", e => { e.preventDefault(); fnKey.setPointerCapture?.(e.pointerId); holdStart(); });
+    fnKey.addEventListener("pointerup", holdEnd);
+    fnKey.addEventListener("pointercancel", holdEnd);
+    fnKey.addEventListener("keydown", e => { if ((e.key === " " || e.key === "Enter") && !e.repeat) { e.preventDefault(); holdStart(); } });
+    fnKey.addEventListener("keyup", e => { if (e.key === " " || e.key === "Enter") holdEnd(); });
+  }
   addEventListener("keydown", e => {
     if (e.repeat || e.metaKey || e.ctrlKey || e.altKey || !["f", "F", "а", "А"].includes(e.key)) return;
-    if (e.target.closest("input, textarea, [contenteditable]") || !heroDemo.visible) return;
+    if (e.target?.closest?.("input, textarea, [contenteditable]") || !heroDemo.visible) return;
     holdStart();
   });
   addEventListener("keyup", e => { if (["f", "F", "а", "А"].includes(e.key)) holdEnd(); });

@@ -49,6 +49,7 @@
         <a href="#tasks" class="toc-link" data-section="tasks"><span data-en="Tasks">Задачи</span></a>
         <a href="#translate" class="toc-link" data-section="translate"><span data-en="Translate">Перевод</span></a>
         <a href="#vocabulary" class="toc-link" data-section="vocabulary"><span data-en="Vocabulary">Словарь</span></a>
+        <a href="#latency" class="toc-link" data-section="latency"><span data-en="Speed">Скорость</span></a>
         <a href="#price" class="toc-link" data-section="price"><span data-en="Pricing">Тарифы</span></a>
       </nav>
 
@@ -349,6 +350,236 @@
         <canvas id="flow" aria-hidden="true"></canvas>
         <p class="sr-only" id="flow-desc"></p>
       </div>
+    </div>
+  </section>
+
+  <!-- 6.5 LATENCY BENCHMARK -->
+  <section class="section latency-section" id="latency">
+    <div class="wrap">
+      <div class="latency-head center">
+        <div class="latency-badge reveal">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span data-en="BENCHMARK · APPLE SILICON M4">ИЗМЕРЕНИЯ · APPLE SILICON M4</span>
+        </div>
+        <h2 class="title latency-title reveal" data-en-html="341 milliseconds.<br class='br-wide'> Faster than an eye blink.">341 миллисекунда.<br class="br-wide"> Быстрее, чем моргает глаз.</h2>
+        <p class="lead latency-lead reveal" data-en="Human eye blink takes 300–400 ms. any processes speech directly on your Mac’s Neural Engine and pastes ready text without waiting for cloud round-trips.">В среднем человеческий глаз моргает за 300–400 мс. any распознает речь прямо на Neural Engine вашего Mac и вставляет готовый текст в активное приложение в момент завершения фразы.</p>
+      </div>
+
+      <div class="latency-grid">
+        <!-- Card 1: Benchmark Comparison -->
+        <div class="latency-card latency-card-main reveal">
+          <div class="latency-card-header">
+            <div>
+              <h3 class="latency-card-title" data-en="Latency Benchmark">Сравнение скорости отклика</h3>
+              <p class="latency-card-sub" data-en="From releasing dictation to text insertion. Lower is faster.">От отпускания клавиши до появления текста. Чем меньше — тем быстрее.</p>
+            </div>
+            <div class="latency-switch" role="tablist" aria-label="Метрика перцентиля" data-en-aria="Percentile Metric">
+              <button type="button" class="latency-switch-btn active" role="tab" aria-selected="true" data-metric="p50">
+                <span class="metric-name">p50</span>
+                <span class="metric-desc" data-en="Median">Медиана</span>
+              </button>
+              <button type="button" class="latency-switch-btn" role="tab" aria-selected="false" data-metric="p95">
+                <span class="metric-name">p95</span>
+                <span class="metric-desc" data-en="95% sessions">95% сессий</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="benchmark-list" id="benchmark-list">
+            <!-- any (Hero) -->
+            <div class="benchmark-row is-hero" data-name="any" data-p50="341" data-p95="2447" data-p50-val="341" data-p95-val="2447" data-note-p50="Медиана any" data-note-p95="30 сессий (2–600 с)" data-en-note-p50="any Median" data-en-note-p95="30 sessions (2–600s)">
+              <div class="benchmark-meta">
+                <div class="benchmark-brand">
+                  <span class="benchmark-name">any</span>
+                  <span class="benchmark-tag hero-tag" data-en="On-Device · Parakeet">Локально · Parakeet</span>
+                </div>
+                <div class="benchmark-score">
+                  <span class="benchmark-val">341</span><span class="benchmark-unit">мс</span>
+                  <span class="benchmark-note hero-note" data-en="any Median">Медиана any</span>
+                </div>
+              </div>
+              <div class="benchmark-track">
+                <div class="benchmark-bar is-any" style="width: 38%;"></div>
+              </div>
+            </div>
+
+            <!-- VoiceInk -->
+            <div class="benchmark-row" data-name="VoiceInk" data-p50="324" data-p95="351" data-p50-val="324" data-p95-val="351" data-note-p50="" data-note-p95="" data-en-note-p50="" data-en-note-p95="">
+              <div class="benchmark-meta">
+                <div class="benchmark-brand">
+                  <span class="benchmark-name">VoiceInk</span>
+                  <span class="benchmark-tag" data-en="On-Device · Parakeet V3">Локально · Parakeet V3</span>
+                </div>
+                <div class="benchmark-score">
+                  <span class="benchmark-val">324</span><span class="benchmark-unit">мс</span>
+                  <span class="benchmark-note"></span>
+                </div>
+              </div>
+              <div class="benchmark-track">
+                <div class="benchmark-bar" style="width: 36%;"></div>
+              </div>
+            </div>
+
+            <!-- Superwhisper -->
+            <div class="benchmark-row" data-name="Superwhisper" data-p50="216" data-p95="247" data-p50-val="216" data-p95-val="247" data-note-p50="Короткая фраза" data-note-p95="Короткая фраза" data-en-note-p50="Short phrase" data-en-note-p95="Short phrase">
+              <div class="benchmark-meta">
+                <div class="benchmark-brand">
+                  <span class="benchmark-name">Superwhisper</span>
+                  <span class="benchmark-tag" data-en="On-Device · Standard EN">Локально · Standard EN</span>
+                </div>
+                <div class="benchmark-score">
+                  <span class="benchmark-val">216</span><span class="benchmark-unit">мс</span>
+                  <span class="benchmark-note" data-en="Short phrase">Короткая фраза</span>
+                </div>
+              </div>
+              <div class="benchmark-track">
+                <div class="benchmark-bar" style="width: 24%;"></div>
+              </div>
+            </div>
+
+            <!-- Wispr Flow -->
+            <div class="benchmark-row" data-name="Wispr Flow" data-p50="587" data-p95="693" data-p50-val="587" data-p95-val="693" data-note-p50="+72% задержки" data-note-p95="Облако" data-en-note-p50="+72% latency" data-en-note-p95="Cloud">
+              <div class="benchmark-meta">
+                <div class="benchmark-brand">
+                  <span class="benchmark-name">Wispr Flow</span>
+                  <span class="benchmark-tag tag-cloud" data-en="Cloud"><svg class="tag-icon" viewBox="0 0 24 24" width="12" height="12"><path fill="currentColor" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>Облако</span>
+                </div>
+                <div class="benchmark-score">
+                  <span class="benchmark-val">587</span><span class="benchmark-unit">мс</span>
+                  <span class="benchmark-note note-diff" data-en="+72% latency">+72% задержки</span>
+                </div>
+              </div>
+              <div class="benchmark-track">
+                <div class="benchmark-bar" style="width: 65%;"></div>
+              </div>
+            </div>
+
+            <!-- Aqua Voice -->
+            <div class="benchmark-row" data-name="Aqua Voice" data-p50="630" data-p95="872" data-p50-val="630" data-p95-val="872" data-note-p50="+85% задержки" data-note-p95="Облако" data-en-note-p50="+85% latency" data-en-note-p95="Cloud">
+              <div class="benchmark-meta">
+                <div class="benchmark-brand">
+                  <span class="benchmark-name">Aqua Voice</span>
+                  <span class="benchmark-tag tag-cloud" data-en="Cloud · Avalon"><svg class="tag-icon" viewBox="0 0 24 24" width="12" height="12"><path fill="currentColor" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>Облако · Avalon</span>
+                </div>
+                <div class="benchmark-score">
+                  <span class="benchmark-val">630</span><span class="benchmark-unit">мс</span>
+                  <span class="benchmark-note note-diff" data-en="+85% latency">+85% задержки</span>
+                </div>
+              </div>
+              <div class="benchmark-track">
+                <div class="benchmark-bar" style="width: 70%;"></div>
+              </div>
+            </div>
+
+            <!-- Typeless -->
+            <div class="benchmark-row" data-name="Typeless" data-p50="900" data-p95="1100" data-p50-val="900+" data-p95-val="1100+" data-note-p50="+164% задержки" data-note-p95="Облако (Willow)" data-en-note-p50="+164% latency" data-en-note-p95="Cloud (Willow)">
+              <div class="benchmark-meta">
+                <div class="benchmark-brand">
+                  <span class="benchmark-name">Typeless</span>
+                  <span class="benchmark-tag tag-cloud" data-en="Cloud"><svg class="tag-icon" viewBox="0 0 24 24" width="12" height="12"><path fill="currentColor" d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z"/></svg>Облако</span>
+                </div>
+                <div class="benchmark-score">
+                  <span class="benchmark-val">900+</span><span class="benchmark-unit">мс</span>
+                  <span class="benchmark-note note-diff" data-en="+164% latency">+164% задержки</span>
+                </div>
+              </div>
+              <div class="benchmark-track">
+                <div class="benchmark-bar" style="width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="benchmark-caption">
+            <span data-en="* Competitor benchmarks based on Talkify tests (M4 Max) and Willow reports. any measured across 30 real sessions on MacBook Air M4.">* Данные конкурентов: тест Talkify (M4 Max) и отчет Willow. any: 30 реальных сессий на MacBook Air M4.</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Anatomy & Pipeline -->
+        <div class="latency-card latency-card-anatomy reveal">
+          <div class="anatomy-header">
+            <div>
+              <span class="anatomy-eyebrow" data-en="ENGINEERING BREAKDOWN">ИНЖЕНЕРНАЯ ДЕКОМПОЗИЦИЯ</span>
+              <h3 class="anatomy-title" data-en="Anatomy of 341 ms">Куда уходит каждая миллисекунда</h3>
+              <p class="anatomy-sub" data-en="Full pipeline from releasing the key to instant cursor insertion">Полный цикл от отпускания клавиши до вставки в курсор</p>
+            </div>
+            <div class="anatomy-total">
+              <span class="total-num">341</span>
+              <span class="total-unit">мс</span>
+              <span class="total-label" data-en="median p50">медиана p50</span>
+            </div>
+          </div>
+
+          <div class="anatomy-pipeline">
+            <div class="pipeline-step">
+              <div class="step-head">
+                <div class="step-num">76 <span class="step-unit">мс</span></div>
+                <span class="step-share">22%</span>
+              </div>
+              <div class="step-progress"><span class="step-bar" style="width: 22%;"></span></div>
+              <div class="step-info">
+                <h4 class="step-title" data-en="Audio Capture">Аудиозахват</h4>
+                <p class="step-desc" data-en="Instant ring buffer ready right upon gesture detection">Мгновенный старт кольцевого буфера без задержек аудиоподсистемы</p>
+              </div>
+            </div>
+
+            <div class="pipeline-step">
+              <div class="step-head">
+                <div class="step-num">216 <span class="step-unit">мс</span></div>
+                <span class="step-share">63%</span>
+              </div>
+              <div class="step-progress"><span class="step-bar" style="width: 63%;"></span></div>
+              <div class="step-info">
+                <h4 class="step-title" data-en="Neural Engine">Распознавание</h4>
+                <p class="step-desc" data-en="Parakeet model on Apple Silicon Neural Engine during and after speech">Модель Parakeet на NPU вашего Mac — часть работы идет во время речи</p>
+              </div>
+            </div>
+
+            <div class="pipeline-step">
+              <div class="step-head">
+                <div class="step-num">41 <span class="step-unit">мс</span></div>
+                <span class="step-share">12%</span>
+              </div>
+              <div class="step-progress"><span class="step-bar" style="width: 12%;"></span></div>
+              <div class="step-info">
+                <h4 class="step-title" data-en="Formatting">Форматирование</h4>
+                <p class="step-desc" data-en="Smart punctuation, capitalization and contextual cleanup">Расстановка знаков препинания, заглавных букв и контекстная очистка</p>
+              </div>
+            </div>
+
+            <div class="pipeline-step">
+              <div class="step-head">
+                <div class="step-num">8 <span class="step-unit">мс</span></div>
+                <span class="step-share">3%</span>
+              </div>
+              <div class="step-progress"><span class="step-bar" style="width: 3%;"></span></div>
+              <div class="step-info">
+                <h4 class="step-title" data-en="Direct Insertion">Вставка</h4>
+                <p class="step-desc" data-en="macOS Accessibility API call straight into active cursor">Прямой системный вызов Accessibility API без потери фокуса окна</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="anatomy-footer">
+            <div class="anatomy-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              <span data-en="0 bytes sent to network · 100% on-device execution">0 байт отправлено в сеть · Все вычисления локально на Mac</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expandable Methodology Accordion -->
+      <details class="latency-methodology reveal">
+        <summary class="methodology-summary">
+          <svg class="methodology-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          <span data-en="Methodology, test conditions and data sources">Методология, условия тестов и источники данных</span>
+          <svg class="methodology-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="methodology-body">
+          <p data-en="any measurements: 30 real-world dictation sessions (MacBook Air M4, 16 GB, local Parakeet provider, cloud text polish disabled, recorded October 21–22, 2026 via macOS Unified Logging). Insertion time is calculated from the stop-dictation gesture up to dispatching the accessibility text insertion event into the active window.">Измерения any основаны на выборке из 30 реальных разнородных сессий диктовки (MacBook Air M4, 16 ГБ, локальная модель Parakeet, облачная очистка текста отключена, Unified Logging от 21–22 октября 2026 г.). Время зафиксировано от остановки диктовки до отправки команды вставки в целевое приложение.</p>
+          <p data-en="Competitor reference data: Talkify benchmark (M4 Max, August 2026, 20 runs of a single short English phrase, measured to final visible text); Willow internal benchmark (September 2026, text latency across phrase durations); DoNotType practical report. Because hardware, phrase length and measurement points differ between benchmarks, this comparison provides an engineering baseline rather than a universal claim.">Данные конкурентов: бенчмарк Talkify на M4 Max (август 2026 г., 20 прогонов одной короткой английской фразы до финального видимого текста); внутренний тест Willow (сентябрь 2026 г., задержка по длительности диктовки); полевой отчет DoNotType. В силу различий тестовых сред, длительности фраз и точек отсчета прямое математическое превосходство не декларируется — данные приведены как честный инженерный срез рынка.</p>
+        </div>
+      </details>
     </div>
   </section>
 

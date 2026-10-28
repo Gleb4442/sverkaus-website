@@ -27,6 +27,7 @@
 
 <main class="document wrap">
   <h1>Ваши данные.<br>Your data.</h1>
+  <p><strong>Обновлено: 28 октября 2026 / Last updated: 28 October 2026</strong></p>
   <p>Эта страница описывает техническую обработку данных в any. Разработчик: Sverkaus Labs (Глеб, индивидуальный разработчик из Украины). Контакт: <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>. Поддержка в Telegram: <a href="https://t.me/gennetysupport" target="_blank" rel="noopener">@gennetysupport</a>.</p>
   <p>This page describes how any processes data. Developer: Sverkaus Labs (Gleb, an individual developer based in Ukraine). Contact: <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>.</p>
 
@@ -35,16 +36,28 @@
   <p>Local speech and text modes process content on your Mac without an automatic cloud fallback. Model downloads contact external model hosts only when requested. Apple Translation requires supported installed languages.</p>
 
   <h2>Облачный выбор / Cloud choice</h2>
-  <p>При выбранном Groq приложение отправляет аудио для распознавания и соответствующий текст для обработки в Groq с вашим ключом. Ключ хранится в macOS Keychain. Действуют условия выбранного сервиса.</p>
-  <p>Choosing Groq sends the relevant audio and text to Groq using your key, stored in macOS Keychain. The provider's terms apply.</p>
+  <p>Облачные функции (облачное распознавание речи, веб-поиск, перевод речи на английский, чистка текста) работают только с вашим ключом Groq: тогда приложение отправляет аудио и соответствующий текст в Groq, а веб-поиск выполняется поисковым инструментом Groq. Ключ хранится в macOS Keychain. Действуют условия выбранного сервиса.</p>
+  <p>Cloud features (cloud speech recognition, web search, speech to English, text cleanup) work only with your own Groq key: the app then sends the relevant audio and text to Groq, and web search runs through Groq's built-in search tool. Your key is stored in macOS Keychain. The provider's terms apply.</p>
 
   <h2>История / History</h2>
   <p>История, словарь, настройки и резервное аудио хранятся на этом Mac. Управляйте сохранением и удалением в приложении. Автоматической синхронизации с аккаунтом any нет.</p>
   <p>History, vocabulary, settings and audio backups live on this Mac. Manage retention and deletion in the app. There is no automatic any account sync.</p>
 
-  <h2>Оплата и лицензия / Purchases and licensing</h2>
-  <p>Заказы и платежи обрабатываются через сервис <strong>Creem</strong> (Armitage Labs OÜ), выступающий в качестве Merchant of Record. Creem обрабатывает банковские карты, налоги, выставление счетов и возвраты в соответствии со своими правилами безопасности и конфиденциальности. Данные заказа (email и идентификатор устройства) используются исключительно для генерации, выдачи и привязки лицензионного ключа. Проверка купленного ключа выполняется локально на вашем Mac. Проверка обновлений обращается к официальному каналу выпуска версий.</p>
-  <p>Purchases and billing are facilitated by <strong>Creem</strong> (Armitage Labs OÜ) acting as the Merchant of Record. Creem securely handles payment processing, taxes, invoicing, and refunds under its own privacy standards. Order metadata (such as email and device identifier) is used solely to issue and bind the digital license key. Purchased keys are validated offline on your device. Update checks contact the official release channel.</p>
+  <h2>Пробный период и лицензия / Trial and licence server</h2>
+  <p>Чтобы считать 30 дней пробного периода и выдавать ключи, any обращается к нашему серверу лицензий (Cloudflare Workers). Приложение отправляет только идентификатор устройства — солёный SHA-256-хеш, вычисленный на Mac; сам аппаратный идентификатор Mac не покидает. Сервер хранит: этот хеш и время первого запуска, лицензионный ключ для этого хеша (тип плана и срок для подписки), связку «номер подписки Creem → хеш устройства» и номера обработанных событий Creem (90 дней). Имени, почты и платёжных данных на сервере нет. Купленный ключ проверяется на Mac по цифровой подписи; к серверу приложение обращается за новым ключом после оплаты и перед продлением подписки.</p>
+  <p>To run the 30-day trial and deliver licence keys, any talks to our licence server (Cloudflare Workers). The app sends only a device identifier: a salted SHA-256 hash computed on your Mac; the Mac's hardware ID itself never leaves it. The server stores that hash with the time of first launch, the licence key issued for it (plan type, and the end date for a subscription), a link from the Creem subscription ID to the device hash, and the IDs of processed Creem events (kept 90 days). It stores no name, email or payment details. A purchased key is verified on your Mac by its digital signature; the app contacts the server to fetch a new key after payment and before a subscription renews.</p>
+
+  <h2>Оплата / Payments</h2>
+  <p>Заказы и платежи обрабатывает <strong>Creem</strong> (Armitage Labs OÜ) — продавец (Merchant of Record). Почту, платёжные и налоговые данные вы вводите на странице оплаты Creem; Creem обрабатывает их по своей политике конфиденциальности. Мы получаем от Creem сведения о заказе (например, почту и номер заказа), чтобы помогать с поддержкой и возвратами, и не получаем данные карты. Вместе с заказом в Creem передаётся хеш устройства и выбранный план, чтобы выдать ключ для вашего Mac.</p>
+  <p>Orders and payments are handled by <strong>Creem</strong> (Armitage Labs OÜ) as the Merchant of Record. You enter your email, payment and tax details on Creem's checkout page, and Creem processes them under its own privacy policy. We receive order details from Creem (such as your email and order ID) to help with support and refunds; we never receive your card details. The device hash and the chosen plan are attached to the order so the key can be issued for your Mac.</p>
+
+  <h2>Обновления и загрузки / Updates and downloads</h2>
+  <p>Проверка обновлений обращается к GitHub, где лежат файлы выпусков. Модели скачиваются с Hugging Face по вашей команде. Эти сервисы видят обычные сетевые данные (например, IP-адрес) по своим правилам. Аналитики и трекеров в приложении нет.</p>
+  <p>Update checks contact GitHub, where release files are hosted. Models are downloaded from Hugging Face when you ask. These services see ordinary network data (such as your IP address) under their own policies. The app contains no analytics or trackers.</p>
+
+  <h2>Ваши права / Your choices</h2>
+  <p>Вы можете попросить удалить записи о вашем устройстве с сервера лицензий — напишите на <a href="mailto:main@sverkaus.com">main@sverkaus.com</a> и укажите номер заказа. После удаления мы не сможем повторно выдать ключ. Данные заказа у Creem удаляются по запросу к Creem в соответствии с их политикой и налоговыми требованиями.</p>
+  <p>You can ask us to delete your device records from the licence server: email <a href="mailto:main@sverkaus.com">main@sverkaus.com</a> with your order ID. After deletion we cannot re-issue your key. Order data held by Creem is handled under Creem's policy and tax record rules.</p>
 
   <h2>Этот сайт / This website</h2>
   <p>В исходном сайте нет аналитики, рекламных трекеров или форм сбора данных. Выбранный язык хранится в localStorage браузера. Хостинг (Vercel) и внешние ссылки могут обрабатывать сетевые метаданные по собственным правилам.</p>
@@ -53,10 +66,11 @@
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <a class="brand" href="/any"><img src="/any/assets/img/any-icon-64.png" alt="" width="24" height="24"><span>any</span></a>
-    <a href="/terms">Terms</a>
-    <a href="/refund">Refund</a>
+    <a class="brand" href="/any/"><img src="/any/assets/img/any-icon-64.png" alt="" width="24" height="24"><span>any</span></a>
     <a href="/any/privacy">Privacy</a>
+    <a href="/any/terms">Terms</a>
+    <a href="/any/refund">Refunds</a>
+    <a href="https://t.me/gennetysupport" target="_blank" rel="noopener">Support</a>
     <a href="/any/help">Help</a>
     <a href="/any/third-party-notices.txt">Licenses</a>
     <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>

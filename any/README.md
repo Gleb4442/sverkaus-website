@@ -8,7 +8,7 @@ A self-contained static module. Every URL inside is relative, so the folder work
 - `assets/js/sky.js` — the starfield.
 - `assets/video/manifest.json` — optional recorded loops. Add `"hero": "hero.mp4"` (keys: `hero`, `task`, `translate`, `chain`) and drop the file next to it. The stage then shows the video instead of the live simulation.
 - `assets/img/apps/*.svg` — app logos for the vocabulary demo, taken unchanged from the Iconify “logos” set (CC0). The marks belong to their owners and only name apps any can type into; any has no integration with them.
-- `help.html`, `privacy.html`, `third-party-notices.txt` — text pages.
+- `help.html`, `privacy.html`, `terms.html`, `refund.html`, `third-party-notices.txt` — text pages (RU and EN side by side). `/terms` and `/refund` on the main domain redirect here (`vercel.json`).
 
 ## Downloads
 

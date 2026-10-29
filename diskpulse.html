@@ -3,25 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:title" content="DiskPulse — Sverkaus Labs">
-    <meta property="og:description" content="A lightweight macOS menu-bar utility that keeps your disk and memory under control — safely, quietly, and entirely locally on your Mac.">
-    <title>DiskPulse — Sverkaus Labs</title>
+    <meta property="og:title" content="DiskPulse — Sverkaus">
+    <meta property="og:description" content="Lightweight macOS menu-bar utility that stops your disk and memory from filling up mid-build. Safe, visual, 100% local.">
+    <title>DiskPulse — Sverkaus</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #1c1c1c;
-            --surface-color: #242426;
-            --surface-raised: #2c2c2f;
-            --text-color: #f0f0f0;
-            --accent-color: #a3e635;
-            --accent-dim: rgba(163, 230, 53, 0.15);
-            --dim-color: #666666;
-            --tagline-color: #888888;
-            --border-color: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.16);
+            --bg: #141416;
+            --surface: #1c1c1f;
+            --surface-elevated: #242428;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.18);
+            --text-main: #f0f0f2;
+            --text-muted: #888890;
+            --text-dim: #5c5c64;
+            --accent: #a3e635;
+            --accent-dim: rgba(163, 230, 53, 0.12);
+            --accent-glow: rgba(163, 230, 53, 0.28);
+            --danger: #ef4444;
+            --warning: #f59e0b;
         }
 
         * {
@@ -35,8 +38,8 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg);
+            color: var(--text-main);
             font-family: 'JetBrains Mono', monospace;
             cursor: crosshair;
             overflow-x: hidden;
@@ -44,15 +47,10 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Top Header Navigation (Borderless & Minimalist) */
+        /* Top Header Navigation */
         .site-header {
             position: fixed;
             top: 0;
@@ -61,537 +59,666 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 22px 30px;
+            padding: 20px 32px;
             z-index: 1000;
-            background: rgba(28, 28, 28, 0.85);
+            background: rgba(20, 20, 22, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .header-left, .nav-tabs, .header-right {
-            display: inline-flex;
-            align-items: center;
+            border-bottom: 1px solid var(--border);
         }
 
         .brand-link {
             font-size: 11px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--text-color);
+            color: var(--text-main);
             text-decoration: none;
             font-weight: 800;
-            transition: color 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            transition: color 0.2s ease;
         }
 
         .brand-link:hover {
-            color: var(--accent-color);
+            color: var(--accent);
         }
 
-        .brand-arrow {
-            color: var(--dim-color);
+        .brand-link span.arrow {
+            color: var(--text-dim);
             transition: transform 0.2s ease, color 0.2s ease;
         }
 
-        .brand-link:hover .brand-arrow {
-            color: var(--accent-color);
+        .brand-link:hover span.arrow {
+            color: var(--accent);
             transform: translateX(-3px);
         }
 
-        .nav-tabs {
-            gap: 24px;
-            user-select: none;
-        }
-
-        .nav-tab {
-            color: #777777;
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            padding: 4px 0;
-            transition: color 0.2s ease;
-            position: relative;
-        }
-
-        .nav-tab:hover {
-            color: #ffffff;
-        }
-
-        .header-right {
+        .header-actions {
+            display: flex;
+            align-items: center;
             gap: 16px;
         }
 
-        .github-link-btn {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--dim-color);
-            text-decoration: none;
-            transition: color 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .github-link-btn:hover {
-            color: #ffffff;
-        }
-
-        /* Language Toggle Button */
-        .lang-toggle-btn {
-            background: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--dim-color);
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
             font-family: inherit;
             font-size: 10px;
             font-weight: 800;
-            letter-spacing: 0.15em;
-            padding: 4px 10px;
+            letter-spacing: 0.14em;
+            padding: 5px 11px;
             border-radius: 9999px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .lang-toggle-btn:hover {
+        .lang-btn:hover {
             color: #ffffff;
             border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        /* Container Layout */
-        .page-container {
+        .github-btn {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s ease;
+        }
+
+        .github-btn:hover {
+            color: #ffffff;
+        }
+
+        /* Page Layout */
+        .page-wrap {
             flex: 1;
             width: 100%;
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 120px 24px 80px;
+            padding: 110px 24px 80px;
             display: flex;
             flex-direction: column;
             gap: 80px;
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            gap: 26px;
-            padding: 30px 0 20px;
-            position: relative;
+            gap: 20px;
+            padding-top: 20px;
         }
 
-        .app-icon-wrapper {
-            position: relative;
-            width: 110px;
-            height: 110px;
-            margin-bottom: 6px;
-            border-radius: 26px;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(163, 230, 53, 0.12);
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
-            user-select: none;
+        .hero-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border: 1px solid rgba(163, 230, 53, 0.24);
         }
 
-        .app-icon-wrapper:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(163, 230, 53, 0.25);
+        .hero-badge-pill .pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse 2s infinite;
         }
 
-        .app-icon-img {
-            width: 100%;
-            height: 100%;
-            border-radius: 26px;
-            display: block;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.85); }
         }
 
         .hero-title {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(44px, 8vw, 76px);
+            font-size: clamp(48px, 9vw, 84px);
             font-weight: 900;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: #ffffff;
-            line-height: 1;
-            margin: 0;
-        }
-
-        .hero-tagline {
-            font-size: 15px;
-            color: #bbbbbb;
-            max-width: 680px;
-            line-height: 1.7;
-            font-weight: 400;
-        }
-
-        .hero-badges {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 4px;
-        }
-
-        .badge-chip {
-            font-size: 11px;
-            font-weight: 600;
-            color: #999999;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid var(--border-color);
-            padding: 5px 12px;
-            border-radius: 9999px;
             letter-spacing: 0.04em;
+            text-transform: uppercase;
+            line-height: 0.95;
+            color: #ffffff;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(14px, 2.5vw, 17px);
+            color: var(--text-muted);
+            max-width: 640px;
+            line-height: 1.6;
+        }
+
+        .hero-meta-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 11px;
+            color: var(--text-dim);
+            letter-spacing: 0.06em;
+        }
+
+        .hero-meta-row span.sep {
+            opacity: 0.3;
+        }
+
+        /* Interactive Menu Bar Mockup (The Hero Centerpiece) */
+        .mockup-container {
+            width: 100%;
+            max-width: 580px;
+            margin: 10px auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        /* Simulated macOS Menu Bar Strip */
+        .sim-menubar {
+            background: rgba(30, 30, 34, 0.7);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 6px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+            font-size: 11px;
+            color: var(--text-muted);
+            user-select: none;
+        }
+
+        .sim-menu-item {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-        }
-
-        .badge-chip.highlight {
-            color: var(--accent-color);
-            border-color: rgba(163, 230, 53, 0.25);
-            background: var(--accent-dim);
-        }
-
-        .badge-chip .dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background-color: var(--accent-color);
-            display: inline-block;
-        }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-            margin-top: 10px;
-        }
-
-        .btn-primary {
-            background-color: var(--accent-color);
-            color: #0d1405;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 13px 26px;
-            border-radius: 10px;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            border: none;
+            font-weight: 600;
             cursor: pointer;
-        }
-
-        .btn-primary:hover {
-            background-color: #bbf44b;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(163, 230, 53, 0.25);
-            color: #000000;
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-color);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 12px 22px;
-            border-radius: 10px;
-            text-decoration: none;
-            border: 1px solid var(--border-color);
+            padding: 2px 6px;
+            border-radius: 4px;
             transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .btn-secondary:hover {
+        .sim-menu-item.active {
             background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.25);
             color: #ffffff;
         }
 
-        .hero-shortcut-hint {
-            font-size: 11px;
-            color: var(--dim-color);
+        .sim-pulse-icon {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+        }
+
+        /* The DiskPulse Popover Card */
+        .popover-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.1);
             display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: -6px;
-        }
-
-        .kbd-key {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 2px 7px;
-            font-size: 11px;
-            font-weight: 700;
-            color: #cccccc;
-        }
-
-        /* Terminal Demo Card */
-        .terminal-card {
-            background: #141415;
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
+            flex-direction: column;
+            gap: 20px;
+            text-align: left;
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
-            font-size: 12px;
-            line-height: 1.7;
         }
 
-        .terminal-header {
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 16px;
+        .popover-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            width: 60%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(163, 230, 53, 0.4), transparent);
+        }
+
+        .popover-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
 
-        .terminal-dots {
+        .popover-app-title {
             display: flex;
-            gap: 6px;
+            align-items: center;
+            gap: 10px;
         }
 
-        .terminal-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #333333;
+        .popover-app-title img {
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
         }
 
-        .terminal-dot.red { background: #ff5f56; }
-        .terminal-dot.yellow { background: #ffbd2e; }
-        .terminal-dot.green { background: #27c93f; }
+        .popover-app-name {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.02em;
+        }
 
-        .terminal-title {
-            color: #777777;
+        .popover-app-tag {
             font-size: 10px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
+            color: var(--text-dim);
+            letter-spacing: 0.05em;
+        }
+
+        .live-status-chip {
+            background: rgba(163, 230, 53, 0.1);
+            border: 1px solid rgba(163, 230, 53, 0.2);
+            color: var(--accent);
+            font-size: 10px;
             font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 9999px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
-        .terminal-body {
-            padding: 20px;
-            overflow-x: auto;
-            color: #b0b0b0;
-        }
-
-        .terminal-prompt {
-            color: var(--accent-color);
-            font-weight: 700;
-        }
-
-        .term-green { color: #a3e635; }
-        .term-dim { color: #666666; }
-        .term-white { color: #ffffff; font-weight: 600; }
-        .term-orange { color: #e57e60; }
-
-        /* Section Typography */
-        .section-header {
+        /* Gauge Area */
+        .gauge-area {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 16px;
-            margin-bottom: 30px;
+            gap: 10px;
         }
 
-        .section-category {
+        .gauge-numbers {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+        }
+
+        .gauge-free {
+            font-family: 'Outfit', sans-serif;
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1;
+        }
+
+        .gauge-free span.unit {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-left: 2px;
+        }
+
+        .gauge-velocity {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--warning);
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            padding: 3px 9px;
+            border-radius: 6px;
+        }
+
+        .gauge-bar-track {
+            width: 100%;
+            height: 12px;
+            background: #101012;
+            border-radius: 9999px;
+            overflow: hidden;
+            display: flex;
+            border: 1px solid var(--border);
+        }
+
+        .bar-seg {
+            height: 100%;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bar-xcode { background: #3b82f6; }
+        .bar-sims { background: #8b5cf6; }
+        .bar-agents { background: #ec4899; }
+        .bar-free { background: var(--accent); }
+
+        .gauge-legend {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        /* Action Row inside popover */
+        .popover-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-top: 4px;
+        }
+
+        .btn-clean {
+            flex: 1;
+            background: var(--accent);
+            color: #0b1104;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 12px 18px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-clean:hover {
+            background: #b6f545;
+            box-shadow: 0 4px 20px var(--accent-glow);
+            transform: translateY(-1px);
+        }
+
+        .btn-clean:active {
+            transform: translateY(0);
+        }
+
+        .btn-clean.cleaned {
+            background: #22c55e;
+            color: #ffffff;
+        }
+
+        .autoclean-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            padding: 10px 14px;
+            border-radius: 10px;
+            font-size: 11px;
+            color: var(--text-muted);
+            cursor: pointer;
+            user-select: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .autoclean-toggle:hover {
+            border-color: var(--border-hover);
+        }
+
+        .toggle-switch {
+            width: 28px;
+            height: 16px;
+            background: var(--accent);
+            border-radius: 9999px;
+            position: relative;
+            transition: background 0.2s ease;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 12px;
+            height: 12px;
+            background: #000000;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+        }
+
+        /* Scenarios Switcher */
+        .scenarios-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .scenario-pill {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .scenario-pill:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .scenario-pill.active {
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+            font-weight: 700;
+        }
+
+        /* 4 Killer Features Grid (Visual & Concise) */
+        .features-section {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .section-tag {
             font-size: 10px;
             font-weight: 800;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--accent-color);
+            color: var(--accent);
         }
 
-        .section-title {
+        .section-headline {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(26px, 4.5vw, 36px);
-            font-weight: 800;
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 900;
             letter-spacing: 0.02em;
-            text-transform: uppercase;
             color: #ffffff;
             line-height: 1.1;
         }
 
-        .section-desc {
-            font-size: 13px;
-            color: var(--tagline-color);
-            line-height: 1.7;
-        }
-
-        /* Features Grid */
-        .features-grid {
+        .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
-        .feature-card {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 24px;
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 26px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            transition: all 0.25s ease;
+            gap: 14px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
-        .feature-card:hover {
+        .card:hover {
             border-color: var(--border-hover);
             transform: translateY(-2px);
-            background: var(--surface-raised);
         }
 
-        .feature-icon-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .feature-icon {
-            font-size: 18px;
-            line-height: 1;
-        }
-
-        .feature-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 18px;
-            font-weight: 700;
-            color: #ffffff;
-            letter-spacing: 0.01em;
-        }
-
-        .feature-text {
-            font-size: 12px;
-            color: #a8a8a8;
-            line-height: 1.7;
-        }
-
-        /* Rules Table */
-        .rules-table-wrapper {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .rules-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 12px;
-        }
-
-        .rules-table th {
-            background: rgba(255, 255, 255, 0.03);
-            border-bottom: 1px solid var(--border-color);
-            padding: 14px 18px;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #ffffff;
-        }
-
-        .rules-table td {
-            padding: 16px 18px;
-            border-bottom: 1px solid var(--border-color);
-            color: #b0b0b0;
-            vertical-align: top;
-            line-height: 1.7;
-        }
-
-        .rules-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .rules-table strong {
-            color: #ffffff;
-        }
-
-        .rule-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 700;
-            font-size: 11px;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        .status-safe { color: var(--accent-color); }
-        .status-consent { color: #e5a55d; }
-        .status-never { color: #f87171; }
-
-        /* Install Block */
-        .install-options {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .command-box {
-            background: #141415;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 14px 18px;
+        .card-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
-            font-size: 12px;
-            transition: border-color 0.2s ease;
         }
 
-        .command-box:hover {
-            border-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .command-code {
-            color: #ffffff;
-            font-family: 'JetBrains Mono', monospace;
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-
-        .command-label {
-            color: var(--dim-color);
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            min-width: 90px;
-        }
-
-        .copy-btn {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid var(--border-color);
-            color: #aaaaaa;
-            font-family: inherit;
+        .card-badge {
             font-size: 10px;
             font-weight: 700;
             letter-spacing: 0.08em;
             text-transform: uppercase;
-            padding: 6px 12px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        .card-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 0.01em;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Micro-Visual Inside Card */
+        .card-micro {
+            background: #111113;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            font-size: 11px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-top: 4px;
+        }
+
+        .micro-line {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .micro-label {
+            color: var(--text-dim);
+        }
+
+        .micro-val {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .micro-val.green { color: var(--accent); }
+        .micro-val.orange { color: var(--warning); }
+
+        /* Terminal Hook Snippet */
+        .terminal-snippet {
+            font-size: 11px;
+            line-height: 1.5;
+            color: #a0a0a8;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .terminal-snippet span.prompt { color: var(--accent); }
+        .terminal-snippet span.refuse { color: #f87171; font-weight: 700; }
+        .terminal-snippet span.pass { color: var(--accent); font-weight: 700; }
+
+        /* Install CTA Section */
+        .install-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .install-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(26px, 4.5vw, 36px);
+            font-weight: 900;
+            color: #ffffff;
+        }
+
+        .install-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            max-width: 500px;
+            margin-top: -12px;
+        }
+
+        .cmd-pill {
+            background: #101012;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 14px 10px 18px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            width: 100%;
+            max-width: 540px;
+            justify-content: space-between;
+            transition: border-color 0.2s ease;
+        }
+
+        .cmd-pill:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .cmd-text {
+            color: #ffffff;
+            font-size: 12px;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 6px 14px;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -599,51 +726,55 @@
         }
 
         .copy-btn:hover {
-            color: #ffffff;
+            background: rgba(255, 255, 255, 0.15);
             border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.1);
         }
 
         .copy-btn.copied {
-            background: var(--accent-color);
-            color: #0e1606;
-            border-color: var(--accent-color);
+            background: var(--accent);
+            color: #0b1104;
+            border-color: var(--accent);
         }
 
-        /* FAQ / Architecture Accents */
-        .faq-grid {
+        .install-alt-row {
             display: flex;
-            flex-direction: column;
-            gap: 14px;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .faq-item {
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 16px;
-        }
-
-        .faq-q {
-            font-family: 'Outfit', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
+        .btn-dmg {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
             color: #ffffff;
-            margin-bottom: 6px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 11px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
         }
 
-        .faq-a {
-            font-size: 12px;
-            color: #999999;
-            line-height: 1.7;
+        .btn-dmg:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
         /* Footer */
         .site-footer {
-            border-top: 1px solid var(--border-color);
-            padding: 40px 20px 30px;
+            border-top: 1px solid var(--border);
+            padding: 36px 20px 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 16px;
+            gap: 14px;
             margin-top: auto;
             text-align: center;
         }
@@ -653,7 +784,7 @@
             letter-spacing: 0.2em;
             text-transform: uppercase;
             font-weight: 800;
-            color: #777777;
+            color: var(--text-dim);
             text-decoration: none;
             transition: color 0.2s ease;
         }
@@ -664,343 +795,279 @@
 
         .footer-links {
             display: flex;
-            gap: 20px;
+            gap: 18px;
         }
 
-        .social-link {
-            width: 32px;
-            height: 32px;
+        .footer-link {
+            color: var(--text-dim);
+            transition: color 0.2s ease;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: var(--dim-color);
-            transition: color 0.2s ease;
         }
 
-        .social-link:hover {
-            color: var(--accent-color);
+        .footer-link:hover {
+            color: var(--accent);
         }
 
-        .social-link svg {
-            width: 16px;
-            height: 16px;
+        .footer-link svg {
+            width: 15px;
+            height: 15px;
             fill: currentColor;
         }
 
-        .footer-note {
+        .footer-copy {
             font-size: 11px;
-            color: var(--dim-color);
+            color: var(--text-dim);
         }
 
         @media (max-width: 768px) {
-            .site-header {
-                padding: 16px 20px;
-            }
-            .nav-tabs {
-                display: none;
-            }
-            .page-container {
-                padding: 100px 18px 60px;
-                gap: 60px;
-            }
-            .command-box {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            .command-label {
-                min-width: unset;
-            }
-            .copy-btn {
-                align-self: flex-end;
-            }
+            .site-header { padding: 16px 20px; }
+            .page-wrap { padding: 90px 18px 50px; gap: 50px; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .gauge-numbers { flex-direction: column; gap: 6px; }
+            .cmd-pill { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .copy-btn { align-self: flex-end; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Site Header -->
+    <!-- Header Navigation -->
     <header class="site-header">
-        <div class="header-left">
-            <a href="index.html" class="brand-link">
-                <span class="brand-arrow">&larr;</span>
-                <span>SVERKAUS LABS</span>
-            </a>
-        </div>
+        <a href="index.html" class="brand-link">
+            <span class="arrow">&larr;</span>
+            <span>SVERKAUS</span>
+        </a>
 
-        <nav class="nav-tabs" aria-label="DiskPulse navigation">
-            <a href="#overview" class="nav-tab" data-i18n="navOverview">Overview</a>
-            <a href="#features" class="nav-tab" data-i18n="navFeatures">Features</a>
-            <a href="#safety" class="nav-tab" data-i18n="navSafety">Safety</a>
-            <a href="#install" class="nav-tab" data-i18n="navInstall">Install</a>
-        </nav>
-
-        <div class="header-right">
-            <button class="lang-toggle-btn" id="lang-toggle-btn" title="Toggle language / Сменить язык">RU</button>
-            <a href="https://github.com/Gleb4442/diskpulse" target="_blank" class="github-link-btn" title="View Source on GitHub">
+        <div class="header-actions">
+            <button class="lang-btn" id="lang-btn" title="Toggle language / Сменить язык">RU</button>
+            <a href="https://github.com/Gleb4442/diskpulse" target="_blank" class="github-btn">
                 <span>GitHub</span>
                 <span>&nearr;</span>
             </a>
         </div>
     </header>
 
-    <main class="page-container" id="overview">
+    <main class="page-wrap">
 
-        <!-- Hero Section -->
+        <!-- 1. HERO SECTION -->
         <section class="hero">
-            <div class="app-icon-wrapper">
-                <img src="diskpulse-icon.png" alt="DiskPulse App Icon" class="app-icon-img">
+            <div class="hero-badge-pill">
+                <span class="pulse-dot"></span>
+                <span id="txt-pill">macOS Menu Bar Utility · Open Source</span>
             </div>
 
             <h1 class="hero-title">DISKPULSE</h1>
 
-            <p class="hero-tagline" id="hero-tagline">
-                A lightweight macOS menu-bar utility that keeps your disk and memory under control — safely, quietly, and entirely locally on your Mac.
+            <p class="hero-subtitle" id="txt-hero-sub">
+                Stops your Mac's disk and memory from running out mid-build. Safe background auto-cleanup built specifically for developer tools and AI coding agents.
             </p>
 
-            <div class="hero-badges">
-                <span class="badge-chip highlight"><span class="dot"></span> <span id="badge-mac">macOS 15+</span></span>
-                <span class="badge-chip" id="badge-arch">Apple Silicon &amp; Intel</span>
-                <span class="badge-chip" id="badge-privacy">100% Local · Zero Telemetry</span>
-                <span class="badge-chip" id="badge-signed">Signed &amp; Notarized</span>
+            <div class="hero-meta-row">
+                <span id="txt-meta-local">100% Local &amp; Private</span>
+                <span class="sep">·</span>
+                <span>macOS 15+ Sequoia</span>
+                <span class="sep">·</span>
+                <span id="txt-meta-arch">Apple Silicon &amp; Intel</span>
+                <span class="sep">·</span>
+                <span id="txt-meta-shortcut">Shortcut: ^ ⌥ D</span>
             </div>
 
-            <div class="hero-actions">
-                <a href="https://github.com/Gleb4442/diskpulse/releases/latest/download/DiskPulse.dmg" class="btn-primary" id="btn-download">
+            <!-- Interactive Menu Bar App Mockup -->
+            <div class="mockup-container">
+                
+                <!-- Simulated Menu Bar Strip -->
+                <div class="sim-menubar">
+                    <span style="font-size:10px; opacity:0.6;">15:37</span>
+                    <div class="sim-menu-item active" id="sim-menu-trigger" title="Click to toggle popover">
+                        <img src="diskpulse-icon.png" alt="" class="sim-pulse-icon">
+                        <span id="bar-free-label">18.5 GB</span>
+                    </div>
+                </div>
+
+                <!-- Popover Window -->
+                <div class="popover-card" id="popover-card">
+                    <div class="popover-header">
+                        <div class="popover-app-title">
+                            <img src="diskpulse-icon.png" alt="DiskPulse">
+                            <div>
+                                <div class="popover-app-name">DiskPulse</div>
+                                <div class="popover-app-tag" id="txt-popover-tag">Safe Background Care</div>
+                            </div>
+                        </div>
+                        <div class="live-status-chip">
+                            <span class="pulse-dot" style="width:5px; height:5px;"></span>
+                            <span id="txt-chip-status">Watching Space</span>
+                        </div>
+                    </div>
+
+                    <!-- Gauge Display -->
+                    <div class="gauge-area">
+                        <div class="gauge-numbers">
+                            <div class="gauge-free" id="gauge-val">18.5 <span class="unit">GB free</span></div>
+                            <div class="gauge-velocity" id="gauge-vel">+4.3 GB/h · Forecast: ~4h left</div>
+                        </div>
+
+                        <div class="gauge-bar-track">
+                            <div class="bar-seg bar-xcode" id="seg-xcode" style="width: 32%;" title="Xcode DerivedData: 24 GB"></div>
+                            <div class="bar-seg bar-sims" id="seg-sims" style="width: 22%;" title="Simulators: 17 GB"></div>
+                            <div class="bar-seg bar-agents" id="seg-agents" style="width: 16%;" title="AI Agent Caches: 12 GB"></div>
+                            <div class="bar-seg bar-free" id="seg-free" style="width: 30%;" title="Free Space: 18.5 GB"></div>
+                        </div>
+
+                        <div class="gauge-legend">
+                            <span class="legend-item"><span class="legend-dot" style="background:#3b82f6;"></span> Xcode (24 GB)</span>
+                            <span class="legend-item"><span class="legend-dot" style="background:#8b5cf6;"></span> Simulators (17 GB)</span>
+                            <span class="legend-item"><span class="legend-dot" style="background:#ec4899;"></span> Agent Caches (12 GB)</span>
+                            <span class="legend-item"><span class="legend-dot" style="background:var(--accent);"></span> <span id="txt-leg-free">Free (18.5 GB)</span></span>
+                        </div>
+                    </div>
+
+                    <!-- Popover Interactive Action -->
+                    <div class="popover-actions">
+                        <button class="btn-clean" id="btn-live-clean">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 3v18M3 12h18"></path>
+                            </svg>
+                            <span id="txt-btn-clean">Clean Safe Cache (+14.2 GB)</span>
+                        </button>
+                        <div class="autoclean-toggle" id="toggle-autoclean" title="Toggle background timer">
+                            <span class="toggle-switch"></span>
+                            <span id="txt-toggle-label">Auto 5m</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Scenario Buttons -->
+                <div class="scenarios-row">
+                    <button class="scenario-pill active" data-scenario="normal" id="sc-btn-1">Default</button>
+                    <button class="scenario-pill" data-scenario="build" id="sc-btn-2">Xcode Build Surge</button>
+                    <button class="scenario-pill" data-scenario="agent" id="sc-btn-3">Claude Code Agent</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. THE 4 CRITICAL FEATURES -->
+        <section class="features-section">
+            <div>
+                <span class="section-tag" id="tag-features">// ARCHITECTURE &amp; GUARANTEES</span>
+                <h2 class="section-headline" id="title-features">What Makes DiskPulse Indispensable</h2>
+            </div>
+
+            <div class="cards-grid">
+                
+                <!-- Card 1: Velocity & Forecast -->
+                <div class="card">
+                    <div class="card-top">
+                        <span class="card-badge">01 · TELEMETRY</span>
+                        <span style="font-size:18px;">⚡️</span>
+                    </div>
+                    <h3 class="card-title" id="c1-title">Real-Time Velocity &amp; Burn Forecast</h3>
+                    <p class="card-desc" id="c1-desc">
+                        Standard tools only show static bytes. DiskPulse tracks the burn velocity in GB/hour and forecasts exactly when Xcode or agent tasks will exhaust your SSD before compilation crashes.
+                    </p>
+                    <div class="card-micro">
+                        <div class="micro-line">
+                            <span class="micro-label">Velocity Rate</span>
+                            <span class="micro-val orange">+4.3 GB / hour</span>
+                        </div>
+                        <div class="micro-line">
+                            <span class="micro-label">Crash Forecast</span>
+                            <span class="micro-val">42 minutes remaining</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: PreToolUse Guard for Claude Code -->
+                <div class="card">
+                    <div class="card-top">
+                        <span class="card-badge">02 · AI AGENTS</span>
+                        <span style="font-size:18px;">🛡️</span>
+                    </div>
+                    <h3 class="card-title" id="c2-title">PreToolUse Guard for AI Agents</h3>
+                    <p class="card-desc" id="c2-desc">
+                        Cleaning cannot outrun 3 parallel agent compiler tasks. The PreToolUse hook intercepts heavy bash commands before disk hits 0 GB, pausing builds until space is reclaimed.
+                    </p>
+                    <div class="card-micro terminal-snippet">
+                        <div><span class="prompt">$</span> claude code &rarr; bash [xcodebuild]</div>
+                        <div><span class="refuse">[guard] Refused:</span> Free space &lt; 5 GB (4.8 GB)</div>
+                        <div><span class="pass">[auto-clean]</span> Reclaimed 9.2 GB &rarr; Running build</div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Memory Pressure & Swap Protection -->
+                <div class="card">
+                    <div class="card-top">
+                        <span class="card-badge">03 · KERNEL</span>
+                        <span style="font-size:18px;">🧠</span>
+                    </div>
+                    <h3 class="card-title" id="c3-title">Swap &amp; Memory Pressure Relief</h3>
+                    <p class="card-desc" id="c3-desc">
+                        macOS swap lives on your SSD. A full disk causes macOS to force-quit apps. DiskPulse frees disk space under memory pressure and gently sends SIGTERM to dead orphan language/MCP servers.
+                    </p>
+                    <div class="card-micro">
+                        <div class="micro-line">
+                            <span class="micro-label">Swap File Condition</span>
+                            <span class="micro-val">1.6 GB (Encrypted)</span>
+                        </div>
+                        <div class="micro-line">
+                            <span class="micro-label">Dead LSP / MCP Servers</span>
+                            <span class="micro-val green">1 terminated (gentle SIGTERM)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4: Zero-Harm Principle -->
+                <div class="card">
+                    <div class="card-top">
+                        <span class="card-badge">04 · INTEGRITY</span>
+                        <span style="font-size:18px;">🔒</span>
+                    </div>
+                    <h3 class="card-title" id="c4-title">Strict Zero-Harm Allow-List</h3>
+                    <p class="card-desc" id="c4-desc">
+                        Cleans only files that safely rebuild themselves. Open applications are never quit. Uncommitted git work, user documents, and active agent sessions are strictly untouchable.
+                    </p>
+                    <div class="card-micro">
+                        <div class="micro-line">
+                            <span class="micro-label">Git Uncommitted Work</span>
+                            <span class="micro-val green">Strictly untouchable</span>
+                        </div>
+                        <div class="micro-line">
+                            <span class="micro-label">Running Apps</span>
+                            <span class="micro-val green">Never quit</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. INSTALLATION CTA -->
+        <section class="install-box">
+            <h2 class="install-title" id="txt-install-title">Get DiskPulse for Mac</h2>
+            <p class="install-sub" id="txt-install-sub">
+                Free &amp; open source under MIT. No accounts, no telemetry, verified Developer ID signature.
+            </p>
+
+            <div class="cmd-pill">
+                <code class="cmd-text">brew install --cask gleb4442/tap/diskpulse</code>
+                <button class="copy-btn" data-copy="brew install --cask gleb4442/tap/diskpulse">Copy</button>
+            </div>
+
+            <div class="install-alt-row">
+                <a href="https://github.com/Gleb4442/diskpulse/releases/latest/download/DiskPulse.dmg" class="btn-dmg" id="btn-dmg-link">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="7 10 12 15 17 10"></polyline>
                         <line x1="12" y1="15" x2="12" y2="3"></line>
                     </svg>
-                    <span>Download .dmg</span>
+                    <span>Download DiskPulse.dmg</span>
                 </a>
-                <a href="#install" class="btn-secondary" id="btn-quick-install">
-                    <span>Install via Brew &rarr;</span>
-                </a>
-            </div>
 
-            <div class="hero-shortcut-hint">
-                <span id="hint-shortcut">Open anytime with</span>
-                <span class="kbd-key">^ Control</span>
-                <span class="kbd-key">&alefsym; Option</span>
-                <span class="kbd-key">D</span>
-            </div>
-        </section>
-
-        <!-- Live Terminal Simulation Card -->
-        <section class="terminal-card">
-            <div class="terminal-header">
-                <div class="terminal-dots">
-                    <span class="terminal-dot red"></span>
-                    <span class="terminal-dot yellow"></span>
-                    <span class="terminal-dot green"></span>
-                </div>
-                <div class="terminal-title">diskcare.py status</div>
-                <div style="width: 40px"></div>
-            </div>
-            <div class="terminal-body">
-                <div><span class="terminal-prompt">$</span> python3 Engine/diskcare.py status</div>
-                <div class="term-dim">------------------------------------------------------------</div>
-                <div><span class="term-orange"># Disk — low:</span> Free 18.5 GB — low space, autoclean is active</div>
-                <div><span class="term-dim">- velocity:</span> +4.3 GB/h</div>
-                <div><span class="term-dim">- active:</span> builds 0, simulators 0, Claude sessions 1 (background jobs 5), swap 1.6 GB</div>
-                <div><span class="term-green">- last clean:</span> 18.5 GB &rarr; 18.5 GB; orphan app copies 1.4 GB, temp files 424 KB</div>
-                <div><span class="term-white">- Memory:</span> Healthy — free 62%, swap 1.6 GB</div>
-                <div><span class="term-dim">- Autoclean:</span> Enabled, background pass every 5 min</div>
-            </div>
-        </section>
-
-        <!-- Core Features -->
-        <section id="features">
-            <div class="section-header">
-                <span class="section-category" id="cat-features">// CAPABILITIES</span>
-                <h2 class="section-title" id="title-features">Engineered for Developer Macs</h2>
-                <p class="section-desc" id="desc-features">
-                    Xcode builds, simulators, npm packages, and parallel AI coding agents quietly fill your storage until builds fail. DiskPulse watches free space, explains where it went, and cleans safely.
-                </p>
-            </div>
-
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon-title">
-                        <span class="feature-icon">🔒</span>
-                        <h3 class="feature-title" id="f1-title">100% Local</h3>
-                    </div>
-                    <p class="feature-text" id="f1-desc">
-                        No accounts, no analytics, no external trackers. Your filesystem data never leaves your Mac. The only network call is an optional, opt-in daily update check against GitHub.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon-title">
-                        <span class="feature-icon">🧹</span>
-                        <h3 class="feature-title" id="f2-title">Safe Background Autoclean</h3>
-                    </div>
-                    <p class="feature-text" id="f2-desc">
-                        Runs quietly in the background every 5 minutes when disk space drops below safe thresholds. Strictly cleans caches from an allow-list; never deletes your source code or documents.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon-title">
-                        <span class="feature-icon">🧠</span>
-                        <h3 class="feature-title" id="f3-title">RAM &amp; Swap Protection</h3>
-                    </div>
-                    <p class="feature-text" id="f3-desc">
-                        Swap lives on the disk. Under memory pressure, DiskPulse frees disk space early and terminates orphan MCP and language servers whose parent process has died, preventing system freezes.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon-title">
-                        <span class="feature-icon">⚡️</span>
-                        <h3 class="feature-title" id="f4-title">PreToolUse Guard</h3>
-                    </div>
-                    <p class="feature-text" id="f4-desc">
-                        Cleaning cannot outrun three parallel Xcode builds. The <code>guard</code> hook for Claude Code refuses builds, installs, and simulator boots when free space drops below 5 GB, protecting your drive.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon-title">
-                        <span class="feature-icon">🤖</span>
-                        <h3 class="feature-title" id="f5-title">Agent Resource Manager</h3>
-                    </div>
-                    <p class="feature-text" id="f5-desc">
-                        Coordinates parallel coding agents (Claude Code, Codex). Heavy compiler and test tasks share a resource pool sized to your Mac so agents complete tasks without CPU and memory thrashing.
-                    </p>
-                </div>
-
-                <div class="feature-card">
-                    <div class="feature-icon-title">
-                        <span class="feature-icon">⬆️</span>
-                        <h3 class="feature-title" id="f6-title">Signed &amp; Notarized</h3>
-                    </div>
-                    <p class="feature-text" id="f6-desc">
-                        Signed with Apple Developer ID and notarized by Apple. Supports one-click updates verified by cryptographic signature before install. Fully open source under MIT.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Safety Principles & Table -->
-        <section id="safety">
-            <div class="section-header">
-                <span class="section-category" id="cat-safety">// ZERO-HARM GUARANTEE</span>
-                <h2 class="section-title" id="title-safety">What Gets Cleaned</h2>
-                <p class="section-desc" id="desc-safety">
-                    DiskPulse only cleans files that are guaranteed to re-create themselves automatically, and only when they are not in use. Open applications are never touched.
-                </p>
-            </div>
-
-            <div class="rules-table-wrapper">
-                <table class="rules-table">
-                    <thead>
-                        <tr>
-                            <th style="width: 28%;" id="th-category">Tier</th>
-                            <th id="th-rules">Files &amp; Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span class="rule-status status-safe">● Always Safe</span>
-                            </td>
-                            <td id="row-safe-desc">
-                                <strong>Xcode Build Data</strong> of deleted projects and worktrees, old <code>ModuleCache</code>, <code>PIFCache</code>.<br>
-                                <strong>Tool Caches:</strong> npm, npx, VS Code, headless-Chrome, pip, uv caches when tools are not running.<br>
-                                <strong>Agent Temp:</strong> Completed Claude Code background tasks (2h after session ends).<br>
-                                <strong>Closed Apps:</strong> Hidden Electron caches in Application Support (Slack, Notion, Figma, Claude) — never Local Storage or cookies.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rule-status status-consent">● With Consent</span>
-                            </td>
-                            <td id="row-consent-desc">
-                                <strong>Deep Clean («Глубже…»):</strong> Xcode builds for projects untouched for 7+ days; simulators for completed agent jobs; <code>node_modules</code> in idle agent worktrees.<br>
-                                <strong>Manual Consent Only:</strong> Installers &amp; DMG archives in Downloads older than 30 days, iPhone backups older than 6 months, untouched AI models (Hugging Face / LM Studio).
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="rule-status status-never">✕ Never Touched</span>
-                            </td>
-                            <td id="row-never-desc">
-                                <strong>Your Work:</strong> Documents, Desktop, Photos, Mail, Keychain credentials.<br>
-                                <strong>Git Repositories:</strong> Anything with uncommitted or unpushed work is strictly untouchable.<br>
-                                <strong>Running Programs:</strong> If an app is open, it is in use. DiskPulse never quits running apps. Active agent memories and config directories (<code>~/.codex</code>, <code>~/.gemini</code>, <code>~/.cursor</code>) are never touched.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- Installation Section -->
-        <section id="install">
-            <div class="section-header">
-                <span class="section-category" id="cat-install">// GET STARTED</span>
-                <h2 class="section-title" id="title-install">Install in 2 Minutes</h2>
-                <p class="section-desc" id="desc-install">
-                    Requires macOS 15 (Sequoia) or newer. Choose your preferred installation method:
-                </p>
-            </div>
-
-            <div class="install-options">
-                <div class="command-box">
-                    <span class="command-label">Homebrew</span>
-                    <code class="command-code">brew install --cask gleb4442/tap/diskpulse</code>
-                    <button class="copy-btn" data-copy="brew install --cask gleb4442/tap/diskpulse">Copy</button>
-                </div>
-
-                <div class="command-box">
-                    <span class="command-label">Terminal</span>
-                    <code class="command-code">curl -fsSL https://github.com/Gleb4442/diskpulse/releases/latest/download/get.sh | bash</code>
-                    <button class="copy-btn" data-copy="curl -fsSL https://github.com/Gleb4442/diskpulse/releases/latest/download/get.sh | bash">Copy</button>
-                </div>
-
-                <div class="command-box">
-                    <span class="command-label">Direct</span>
-                    <code class="command-code">https://github.com/Gleb4442/diskpulse/releases/latest/download/DiskPulse.dmg</code>
-                    <a href="https://github.com/Gleb4442/diskpulse/releases/latest/download/DiskPulse.dmg" class="copy-btn" style="text-decoration:none;">Download</a>
-                </div>
-
-                <div class="command-box">
-                    <span class="command-label">Source</span>
-                    <code class="command-code">git clone https://github.com/Gleb4442/diskpulse.git && cd diskpulse && ./install.sh</code>
-                    <button class="copy-btn" data-copy="git clone https://github.com/Gleb4442/diskpulse.git && cd diskpulse && ./install.sh">Copy</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section id="faq">
-            <div class="section-header">
-                <span class="section-category" id="cat-faq">// FAQ</span>
-                <h2 class="section-title" id="title-faq">Frequently Asked Questions</h2>
-            </div>
-
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <h3 class="faq-q" id="faq1-q">How does DiskPulse protect my open work?</h3>
-                    <p class="faq-a" id="faq1-a">
-                        DiskPulse checks whether an application is currently running before cleaning its caches. It also checks git status for uncommitted modifications. If a folder belongs to an open process or an active git worktree, it is bypassed completely.
-                    </p>
-                </div>
-
-                <div class="faq-item">
-                    <h3 class="faq-q" id="faq2-q">Can it be run completely from the CLI without GUI?</h3>
-                    <p class="faq-a" id="faq2-a">
-                        Yes. DiskPulse uses a standalone standard Python engine (<code>Engine/diskcare.py</code>). You can run <code>python3 Engine/diskcare.py audit</code> to inspect usage, <code>plan</code> to preview deletions, or <code>clean</code> directly from any terminal or CI pipeline.
-                    </p>
-                </div>
-
-                <div class="faq-item">
-                    <h3 class="faq-q" id="faq3-q">Where are my custom rules saved?</h3>
-                    <p class="faq-a" id="faq3-a">
-                        You can create <code>~/Library/Application Support/diskcare/config.json</code> to specify folders that must never be touched, simulator prefixes, and notification thresholds. Everything stays strictly local on your Mac.
-                    </p>
+                <div class="cmd-pill" style="max-width: unset; width: auto; padding: 6px 12px;">
+                    <code class="cmd-text" style="font-size:11px;">curl -fsSL https://github.com/Gleb4442/diskpulse/releases/latest/download/get.sh | bash</code>
+                    <button class="copy-btn" data-copy="curl -fsSL https://github.com/Gleb4442/diskpulse/releases/latest/download/get.sh | bash" style="padding:4px 8px; font-size:9px;">Copy</button>
                 </div>
             </div>
         </section>
@@ -1009,136 +1076,219 @@
 
     <!-- Footer -->
     <footer class="site-footer">
-        <a href="index.html" class="footer-brand">SVERKAUS LABS</a>
+        <a href="index.html" class="footer-brand">SVERKAUS</a>
         <div class="footer-links">
-            <a href="https://www.linkedin.com/in/gleb-gosha" target="_blank" class="social-link" title="LinkedIn">
+            <a href="https://www.linkedin.com/in/gleb-gosha" target="_blank" class="footer-link" title="LinkedIn">
                 <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
             </a>
-            <a href="https://x.com/gleb443?s=11" target="_blank" class="social-link" title="X">
+            <a href="https://x.com/gleb443?s=11" target="_blank" class="footer-link" title="X">
                 <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             </a>
-            <a href="https://t.me/GGen1e" target="_blank" class="social-link" title="Telegram">
+            <a href="https://t.me/GGen1e" target="_blank" class="footer-link" title="Telegram">
                 <svg viewBox="0 0 192 192"><path d="M23.073 88.132s65.458-26.782 88.16-36.212c8.702-3.772 38.215-15.843 38.215-15.843s13.621-5.28 12.486 7.544c-.379 5.281-3.406 23.764-6.433 43.756-4.54 28.291-9.459 59.221-9.459 59.221s-.756 8.676-7.188 10.185c-6.433 1.509-17.027-5.281-18.919-6.79-1.513-1.132-28.377-18.106-38.214-26.404-2.649-2.263-5.676-6.79.378-12.071 13.621-12.447 29.891-27.913 39.728-37.72 4.54-4.527 9.081-15.089-9.837-2.264-26.864 18.483-53.35 35.835-53.35 35.835s-6.053 3.772-17.404.377c-11.351-3.395-24.594-7.921-24.594-7.921s-9.08-5.659 6.433-11.693Z"/></svg>
             </a>
-            <a href="mailto:main@sverkaus.com" class="social-link" title="Email">
+            <a href="mailto:main@sverkaus.com" class="footer-link" title="Email">
                 <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
             </a>
         </div>
-        <div class="footer-note">
-            &copy; <span id="year">2026</span> Sverkaus Labs. Open source under MIT License.
+        <div class="footer-copy">
+            &copy; 2026 Sverkaus. Open source under MIT License.
         </div>
     </footer>
 
     <script>
-        // Copy to clipboard functionality
+        // Copy to clipboard
         document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
             btn.addEventListener('click', () => {
                 const text = btn.getAttribute('data-copy');
                 navigator.clipboard.writeText(text).then(() => {
-                    const originalText = btn.textContent;
+                    const orig = btn.textContent;
                     btn.textContent = 'Copied!';
                     btn.classList.add('copied');
                     setTimeout(() => {
-                        btn.textContent = originalText;
+                        btn.textContent = orig;
                         btn.classList.remove('copied');
-                    }, 2000);
+                    }, 1800);
                 });
             });
         });
 
-        // Bilingual Content Dictionary
+        // Interactive Live Mockup State & Animation
+        let isCleaned = false;
+        const btnClean = document.getElementById('btn-live-clean');
+        const gaugeVal = document.getElementById('gauge-val');
+        const gaugeVel = document.getElementById('gauge-vel');
+        const barFreeLabel = document.getElementById('bar-free-label');
+        const segXcode = document.getElementById('seg-xcode');
+        const segSims = document.getElementById('seg-sims');
+        const segAgents = document.getElementById('seg-agents');
+        const segFree = document.getElementById('seg-free');
+        const txtBtnClean = document.getElementById('txt-btn-clean');
+
+        const scenarios = {
+            normal: {
+                free: "18.5",
+                vel: "+4.3 GB/h · Forecast: ~4h left",
+                xcodeW: "32%",
+                simsW: "22%",
+                agentsW: "16%",
+                freeW: "30%",
+                cleanAmount: "14.2"
+            },
+            build: {
+                free: "8.2",
+                vel: "+18.6 GB/h · Critical: ~26m left",
+                xcodeW: "48%",
+                simsW: "24%",
+                agentsW: "14%",
+                freeW: "14%",
+                cleanAmount: "22.5"
+            },
+            agent: {
+                free: "5.1",
+                vel: "[guard active] Blocked 2 jobs",
+                xcodeW: "26%",
+                simsW: "18%",
+                agentsW: "46%",
+                freeW: "10%",
+                cleanAmount: "19.8"
+            }
+        };
+
+        let currentScenario = 'normal';
+
+        function updateMockup(scenarioKey) {
+            currentScenario = scenarioKey;
+            const s = scenarios[scenarioKey];
+            isCleaned = false;
+            btnClean.classList.remove('cleaned');
+            gaugeVal.innerHTML = `${s.free} <span class="unit">GB free</span>`;
+            barFreeLabel.textContent = `${s.free} GB`;
+            gaugeVel.textContent = s.vel;
+            segXcode.style.width = s.xcodeW;
+            segSims.style.width = s.simsW;
+            segAgents.style.width = s.agentsW;
+            segFree.style.width = s.freeW;
+            txtBtnClean.textContent = currentLang === 'ru' 
+                ? `Очистить кэш (+${s.cleanAmount} ГБ)` 
+                : `Clean Safe Cache (+${s.cleanAmount} GB)`;
+        }
+
+        // Scenario Pills
+        document.querySelectorAll('.scenario-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('.scenario-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                updateMockup(pill.dataset.scenario);
+            });
+        });
+
+        // Live Clean Simulation Click
+        btnClean.addEventListener('click', () => {
+            if (!isCleaned) {
+                isCleaned = true;
+                btnClean.classList.add('cleaned');
+                const s = scenarios[currentScenario];
+                const newFree = (parseFloat(s.free) + parseFloat(s.cleanAmount)).toFixed(1);
+                gaugeVal.innerHTML = `${newFree} <span class="unit">GB free</span>`;
+                barFreeLabel.textContent = `${newFree} GB`;
+                gaugeVel.textContent = currentLang === 'ru' 
+                    ? `✓ Очищено ${s.cleanAmount} ГБ · Диск в безопасности` 
+                    : `✓ Reclaimed ${s.cleanAmount} GB · Disk Protected`;
+                gaugeVel.style.color = 'var(--accent)';
+                gaugeVel.style.background = 'rgba(163, 230, 53, 0.1)';
+                gaugeVel.style.borderColor = 'rgba(163, 230, 53, 0.2)';
+                
+                segXcode.style.width = "10%";
+                segSims.style.width = "8%";
+                segAgents.style.width = "6%";
+                segFree.style.width = "76%";
+
+                txtBtnClean.textContent = currentLang === 'ru' ? '✓ Готово (+14.2 ГБ)' : '✓ Freed Successfully';
+            } else {
+                updateMockup(currentScenario);
+                gaugeVel.style.color = '';
+                gaugeVel.style.background = '';
+                gaugeVel.style.borderColor = '';
+            }
+        });
+
+        // Autoclean Toggle
+        const toggleAutoclean = document.getElementById('toggle-autoclean');
+        let autoActive = true;
+        toggleAutoclean.addEventListener('click', () => {
+            autoActive = !autoActive;
+            const sw = toggleAutoclean.querySelector('.toggle-switch');
+            const lbl = document.getElementById('txt-toggle-label');
+            if (autoActive) {
+                sw.style.background = 'var(--accent)';
+                sw.style.justifyContent = 'flex-end';
+                lbl.textContent = currentLang === 'ru' ? 'Авто 5м' : 'Auto 5m';
+            } else {
+                sw.style.background = '#444';
+                lbl.textContent = currentLang === 'ru' ? 'Выкл' : 'Off';
+            }
+        });
+
+        // Bilingual Dictionary
         const i18n = {
             en: {
                 toggleBtn: "RU",
-                navOverview: "Overview",
-                navFeatures: "Features",
-                navSafety: "Safety",
-                navInstall: "Install",
-                tagline: "A lightweight macOS menu-bar utility that keeps your disk and memory under control — safely, quietly, and entirely locally on your Mac.",
-                badgePrivacy: "100% Local · Zero Telemetry",
-                badgeSigned: "Signed & Notarized",
-                btnQuickInstall: "Install via Brew →",
-                hintShortcut: "Open anytime with",
-                catFeatures: "// CAPABILITIES",
-                titleFeatures: "Engineered for Developer Macs",
-                descFeatures: "Xcode builds, simulators, npm packages, and parallel AI coding agents quietly fill your storage until builds fail. DiskPulse watches free space, explains where it went, and cleans safely.",
-                f1Title: "100% Local",
-                f1Desc: "No accounts, no analytics, no external trackers. Your filesystem data never leaves your Mac. The only network call is an optional, opt-in daily update check against GitHub.",
-                f2Title: "Safe Background Autoclean",
-                f2Desc: "Runs quietly in the background every 5 minutes when disk space drops below safe thresholds. Strictly cleans caches from an allow-list; never deletes your source code or documents.",
-                f3Title: "RAM & Swap Protection",
-                f3Desc: "Swap lives on the disk. Under memory pressure, DiskPulse frees disk space early and terminates orphan MCP and language servers whose parent process has died, preventing system freezes.",
-                f4Title: "PreToolUse Guard",
-                f4Desc: "Cleaning cannot outrun three parallel Xcode builds. The guard hook for Claude Code refuses builds, installs, and simulator boots when free space drops below 5 GB, protecting your drive.",
-                f5Title: "Agent Resource Manager",
-                f5Desc: "Coordinates parallel coding agents (Claude Code, Codex). Heavy compiler and test tasks share a resource pool sized to your Mac so agents complete tasks without CPU and memory thrashing.",
-                f6Title: "Signed & Notarized",
-                f6Desc: "Signed with Apple Developer ID and notarized by Apple. Supports one-click updates verified by cryptographic signature before install. Fully open source under MIT.",
-                catSafety: "// ZERO-HARM GUARANTEE",
-                titleSafety: "What Gets Cleaned",
-                descSafety: "DiskPulse only cleans files that are guaranteed to re-create themselves automatically, and only when they are not in use. Open applications are never touched.",
-                thCategory: "Tier",
-                thRules: "Files & Actions",
-                safeDesc: "<strong>Xcode Build Data</strong> of deleted projects and worktrees, old <code>ModuleCache</code>, <code>PIFCache</code>.<br><strong>Tool Caches:</strong> npm, npx, VS Code, headless-Chrome, pip, uv caches when tools are not running.<br><strong>Agent Temp:</strong> Completed Claude Code background tasks (2h after session ends).<br><strong>Closed Apps:</strong> Hidden Electron caches in Application Support (Slack, Notion, Figma, Claude) — never Local Storage or cookies.",
-                consentDesc: "<strong>Deep Clean («Глубже…»):</strong> Xcode builds for projects untouched for 7+ days; simulators for completed agent jobs; <code>node_modules</code> in idle agent worktrees.<br><strong>Manual Consent Only:</strong> Installers & DMG archives in Downloads older than 30 days, iPhone backups older than 6 months, untouched AI models (Hugging Face / LM Studio).",
-                neverDesc: "<strong>Your Work:</strong> Documents, Desktop, Photos, Mail, Keychain credentials.<br><strong>Git Repositories:</strong> Anything with uncommitted or unpushed work is strictly untouchable.<br><strong>Running Programs:</strong> If an app is open, it is in use. DiskPulse never quits running apps. Active agent memories and config directories (<code>~/.codex</code>, <code>~/.gemini</code>, <code>~/.cursor</code>) are never touched.",
-                catInstall: "// GET STARTED",
-                titleInstall: "Install in 2 Minutes",
-                descInstall: "Requires macOS 15 (Sequoia) or newer. Choose your preferred installation method:",
-                catFaq: "// FAQ",
-                titleFaq: "Frequently Asked Questions",
-                faq1Q: "How does DiskPulse protect my open work?",
-                faq1A: "DiskPulse checks whether an application is currently running before cleaning its caches. It also checks git status for uncommitted modifications. If a folder belongs to an open process or an active git worktree, it is bypassed completely.",
-                faq2Q: "Can it be run completely from the CLI without GUI?",
-                faq2A: "Yes. DiskPulse uses a standalone standard Python engine (Engine/diskcare.py). You can run `python3 Engine/diskcare.py audit` to inspect usage, `plan` to preview deletions, or `clean` directly from any terminal or CI pipeline.",
-                faq3Q: "Where are my custom rules saved?",
-                faq3A: "You can create `~/Library/Application Support/diskcare/config.json` to specify folders that must never be touched, simulator prefixes, and notification thresholds. Everything stays strictly local on your Mac."
+                pill: "macOS Menu Bar Utility · Open Source",
+                heroSub: "Stops your Mac's disk and memory from running out mid-build. Safe background auto-cleanup built specifically for developer tools and AI coding agents.",
+                metaLocal: "100% Local & Private",
+                metaArch: "Apple Silicon & Intel",
+                metaShortcut: "Shortcut: ^ ⌥ D",
+                popoverTag: "Safe Background Care",
+                chipStatus: "Watching Space",
+                legFree: "Free (18.5 GB)",
+                cleanBtn: "Clean Safe Cache (+14.2 GB)",
+                toggleLabel: "Auto 5m",
+                sc1: "Default",
+                sc2: "Xcode Build Surge",
+                sc3: "Claude Code Agent",
+                tagFeatures: "// ARCHITECTURE & GUARANTEES",
+                titleFeatures: "What Makes DiskPulse Indispensable",
+                c1Title: "Real-Time Velocity & Burn Forecast",
+                c1Desc: "Standard tools only show static bytes. DiskPulse tracks the burn velocity in GB/hour and forecasts exactly when Xcode or agent tasks will exhaust your SSD before compilation crashes.",
+                c2Title: "PreToolUse Guard for AI Agents",
+                c2Desc: "Cleaning cannot outrun 3 parallel agent compiler tasks. The PreToolUse hook intercepts heavy bash commands before disk hits 0 GB, pausing builds until space is reclaimed.",
+                c3Title: "Swap & Memory Pressure Relief",
+                c3Desc: "macOS swap lives on your SSD. A full disk causes macOS to force-quit apps. DiskPulse frees disk space under memory pressure and gently sends SIGTERM to dead orphan language/MCP servers.",
+                c4Title: "Strict Zero-Harm Allow-List",
+                c4Desc: "Cleans only files that safely rebuild themselves. Open applications are never quit. Uncommitted git work, user documents, and active agent sessions are strictly untouchable.",
+                installTitle: "Get DiskPulse for Mac",
+                installSub: "Free & open source under MIT. No accounts, no telemetry, verified Developer ID signature.",
+                dmgBtn: "Download DiskPulse.dmg"
             },
             ru: {
                 toggleBtn: "EN",
-                navOverview: "Обзор",
-                navFeatures: "Возможности",
-                navSafety: "Безопасность",
-                navInstall: "Установка",
-                tagline: "Маленькая утилита в строке меню macOS: показывает, что съедает диск и память, и не даёт диску заполниться — безопасно и целиком на вашем Mac.",
-                badgePrivacy: "100% Локально · Без телеметрии",
-                badgeSigned: "Подписано и нотариально заверено",
-                btnQuickInstall: "Установить через Brew →",
-                hintShortcut: "Быстрый вызов в любой момент",
-                catFeatures: "// ВОЗМОЖНОСТИ",
-                titleFeatures: "Сделано для Mac разработчика",
-                descFeatures: "Сборки Xcode, симуляторы, кэши npm и AI-агенты незаметно забивают диск, пока сборки не начинают падать. DiskPulse следит за свободным местом, объясняет, куда оно ушло, и чистит безопасно.",
-                f1Title: "100% Локально",
-                f1Desc: "Без аккаунтов, аналитики и трекеров. Ваши данные не покидают Mac. Единственный запрос в сеть — проверка обновлений на GitHub раз в день, и только если вы её разрешили.",
-                f2Title: "Безопасная автоуборка",
-                f2Desc: "Работает в фоне каждые 5 минут, когда места становится мало. Чистит строго кэши из белого списка; исходники, коммиты и пользовательские файлы никогда не удаляются.",
-                f3Title: "Память и swap",
-                f3Desc: "Своп лежит на диске. При давлении памяти DiskPulse заранее освобождает место на диске и вежливо завершает зависшие осиротевшие MCP- и языковые серверы через SIGTERM.",
-                f4Title: "PreToolUse Guard",
-                f4Desc: "Уборка не обгонит три параллельные сборки Xcode. Хук guard для Claude Code отклоняет сборки и установку пакетов при свободном месте менее 5 ГБ, спасая диск от переполнения.",
-                f5Title: "Agent Resource Manager",
-                f5Desc: "Координирует параллельных AI-агентов (Claude Code, Codex). Тяжёлые задачи компиляции делят общий пул ресурсов, чтобы агенты не замораживали систему борьбой за CPU и RAM.",
-                f6Title: "Подписано Apple",
-                f6Desc: "Собрано с подписью Developer ID и нотариально проверено Apple. Обновление в один клик с проверкой криптографической подписи. Открытый исходный код под лицензией MIT.",
-                catSafety: "// ГАРАНТИЯ БЕЗОПАСНОСТИ",
-                titleSafety: "Что чистится",
-                descSafety: "DiskPulse удаляет только то, что гарантированно пересоберётся само, и только когда этим никто не пользуется. Открытые программы не трогаются никогда.",
-                thCategory: "Уровень",
-                thRules: "Файлы и действия",
-                safeDesc: "<strong>Сборки Xcode</strong> удалённых проектов и ворктри, старые <code>ModuleCache</code>, <code>PIFCache</code>.<br><strong>Кэши инструментов:</strong> npm, npx, VS Code, headless-Chrome, pip, uv, пока инструмент не запущен.<br><strong>Фон агентов:</strong> Завершённые фоновые задачи Claude Code (через 2 ч после закрытия).<br><strong>Закрытые программы:</strong> Скрытые кэши в Application Support (Electron/Chromium: Slack, Notion, Figma, Claude) — никогда Local Storage или cookies.",
-                consentDesc: "<strong>Глубокая чистка («Глубже…»):</strong> Сборки проектов, не открывавшихся 7 дней; симуляторы завершённых задач агентов; <code>node_modules</code> в простаивающих ворктри.<br><strong>Только с согласия:</strong> Установщики и архивы в Загрузках старше 30 дней, бэкапы iPhone старше 6 месяцев, неиспользуемые модели AI (Hugging Face / LM Studio).",
-                neverDesc: "<strong>Ваши файлы:</strong> Документы, рабочий стол, фото, почта, пароли связки ключей.<br><strong>Git-репозитории:</strong> Всё с незакоммиченной или неотправленной работой строго неприкосновенно.<br><strong>Работающие приложения:</strong> Если программа открыта — её кэш ждёт закрытия. Папки агентов (<code>~/.codex</code>, <code>~/.gemini</code>, <code>~/.cursor</code>) никогда не трогаются.",
-                catInstall: "// БЫСТРЫЙ СТАРТ",
-                titleInstall: "Установка за 2 минуты",
-                descInstall: "Требуется macOS 15 (Sequoia) или новее. Выберите удобный способ установки:",
-                catFaq: "// ЧАСТЫЕ ВОПРОСЫ",
-                titleFaq: "Часто задаваемые вопросы",
-                faq1Q: "Как DiskPulse защищает открытую работу?",
-                faq1A: "Перед очисткой кэша DiskPulse проверяет запущенные процессы и статус git-репозиториев. Если папка используется открытым приложением или содержит незакоммиченные изменения, она полностью пропускается.",
-                faq2Q: "Можно ли использовать DiskPulse чисто в терминале без GUI?",
-                faq2A: "Да. Движок утилиты (Engine/diskcare.py) написан на стандартном Python и не требует сторонних пакетов. Вы можете запускать `python3 Engine/diskcare.py audit`, `plan` или `clean` в любом скрипте или CI/CD.",
-                faq3Q: "Где хранятся пользовательские правила?",
-                faq3A: "В файле `~/Library/Application Support/diskcare/config.json`. Там можно указать защищённые папки, префиксы симуляторов и пороги уведомлений. Все настройки хранятся только на вашем Mac."
+                pill: "Утилита в строке меню macOS · Open Source",
+                heroSub: "Не даёт диску и памяти закончиться посреди сборки. Безопасная фоновая автоуборка специально для инструментов разработки и AI-агентов.",
+                metaLocal: "100% Локально и приватно",
+                metaArch: "Apple Silicon и Intel",
+                metaShortcut: "Вызов: ^ ⌥ D",
+                popoverTag: "Безопасная уборка в фоне",
+                chipStatus: "Мониторинг диска",
+                legFree: "Свободно (18.5 ГБ)",
+                cleanBtn: "Очистить кэш (+14.2 ГБ)",
+                toggleLabel: "Авто 5м",
+                sc1: "Обычный режим",
+                sc2: "Пиковая сборка Xcode",
+                sc3: "AI-агент Claude Code",
+                tagFeatures: "// АРХИТЕКТУРА И ГАРАНТИИ",
+                titleFeatures: "Почему DiskPulse незаменим",
+                c1Title: "Скорость заполнения и прогноз",
+                c1Desc: "Обычные утилиты показывают лишь сухие гигабайты. DiskPulse рассчитывает скорость заполнения в ГБ/час и заранее предупреждает, когда диск закончится из-за сборки.",
+                c2Title: "PreToolUse Guard для AI-агентов",
+                c2Desc: "Автоуборка не обгонит 3 параллельные сборки. Хук PreToolUse для Claude Code перехватывает тяжёлые команды bash, если места меньше 5 ГБ, спасая систему от зависания.",
+                c3Title: "Защита памяти и спасение свопа",
+                c3Desc: "Файл подкачки лежит на диске. При забитом SSD программы вылетают. DiskPulse освобождает диск при давлении памяти и вежливо завершает зависшие языковые/MCP серверы.",
+                c4Title: "Строгий белый список безопасности",
+                c4Desc: "Удаляется только то, что пересоберётся само. Открытые программы не закрываются никогда. Репозитории с незакоммиченной работой и документы абсолютно неприкосновенны.",
+                installTitle: "Установить DiskPulse на Mac",
+                installSub: "Бесплатно и с открытым исходным кодом (MIT). Без аккаунтов и аналитики, подписано Apple Developer ID.",
+                dmgBtn: "Скачать DiskPulse.dmg"
             }
         };
 
@@ -1150,65 +1300,44 @@
             localStorage.setItem('sverkaus-diskpulse-lang', lang);
             const t = i18n[lang];
 
-            document.getElementById('lang-toggle-btn').textContent = t.toggleBtn;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key]) el.textContent = t[key];
-            });
+            document.getElementById('lang-btn').textContent = t.toggleBtn;
+            document.getElementById('txt-pill').textContent = t.pill;
+            document.getElementById('txt-hero-sub').textContent = t.heroSub;
+            document.getElementById('txt-meta-local').textContent = t.metaLocal;
+            document.getElementById('txt-meta-arch').textContent = t.metaArch;
+            document.getElementById('txt-meta-shortcut').textContent = t.metaShortcut;
 
-            document.getElementById('hero-tagline').textContent = t.tagline;
-            document.getElementById('badge-privacy').textContent = t.badgePrivacy;
-            document.getElementById('badge-signed').textContent = t.badgeSigned;
-            document.getElementById('btn-quick-install').querySelector('span').textContent = t.btnQuickInstall;
-            document.getElementById('hint-shortcut').textContent = t.hintShortcut;
+            document.getElementById('txt-popover-tag').textContent = t.popoverTag;
+            document.getElementById('txt-chip-status').textContent = t.chipStatus;
+            document.getElementById('txt-leg-free').textContent = t.legFree;
+            document.getElementById('txt-btn-clean').textContent = isCleaned ? (lang === 'ru' ? '✓ Готово' : '✓ Done') : t.cleanBtn;
+            document.getElementById('txt-toggle-label').textContent = autoActive ? t.toggleLabel : (lang === 'ru' ? 'Выкл' : 'Off');
 
-            document.getElementById('cat-features').textContent = t.catFeatures;
+            document.getElementById('sc-btn-1').textContent = t.sc1;
+            document.getElementById('sc-btn-2').textContent = t.sc2;
+            document.getElementById('sc-btn-3').textContent = t.sc3;
+
+            document.getElementById('tag-features').textContent = t.tagFeatures;
             document.getElementById('title-features').textContent = t.titleFeatures;
-            document.getElementById('desc-features').textContent = t.descFeatures;
+            document.getElementById('c1-title').textContent = t.c1Title;
+            document.getElementById('c1-desc').textContent = t.c1Desc;
+            document.getElementById('c2-title').textContent = t.c2Title;
+            document.getElementById('c2-desc').textContent = t.c2Desc;
+            document.getElementById('c3-title').textContent = t.c3Title;
+            document.getElementById('c3-desc').textContent = t.c3Desc;
+            document.getElementById('c4-title').textContent = t.c4Title;
+            document.getElementById('c4-desc').textContent = t.c4Desc;
 
-            document.getElementById('f1-title').textContent = t.f1Title;
-            document.getElementById('f1-desc').textContent = t.f1Desc;
-            document.getElementById('f2-title').textContent = t.f2Title;
-            document.getElementById('f2-desc').textContent = t.f2Desc;
-            document.getElementById('f3-title').textContent = t.f3Title;
-            document.getElementById('f3-desc').textContent = t.f3Desc;
-            document.getElementById('f4-title').textContent = t.f4Title;
-            document.getElementById('f4-desc').textContent = t.f4Desc;
-            document.getElementById('f5-title').textContent = t.f5Title;
-            document.getElementById('f5-desc').textContent = t.f5Desc;
-            document.getElementById('f6-title').textContent = t.f6Title;
-            document.getElementById('f6-desc').textContent = t.f6Desc;
-
-            document.getElementById('cat-safety').textContent = t.catSafety;
-            document.getElementById('title-safety').textContent = t.titleSafety;
-            document.getElementById('desc-safety').textContent = t.descSafety;
-
-            document.getElementById('th-category').textContent = t.thCategory;
-            document.getElementById('th-rules').textContent = t.thRules;
-            document.getElementById('row-safe-desc').innerHTML = t.safeDesc;
-            document.getElementById('row-consent-desc').innerHTML = t.consentDesc;
-            document.getElementById('row-never-desc').innerHTML = t.neverDesc;
-
-            document.getElementById('cat-install').textContent = t.catInstall;
-            document.getElementById('title-install').textContent = t.titleInstall;
-            document.getElementById('desc-install').textContent = t.descInstall;
-
-            document.getElementById('cat-faq').textContent = t.catFaq;
-            document.getElementById('title-faq').textContent = t.titleFaq;
-            document.getElementById('faq1-q').textContent = t.faq1Q;
-            document.getElementById('faq1-a').textContent = t.faq1A;
-            document.getElementById('faq2-q').textContent = t.faq2Q;
-            document.getElementById('faq2-a').textContent = t.faq2A;
-            document.getElementById('faq3-q').textContent = t.faq3Q;
-            document.getElementById('faq3-a').textContent = t.faq3A;
+            document.getElementById('txt-install-title').textContent = t.installTitle;
+            document.getElementById('txt-install-sub').textContent = t.installSub;
+            document.getElementById('btn-dmg-link').querySelector('span').textContent = t.dmgBtn;
         }
 
-        document.getElementById('lang-toggle-btn').addEventListener('click', () => {
-            const nextLang = currentLang === 'en' ? 'ru' : 'en';
-            applyLanguage(nextLang);
+        document.getElementById('lang-btn').addEventListener('click', () => {
+            const next = currentLang === 'en' ? 'ru' : 'en';
+            applyLanguage(next);
         });
 
-        // Initialize on load
         applyLanguage(currentLang);
     </script>
 </body>

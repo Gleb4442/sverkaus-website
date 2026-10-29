@@ -1,325 +1,1215 @@
-<!doctype html>
-<html lang="ru" data-title-en="DiskPulse — your disk never runs out mid-build again">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <!-- Relative URLs need the trailing slash: /diskpulse → /diskpulse/ (only this exact path). -->
-  <script>if (location.pathname === "/diskpulse") location.replace("/diskpulse/" + location.search + location.hash);</script>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>DiskPulse — диск больше не заканчивается посреди сборки</title>
-  <meta name="description" content="DiskPulse — бесплатное приложение для строки меню macOS. Показывает, что съедает диск, и безопасно убирает кэши Xcode, симуляторов, npm и AI-агентов. Локально, открытый код.">
-  <meta name="theme-color" content="#f2f2f5" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#131315" media="(prefers-color-scheme: dark)">
-  <meta property="og:title" content="DiskPulse — диск больше не заканчивается посреди сборки">
-  <meta property="og:description" content="Приложение для строки меню macOS: следит за свободным местом и безопасно убирает кэши Xcode, симуляторов, npm и AI-агентов.">
-  <meta property="og:image" content="assets/img/diskpulse-icon-512.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
-  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-  <link rel="stylesheet" href="assets/css/diskpulse.css">
-  <!-- Release contract (see README.md): while "released" is false, download buttons read «Релиз готовится»
-       and GitHub links stay hidden. After the first public release set both flags to true. -->
-  <script id="release-config" type="application/json">{
-    "released": false,
-    "repoPublic": false,
-    "dmgURL": "https://github.com/Gleb4442/diskpulse/releases/latest/download/DiskPulse.dmg",
-    "repoURL": "https://github.com/Gleb4442/diskpulse",
-    "brew": "brew install --cask gleb4442/tap/diskpulse",
-    "curl": "curl -fsSL https://github.com/Gleb4442/diskpulse/releases/latest/download/get.sh | bash"
-  }</script>
-  <script defer src="assets/js/diskpulse.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="DiskPulse — Sverkaus Labs">
+    <meta property="og:description" content="A lightweight macOS menu-bar utility that keeps your disk and memory under control — safely, quietly, and entirely locally on your Mac.">
+    <title>DiskPulse — Sverkaus Labs</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #1c1c1c;
+            --surface-color: #242426;
+            --surface-raised: #2c2c2f;
+            --text-color: #f0f0f0;
+            --accent-color: #a3e635;
+            --accent-dim: rgba(163, 230, 53, 0.15);
+            --dim-color: #666666;
+            --tagline-color: #888888;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.16);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'JetBrains Mono', monospace;
+            cursor: crosshair;
+            overflow-x: hidden;
+            overflow-y: auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Top Header Navigation (Borderless & Minimalist) */
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 30px;
+            z-index: 1000;
+            background: rgba(28, 28, 28, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-left, .nav-tabs, .header-right {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .brand-link {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 800;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-link:hover {
+            color: var(--accent-color);
+        }
+
+        .brand-arrow {
+            color: var(--dim-color);
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .brand-link:hover .brand-arrow {
+            color: var(--accent-color);
+            transform: translateX(-3px);
+        }
+
+        .nav-tabs {
+            gap: 24px;
+            user-select: none;
+        }
+
+        .nav-tab {
+            color: #777777;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            padding: 4px 0;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            color: #ffffff;
+        }
+
+        .header-right {
+            gap: 16px;
+        }
+
+        .github-link-btn {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--dim-color);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .github-link-btn:hover {
+            color: #ffffff;
+        }
+
+        /* Language Toggle Button */
+        .lang-toggle-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--dim-color);
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.15em;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lang-toggle-btn:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        /* Container Layout */
+        .page-container {
+            flex: 1;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 120px 24px 80px;
+            display: flex;
+            flex-direction: column;
+            gap: 80px;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 26px;
+            padding: 30px 0 20px;
+            position: relative;
+        }
+
+        .app-icon-wrapper {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin-bottom: 6px;
+            border-radius: 26px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(163, 230, 53, 0.12);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+            user-select: none;
+        }
+
+        .app-icon-wrapper:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(163, 230, 53, 0.25);
+        }
+
+        .app-icon-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 26px;
+            display: block;
+        }
+
+        .hero-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(44px, 8vw, 76px);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1;
+            margin: 0;
+        }
+
+        .hero-tagline {
+            font-size: 15px;
+            color: #bbbbbb;
+            max-width: 680px;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .badge-chip {
+            font-size: 11px;
+            font-weight: 600;
+            color: #999999;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            padding: 5px 12px;
+            border-radius: 9999px;
+            letter-spacing: 0.04em;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .badge-chip.highlight {
+            color: var(--accent-color);
+            border-color: rgba(163, 230, 53, 0.25);
+            background: var(--accent-dim);
+        }
+
+        .badge-chip .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            display: inline-block;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: #0d1405;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 13px 26px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #bbf44b;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(163, 230, 53, 0.25);
+            color: #000000;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 12px 22px;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+        }
+
+        .hero-shortcut-hint {
+            font-size: 11px;
+            color: var(--dim-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: -6px;
+        }
+
+        .kbd-key {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 2px 7px;
+            font-size: 11px;
+            font-weight: 700;
+            color: #cccccc;
+        }
+
+        /* Terminal Demo Card */
+        .terminal-card {
+            background: #141415;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .terminal-header {
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border-color);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .terminal-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .terminal-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #333333;
+        }
+
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27c93f; }
+
+        .terminal-title {
+            color: #777777;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .terminal-body {
+            padding: 20px;
+            overflow-x: auto;
+            color: #b0b0b0;
+        }
+
+        .terminal-prompt {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .term-green { color: #a3e635; }
+        .term-dim { color: #666666; }
+        .term-white { color: #ffffff; font-weight: 600; }
+        .term-orange { color: #e57e60; }
+
+        /* Section Typography */
+        .section-header {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+            margin-bottom: 30px;
+        }
+
+        .section-category {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+        }
+
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(26px, 4.5vw, 36px);
+            font-weight: 800;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .section-desc {
+            font-size: 13px;
+            color: var(--tagline-color);
+            line-height: 1.7;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: all 0.25s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+            background: var(--surface-raised);
+        }
+
+        .feature-icon-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-icon {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .feature-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.01em;
+        }
+
+        .feature-text {
+            font-size: 12px;
+            color: #a8a8a8;
+            line-height: 1.7;
+        }
+
+        /* Rules Table */
+        .rules-table-wrapper {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .rules-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .rules-table th {
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border-color);
+            padding: 14px 18px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #ffffff;
+        }
+
+        .rules-table td {
+            padding: 16px 18px;
+            border-bottom: 1px solid var(--border-color);
+            color: #b0b0b0;
+            vertical-align: top;
+            line-height: 1.7;
+        }
+
+        .rules-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rules-table strong {
+            color: #ffffff;
+        }
+
+        .rule-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            font-size: 11px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .status-safe { color: var(--accent-color); }
+        .status-consent { color: #e5a55d; }
+        .status-never { color: #f87171; }
+
+        /* Install Block */
+        .install-options {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .command-box {
+            background: #141415;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            font-size: 12px;
+            transition: border-color 0.2s ease;
+        }
+
+        .command-box:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .command-code {
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .command-label {
+            color: var(--dim-color);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            min-width: 90px;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border-color);
+            color: #aaaaaa;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .copy-btn.copied {
+            background: var(--accent-color);
+            color: #0e1606;
+            border-color: var(--accent-color);
+        }
+
+        /* FAQ / Architecture Accents */
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 16px;
+        }
+
+        .faq-q {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .faq-a {
+            font-size: 12px;
+            color: #999999;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        .site-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 40px 20px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-size: 11px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 800;
+            color: #777777;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-brand:hover {
+            color: #ffffff;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-link {
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dim-color);
+            transition: color 0.2s ease;
+        }
+
+        .social-link:hover {
+            color: var(--accent-color);
+        }
+
+        .social-link svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .footer-note {
+            font-size: 11px;
+            color: var(--dim-color);
+        }
+
+        @media (max-width: 768px) {
+            .site-header {
+                padding: 16px 20px;
+            }
+            .nav-tabs {
+                display: none;
+            }
+            .page-container {
+                padding: 100px 18px 60px;
+                gap: 60px;
+            }
+            .command-box {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .command-label {
+                min-width: unset;
+            }
+            .copy-btn {
+                align-self: flex-end;
+            }
+        }
+    </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-  <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 10.5l5 5 5-5M5 19.5h14"/></symbol>
-  <symbol id="i-apple" viewBox="0 0 24 24" fill="currentColor"><path d="M16.37 12.62c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.87-.76-1.47.02-2.83.86-3.59 2.17-1.54 2.66-.39 6.59 1.1 8.75.73 1.05 1.6 2.24 2.73 2.2 1.1-.05 1.51-.71 2.84-.71 1.32 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.13.84-1.22 1.18-2.41 1.2-2.47-.03-.01-2.3-.88-2.32-3.5zM14.2 6.16c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.64-1.05 1.67-.92 2.66.97.07 1.96-.49 2.56-1.21z"/></symbol>
-  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2"/></symbol>
-  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
-  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></symbol>
-  <symbol id="i-drive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13.5l2.3-7A2 2 0 0 1 8.2 5h7.6a2 2 0 0 1 1.9 1.5l2.3 7"/><rect x="3.5" y="13.5" width="17" height="5.5" rx="2"/><path d="M8 16.25h.01M11 16.25h.01"/></symbol>
-  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="2.8"/></symbol>
-  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 7h11M9 12h11M9 17h11M4.5 7h.01M4.5 12h.01M4.5 17h.01"/></symbol>
-  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l7 2.8v5.4c0 4.3-3 7.6-7 8.8-4-1.2-7-4.5-7-8.8V6.3z"/><path d="M9 12l2.2 2.2L15.5 10"/></symbol>
-  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></symbol>
-  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12a7.5 7.5 0 0 1-13 5.1M4.5 12a7.5 7.5 0 0 1 13-5.1"/><path d="M17.5 3.5v3.4h-3.4M6.5 20.5v-3.4h3.4"/></symbol>
-  <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7.5L4 12l4.5 4.5M15.5 7.5L20 12l-4.5 4.5M13.5 5l-3 14"/></symbol>
-  <symbol id="i-apps" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5.5l-5 9.5M12 5.5l5 9.5M5.5 15h13M9 11h6"/></symbol>
-  <symbol id="i-sparkle" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5c.5 4.6 2.4 6.5 7 7-4.6.5-6.5 2.4-7 7-.5-4.6-2.4-6.5-7-7 4.6-.5 6.5-2.4 7-7z"/></symbol>
-</defs></svg>
 
-<nav class="nav" aria-label="DiskPulse">
-  <div class="wrap">
-    <a class="brand" href="./"><img src="assets/img/diskpulse-icon-128.png" alt="" width="28" height="28">DiskPulse</a>
-    <div class="nav-links">
-      <a href="#how" data-en="How it works">Как работает</a>
-      <a href="#safety" data-en="Safety">Безопасность</a>
-      <a href="#install" data-en="Install">Установка</a>
-      <a href="#faq" data-en="FAQ">Вопросы</a>
-      <a href="help.html" data-en="Help">Помощь</a>
-    </div>
-    <div class="nav-spacer"></div>
-    <div class="lang" role="group" aria-label="Language">
-      <button type="button" data-lang="ru" aria-pressed="true">RU</button>
-      <button type="button" data-lang="en" aria-pressed="false">EN</button>
-    </div>
-    <a class="btn btn-primary btn-small js-download" href="#install"><svg><use href="#i-download"/></svg><span class="js-download-label" data-en="Download">Скачать</span></a>
-  </div>
-</nav>
+    <!-- Site Header -->
+    <header class="site-header">
+        <div class="header-left">
+            <a href="/" class="brand-link">
+                <span class="brand-arrow">&larr;</span>
+                <span>SVERKAUS LABS</span>
+            </a>
+        </div>
 
-<main>
-  <!-- ============ HERO ============ -->
-  <header class="hero">
-    <div class="wrap">
-      <img class="hero-icon" src="assets/img/diskpulse-icon-512.png" alt="DiskPulse" width="92" height="92">
-      <h1 data-en="Your disk never runs out mid-build again.">Диск больше не заканчивается посреди сборки.</h1>
-      <p class="lead" data-en="DiskPulse lives in the menu bar, shows what is eating your disk and safely clears what Xcode, simulators, npm and AI agents leave behind. Free, open source, entirely on your Mac.">DiskPulse живёт в строке меню, показывает, что съедает диск, и безопасно убирает то, что оставляют Xcode, симуляторы, npm и AI-агенты. Бесплатно, с открытым кодом и целиком на вашем Mac.</p>
-      <div class="cta">
-        <a class="btn btn-primary js-download" href="#install"><svg><use href="#i-apple"/></svg><span class="js-download-label" data-en="Download for Mac">Скачать для Mac</span></a>
-        <div class="copy-chip" data-copy-key="brew"><span class="prompt">$</span><code class="js-cmd" data-cmd="brew">brew install --cask gleb4442/tap/diskpulse</code><button class="copy-btn" type="button" aria-label="Copy"><svg><use href="#i-copy"/></svg></button></div>
-      </div>
-      <div class="cta-meta"><span data-en="macOS 15 or newer">macOS 15 и новее</span><span>Apple Silicon &amp; Intel</span><span data-en="Free · MIT">Бесплатно · MIT</span><span class="js-version"></span></div>
-      <div class="platform-note js-platform-note" data-en="DiskPulse is a Mac app — open this page on your Mac to download it.">DiskPulse — приложение для Mac. Откройте эту страницу на Mac, чтобы скачать.</div>
+        <nav class="nav-tabs" aria-label="DiskPulse navigation">
+            <a href="#overview" class="nav-tab" data-i18n="navOverview">Overview</a>
+            <a href="#features" class="nav-tab" data-i18n="navFeatures">Features</a>
+            <a href="#safety" class="nav-tab" data-i18n="navSafety">Safety</a>
+            <a href="#install" class="nav-tab" data-i18n="navInstall">Install</a>
+        </nav>
 
-      <div class="stage reveal" aria-hidden="true">
-        <div class="desktop">
-          <div class="menubar">
-            <span class="apple"><svg width="14" height="14"><use href="#i-apple"/></svg></span>
-            <b>Xcode</b><span class="extra">File</span><span class="extra">Edit</span><span class="extra">Product</span>
-            <span class="spacer"></span>
-            <span class="mb-item"><svg><use href="#i-drive"/></svg><span class="js-mb-free">8 GB</span></span>
-            <span class="extra">⌃⌥D</span><span class="extra js-clock">9:41</span>
-          </div>
-          <div class="term">
-            <div class="term-bar"><i></i><i></i><i></i><span>zsh — 3 builds</span></div>
-            <pre><span class="c">$</span> xcodebuild -scheme App -destination 'platform=iOS Simulator'
-<span class="d">▸ Compiling 1 284 Swift files · DerivedData +6,2 GB</span>
-<span class="c">$</span> npm install
-<span class="d">added 1 942 packages · node_modules +1,1 GB</span>
-<span class="c">agent</span> running tests in 3 worktrees…
-<span class="d">▸ Booting iPhone 16 Pro (agent-7f3a) · +4,8 GB</span>
-<span class="c">agent</span> <span class="cur"></span></pre>
-          </div>
-          <div class="panel">
-            <div class="panel-head"><svg width="15" height="15"><use href="#i-drive"/></svg>DiskPulse
-              <span class="chip attention js-chip"><i></i><span class="js-chip-text" data-en="Low on space">Места мало</span></span></div>
-            <div class="plate">
-              <div class="free"><span class="js-free">8,2 ГБ</span><small data-en="Free">Свободно</small></div>
-              <div class="bar"><b class="js-bar"></b></div>
+        <div class="header-right">
+            <button class="lang-toggle-btn" id="lang-toggle-btn" title="Toggle language / Сменить язык">RU</button>
+            <a href="https://github.com/Gleb4442/diskpulse" target="_blank" class="github-link-btn" title="View Source on GitHub">
+                <span>GitHub</span>
+                <span>&nearr;</span>
+            </a>
+        </div>
+    </header>
+
+    <main class="page-container" id="overview">
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="app-icon-wrapper">
+                <img src="diskpulse-icon.png" alt="DiskPulse App Icon" class="app-icon-img">
             </div>
-            <div class="plate">
-              <div class="auto">
-                <div><div class="title" data-en="Automatic cleanup">Автоуборка</div><div class="sub js-auto-sub" data-en="Watching every 5 minutes">Следит каждые 5 минут</div></div>
-                <span class="switch"></span>
-              </div>
-              <div class="rows">
-                <div class="row js-r1"><span class="dot"></span><span data-en="Build data of deleted projects">Сборки удалённых проектов</span><span class="num" data-en="9.4 GB">9,4 ГБ</span></div>
-                <div class="row js-r2"><span class="dot"></span><span data-en="Simulators of finished agent jobs">Симуляторы завершённых задач</span><span class="num" data-en="6.1 GB">6,1 ГБ</span></div>
-                <div class="row js-r3"><span class="dot"></span><span data-en="npm / VS Code caches">Кэши npm / VS Code</span><span class="num" data-en="3.8 GB">3,8 ГБ</span></div>
-                <div class="row"><span class="dot"></span><span data-en="Your projects, git, agent sessions">Ваши проекты, git, сессии агентов</span><span class="num" data-en="never">никогда</span></div>
-              </div>
+
+            <h1 class="hero-title">DISKPULSE</h1>
+
+            <p class="hero-tagline" id="hero-tagline">
+                A lightweight macOS menu-bar utility that keeps your disk and memory under control — safely, quietly, and entirely locally on your Mac.
+            </p>
+
+            <div class="hero-badges">
+                <span class="badge-chip highlight"><span class="dot"></span> <span id="badge-mac">macOS 15+</span></span>
+                <span class="badge-chip" id="badge-arch">Apple Silicon &amp; Intel</span>
+                <span class="badge-chip" id="badge-privacy">100% Local · Zero Telemetry</span>
+                <span class="badge-chip" id="badge-signed">Signed &amp; Notarized</span>
             </div>
-            <div class="toast js-toast"><svg><use href="#i-check"/></svg><span data-en="Cleaned 19.3 GB of rebuildable caches. Nothing of yours was touched.">Убрано 19,3 ГБ пересоздаваемых кэшей. Ваше не тронуто.</span></div>
-          </div>
+
+            <div class="hero-actions">
+                <a href="https://github.com/Gleb4442/diskpulse/releases/latest/download/DiskPulse.dmg" class="btn-primary" id="btn-download">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>Download .dmg</span>
+                </a>
+                <a href="#install" class="btn-secondary" id="btn-quick-install">
+                    <span>Install via Brew &rarr;</span>
+                </a>
+            </div>
+
+            <div class="hero-shortcut-hint">
+                <span id="hint-shortcut">Open anytime with</span>
+                <span class="kbd-key">^ Control</span>
+                <span class="kbd-key">&alefsym; Option</span>
+                <span class="kbd-key">D</span>
+            </div>
+        </section>
+
+        <!-- Live Terminal Simulation Card -->
+        <section class="terminal-card">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                </div>
+                <div class="terminal-title">diskcare.py status</div>
+                <div style="width: 40px"></div>
+            </div>
+            <div class="terminal-body">
+                <div><span class="terminal-prompt">$</span> python3 Engine/diskcare.py status</div>
+                <div class="term-dim">------------------------------------------------------------</div>
+                <div><span class="term-orange"># Disk — low:</span> Free 18.5 GB — low space, autoclean is active</div>
+                <div><span class="term-dim">- velocity:</span> +4.3 GB/h</div>
+                <div><span class="term-dim">- active:</span> builds 0, simulators 0, Claude sessions 1 (background jobs 5), swap 1.6 GB</div>
+                <div><span class="term-green">- last clean:</span> 18.5 GB &rarr; 18.5 GB; orphan app copies 1.4 GB, temp files 424 KB</div>
+                <div><span class="term-white">- Memory:</span> Healthy — free 62%, swap 1.6 GB</div>
+                <div><span class="term-dim">- Autoclean:</span> Enabled, background pass every 5 min</div>
+            </div>
+        </section>
+
+        <!-- Core Features -->
+        <section id="features">
+            <div class="section-header">
+                <span class="section-category" id="cat-features">// CAPABILITIES</span>
+                <h2 class="section-title" id="title-features">Engineered for Developer Macs</h2>
+                <p class="section-desc" id="desc-features">
+                    Xcode builds, simulators, npm packages, and parallel AI coding agents quietly fill your storage until builds fail. DiskPulse watches free space, explains where it went, and cleans safely.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-title">
+                        <span class="feature-icon">🔒</span>
+                        <h3 class="feature-title" id="f1-title">100% Local</h3>
+                    </div>
+                    <p class="feature-text" id="f1-desc">
+                        No accounts, no analytics, no external trackers. Your filesystem data never leaves your Mac. The only network call is an optional, opt-in daily update check against GitHub.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-title">
+                        <span class="feature-icon">🧹</span>
+                        <h3 class="feature-title" id="f2-title">Safe Background Autoclean</h3>
+                    </div>
+                    <p class="feature-text" id="f2-desc">
+                        Runs quietly in the background every 5 minutes when disk space drops below safe thresholds. Strictly cleans caches from an allow-list; never deletes your source code or documents.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-title">
+                        <span class="feature-icon">🧠</span>
+                        <h3 class="feature-title" id="f3-title">RAM &amp; Swap Protection</h3>
+                    </div>
+                    <p class="feature-text" id="f3-desc">
+                        Swap lives on the disk. Under memory pressure, DiskPulse frees disk space early and terminates orphan MCP and language servers whose parent process has died, preventing system freezes.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-title">
+                        <span class="feature-icon">⚡️</span>
+                        <h3 class="feature-title" id="f4-title">PreToolUse Guard</h3>
+                    </div>
+                    <p class="feature-text" id="f4-desc">
+                        Cleaning cannot outrun three parallel Xcode builds. The <code>guard</code> hook for Claude Code refuses builds, installs, and simulator boots when free space drops below 5 GB, protecting your drive.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-title">
+                        <span class="feature-icon">🤖</span>
+                        <h3 class="feature-title" id="f5-title">Agent Resource Manager</h3>
+                    </div>
+                    <p class="feature-text" id="f5-desc">
+                        Coordinates parallel coding agents (Claude Code, Codex). Heavy compiler and test tasks share a resource pool sized to your Mac so agents complete tasks without CPU and memory thrashing.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-title">
+                        <span class="feature-icon">⬆️</span>
+                        <h3 class="feature-title" id="f6-title">Signed &amp; Notarized</h3>
+                    </div>
+                    <p class="feature-text" id="f6-desc">
+                        Signed with Apple Developer ID and notarized by Apple. Supports one-click updates verified by cryptographic signature before install. Fully open source under MIT.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Safety Principles & Table -->
+        <section id="safety">
+            <div class="section-header">
+                <span class="section-category" id="cat-safety">// ZERO-HARM GUARANTEE</span>
+                <h2 class="section-title" id="title-safety">What Gets Cleaned</h2>
+                <p class="section-desc" id="desc-safety">
+                    DiskPulse only cleans files that are guaranteed to re-create themselves automatically, and only when they are not in use. Open applications are never touched.
+                </p>
+            </div>
+
+            <div class="rules-table-wrapper">
+                <table class="rules-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 28%;" id="th-category">Tier</th>
+                            <th id="th-rules">Files &amp; Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <span class="rule-status status-safe">● Always Safe</span>
+                            </td>
+                            <td id="row-safe-desc">
+                                <strong>Xcode Build Data</strong> of deleted projects and worktrees, old <code>ModuleCache</code>, <code>PIFCache</code>.<br>
+                                <strong>Tool Caches:</strong> npm, npx, VS Code, headless-Chrome, pip, uv caches when tools are not running.<br>
+                                <strong>Agent Temp:</strong> Completed Claude Code background tasks (2h after session ends).<br>
+                                <strong>Closed Apps:</strong> Hidden Electron caches in Application Support (Slack, Notion, Figma, Claude) — never Local Storage or cookies.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="rule-status status-consent">● With Consent</span>
+                            </td>
+                            <td id="row-consent-desc">
+                                <strong>Deep Clean («Глубже…»):</strong> Xcode builds for projects untouched for 7+ days; simulators for completed agent jobs; <code>node_modules</code> in idle agent worktrees.<br>
+                                <strong>Manual Consent Only:</strong> Installers &amp; DMG archives in Downloads older than 30 days, iPhone backups older than 6 months, untouched AI models (Hugging Face / LM Studio).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="rule-status status-never">✕ Never Touched</span>
+                            </td>
+                            <td id="row-never-desc">
+                                <strong>Your Work:</strong> Documents, Desktop, Photos, Mail, Keychain credentials.<br>
+                                <strong>Git Repositories:</strong> Anything with uncommitted or unpushed work is strictly untouchable.<br>
+                                <strong>Running Programs:</strong> If an app is open, it is in use. DiskPulse never quits running apps. Active agent memories and config directories (<code>~/.codex</code>, <code>~/.gemini</code>, <code>~/.cursor</code>) are never touched.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Installation Section -->
+        <section id="install">
+            <div class="section-header">
+                <span class="section-category" id="cat-install">// GET STARTED</span>
+                <h2 class="section-title" id="title-install">Install in 2 Minutes</h2>
+                <p class="section-desc" id="desc-install">
+                    Requires macOS 15 (Sequoia) or newer. Choose your preferred installation method:
+                </p>
+            </div>
+
+            <div class="install-options">
+                <div class="command-box">
+                    <span class="command-label">Homebrew</span>
+                    <code class="command-code">brew install --cask gleb4442/tap/diskpulse</code>
+                    <button class="copy-btn" data-copy="brew install --cask gleb4442/tap/diskpulse">Copy</button>
+                </div>
+
+                <div class="command-box">
+                    <span class="command-label">Terminal</span>
+                    <code class="command-code">curl -fsSL https://github.com/Gleb4442/diskpulse/releases/latest/download/get.sh | bash</code>
+                    <button class="copy-btn" data-copy="curl -fsSL https://github.com/Gleb4442/diskpulse/releases/latest/download/get.sh | bash">Copy</button>
+                </div>
+
+                <div class="command-box">
+                    <span class="command-label">Direct</span>
+                    <code class="command-code">https://github.com/Gleb4442/diskpulse/releases/latest/download/DiskPulse.dmg</code>
+                    <a href="https://github.com/Gleb4442/diskpulse/releases/latest/download/DiskPulse.dmg" class="copy-btn" style="text-decoration:none;">Download</a>
+                </div>
+
+                <div class="command-box">
+                    <span class="command-label">Source</span>
+                    <code class="command-code">git clone https://github.com/Gleb4442/diskpulse.git && cd diskpulse && ./install.sh</code>
+                    <button class="copy-btn" data-copy="git clone https://github.com/Gleb4442/diskpulse.git && cd diskpulse && ./install.sh">Copy</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq">
+            <div class="section-header">
+                <span class="section-category" id="cat-faq">// FAQ</span>
+                <h2 class="section-title" id="title-faq">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3 class="faq-q" id="faq1-q">How does DiskPulse protect my open work?</h3>
+                    <p class="faq-a" id="faq1-a">
+                        DiskPulse checks whether an application is currently running before cleaning its caches. It also checks git status for uncommitted modifications. If a folder belongs to an open process or an active git worktree, it is bypassed completely.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-q" id="faq2-q">Can it be run completely from the CLI without GUI?</h3>
+                    <p class="faq-a" id="faq2-a">
+                        Yes. DiskPulse uses a standalone standard Python engine (<code>Engine/diskcare.py</code>). You can run <code>python3 Engine/diskcare.py audit</code> to inspect usage, <code>plan</code> to preview deletions, or <code>clean</code> directly from any terminal or CI pipeline.
+                    </p>
+                </div>
+
+                <div class="faq-item">
+                    <h3 class="faq-q" id="faq3-q">Where are my custom rules saved?</h3>
+                    <p class="faq-a" id="faq3-a">
+                        You can create <code>~/Library/Application Support/diskcare/config.json</code> to specify folders that must never be touched, simulator prefixes, and notification thresholds. Everything stays strictly local on your Mac.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <a href="/" class="footer-brand">SVERKAUS LABS</a>
+        <div class="footer-links">
+            <a href="https://www.linkedin.com/in/gleb-gosha" target="_blank" class="social-link" title="LinkedIn">
+                <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </a>
+            <a href="https://x.com/gleb443?s=11" target="_blank" class="social-link" title="X">
+                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://t.me/GGen1e" target="_blank" class="social-link" title="Telegram">
+                <svg viewBox="0 0 192 192"><path d="M23.073 88.132s65.458-26.782 88.16-36.212c8.702-3.772 38.215-15.843 38.215-15.843s13.621-5.28 12.486 7.544c-.379 5.281-3.406 23.764-6.433 43.756-4.54 28.291-9.459 59.221-9.459 59.221s-.756 8.676-7.188 10.185c-6.433 1.509-17.027-5.281-18.919-6.79-1.513-1.132-28.377-18.106-38.214-26.404-2.649-2.263-5.676-6.79.378-12.071 13.621-12.447 29.891-27.913 39.728-37.72 4.54-4.527 9.081-15.089-9.837-2.264-26.864 18.483-53.35 35.835-53.35 35.835s-6.053 3.772-17.404.377c-11.351-3.395-24.594-7.921-24.594-7.921s-9.08-5.659 6.433-11.693Z"/></svg>
+            </a>
+            <a href="mailto:main@sverkaus.com" class="social-link" title="Email">
+                <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </a>
         </div>
-      </div>
-
-      <div class="eaters">
-        <span data-en="Built for Macs where these quietly eat the disk:">Для Mac, где диск незаметно съедают:</span>
-        <b>Xcode DerivedData</b><b data-en="iOS simulators">симуляторы iOS</b><b>node_modules</b><b>npm · pnpm · uv</b><b>Claude Code · Codex</b><b>Docker</b>
-      </div>
-    </div>
-  </header>
-
-  <!-- ============ HOW ============ -->
-  <section class="section" id="how">
-    <div class="wrap">
-      <div class="eyebrow reveal" data-en="How it works">Как это работает</div>
-      <h2 class="reveal" data-en="Watches. Explains. Cleans only what rebuilds itself.">Следит. Объясняет. Убирает только то, что пересоздаётся само.</h2>
-      <p class="lead reveal" data-en="Three parallel builds and an AI agent can burn 20 GB in under an hour. DiskPulse sees the trend before the disk hits zero.">Три параллельные сборки и AI-агент сжигают 20 ГБ меньше чем за час. DiskPulse видит тренд раньше, чем диск дойдёт до нуля.</p>
-      <div class="grid-3">
-        <div class="card reveal"><div class="glyph"><svg><use href="#i-eye"/></svg></div><div class="step-num" style="margin-top:18px">01</div>
-          <h3 data-en="Always in sight">Всегда на виду</h3>
-          <p data-en="Free space sits in the menu bar. The panel opens with a click or ⌃⌥D from any app.">Свободное место — прямо в строке меню. Панель открывается кликом или ⌃⌥D из любого приложения.</p></div>
-        <div class="card reveal"><div class="glyph"><svg><use href="#i-list"/></svg></div><div class="step-num" style="margin-top:18px">02</div>
-          <h3 data-en="Explains where it went">Объясняет, куда ушло</h3>
-          <p data-en="Which caches grew, which builds and simulators are running, how much memory and swap apps use — in plain words.">Какие кэши выросли, какие сборки и симуляторы запущены, сколько памяти и свопа заняли приложения — простыми словами.</p></div>
-        <div class="card reveal"><div class="glyph"><svg><use href="#i-sparkle"/></svg></div><div class="step-num" style="margin-top:18px">03</div>
-          <h3 data-en="Cleans safely, on its own">Убирает безопасно и сам</h3>
-          <p data-en="Every 5 minutes in the background, only when space runs low. Before anything is deleted you can always see the plan.">Раз в 5 минут в фоне и только когда места мало. Перед удалением всегда можно посмотреть план.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ SAFETY ============ -->
-  <section class="section" id="safety" style="padding-top:0">
-    <div class="wrap">
-      <div class="eyebrow reveal" data-en="Safety">Безопасность</div>
-      <h2 class="reveal" data-en="When in doubt, it keeps it.">Сомневается — оставляет.</h2>
-      <p class="lead reveal" data-en="A cleanup tool is only useful if you never wonder what it took. Every check fails closed: if DiskPulse cannot prove something is safe, it stays.">Инструмент уборки полезен, только если не приходится гадать, что он удалил. Каждая проверка работает «на закрытие»: не удалось доказать безопасность — файл остаётся.</p>
-      <div class="grid-2">
-        <div class="card reveal">
-          <h3 style="margin-top:0" data-en="What gets cleaned">Что убирается</h3>
-          <ul class="list yes">
-            <li><svg><use href="#i-check"/></svg><span data-en-html="Xcode build data of deleted projects, old ModuleCache and PIFCache">Сборки Xcode удалённых проектов, старые ModuleCache и PIFCache</span></li>
-            <li><svg><use href="#i-check"/></svg><span data-en="Temp files of finished Claude Code jobs (2 hours after the session ends)">Временные файлы завершённых задач Claude Code (через 2 часа после конца сессии)</span></li>
-            <li><svg><use href="#i-check"/></svg><span data-en="npm, npx, VS Code and headless-Chrome caches, brew / pnpm / uv cleanup">Кэши npm, npx, VS Code, headless-Chrome, уборка brew / pnpm / uv</span></li>
-            <li><svg><use href="#i-check"/></svg><span data-en-html="Simulators of finished agent jobs, idle worktree builds <span class=&quot;tag&quot;>deep</span>">Симуляторы завершённых задач, сборки неактивных worktree <span class="tag">глубже</span></span></li>
-          </ul>
+        <div class="footer-note">
+            &copy; <span id="year">2026</span> Sverkaus Labs. Open source under MIT License.
         </div>
-        <div class="card reveal">
-          <h3 style="margin-top:0" data-en="Never touched">Никогда не трогается</h3>
-          <ul class="list no">
-            <li><svg><use href="#i-x"/></svg><span data-en="Documents, Desktop, Photos, Mail, keychains">Документы, рабочий стол, фото, почта, связки ключей</span></li>
-            <li><svg><use href="#i-x"/></svg><span data-en="Git repositories with uncommitted or unpushed work">Git-репозитории с незакоммиченной или неотправленной работой</span></li>
-            <li><svg><use href="#i-x"/></svg><span data-en="Open AI-agent sessions, their memory and history">Открытые сессии AI-агентов, их память и история</span></li>
-            <li><svg><use href="#i-x"/></svg><span data-en="Anything a running program has open">Всё, что открыто у работающей программы</span></li>
-          </ul>
-        </div>
-      </div>
-      <div class="layers reveal">
-        <div class="layer"><b data-en="Allow-list">Список разрешённого</b><span data-en="Only known cache patterns can ever be deleted.">Удалить можно только известные виды кэшей.</span></div>
-        <div class="layer"><b data-en="Second key">Второй ключ</b><span data-en="Never home, never outside it, never a folder with .git.">Никогда домашняя папка, ничего вне её, ничего с .git.</span></div>
-        <div class="layer"><b data-en="Is anyone using it?">Кто-то пользуется?</b><span data-en="Fresh lsof / ps right before deleting. No answer — no deletion.">Свежие lsof / ps прямо перед удалением. Нет ответа — нет удаления.</span></div>
-        <div class="layer"><b data-en="Self-test">Самопроверка</b><span data-en="Before every real cleanup the rules check themselves.">Перед каждой настоящей уборкой правила проверяют сами себя.</span></div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- ============ PRIVACY ============ -->
-  <section class="section" id="privacy" style="padding-top:0">
-    <div class="wrap">
-      <div class="grid-3" style="margin-top:0">
-        <div class="card reveal"><div class="glyph"><svg><use href="#i-lock"/></svg></div>
-          <h3 data-en="Nothing leaves your Mac">Ничего не уходит с Mac</h3>
-          <p data-en="No accounts, no analytics, no crash reporter. Paths, processes and tabs stay on this computer.">Без аккаунтов, аналитики и отчётов о сбоях. Пути, процессы и вкладки остаются на этом компьютере.</p></div>
-        <div class="card reveal"><div class="glyph"><svg><use href="#i-refresh"/></svg></div>
-          <h3 data-en="Signed updates, if you want them">Подписанные обновления — по желанию</h3>
-          <p data-en="One request to GitHub a day, only if you allow it. Every update is checked by signature before it installs.">Один запрос к GitHub в день и только с вашего согласия. Каждое обновление проверяется подписью перед установкой.</p></div>
-        <div class="card reveal"><div class="glyph"><svg><use href="#i-code"/></svg></div>
-          <h3 data-en="Open source">Открытый код</h3>
-          <p data-en="MIT license. Read every rule that decides what may be deleted — and the tests that guard them.">Лицензия MIT. Каждое правило, которое решает, что можно удалить, открыто — как и тесты, которые его охраняют.</p></div>
-      </div>
-    </div>
-  </section>
+    <script>
+        // Copy to clipboard functionality
+        document.querySelectorAll('.copy-btn[data-copy]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const text = btn.getAttribute('data-copy');
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Copied!';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+        });
 
-  <!-- ============ INSTALL ============ -->
-  <section class="section" id="install" style="padding-top:0">
-    <div class="wrap">
-      <div class="eyebrow reveal" data-en="Install">Установка</div>
-      <h2 class="reveal" data-en="Two minutes from click to menu bar.">Две минуты от клика до строки меню.</h2>
-      <p class="lead reveal" data-en="The same notarized app in every way — pick what feels natural.">Одно и то же нотаризованное приложение — выберите удобный способ.</p>
+        // Bilingual Content Dictionary
+        const i18n = {
+            en: {
+                toggleBtn: "RU",
+                navOverview: "Overview",
+                navFeatures: "Features",
+                navSafety: "Safety",
+                navInstall: "Install",
+                tagline: "A lightweight macOS menu-bar utility that keeps your disk and memory under control — safely, quietly, and entirely locally on your Mac.",
+                badgePrivacy: "100% Local · Zero Telemetry",
+                badgeSigned: "Signed & Notarized",
+                btnQuickInstall: "Install via Brew →",
+                hintShortcut: "Open anytime with",
+                catFeatures: "// CAPABILITIES",
+                titleFeatures: "Engineered for Developer Macs",
+                descFeatures: "Xcode builds, simulators, npm packages, and parallel AI coding agents quietly fill your storage until builds fail. DiskPulse watches free space, explains where it went, and cleans safely.",
+                f1Title: "100% Local",
+                f1Desc: "No accounts, no analytics, no external trackers. Your filesystem data never leaves your Mac. The only network call is an optional, opt-in daily update check against GitHub.",
+                f2Title: "Safe Background Autoclean",
+                f2Desc: "Runs quietly in the background every 5 minutes when disk space drops below safe thresholds. Strictly cleans caches from an allow-list; never deletes your source code or documents.",
+                f3Title: "RAM & Swap Protection",
+                f3Desc: "Swap lives on the disk. Under memory pressure, DiskPulse frees disk space early and terminates orphan MCP and language servers whose parent process has died, preventing system freezes.",
+                f4Title: "PreToolUse Guard",
+                f4Desc: "Cleaning cannot outrun three parallel Xcode builds. The guard hook for Claude Code refuses builds, installs, and simulator boots when free space drops below 5 GB, protecting your drive.",
+                f5Title: "Agent Resource Manager",
+                f5Desc: "Coordinates parallel coding agents (Claude Code, Codex). Heavy compiler and test tasks share a resource pool sized to your Mac so agents complete tasks without CPU and memory thrashing.",
+                f6Title: "Signed & Notarized",
+                f6Desc: "Signed with Apple Developer ID and notarized by Apple. Supports one-click updates verified by cryptographic signature before install. Fully open source under MIT.",
+                catSafety: "// ZERO-HARM GUARANTEE",
+                titleSafety: "What Gets Cleaned",
+                descSafety: "DiskPulse only cleans files that are guaranteed to re-create themselves automatically, and only when they are not in use. Open applications are never touched.",
+                thCategory: "Tier",
+                thRules: "Files & Actions",
+                safeDesc: "<strong>Xcode Build Data</strong> of deleted projects and worktrees, old <code>ModuleCache</code>, <code>PIFCache</code>.<br><strong>Tool Caches:</strong> npm, npx, VS Code, headless-Chrome, pip, uv caches when tools are not running.<br><strong>Agent Temp:</strong> Completed Claude Code background tasks (2h after session ends).<br><strong>Closed Apps:</strong> Hidden Electron caches in Application Support (Slack, Notion, Figma, Claude) — never Local Storage or cookies.",
+                consentDesc: "<strong>Deep Clean («Глубже…»):</strong> Xcode builds for projects untouched for 7+ days; simulators for completed agent jobs; <code>node_modules</code> in idle agent worktrees.<br><strong>Manual Consent Only:</strong> Installers & DMG archives in Downloads older than 30 days, iPhone backups older than 6 months, untouched AI models (Hugging Face / LM Studio).",
+                neverDesc: "<strong>Your Work:</strong> Documents, Desktop, Photos, Mail, Keychain credentials.<br><strong>Git Repositories:</strong> Anything with uncommitted or unpushed work is strictly untouchable.<br><strong>Running Programs:</strong> If an app is open, it is in use. DiskPulse never quits running apps. Active agent memories and config directories (<code>~/.codex</code>, <code>~/.gemini</code>, <code>~/.cursor</code>) are never touched.",
+                catInstall: "// GET STARTED",
+                titleInstall: "Install in 2 Minutes",
+                descInstall: "Requires macOS 15 (Sequoia) or newer. Choose your preferred installation method:",
+                catFaq: "// FAQ",
+                titleFaq: "Frequently Asked Questions",
+                faq1Q: "How does DiskPulse protect my open work?",
+                faq1A: "DiskPulse checks whether an application is currently running before cleaning its caches. It also checks git status for uncommitted modifications. If a folder belongs to an open process or an active git worktree, it is bypassed completely.",
+                faq2Q: "Can it be run completely from the CLI without GUI?",
+                faq2A: "Yes. DiskPulse uses a standalone standard Python engine (Engine/diskcare.py). You can run `python3 Engine/diskcare.py audit` to inspect usage, `plan` to preview deletions, or `clean` directly from any terminal or CI pipeline.",
+                faq3Q: "Where are my custom rules saved?",
+                faq3A: "You can create `~/Library/Application Support/diskcare/config.json` to specify folders that must never be touched, simulator prefixes, and notification thresholds. Everything stays strictly local on your Mac."
+            },
+            ru: {
+                toggleBtn: "EN",
+                navOverview: "Обзор",
+                navFeatures: "Возможности",
+                navSafety: "Безопасность",
+                navInstall: "Установка",
+                tagline: "Маленькая утилита в строке меню macOS: показывает, что съедает диск и память, и не даёт диску заполниться — безопасно и целиком на вашем Mac.",
+                badgePrivacy: "100% Локально · Без телеметрии",
+                badgeSigned: "Подписано и нотариально заверено",
+                btnQuickInstall: "Установить через Brew →",
+                hintShortcut: "Быстрый вызов в любой момент",
+                catFeatures: "// ВОЗМОЖНОСТИ",
+                titleFeatures: "Сделано для Mac разработчика",
+                descFeatures: "Сборки Xcode, симуляторы, кэши npm и AI-агенты незаметно забивают диск, пока сборки не начинают падать. DiskPulse следит за свободным местом, объясняет, куда оно ушло, и чистит безопасно.",
+                f1Title: "100% Локально",
+                f1Desc: "Без аккаунтов, аналитики и трекеров. Ваши данные не покидают Mac. Единственный запрос в сеть — проверка обновлений на GitHub раз в день, и только если вы её разрешили.",
+                f2Title: "Безопасная автоуборка",
+                f2Desc: "Работает в фоне каждые 5 минут, когда места становится мало. Чистит строго кэши из белого списка; исходники, коммиты и пользовательские файлы никогда не удаляются.",
+                f3Title: "Память и swap",
+                f3Desc: "Своп лежит на диске. При давлении памяти DiskPulse заранее освобождает место на диске и вежливо завершает зависшие осиротевшие MCP- и языковые серверы через SIGTERM.",
+                f4Title: "PreToolUse Guard",
+                f4Desc: "Уборка не обгонит три параллельные сборки Xcode. Хук guard для Claude Code отклоняет сборки и установку пакетов при свободном месте менее 5 ГБ, спасая диск от переполнения.",
+                f5Title: "Agent Resource Manager",
+                f5Desc: "Координирует параллельных AI-агентов (Claude Code, Codex). Тяжёлые задачи компиляции делят общий пул ресурсов, чтобы агенты не замораживали систему борьбой за CPU и RAM.",
+                f6Title: "Подписано Apple",
+                f6Desc: "Собрано с подписью Developer ID и нотариально проверено Apple. Обновление в один клик с проверкой криптографической подписи. Открытый исходный код под лицензией MIT.",
+                catSafety: "// ГАРАНТИЯ БЕЗОПАСНОСТИ",
+                titleSafety: "Что чистится",
+                descSafety: "DiskPulse удаляет только то, что гарантированно пересоберётся само, и только когда этим никто не пользуется. Открытые программы не трогаются никогда.",
+                thCategory: "Уровень",
+                thRules: "Файлы и действия",
+                safeDesc: "<strong>Сборки Xcode</strong> удалённых проектов и ворктри, старые <code>ModuleCache</code>, <code>PIFCache</code>.<br><strong>Кэши инструментов:</strong> npm, npx, VS Code, headless-Chrome, pip, uv, пока инструмент не запущен.<br><strong>Фон агентов:</strong> Завершённые фоновые задачи Claude Code (через 2 ч после закрытия).<br><strong>Закрытые программы:</strong> Скрытые кэши в Application Support (Electron/Chromium: Slack, Notion, Figma, Claude) — никогда Local Storage или cookies.",
+                consentDesc: "<strong>Глубокая чистка («Глубже…»):</strong> Сборки проектов, не открывавшихся 7 дней; симуляторы завершённых задач агентов; <code>node_modules</code> в простаивающих ворктри.<br><strong>Только с согласия:</strong> Установщики и архивы в Загрузках старше 30 дней, бэкапы iPhone старше 6 месяцев, неиспользуемые модели AI (Hugging Face / LM Studio).",
+                neverDesc: "<strong>Ваши файлы:</strong> Документы, рабочий стол, фото, почта, пароли связки ключей.<br><strong>Git-репозитории:</strong> Всё с незакоммиченной или неотправленной работой строго неприкосновенно.<br><strong>Работающие приложения:</strong> Если программа открыта — её кэш ждёт закрытия. Папки агентов (<code>~/.codex</code>, <code>~/.gemini</code>, <code>~/.cursor</code>) никогда не трогаются.",
+                catInstall: "// БЫСТРЫЙ СТАРТ",
+                titleInstall: "Установка за 2 минуты",
+                descInstall: "Требуется macOS 15 (Sequoia) или новее. Выберите удобный способ установки:",
+                catFaq: "// ЧАСТЫЕ ВОПРОСЫ",
+                titleFaq: "Часто задаваемые вопросы",
+                faq1Q: "Как DiskPulse защищает открытую работу?",
+                faq1A: "Перед очисткой кэша DiskPulse проверяет запущенные процессы и статус git-репозиториев. Если папка используется открытым приложением или содержит незакоммиченные изменения, она полностью пропускается.",
+                faq2Q: "Можно ли использовать DiskPulse чисто в терминале без GUI?",
+                faq2A: "Да. Движок утилиты (Engine/diskcare.py) написан на стандартном Python и не требует сторонних пакетов. Вы можете запускать `python3 Engine/diskcare.py audit`, `plan` или `clean` в любом скрипте или CI/CD.",
+                faq3Q: "Где хранятся пользовательские правила?",
+                faq3A: "В файле `~/Library/Application Support/diskcare/config.json`. Там можно указать защищённые папки, префиксы симуляторов и пороги уведомлений. Все настройки хранятся только на вашем Mac."
+            }
+        };
 
-      <div class="tabs" role="tablist">
-        <button type="button" role="tab" aria-selected="true" data-tab="dmg" data-en="Download">Скачать</button>
-        <button type="button" role="tab" aria-selected="false" data-tab="brew">Homebrew</button>
-        <button type="button" role="tab" aria-selected="false" data-tab="curl" data-en="Terminal">Терминал</button>
-        <button type="button" role="tab" aria-selected="false" data-tab="source" data-en="From source">Из исходников</button>
-      </div>
+        let currentLang = localStorage.getItem('sverkaus-diskpulse-lang') || 
+            (navigator.language.startsWith('ru') ? 'ru' : 'en');
 
-      <div class="tabpanel active" data-panel="dmg" role="tabpanel">
-        <div class="flow">
-          <div class="card">
-            <div class="mini"><div class="mini-dl"><div class="file"><img src="assets/img/favicon-32.png" alt="">DiskPulse.dmg</div><div class="prog"><b></b></div></div></div>
-            <div class="step-num" style="margin-top:14px">01</div>
-            <h3 data-en="Download">Скачайте</h3>
-            <p data-en="One click — a 3 MB disk image, signed and notarized by Apple.">Один клик — образ диска на 3 МБ, подписан и нотаризован Apple.</p>
-          </div>
-          <div class="card">
-            <div class="mini"><div class="mini-dmg"><img class="drag" src="assets/img/diskpulse-icon-128.png" alt=""><span class="arrow">→</span><span class="apps"><svg><use href="#i-apps"/></svg></span></div></div>
-            <div class="step-num" style="margin-top:14px">02</div>
-            <h3 data-en="Drag to Applications">Перетащите в «Программы»</h3>
-            <p data-en="Open the file: a window with an arrow shows where DiskPulse goes.">Откройте файл: окно со стрелкой покажет, куда положить DiskPulse.</p>
-          </div>
-          <div class="card">
-            <div class="mini"><div class="mini-move"><div class="t" data-en="Welcome to DiskPulse">Добро пожаловать в DiskPulse</div><span data-en="Cleanup · notifications · updates · open at login">Уборка · уведомления · обновления · запуск при входе</span><div class="b"><span data-en="Back">Назад</span><span class="p" data-en="Continue">Дальше</span></div></div></div>
-            <div class="step-num" style="margin-top:14px">03</div>
-            <h3 data-en="Open it">Откройте</h3>
-            <p data-en="macOS asks once to confirm a downloaded app. A short welcome sets up the rest.">macOS один раз спросит про скачанное приложение. Короткое приветствие настроит остальное.</p>
-          </div>
-          <div class="card">
-            <div class="mini"><div class="mini-menu"><div class="bar2"><span>Wi‑Fi</span><span class="hi">⛁ 128 GB</span><span>9:41</span></div><div class="center"><kbd>⌃ ⌥ D</kbd></div></div></div>
-            <div class="step-num" style="margin-top:14px">04</div>
-            <h3 data-en="It lives in the menu bar">Живёт в строке меню</h3>
-            <p data-en="Free space at a glance; the panel opens with a click or ⌃⌥D.">Свободное место всегда на виду; панель — кликом или ⌃⌥D.</p>
-          </div>
-        </div>
-        <div class="cta" style="justify-content:flex-start;margin-top:26px">
-          <a class="btn btn-primary js-download" href="#install"><svg><use href="#i-download"/></svg><span class="js-download-label" data-en="Download for Mac">Скачать для Mac</span></a>
-          <span class="muted" style="font-size:14px" data-en-html="Opened it from the disk image by mistake? DiskPulse offers to move itself to Applications. <a href=&quot;help.html&quot;>Install help →</a>">Открыли прямо из образа? DiskPulse сам предложит переместиться в «Программы». <a href="help.html">Помощь с установкой →</a></span>
-        </div>
-      </div>
+        function applyLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('sverkaus-diskpulse-lang', lang);
+            const t = i18n[lang];
 
-      <div class="tabpanel" data-panel="brew" role="tabpanel">
-        <div class="cmd-card">
-          <p data-en="If you already use Homebrew. Updates come with brew upgrade or from DiskPulse itself.">Если вы уже пользуетесь Homebrew. Обновления — через brew upgrade или в самом DiskPulse.</p>
-          <div class="cmd"><span class="prompt">$</span><code class="js-cmd" data-cmd="brew">brew install --cask gleb4442/tap/diskpulse</code><button class="copy-btn" type="button"><svg><use href="#i-copy"/></svg><span data-en="Copy">Копировать</span></button></div>
-          <div class="cmd-note" data-en="Uninstall: brew uninstall --cask diskpulse (add --zap to remove settings and logs).">Удалить: brew uninstall --cask diskpulse (с --zap — вместе с настройками и логами).</div>
-        </div>
-      </div>
+            document.getElementById('lang-toggle-btn').textContent = t.toggleBtn;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
 
-      <div class="tabpanel" data-panel="curl" role="tabpanel">
-        <div class="cmd-card">
-          <p data-en="One line, no Homebrew. The script downloads the same notarized app, checks its checksum, developer signature and Apple notarization, then puts it into Applications. No sudo.">Одна строка, без Homebrew. Скрипт скачивает то же нотаризованное приложение, проверяет контрольную сумму, подпись разработчика и нотаризацию Apple и кладёт его в «Программы». Без sudo.</p>
-          <div class="cmd"><span class="prompt">$</span><code class="js-cmd" data-cmd="curl">curl -fsSL https://github.com/Gleb4442/diskpulse/releases/latest/download/get.sh | bash</code><button class="copy-btn" type="button"><svg><use href="#i-copy"/></svg><span data-en="Copy">Копировать</span></button></div>
-          <div class="cmd-note" data-en-html="Prefer to read it first? <a class=&quot;js-gh&quot; href=&quot;#&quot; data-gh-path=&quot;/blob/main/Packaging/get.sh&quot;>The script on GitHub</a>.">Хотите сначала прочитать? <a class="js-gh" href="#" data-gh-path="/blob/main/Packaging/get.sh">Скрипт на GitHub</a>.</div>
-        </div>
-      </div>
+            document.getElementById('hero-tagline').textContent = t.tagline;
+            document.getElementById('badge-privacy').textContent = t.badgePrivacy;
+            document.getElementById('badge-signed').textContent = t.badgeSigned;
+            document.getElementById('btn-quick-install').querySelector('span').textContent = t.btnQuickInstall;
+            document.getElementById('hint-shortcut').textContent = t.hintShortcut;
 
-      <div class="tabpanel" data-panel="source" role="tabpanel">
-        <div class="cmd-card">
-          <p data-en="Build it yourself with Apple's free Command Line Tools. Source builds see updates and install them with git pull.">Соберите сами с бесплатными Command Line Tools от Apple. Сборка из исходников видит обновления и ставит их через git pull.</p>
-          <div class="cmd"><code>xcode-select --install
-git clone https://github.com/Gleb4442/diskpulse.git
-cd diskpulse &amp;&amp; ./install.sh</code><button class="copy-btn" type="button" data-copy-text="git clone https://github.com/Gleb4442/diskpulse.git &amp;&amp; cd diskpulse &amp;&amp; ./install.sh"><svg><use href="#i-copy"/></svg></button></div>
-        </div>
-      </div>
-    </div>
-  </section>
+            document.getElementById('cat-features').textContent = t.catFeatures;
+            document.getElementById('title-features').textContent = t.titleFeatures;
+            document.getElementById('desc-features').textContent = t.descFeatures;
 
-  <!-- ============ FAQ ============ -->
-  <section class="section" id="faq" style="padding-top:0">
-    <div class="wrap">
-      <div class="eyebrow reveal" data-en="Questions">Вопросы</div>
-      <h2 class="reveal" data-en="Before you install">Перед установкой</h2>
-      <div class="faq">
-        <details class="reveal"><summary data-en="Is it really free?">Это правда бесплатно?</summary>
-          <p data-en="Yes. DiskPulse is open source under the MIT license. No trial, no subscription, no account.">Да. DiskPulse — открытый код под лицензией MIT. Без пробного периода, подписки и аккаунта.</p></details>
-        <details class="reveal"><summary data-en="Do I need Xcode?">Нужен ли Xcode?</summary>
-          <p data-en="No. Cleanup uses Apple's free Command Line Tools (most developer Macs already have them). If they are missing, the welcome window installs them with one click; without them DiskPulse still shows your space.">Нет. Уборке нужны бесплатные Command Line Tools от Apple — на большинстве Mac разработчиков они уже стоят. Если их нет, окно приветствия поставит их в один клик; без них DiskPulse всё равно показывает место.</p></details>
-        <details class="reveal"><summary data-en="What if it deletes something it shouldn't?">А если удалит не то?</summary>
-          <p data-en="It only removes caches that rebuild themselves, re-checks everything right before deleting, and refuses whenever a check has no answer. Automatic cleanup is off until you turn it on, and you can always look at the plan first. If something important ever disappears, report it privately on GitHub — we treat it as a security issue.">Удаляются только кэши, которые пересоздаются сами. Всё перепроверяется прямо перед удалением, а если проверка не дала ответа — отказ. Автоуборка выключена, пока вы её не включите, и план всегда можно посмотреть заранее. Если что-то важное всё же пропадёт, сообщите закрыто на GitHub — для нас это проблема безопасности.</p></details>
-        <details class="reveal"><summary data-en="Why not the Mac App Store?">Почему не в Mac App Store?</summary>
-          <p data-en="App Store apps run in a sandbox that cannot see build caches, simulators or running processes — exactly what DiskPulse needs. Instead it is signed with an Apple Developer ID and notarized by Apple.">Приложения из App Store работают в песочнице и не видят кэши сборок, симуляторы и процессы — то, что нужно DiskPulse. Поэтому он подписан Apple Developer ID и нотаризован Apple.</p></details>
-        <details class="reveal"><summary data-en="How do updates work?">Как приходят обновления?</summary>
-          <p data-en="If you allow it, DiskPulse asks GitHub once a day whether a new version exists, shows what's new and installs it with one click after checking two signatures. You can also update with Homebrew or simply download again.">Если разрешите, DiskPulse раз в день спрашивает GitHub о новой версии, показывает, что нового, и ставит её в один клик после проверки двух подписей. Можно обновляться и через Homebrew или просто скачать заново.</p></details>
-        <details class="reveal"><summary data-en="How do I uninstall it?">Как удалить?</summary>
-          <p data-en-html="Turn off automatic cleanup in Settings, quit DiskPulse and move it to the Trash. Settings and logs live in ~/Library/Application Support/diskcare — <a href=&quot;help.html#uninstall&quot;>full steps</a>.">Выключите автоуборку в настройках, закройте DiskPulse и перетащите его в Корзину. Настройки и логи лежат в ~/Library/Application Support/diskcare — <a href="help.html#uninstall">подробная инструкция</a>.</p></details>
-        <details class="reveal"><summary data-en="Which Macs are supported?">Какие Mac поддерживаются?</summary>
-          <p data-en="Any Mac with macOS 15 Sequoia or newer, Apple Silicon or Intel.">Любой Mac с macOS 15 Sequoia или новее — Apple Silicon или Intel.</p></details>
-      </div>
-    </div>
-  </section>
+            document.getElementById('f1-title').textContent = t.f1Title;
+            document.getElementById('f1-desc').textContent = t.f1Desc;
+            document.getElementById('f2-title').textContent = t.f2Title;
+            document.getElementById('f2-desc').textContent = t.f2Desc;
+            document.getElementById('f3-title').textContent = t.f3Title;
+            document.getElementById('f3-desc').textContent = t.f3Desc;
+            document.getElementById('f4-title').textContent = t.f4Title;
+            document.getElementById('f4-desc').textContent = t.f4Desc;
+            document.getElementById('f5-title').textContent = t.f5Title;
+            document.getElementById('f5-desc').textContent = t.f5Desc;
+            document.getElementById('f6-title').textContent = t.f6Title;
+            document.getElementById('f6-desc').textContent = t.f6Desc;
 
-  <section class="final">
-    <div class="wrap">
-      <img src="assets/img/diskpulse-icon-512.png" alt="" width="72" height="72">
-      <h2 data-en="Keep building. DiskPulse keeps the room.">Собирайте спокойно. Место за DiskPulse.</h2>
-      <div class="cta">
-        <a class="btn btn-primary js-download" href="#install"><svg><use href="#i-apple"/></svg><span class="js-download-label" data-en="Download for Mac">Скачать для Mac</span></a>
-        <a class="btn btn-secondary js-gh" href="#" data-gh-path=""><svg><use href="#i-code"/></svg><span data-en="Source on GitHub">Код на GitHub</span></a>
-      </div>
-    </div>
-  </section>
-</main>
+            document.getElementById('cat-safety').textContent = t.catSafety;
+            document.getElementById('title-safety').textContent = t.titleSafety;
+            document.getElementById('desc-safety').textContent = t.descSafety;
 
-<footer>
-  <div class="wrap">
-    <a class="brand" href="./"><img src="assets/img/diskpulse-icon-128.png" alt="" width="22" height="22" style="width:22px;height:22px">DiskPulse</a>
-    <a href="help.html" data-en="Help">Помощь</a>
-    <a href="privacy.html" data-en="Privacy">Конфиденциальность</a>
-    <a class="js-gh" href="#" data-gh-path="/blob/main/CHANGELOG.md" data-en="What's new">Что нового</a>
-    <a class="js-gh" href="#" data-gh-path="" >GitHub</a>
-    <span class="spacer"></span>
-    <span>MIT · <a href="/">sverkaus.com</a></span>
-  </div>
-</footer>
+            document.getElementById('th-category').textContent = t.thCategory;
+            document.getElementById('th-rules').textContent = t.thRules;
+            document.getElementById('row-safe-desc').innerHTML = t.safeDesc;
+            document.getElementById('row-consent-desc').innerHTML = t.consentDesc;
+            document.getElementById('row-never-desc').innerHTML = t.neverDesc;
+
+            document.getElementById('cat-install').textContent = t.catInstall;
+            document.getElementById('title-install').textContent = t.titleInstall;
+            document.getElementById('desc-install').textContent = t.descInstall;
+
+            document.getElementById('cat-faq').textContent = t.catFaq;
+            document.getElementById('title-faq').textContent = t.titleFaq;
+            document.getElementById('faq1-q').textContent = t.faq1Q;
+            document.getElementById('faq1-a').textContent = t.faq1A;
+            document.getElementById('faq2-q').textContent = t.faq2Q;
+            document.getElementById('faq2-a').textContent = t.faq2A;
+            document.getElementById('faq3-q').textContent = t.faq3Q;
+            document.getElementById('faq3-a').textContent = t.faq3A;
+        }
+
+        document.getElementById('lang-toggle-btn').addEventListener('click', () => {
+            const nextLang = currentLang === 'en' ? 'ru' : 'en';
+            applyLanguage(nextLang);
+        });
+
+        // Initialize on load
+        applyLanguage(currentLang);
+    </script>
 </body>
 </html>

@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>any — диктовка одним нажатием на AirPods</title>
-  <meta name="description" content="any — диктовка для Mac. Нажмите на ножку AirPods, скажите, нажмите ещё раз — текст появится там, где стоит курсор.">
+  <meta name="description" content="any — диктовка и голосовой агент для Mac. Нажмите на ножку AirPods, скажите, нажмите ещё раз — текст появится там, где стоит курсор.">
   <meta name="theme-color" content="#1c1c1c">
   <meta property="og:title" content="any — диктовка одним нажатием на AirPods">
-  <meta property="og:description" content="Нажмите. Скажите. Текст уже под курсором. Диктовка для Mac.">
+  <meta property="og:description" content="Нажмите. Скажите. Текст уже под курсором. Диктовка и голосовой агент для Mac.">
   <meta property="og:image" content="https://www.sverkaus.com/any/assets/img/any-icon-512.png">
   <meta property="og:url" content="https://www.sverkaus.com/any">
   <link rel="icon" type="image/png" sizes="32x32" href="/any/assets/img/favicon-32.png">
@@ -16,9 +16,10 @@
   <script defer src="/any/assets/js/site.js"></script>
 </head>
 <body>
-<header class="nav">
-  <a class="brand" href="#top" aria-label="any"><img src="/any/assets/img/any-icon-64.png" alt="" width="28" height="28"><span>any</span></a>
+<header class="nav glass">
+  <a class="brand" href="#top" aria-label="any"><svg viewBox="140 385 745 320" width="42" height="18" aria-hidden="true"><path fill="currentColor" d="M 225.92 622.00 Q 203.69 622.00 186.78 613.19 Q 169.86 604.38 160.35 589.27 Q 150.84 574.15 150.84 555.13 L 150.84 554.93 Q 150.84 533.51 161.55 518.70 Q 172.26 503.88 192.68 495.38 Q 213.10 486.87 242.53 484.87 L 332.82 478.86 L 332.82 524.50 L 256.14 529.91 Q 243.13 530.71 237.03 535.72 Q 230.92 540.72 230.92 548.93 L 230.92 549.13 Q 230.92 557.74 237.73 562.34 Q 244.53 566.95 255.94 566.95 Q 265.75 566.95 273.16 563.64 Q 280.57 560.34 284.77 554.53 Q 288.98 548.73 288.98 541.52 L 288.98 472.85 Q 288.98 463.24 282.77 457.64 Q 276.56 452.03 263.95 452.03 Q 251.34 452.03 244.33 456.84 Q 237.33 461.64 235.92 468.45 L 235.52 470.45 L 162.25 470.45 L 162.45 467.85 Q 164.25 445.23 177.17 428.51 Q 190.08 411.79 213.20 402.59 Q 236.33 393.38 268.56 393.38 Q 299.39 393.38 322.41 402.89 Q 345.43 412.39 358.24 429.41 Q 371.06 446.43 371.06 468.85 L 371.06 619.20 L 288.98 619.20 L 288.98 589.17 L 287.38 589.17 Q 281.17 599.58 272.26 606.98 Q 263.35 614.39 251.74 618.20 Q 240.13 622.00 225.92 622.00 Z M 395.89 619.20 L 395.89 398.18 L 477.97 398.18 L 477.97 439.22 L 479.57 439.22 Q 487.78 416.80 504.59 405.09 Q 521.41 393.38 546.43 393.38 Q 582.87 393.38 602.59 415.40 Q 622.31 437.42 622.31 477.26 L 622.31 619.20 L 540.23 619.20 L 540.23 495.28 Q 540.23 478.66 532.42 469.05 Q 524.61 459.44 509.20 459.44 Q 499.59 459.44 492.58 464.05 Q 485.57 468.65 481.77 476.66 Q 477.97 484.67 477.97 495.08 L 477.97 619.20 Z M 691.18 690.47 Q 679.17 690.47 668.26 689.37 Q 657.35 688.26 650.34 687.06 L 650.34 628.61 Q 654.34 629.41 661.45 630.31 Q 668.56 631.21 678.37 631.21 Q 687.98 631.21 693.38 628.31 Q 698.79 625.40 700.19 621.40 L 700.99 619.20 L 626.72 398.18 L 717.81 398.18 L 754.64 575.75 L 746.63 560.34 L 758.05 560.34 L 749.84 575.75 L 786.47 398.18 L 873.16 398.18 L 807.29 613.99 Q 797.88 644.62 781.67 661.24 Q 765.45 677.85 742.83 684.16 Q 720.21 690.47 691.18 690.47 Z "/></svg></a>
   <div class="nav-right">
+    <a class="nav-link" href="#agent" data-en="Agent">Агент</a>
     <a class="nav-link" href="#price" data-en="Pricing">Цены</a>
     <button class="lang" id="lang" type="button" aria-label="Switch to English">EN</button>
     <a class="btn btn-sm" href="https://github.com/Gleb4442/any-releases/releases/download/v1.0.0/any-1.0.0.dmg" data-en="Download">Скачать</a>
@@ -26,79 +27,96 @@
 </header>
 
 <main id="top">
-  <section class="hero">
-    <h1 data-en-html="Press. Speak.<br>It’s typed.">Нажмите. Скажите.<br>Готово.</h1>
-    <p class="lede" data-en="Dictation for Mac, one press on your AirPods stem away.">Диктовка для Mac — на расстоянии одного нажатия на ножку AirPods.</p>
-
+  <section class="hero panel">
+    <div class="hero-copy">
+      <h1 data-en-html="Press. Speak.<br>It’s typed.">Нажмите. Скажите.<br>Готово.</h1>
+      <p class="lede" data-en="Dictation for Mac, one press on your AirPods stem away.">Диктовка для Mac на расстоянии одного нажатия на ножку AirPods.</p>
+      <a class="btn" href="https://github.com/Gleb4442/any-releases/releases/download/v1.0.0/any-1.0.0.dmg" data-en="Download for Mac">Скачать для Mac</a>
+      <p class="fine" data-en="30 days free · no card · macOS 14+ · Apple Silicon">30 дней бесплатно · без карты · macOS 14+ · Apple Silicon</p>
+    </div>
     <div class="stage" id="stage" data-state="idle">
       <svg class="bud" viewBox="0 0 220 420" role="img" aria-label="Наушник: нажатие на ножку" data-en-aria="An earbud: pressing the stem">
         <defs>
-          <linearGradient id="shell" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#8f8f8d"/><stop offset=".22" stop-color="#e9e9e6"/><stop offset=".55" stop-color="#fbfbf9"/><stop offset="1" stop-color="#b4b4b1"/>
-          </linearGradient>
-          <radialGradient id="head" cx=".42" cy=".34" r=".78">
-            <stop offset="0" stop-color="#ffffff"/><stop offset=".62" stop-color="#e6e6e3"/><stop offset="1" stop-color="#8d8d8a"/>
-          </radialGradient>
+          <linearGradient id="shell" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#9b9b98"/><stop offset=".2" stop-color="#ececea"/><stop offset=".52" stop-color="#fdfdfb"/><stop offset=".85" stop-color="#d6d6d3"/><stop offset="1" stop-color="#a5a5a2"/></linearGradient>
+          <radialGradient id="head" cx=".44" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#eaeae7"/><stop offset="1" stop-color="#979794"/></radialGradient>
         </defs>
         <g class="rings" fill="none" stroke="#fff"><circle cx="118" cy="268" r="26"/><circle cx="118" cy="268" r="26"/></g>
-        <rect x="96" y="96" width="44" height="300" rx="22" fill="url(#shell)"/>
-        <ellipse cx="100" cy="86" rx="76" ry="70" fill="url(#head)"/>
-        <ellipse cx="70" cy="80" rx="27" ry="24" fill="#2b2b2b"/>
-        <ellipse cx="70" cy="80" rx="19" ry="17" fill="#191919"/>
-        <rect class="sensor" x="110" y="238" width="16" height="60" rx="8"/>
-        <rect x="108" y="378" width="20" height="5" rx="2.5" fill="#6f6f6c"/>
+        <path d="M100 110 L140 120 L137 376 Q136 396 118 396 Q100 396 99 376 Z" fill="url(#shell)"/>
+        <ellipse cx="102" cy="82" rx="68" ry="64" fill="url(#head)"/>
+        <ellipse cx="74" cy="76" rx="20" ry="18" fill="#2a2a2a"/>
+        <ellipse cx="74" cy="76" rx="14" ry="12.5" fill="#171717"/>
+        <rect class="sensor" x="112" y="238" width="12" height="60" rx="6"/>
+        <rect x="110" y="380" width="16" height="4" rx="2" fill="#6f6f6c"/>
       </svg>
-      <div class="readout" aria-hidden="true">
+      <div class="readout glass" aria-hidden="true">
         <div class="status"><i class="wave"><b></b><b></b><b></b><b></b></i><span id="status"></span></div>
         <p class="typed" id="typed"></p>
       </div>
     </div>
+  </section>
 
-    <div class="cta">
-      <a class="btn" href="https://github.com/Gleb4442/any-releases/releases/download/v1.0.0/any-1.0.0.dmg" data-en="Download for Mac">Скачать для Mac</a>
-      <p class="fine" data-en="30 days free · no card · macOS 14+ · Apple Silicon">30 дней бесплатно · без карты · macOS 14+ · Apple Silicon</p>
+  <section class="strip">
+    <div class="glass step"><span>1</span><h2 data-en="Press the stem">Нажмите на ножку</h2><p data-en="Keep your hands off the keyboard.">Клавиатура не нужна.</p></div>
+    <div class="glass step"><span>2</span><h2 data-en="Speak">Говорите</h2><p data-en="Walk around. Think out loud.">Ходите. Думайте вслух.</p></div>
+    <div class="glass step"><span>3</span><h2 data-en="Press again">Нажмите ещё раз</h2><p data-en="The text lands at your cursor.">Текст появится под курсором.</p></div>
+  </section>
+  <p class="aside" data-en-html="Turn it on in Settings → Advanced. Without AirPods, hold <kbd>fn</kbd>.">Включается в Настройках → Дополнительно. Без AirPods зажмите <kbd>fn</kbd>.</p>
+
+  <section class="agent" id="agent">
+    <div class="agent-head">
+      <p class="eyebrow"><kbd>fn</kbd> + <kbd>⌃</kbd></p>
+      <h2 class="title" data-en="An agent that answers in your text field.">Агент, который отвечает прямо в поле ввода.</h2>
+    </div>
+    <div class="agent-grid">
+      <div class="demo glass">
+        <div class="tabs" role="tablist" aria-label="Примеры" data-en-aria="Examples" id="agent-tabs">
+          <button type="button" role="tab" aria-selected="true" data-i="0" data-en="Write">Написать</button>
+          <button type="button" role="tab" aria-selected="false" data-i="1" data-en="Search">Найти</button>
+          <button type="button" role="tab" aria-selected="false" data-i="2" data-en="Edit">Поправить</button>
+        </div>
+        <p class="said" id="agent-said"></p>
+        <p class="answer" id="agent-answer"></p>
+        <p class="sample" data-en="Example">Пример</p>
+      </div>
+      <ul class="abilities">
+        <li><h3 data-en="Writes for you">Пишет за вас</h3><p data-en="Letters, replies, lists. Nothing selected means it’s a task.">Письма, ответы, списки. Ничего не выделено — значит, это задача.</p></li>
+        <li><h3 data-en="Looks things up">Сам ищет факты</h3><p data-en="In cloud mode it checks the web when an answer depends on fresh data.">В облачном режиме идёт в интернет, когда ответу нужны свежие данные.</p></li>
+        <li><h3 data-en="Edits by voice">Правит голосом</h3><p data-en="Select text and say what to change.">Выделите текст и скажите, что изменить.</p></li>
+        <li><h3 data-en="Skips the small talk">Без лишних слов</h3><p data-en="No “Sure! Here it is”. Only the text you asked for.">Никаких «Конечно! Вот ваш текст». Только то, что вы просили.</p></li>
+        <li><h3 data-en="Works offline too">Умеет офлайн</h3><p data-en="Local Qwen3-4B on your Mac, or Groq with your own key.">Локальная Qwen3-4B на вашем Mac или Groq с вашим ключом.</p></li>
+      </ul>
     </div>
   </section>
 
-  <section class="steps">
-    <ol>
-      <li><span>1</span><h2 data-en="Press the stem">Нажмите на ножку</h2><p data-en="No need to reach for the keyboard or look at the screen.">Не нужно тянуться к клавиатуре и смотреть на экран.</p></li>
-      <li><span>2</span><h2 data-en="Speak">Говорите</h2><p data-en="Walk around the room. Think out loud.">Ходите по комнате. Думайте вслух.</p></li>
-      <li><span>3</span><h2 data-en="Press again">Нажмите ещё раз</h2><p data-en="The text lands where your cursor is.">Текст появится там, где стоит курсор.</p></li>
-    </ol>
-    <p class="aside" data-en-html="Turn it on in Settings → Advanced. Not wearing AirPods? Hold <kbd>fn</kbd>.">Включается в Настройках → Дополнительно. Без AirPods — зажмите <kbd>fn</kbd>.</p>
-  </section>
-
-  <section class="light">
-    <h2 class="title" data-en="Everything else stays out of the way.">Всё остальное не мешает.</h2>
+  <section class="light panel">
+    <h2 class="title" data-en="Works where you already work.">Работает там, где вы уже работаете.</h2>
+    <div class="logos">
+      <figure><img src="/any/assets/img/apps/claude.png" alt="" width="52" height="52"><figcaption>Claude</figcaption></figure>
+      <figure><img src="/any/assets/img/apps/codex.svg" alt="" width="52" height="52"><figcaption>Codex</figcaption></figure>
+      <figure><img src="/any/assets/img/apps/chatgpt.png" alt="" width="52" height="52"><figcaption>ChatGPT</figcaption></figure>
+      <figure><img src="/any/assets/img/apps/vscode.png" alt="" width="52" height="52"><figcaption>VS Code</figcaption></figure>
+      <figure><img class="tile" src="/any/assets/img/apps/cursor.svg" alt="" width="52" height="52"><figcaption>Cursor</figcaption></figure>
+      <figure><img src="/any/assets/img/apps/antigravity.png" alt="" width="52" height="52"><figcaption>Antigravity</figcaption></figure>
+      <figure><img src="/any/assets/img/apps/notion-app.png" alt="" width="52" height="52"><figcaption>Notion</figcaption></figure>
+      <figure><img src="/any/assets/img/apps/telegram-app.png" alt="" width="52" height="52"><figcaption>Telegram</figcaption></figure>
+    </div>
+    <p class="logos-note" data-en="And in any other field you can type in, the terminal included.">И в любом другом поле, где можно печатать, включая терминал.</p>
     <div class="grid">
-      <div><h3 data-en="Tasks">Задачи</h3><p data-en-html="Hold <kbd>fn</kbd> + <kbd>⌃</kbd>. Say what you need, get the finished text.">Зажмите <kbd>fn</kbd> + <kbd>⌃</kbd>. Скажите задачу — получите готовый текст.</p></div>
       <div><h3 data-en="Translation">Перевод</h3><p data-en="Select text and name one of ten languages.">Выделите текст и назовите один из десяти языков.</p></div>
-      <div><h3 data-en="Your words">Ваши слова</h3><p data-en="Names, brands and jargon, spelled your way.">Имена, бренды и термины — так, как пишете вы.</p></div>
-      <div><h3 data-en="On your Mac">На вашем Mac</h3><p data-en="Speech and text can stay on the device. The cloud is your choice.">Речь и текст могут оставаться на устройстве. Облако — только по выбору.</p></div>
+      <div><h3 data-en="Your words">Ваши слова</h3><p data-en="Names, brands and jargon, spelled your way.">Имена, бренды и термины так, как пишете вы.</p></div>
+      <div><h3 data-en="On your Mac">На вашем Mac</h3><p data-en="Speech and text can stay on the device. The cloud is your choice.">Речь и текст могут оставаться на устройстве. Облако только по выбору.</p></div>
     </div>
-    <div class="logos" aria-label="Приложения" data-en-aria="Apps">
-      <img src="/any/assets/img/apps/slack.svg" alt="Slack" width="34" height="34">
-      <img src="/any/assets/img/apps/telegram.svg" alt="Telegram" width="34" height="34">
-      <img src="/any/assets/img/apps/whatsapp.svg" alt="WhatsApp" width="34" height="34">
-      <img src="/any/assets/img/apps/notion.svg" alt="Notion" width="34" height="34">
-      <img src="/any/assets/img/apps/discord.svg" alt="Discord" width="34" height="34">
-      <img src="/any/assets/img/apps/zoom.svg" alt="Zoom" width="34" height="34">
-      <img src="/any/assets/img/apps/teams.svg" alt="Microsoft Teams" width="34" height="34">
-      <img src="/any/assets/img/apps/obsidian.svg" alt="Obsidian" width="34" height="34">
-    </div>
-    <p class="logos-note" data-en="Works wherever you can type.">Работает везде, где можно печатать.</p>
   </section>
 
   <section class="price" id="price">
-    <h2 class="title" data-en="30 days free. Then your choice.">30 дней бесплатно. Дальше — на выбор.</h2>
+    <h2 class="title" data-en="30 days free. Then your choice.">30 дней бесплатно. Дальше на выбор.</h2>
     <div class="plans">
-      <div class="plan">
+      <div class="plan glass">
         <h3>Lifetime</h3>
         <p class="amount">$11.99</p>
         <p data-en="One-time payment. Perpetual license for 1 Mac, all updates included. 14-day money-back guarantee.">Разовый платёж. Лицензия навсегда на 1 Mac, все обновления включены. 14 дней гарантия возврата.</p>
       </div>
-      <div class="plan">
+      <div class="plan glass">
         <h3>Monthly</h3>
         <p class="amount">$1.99<small data-en="/mo">/мес</small></p>
         <p data-en="Full access on 1 Mac. Cancel anytime, access lasts through the paid period. 14-day refund on any renewal.">Полный доступ на 1 Mac. Отмена в любой момент, доступ до конца оплаченного периода. 14 дней на возврат списания.</p>
@@ -106,7 +124,7 @@
     </div>
     <div class="cta">
       <a class="btn" href="https://github.com/Gleb4442/any-releases/releases/download/v1.0.0/any-1.0.0.dmg" data-en="Download and try">Скачать и попробовать</a>
-      <p class="fine" data-en="You buy inside the app, whenever you decide.">Покупка — внутри приложения, когда решите.</p>
+      <p class="fine" data-en="You buy inside the app, whenever you decide.">Покупка внутри приложения, когда решите.</p>
     </div>
     <p class="legal" data-en-html="Orders and billing are processed securely by <a href='https://creem.io' target='_blank' rel='noopener'>Creem</a> (Merchant of Record). See <a href='/any/terms'>Terms</a> and <a href='/any/refund'>Refund Policy</a>. Sexually explicit content is not allowed in any, including voice commands and AI text drafting (<a href='/any/terms'>Terms, §5</a>).">Платежи и счета безопасно обрабатывает <a href="https://creem.io" target="_blank" rel="noopener">Creem</a> (Merchant of Record). См. <a href="/any/terms">Условия</a> и <a href="/any/refund">Правила возврата</a>. Контент сексуального характера в any запрещён, включая голосовые команды и составление текста с ИИ (<a href="/any/terms">Условия, §5</a>).</p>
   </section>
@@ -122,7 +140,7 @@
     <a href="/any/third-party-notices.txt" data-en="Licenses">Лицензии</a>
   </nav>
   <p data-en-html="Operated by Hleb Hosha (individual), Ukraine · <a href='mailto:main@sverkaus.com'>main@sverkaus.com</a>">Оператор: Глеб Хоша (Hleb Hosha), физическое лицо, Украина · <a href="mailto:main@sverkaus.com">main@sverkaus.com</a></p>
-  <p data-en="AirPods and Mac are trademarks of Apple Inc. any is not affiliated with Apple. Other logos belong to their owners.">AirPods и Mac — товарные знаки Apple Inc. any не связан с Apple. Остальные логотипы принадлежат их владельцам.</p>
+  <p data-en="AirPods and Mac are trademarks of Apple Inc. any is not affiliated with Apple or the other companies shown. Their names and icons belong to their owners and only indicate apps any can type into.">AirPods и Mac — товарные знаки Apple Inc. any не связан с Apple и другими показанными компаниями. Их названия и значки принадлежат владельцам и лишь показывают приложения, в которых any может печатать.</p>
 </footer>
 </body>
 </html>

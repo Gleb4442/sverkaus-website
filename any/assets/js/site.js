@@ -72,6 +72,32 @@
     });
   }
 
+  var examples = {
+    ru: [
+      ["Напиши вежливый отказ кандидату на вакансию дизайнера", "Анна, здравствуйте!\nСпасибо за отклик и время, которое вы уделили заданию. Мы решили продолжить с другим кандидатом. Будем рады вернуться к вам, когда откроем новые позиции."],
+      ["Чем отличаются Supabase и Firebase? Коротко", "- Supabase: Postgres, SQL, открытый код\n- Firebase: NoSQL, сервисы Google, закрытый код\n- Оба дают авторизацию и хранение файлов"],
+      ["Выделено письмо. «Сделай короче и убери извинения»", "Анна, отчёт будет у вас завтра до обеда. Если нужны правки, напишите сегодня."]
+    ],
+    en: [
+      ["Write a polite rejection for a designer candidate", "Hi Anna,\nThank you for applying and for the time you gave the assignment. We’ve decided to move forward with another candidate, and we’d be glad to reconnect when new roles open."],
+      ["How do Supabase and Firebase differ? Keep it short", "- Supabase: Postgres, SQL, open source\n- Firebase: NoSQL, Google services, closed source\n- Both offer auth and file storage"],
+      ["Email selected. “Shorten this and drop the apologies”", "Hi Anna, you’ll have the report by noon tomorrow. If you need changes, let me know today."]
+    ]
+  };
+  var tabs = document.querySelectorAll("#agent-tabs button");
+  var current = 0;
+  function showExample() {
+    var e = examples[lang][current];
+    document.getElementById("agent-said").textContent = "«" + e[0].replace(/[«»“”]/g, "") + "»";
+    document.getElementById("agent-answer").textContent = e[1];
+    tabs.forEach(function (t, i) { t.setAttribute("aria-selected", i === current ? "true" : "false"); });
+  }
+  tabs.forEach(function (t, i) {
+    t.addEventListener("click", function () { current = i; showExample(); });
+  });
+  button.addEventListener("click", showExample);
+
   apply();
+  showExample();
   play();
 })();

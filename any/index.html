@@ -3,246 +3,126 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>any — голос в челке вашего Mac</title>
-  <meta name="description" content="any — голосовой ассистент для macOS: диктовка, задачи для ИИ, перевод выделенного и личный словарь. Fn — диктовка, Fn + ⌃ — команды. Локальные Whisper и Qwen на Apple Silicon.">
-  <meta name="theme-color" content="#06070b">
-  <meta property="og:title" content="any — голос в челке вашего Mac">
-  <meta property="og:description" content="Диктовка, задачи, перевод и личный словарь для macOS. Локальные модели на Apple Silicon.">
-  <meta property="og:image" content="assets/img/any-icon-512.png">
+  <title>any — диктовка одним нажатием на AirPods</title>
+  <meta name="description" content="any — диктовка для Mac. Нажмите на ножку AirPods, скажите, нажмите ещё раз — текст появится там, где стоит курсор.">
+  <meta name="theme-color" content="#1c1c1c">
+  <meta property="og:title" content="any — диктовка одним нажатием на AirPods">
+  <meta property="og:description" content="Нажмите. Скажите. Текст уже под курсором. Диктовка для Mac.">
+  <meta property="og:image" content="https://www.sverkaus.com/any/assets/img/any-icon-512.png">
+  <meta property="og:url" content="https://www.sverkaus.com/any">
   <link rel="icon" type="image/png" sizes="32x32" href="/any/assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="/any/assets/img/apple-touch-icon.png">
-  <link rel="stylesheet" href="/any/assets/css/any.css">
-  <!-- Release contract: download buttons stay disabled until downloadURL is a verified build (see README.md). -->
-  <script id="release-config" type="application/json">{"downloadURL": "https://github.com/Gleb4442/any-releases/releases/download/v1.0.0/any-1.0.0.dmg", "supportURL": "https://t.me/gennetysupport"}</script>
-  <script defer src="/any/assets/js/sky.js"></script>
-  <script defer src="/any/assets/js/any.js"></script>
+  <link rel="stylesheet" href="/any/assets/css/site.css">
+  <script defer src="/any/assets/js/site.js"></script>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-<symbol id="i-arrow-up-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></symbol>
-<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
-<symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"/></symbol>
-<symbol id="i-chip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="6.5" width="11" height="11" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9.5 3.5v3M14.5 3.5v3M9.5 17.5v3M14.5 17.5v3M3.5 9.5h3M3.5 14.5h3M17.5 9.5h3M17.5 14.5h3"/></symbol>
-<symbol id="i-cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18.5a4.5 4.5 0 0 1-.6-8.96A6 6 0 0 1 18 9.5a4.5 4.5 0 0 1-.5 9z"/></symbol>
-<symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="8.5" y="8.5" width="11" height="11" rx="2.5"/><path d="M15.5 8.5V6.5a2 2 0 0 0-2-2h-7a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h2"/></symbol>
-<symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.4 2.4 3.5 5.3 3.5 8.5s-1.1 6.1-3.5 8.5c-2.4-2.4-3.5-5.3-3.5-8.5s1.1-6.1 3.5-8.5z"/></symbol>
-<symbol id="i-lock-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8.5 11V7.5a3.5 3.5 0 0 1 6.8-1.2"/></symbol>
-<symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0"/><path d="M12 17.5V21"/></symbol>
-<symbol id="i-speaker" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
-<symbol id="i-translate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h9M8.5 3v2M6 5c.6 3 2.7 5.6 5.5 7"/><path d="M11 5c-.8 3.6-3.3 6.4-7 8"/><path d="M12.5 21l4-10 4 10M14 17.5h5"/></symbol>
-<symbol id="i-xmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
-<symbol id="i-swap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7.5h12M15.5 4l3.5 3.5-3.5 3.5"/><path d="M17 16.5H5M8.5 13L5 16.5 8.5 20"/></symbol>
-</defs></svg>
-<div class="sky" aria-hidden="true"><canvas id="sky"></canvas></div>
-
-<header class="nav" id="nav">
-  <div class="wrap nav-inner">
-    <a class="brand" href="#top" aria-label="any"><img src="/any/assets/img/any-icon-64.png" alt="" width="30" height="30"><span>any</span></a>
-    <div class="nav-actions">
-      <button class="lang" id="lang" type="button" aria-label="Switch to English">EN</button>
-      <a class="btn btn-primary btn-sm download" aria-disabled="true"><span class="dl-label" data-en="Soon">Скоро</span></a>
-    </div>
+<header class="nav">
+  <a class="brand" href="#top" aria-label="any"><img src="/any/assets/img/any-icon-64.png" alt="" width="28" height="28"><span>any</span></a>
+  <div class="nav-right">
+    <a class="nav-link" href="#price" data-en="Pricing">Цены</a>
+    <button class="lang" id="lang" type="button" aria-label="Switch to English">EN</button>
+    <a class="btn btn-sm" href="https://github.com/Gleb4442/any-releases/releases/download/v1.0.0/any-1.0.0.dmg" data-en="Download">Скачать</a>
   </div>
 </header>
 
 <main id="top">
+  <section class="hero">
+    <h1 data-en-html="Press. Speak.<br>It’s typed.">Нажмите. Скажите.<br>Готово.</h1>
+    <p class="lede" data-en="Dictation for Mac, one press on your AirPods stem away.">Диктовка для Mac — на расстоянии одного нажатия на ножку AirPods.</p>
 
-  <!-- 1. HERO: Fn dictation -->
-  <section class="hero horizon">
-    <div class="wrap">
-      <h1 class="display grad-text reveal" data-en="Voice at the speed of light.">Голос со скоростью света.</h1>
-      <p class="sub reveal"><span class="kbd sm">fn</span> <span data-en="— and the text is under your cursor.">— и текст уже под курсором.</span></p>
-
-      <div class="screen hero-screen reveal" id="hero-stage" data-video="hero">
-        <div class="notch-host"><div class="notch" id="hero-notch" data-state="idle"></div></div>
-        <div class="canvas-text">
-          <div class="app-tag"><span class="app-dot" style="background:#e5b400">N</span><span data-en="Notes">Заметки</span></div>
-          <div class="typed big" id="hero-text"></div>
-        </div>
-        <div class="hero-keys">
-          <button class="kbd fn-key" id="hero-fn" type="button" aria-label="Зажмите fn, чтобы попробовать" data-en-aria="Hold fn to try it">fn</button>
-          <span class="hold-hint" aria-hidden="true" data-en="hold">зажмите</span>
-        </div>
+    <div class="stage" id="stage" data-state="idle">
+      <svg class="bud" viewBox="0 0 220 420" role="img" aria-label="Наушник: нажатие на ножку" data-en-aria="An earbud: pressing the stem">
+        <defs>
+          <linearGradient id="shell" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#8f8f8d"/><stop offset=".22" stop-color="#e9e9e6"/><stop offset=".55" stop-color="#fbfbf9"/><stop offset="1" stop-color="#b4b4b1"/>
+          </linearGradient>
+          <radialGradient id="head" cx=".42" cy=".34" r=".78">
+            <stop offset="0" stop-color="#ffffff"/><stop offset=".62" stop-color="#e6e6e3"/><stop offset="1" stop-color="#8d8d8a"/>
+          </radialGradient>
+        </defs>
+        <g class="rings" fill="none" stroke="#fff"><circle cx="118" cy="268" r="26"/><circle cx="118" cy="268" r="26"/></g>
+        <rect x="96" y="96" width="44" height="300" rx="22" fill="url(#shell)"/>
+        <ellipse cx="100" cy="86" rx="76" ry="70" fill="url(#head)"/>
+        <ellipse cx="70" cy="80" rx="27" ry="24" fill="#2b2b2b"/>
+        <ellipse cx="70" cy="80" rx="19" ry="17" fill="#191919"/>
+        <rect class="sensor" x="110" y="238" width="16" height="60" rx="8"/>
+        <rect x="108" y="378" width="20" height="5" rx="2.5" fill="#6f6f6c"/>
+      </svg>
+      <div class="readout" aria-hidden="true">
+        <div class="status"><i class="wave"><b></b><b></b><b></b><b></b></i><span id="status"></span></div>
+        <p class="typed" id="typed"></p>
       </div>
+    </div>
 
-      <div class="hero-cta reveal" id="download">
-        <a class="btn btn-primary download" aria-disabled="true"><svg><use href="#i-arrow-up-right"/></svg><span class="dl-label" data-en="Release in preparation">Релиз готовится</span></a>
-      </div>
+    <div class="cta">
+      <a class="btn" href="https://github.com/Gleb4442/any-releases/releases/download/v1.0.0/any-1.0.0.dmg" data-en="Download for Mac">Скачать для Mac</a>
+      <p class="fine" data-en="30 days free · no card · macOS 14+ · Apple Silicon">30 дней бесплатно · без карты · macOS 14+ · Apple Silicon</p>
     </div>
   </section>
 
-  <!-- 2. TASK ASSISTANT + EXA -->
-  <section class="section" id="tasks">
-    <div class="wrap center">
-      <div class="keys-line reveal"><span class="kbd">fn</span><span class="plus">+</span><span class="kbd">⌃</span></div>
-      <h2 class="title reveal" data-en="Say the task. Get the answer.">Скажите задачу. Получите ответ.</h2>
-
-      <div class="screen reveal" id="task-stage" data-video="task">
-        <div class="notch-host"><div class="notch" id="task-notch" data-state="idle"></div></div>
-        <div class="beacon" id="task-beacon" aria-hidden="true"><i></i><i></i><i></i><svg><use href="#i-globe"/></svg><b>Exa</b></div>
-        <div class="canvas-text">
-          <div class="app-tag"><span class="app-dot" style="background:#2f80ed">✉</span><span id="task-to">anna@studio.design</span></div>
-          <div class="typed" id="task-text"></div>
-        </div>
-      </div>
-
-      <div class="prompts reveal" role="group" aria-label="Примеры задач" data-en-aria="Example tasks" id="task-prompts">
-        <button type="button" data-task="0" aria-pressed="true" data-en="Rejection letter">Письмо-отказ</button>
-        <button type="button" data-task="1" aria-pressed="false" data-en="Interview questions">Вопросы к собеседованию</button>
-        <button type="button" data-task="2" aria-pressed="false"><svg><use href="#i-globe"/></svg><span data-en="Supabase vs Firebase">Supabase vs Firebase</span></button>
-      </div>
-      <p class="meta reveal">gpt-oss-120b · Exa <span class="dot"></span> Qwen3-4B <span data-en="offline">офлайн</span></p>
-    </div>
+  <section class="steps">
+    <ol>
+      <li><span>1</span><h2 data-en="Press the stem">Нажмите на ножку</h2><p data-en="No need to reach for the keyboard or look at the screen.">Не нужно тянуться к клавиатуре и смотреть на экран.</p></li>
+      <li><span>2</span><h2 data-en="Speak">Говорите</h2><p data-en="Walk around the room. Think out loud.">Ходите по комнате. Думайте вслух.</p></li>
+      <li><span>3</span><h2 data-en="Press again">Нажмите ещё раз</h2><p data-en="The text lands where your cursor is.">Текст появится там, где стоит курсор.</p></li>
+    </ol>
+    <p class="aside" data-en-html="Turn it on in Settings → Advanced. Not wearing AirPods? Hold <kbd>fn</kbd>.">Включается в Настройках → Дополнительно. Без AirPods — зажмите <kbd>fn</kbd>.</p>
   </section>
 
-  <!-- 3. DUAL TRANSLATION -->
-  <section class="section" id="translate">
-    <div class="wrap center">
-      <h2 class="title reveal" data-en="Select. Name the language.">Выделите. Назовите язык.</h2>
-
-      <div class="tabs reveal" role="tablist" aria-label="Режим перевода" data-en-aria="Translation mode" id="tr-mode">
-        <button type="button" role="tab" aria-selected="true" data-mode="editable" data-en="In a field">В поле</button>
-        <button type="button" role="tab" aria-selected="false" data-mode="readonly" data-en="On a page">На странице</button>
-        <button type="button" role="tab" aria-selected="false" data-mode="speech" data-en="Speech → EN">Речь → EN</button>
-      </div>
-
-      <div class="screen reveal" id="tr-stage" data-video="translate">
-        <div class="notch-host"><div class="notch" id="tr-notch" data-state="idle"></div></div>
-        <div class="canvas-text" id="tr-body"></div>
-      </div>
-
-      <div class="langs reveal" id="tr-langs" aria-label="10 языков перевода" data-en-aria="10 target languages">
-        <span>EN</span><span>RU</span><span>ES</span><span>DE</span><span>FR</span><span>IT</span><span>UK</span><span>ZH</span><span>JA</span><span>PT</span>
-      </div>
-      <p class="meta reveal" id="tr-meta">Apple Translation · <span data-en="on device">на устройстве</span></p>
+  <section class="light">
+    <h2 class="title" data-en="Everything else stays out of the way.">Всё остальное не мешает.</h2>
+    <div class="grid">
+      <div><h3 data-en="Tasks">Задачи</h3><p data-en-html="Hold <kbd>fn</kbd> + <kbd>⌃</kbd>. Say what you need, get the finished text.">Зажмите <kbd>fn</kbd> + <kbd>⌃</kbd>. Скажите задачу — получите готовый текст.</p></div>
+      <div><h3 data-en="Translation">Перевод</h3><p data-en="Select text and name one of ten languages.">Выделите текст и назовите один из десяти языков.</p></div>
+      <div><h3 data-en="Your words">Ваши слова</h3><p data-en="Names, brands and jargon, spelled your way.">Имена, бренды и термины — так, как пишете вы.</p></div>
+      <div><h3 data-en="On your Mac">На вашем Mac</h3><p data-en="Speech and text can stay on the device. The cloud is your choice.">Речь и текст могут оставаться на устройстве. Облако — только по выбору.</p></div>
     </div>
+    <div class="logos" aria-label="Приложения" data-en-aria="Apps">
+      <img src="/any/assets/img/apps/slack.svg" alt="Slack" width="34" height="34">
+      <img src="/any/assets/img/apps/telegram.svg" alt="Telegram" width="34" height="34">
+      <img src="/any/assets/img/apps/whatsapp.svg" alt="WhatsApp" width="34" height="34">
+      <img src="/any/assets/img/apps/notion.svg" alt="Notion" width="34" height="34">
+      <img src="/any/assets/img/apps/discord.svg" alt="Discord" width="34" height="34">
+      <img src="/any/assets/img/apps/zoom.svg" alt="Zoom" width="34" height="34">
+      <img src="/any/assets/img/apps/teams.svg" alt="Microsoft Teams" width="34" height="34">
+      <img src="/any/assets/img/apps/obsidian.svg" alt="Obsidian" width="34" height="34">
+    </div>
+    <p class="logos-note" data-en="Works wherever you can type.">Работает везде, где можно печатать.</p>
   </section>
 
-  <!-- 4. TWO-LEVEL VOCABULARY -->
-  <section class="section" id="vocabulary">
-    <div class="wrap center">
-      <h2 class="title reveal" data-en="Your words. Two layers deep.">Ваши слова. На двух уровнях.</h2>
-
-      <div class="vocab reveal">
-        <div class="layer" id="bytes">
-          <span class="layer-num" data-en="1 · before recognition">1 · до распознавания</span>
-          <div class="hint-cloud" id="hint-cloud" aria-hidden="true"></div>
-          <div class="bytes-bar"><i></i></div>
-          <div class="bytes-count" id="bytes-count">0 / 224 B</div>
-        </div>
-
-        <div class="layer">
-          <span class="layer-num" data-en="2 · after recognition">2 · после распознавания</span>
-          <div class="apps" role="tablist" aria-label="Приложение" data-en-aria="App" id="vocab-app">
-            <button type="button" role="tab" aria-selected="true" data-app="telegram" aria-label="Telegram" title="Telegram"><img src="/any/assets/img/apps/telegram.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="slack" aria-label="Slack" title="Slack"><img src="/any/assets/img/apps/slack.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="whatsapp" aria-label="WhatsApp" title="WhatsApp"><img src="/any/assets/img/apps/whatsapp.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="notion" aria-label="Notion" title="Notion"><img src="/any/assets/img/apps/notion.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="discord" aria-label="Discord" title="Discord"><img src="/any/assets/img/apps/discord.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="zoom" aria-label="Zoom" title="Zoom"><img src="/any/assets/img/apps/zoom.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="teams" aria-label="Microsoft Teams" title="Microsoft Teams"><img src="/any/assets/img/apps/teams.svg" alt="" width="30" height="30"></button>
-            <button type="button" role="tab" aria-selected="false" data-app="obsidian" aria-label="Obsidian" title="Obsidian"><img src="/any/assets/img/apps/obsidian.svg" alt="" width="30" height="30"></button>
-          </div>
-          <p class="vline" id="vocab-out" aria-live="polite"></p>
-          <p class="bundle" id="vocab-bundle"></p>
-        </div>
+  <section class="price" id="price">
+    <h2 class="title" data-en="30 days free. Then your choice.">30 дней бесплатно. Дальше — на выбор.</h2>
+    <div class="plans">
+      <div class="plan">
+        <h3>Lifetime</h3>
+        <p class="amount">$11.99</p>
+        <p data-en="One-time payment. Perpetual license for 1 Mac, all updates included. 14-day money-back guarantee.">Разовый платёж. Лицензия навсегда на 1 Mac, все обновления включены. 14 дней гарантия возврата.</p>
+      </div>
+      <div class="plan">
+        <h3>Monthly</h3>
+        <p class="amount">$1.99<small data-en="/mo">/мес</small></p>
+        <p data-en="Full access on 1 Mac. Cancel anytime, access lasts through the paid period. 14-day refund on any renewal.">Полный доступ на 1 Mac. Отмена в любой момент, доступ до конца оплаченного периода. 14 дней на возврат списания.</p>
       </div>
     </div>
-  </section>
-
-  <!-- 5. CHAINED WORKFLOW -->
-  <section class="section" id="chain">
-    <div class="wrap center">
-      <h2 class="title reveal" data-en="Three gestures. Draft to German.">Три жеста. От черновика до немецкого.</h2>
-
-      <div class="track reveal" id="chain-steps">
-        <div class="track-beam"><i></i></div>
-        <button class="node" type="button" data-step="0" aria-current="step"><span class="node-dot"><span class="orb"></span></span><span class="node-label" data-en="Task">Задача</span></button>
-        <button class="node" type="button" data-step="1"><span class="node-dot">⌘A</span><span class="node-label" data-en="Select">Выделить</span></button>
-        <button class="node" type="button" data-step="2"><span class="node-dot">DE</span><span class="node-label" data-en="German">Немецкий</span></button>
-      </div>
-
-      <div class="screen reveal" id="chain-stage" data-video="chain">
-        <div class="notch-host"><div class="notch" id="chain-notch" data-state="idle"></div></div>
-        <div class="canvas-text">
-          <div class="app-tag"><span class="app-dot" style="background:#2f80ed">✉</span><span data-en="Launch deck">Презентация запуска</span></div>
-          <div class="typed" id="chain-text"></div>
-        </div>
-      </div>
+    <div class="cta">
+      <a class="btn" href="https://github.com/Gleb4442/any-releases/releases/download/v1.0.0/any-1.0.0.dmg" data-en="Download and try">Скачать и попробовать</a>
+      <p class="fine" data-en="You buy inside the app, whenever you decide.">Покупка — внутри приложения, когда решите.</p>
     </div>
-  </section>
-
-  <!-- 6. LOCAL vs CLOUD -->
-  <section class="section horizon" id="local">
-    <div class="wrap center">
-      <h2 class="title reveal" data-en-html="100% local.<br class='br-wide'> Cloud only by choice.">100% локально.<br class="br-wide"> Облако — только по выбору.</h2>
-
-      <div class="tabs reveal" role="tablist" aria-label="Режим" data-en-aria="Mode" id="flow-mode">
-        <button type="button" role="tab" aria-selected="true" data-mode="local"><svg><use href="#i-chip"/></svg><span data-en="On the Mac">На Mac</span></button>
-        <button type="button" role="tab" aria-selected="false" data-mode="cloud"><svg><use href="#i-cloud"/></svg><span>Groq</span></button>
-      </div>
-
-      <div class="flow reveal">
-        <canvas id="flow" aria-hidden="true"></canvas>
-        <p class="sr-only" id="flow-desc"></p>
-      </div>
-      <p class="meta reveal" id="flow-meta"></p>
-    </div>
-  </section>
-
-  <!-- 7. PRICE -->
-  <section class="section price" id="price">
-    <div class="wrap center">
-      <p class="price-days reveal"><b>30</b><span data-en="days free trial">дней бесплатно</span></p>
-      <p class="price-sub reveal" data-en="Full functionality on your Mac. No card required to try.">Полный доступ на вашем Mac. Для старта карта не нужна.</p>
-
-      <div class="pricing-grid reveal">
-        <div class="price-card featured">
-          <span class="price-card-badge" data-en="Best value">Выгоднее всего</span>
-          <h3 class="price-card-title">Lifetime</h3>
-          <div class="price-card-amount">$11.99</div>
-          <div class="price-card-billing" data-en="One-time payment · perpetual license">Разовый платёж · лицензия навсегда</div>
-          <ul class="price-card-features">
-            <li><svg><use href="#i-check"/></svg><span data-en="Perpetual license for 1 Mac">Лицензия навсегда на 1 Mac</span></li>
-            <li><svg><use href="#i-check"/></svg><span data-en="All updates included">Все обновления включены</span></li>
-            <li><svg><use href="#i-check"/></svg><span data-en="100% on-device speech & text">100% локальное распознавание</span></li>
-            <li><svg><use href="#i-check"/></svg><span data-en="14-day money-back guarantee">14 дней гарантия возврата</span></li>
-          </ul>
-          <a class="btn btn-primary plan-btn" href="#download"><span data-en="Get Lifetime — $11.99">Купить Lifetime — $11.99</span></a>
-        </div>
-
-        <div class="price-card">
-          <span class="price-card-badge" data-en="Flexible">Гибкий</span>
-          <h3 class="price-card-title">Monthly</h3>
-          <div class="price-card-amount">$1.99<span class="period" data-en="/mo">/мес</span></div>
-          <div class="price-card-billing" data-en="Monthly subscription · cancel anytime">Ежемесячная подписка · отмена в любой момент</div>
-          <ul class="price-card-features">
-            <li><svg><use href="#i-check"/></svg><span data-en="Full access on 1 Mac">Полный доступ на 1 Mac</span></li>
-            <li><svg><use href="#i-check"/></svg><span data-en="Cancel anytime with one click">Отмена в любой момент в 1 клик</span></li>
-            <li><svg><use href="#i-check"/></svg><span data-en="Access through end of paid period">Доступ до конца оплаченного периода</span></li>
-            <li><svg><use href="#i-check"/></svg><span data-en="14-day refund on any renewal">14 дней на возврат списания</span></li>
-          </ul>
-          <a class="btn btn-ghost plan-btn" href="#download"><span data-en="Subscribe — $1.99/mo">Подписка — $1.99/мес</span></a>
-        </div>
-      </div>
-
-      <p class="price-note reveal" data-en-html="Orders & billing are processed securely by <a href='https://creem.io' target='_blank' rel='noopener'>Creem</a> (Merchant of Record). See <a href='/any/terms'>Terms</a> and <a href='/any/refund'>Refund Policy</a>. Sexually explicit content is not allowed in any, including voice commands and AI text drafting (<a href='/any/terms'>Terms, §5</a>).">Платежи и счета безопасно обрабатывает <a href="https://creem.io" target="_blank" rel="noopener">Creem</a> (Merchant of Record). См. <a href="/any/terms">Условия</a> и <a href="/any/refund">Правила возврата</a>. Контент сексуального характера в any запрещён, включая голосовые команды и составление текста с ИИ (<a href="/any/terms">Условия, §5</a>).</p>
-      <p class="meta reveal">macOS 14+ · Apple Silicon</p>
-    </div>
+    <p class="legal" data-en-html="Orders and billing are processed securely by <a href='https://creem.io' target='_blank' rel='noopener'>Creem</a> (Merchant of Record). See <a href='/any/terms'>Terms</a> and <a href='/any/refund'>Refund Policy</a>. Sexually explicit content is not allowed in any, including voice commands and AI text drafting (<a href='/any/terms'>Terms, §5</a>).">Платежи и счета безопасно обрабатывает <a href="https://creem.io" target="_blank" rel="noopener">Creem</a> (Merchant of Record). См. <a href="/any/terms">Условия</a> и <a href="/any/refund">Правила возврата</a>. Контент сексуального характера в any запрещён, включая голосовые команды и составление текста с ИИ (<a href="/any/terms">Условия, §5</a>).</p>
   </section>
 </main>
 
 <footer class="footer">
-  <div class="wrap footer-inner">
-    <a class="brand" href="#top"><img src="/any/assets/img/any-icon-64.png" alt="" width="24" height="24"><span>any</span></a>
+  <nav>
     <a href="/any/privacy" data-en="Privacy">Конфиденциальность</a>
     <a href="/any/terms" data-en="Terms">Условия</a>
     <a href="/any/refund" data-en="Refunds">Возврат</a>
-    <a href="https://t.me/gennetysupport" target="_blank" rel="noopener" data-en="Support">Поддержка</a>
     <a href="/any/help" data-en="Help">Помощь</a>
+    <a href="https://t.me/gennetysupport" target="_blank" rel="noopener" data-en="Support">Поддержка</a>
     <a href="/any/third-party-notices.txt" data-en="Licenses">Лицензии</a>
-    <span class="footer-note" data-en-html="Operated by Hleb Hosha (individual), Ukraine · <a href='mailto:main@sverkaus.com'>main@sverkaus.com</a>">Оператор: Глеб Хоша (Hleb Hosha), физическое лицо, Украина · <a href="mailto:main@sverkaus.com">main@sverkaus.com</a></span>
-  </div>
+  </nav>
+  <p data-en-html="Operated by Hleb Hosha (individual), Ukraine · <a href='mailto:main@sverkaus.com'>main@sverkaus.com</a>">Оператор: Глеб Хоша (Hleb Hosha), физическое лицо, Украина · <a href="mailto:main@sverkaus.com">main@sverkaus.com</a></p>
+  <p data-en="AirPods and Mac are trademarks of Apple Inc. any is not affiliated with Apple. Other logos belong to their owners.">AirPods и Mac — товарные знаки Apple Inc. any не связан с Apple. Остальные логотипы принадлежат их владельцам.</p>
 </footer>
 </body>
 </html>

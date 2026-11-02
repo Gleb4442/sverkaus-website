@@ -42,7 +42,7 @@
   function place() {
     var r = langBtn.getBoundingClientRect();
     menu.style.top = Math.round(r.bottom + 14) + "px";
-    menu.style.right = Math.max(10, Math.round(window.innerWidth - r.right - 18)) + "px";
+    menu.style.right = Math.max(10, Math.round(window.innerWidth - r.right - 4)) + "px";
   }
   function openMenu() {
     place();
@@ -245,84 +245,127 @@
   agTabs.forEach(function (t, k) { t.addEventListener("click", function () { if (k !== agentIndex) agentPlay(k, true); }); });
   window.addEventListener("resize", moveInd);
 
-  /* ---------- Speed: last word → text in the field ---------- */
-  var sd = $("sd"), sdNum = $("sd-num"), sdTimers = [], sdOn = false;
-  function fmt(sec) { var s = sec.toFixed(2); return tr("sp.num").indexOf(",") >= 0 ? s.replace(".", ",") : s; }
-  function sdReset() { stop(sdTimers); sd.dataset.phase = "idle"; sdNum.textContent = tr("sp.num"); if (sdOn) after(sdTimers, 400, sdPlay); }
+  /* ---------- Speed: you speak, you stop, the text is there ---------- */
+  var sd = $("sd"), sdTimers = [], sdOn = false;
+  function sdReset() { stop(sdTimers); sd.dataset.phase = "idle"; if (sdOn) after(sdTimers, 300, sdPlay); }
   function sdPlay() {
     stop(sdTimers);
     sd.dataset.phase = "talk";
-    sdNum.textContent = fmt(0);
-    after(sdTimers, 1800, function () {
+    after(sdTimers, 2400, function () {
       sd.dataset.phase = "gap";
-      var t0 = performance.now();
-      (function tick() {
-        var ms = Math.min(160, performance.now() - t0);
-        sdNum.textContent = fmt(ms / 1000);
-        if (ms < 160) { requestAnimationFrame(tick); return; }
-        sdNum.textContent = tr("sp.num");
+      after(sdTimers, 160, function () {
         sd.dataset.phase = "in";
-        after(sdTimers, 3600, function () { if (sdOn) sdPlay(); });
-      })();
+        after(sdTimers, 3200, function () {
+          sd.dataset.phase = "out";
+          after(sdTimers, 450, function () { if (sdOn) sdPlay(); });
+        });
+      });
     });
   }
-  $("sd-again").addEventListener("click", function () { sdOn = true; sdPlay(); });
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(function (e) {
       var vis = e[0].isIntersecting;
       if (vis && !sdOn) { sdOn = true; sdPlay(); }
-      if (!vis && sdOn) { sdOn = false; stop(sdTimers); }
-    }, { threshold: .45 }).observe(sd);
+      if (!vis && sdOn) { sdOn = false; stop(sdTimers); sd.dataset.phase = "idle"; }
+    }, { threshold: .6 }).observe(sd);
   } else { sdOn = true; sdPlay(); }
 
-  /* ---------- Download: the button opens into a glass sheet ---------- */
-  var dl = $("dl"), card = $("dl-card"), dlFrom = null, dlUrl = null;
+  /* ---------- Nav: the section you are reading ---------- */
+  var navLinks = qsa(".nav-link");
+  if ("IntersectionObserver" in window) {
+    var spy = new IntersectionObserver(function (list) {
+      list.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        navLinks.forEach(function (a) { a.toggleAttribute("aria-current", a.getAttribute("href") === "#" + e.target.id); });
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    ["how", "agent", "apps", "speed", "price"].forEach(function (id) { var el = $(id); if (el) spy.observe(el); });
+    spy.observe(document.querySelector(".hero"));
+  }
+
+  /* ---------- Download: the button folds, flies to the browser's downloads, the next screen opens from there ---------- */
+  var next = $("next"), fromBtn = null, dlUrl = null, busy = false, corner = { x: 0, y: 0 };
+  var arrowSvg = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.8v9.4M3.8 8.2 8 12.4l4.2-4.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   function startDownload(url) {
     var f = document.createElement("iframe");
     f.hidden = true; f.src = url;
     document.body.appendChild(f);
     setTimeout(function () { f.remove(); }, 60000);
   }
-  function runIcon() { dl.classList.remove("run"); void dl.offsetWidth; dl.classList.add("run"); }
-  function openDl(btn) {
-    dlFrom = btn; dlUrl = btn.href;
-    dl.hidden = false;
-    runIcon();
-    var r1 = card.getBoundingClientRect(), r0 = btn.getBoundingClientRect();
-    if (!reduced && card.animate) {
-      var dx = r0.left + r0.width / 2 - (r1.left + r1.width / 2), dy = r0.top + r0.height / 2 - (r1.top + r1.height / 2);
-      card.animate([
-        { transform: "translate(" + dx + "px," + dy + "px) scale(" + (r0.width / r1.width) + "," + (r0.height / r1.height) + ")", borderRadius: "999px", opacity: .5 },
-        { transform: "none", borderRadius: "34px", opacity: 1 }
-      ], { duration: 620, easing: "cubic-bezier(.22,.9,.2,1)" });
-    }
-    requestAnimationFrame(function () { dl.classList.add("open"); });
-    setTimeout(function () { startDownload(dlUrl); }, 450);
-    setTimeout(function () { card.querySelector(".dl-x").focus({ preventScroll: true }); }, 60);
-    document.body.classList.add("lock");
+  function ping(x) {
+    var p = document.createElement("span");
+    p.className = "ping"; p.style.left = x + "px";
+    document.body.appendChild(p);
+    setTimeout(function () { p.remove(); }, 900);
   }
-  function closeDl() {
-    if (dl.hidden) return;
-    dl.classList.remove("open");
-    if (!reduced && card.animate) card.animate([{ transform: "none", opacity: 1 }, { transform: "scale(.96)", opacity: 0 }], { duration: 220, easing: "ease-in", fill: "forwards" });
-    setTimeout(function () { dl.hidden = true; card.getAnimations && card.getAnimations().forEach(function (a) { a.cancel(); }); }, 230);
-    document.body.classList.remove("lock");
-    if (dlFrom) dlFrom.focus({ preventScroll: true });
+  function reveal() {
+    var R = Math.hypot(Math.max(corner.x, innerWidth - corner.x), innerHeight) * 1.05;
+    next.hidden = false;
+    document.body.classList.add("lock");
+    var shape = function (r) { return "circle(" + r + "px at " + corner.x + "px " + corner.y + "px)"; };
+    next.animate([{ clipPath: shape(0) }, { clipPath: shape(R) }], { duration: 820, easing: "cubic-bezier(.6,0,.2,1)" });
+    requestAnimationFrame(function () { next.classList.add("open"); });
+    setTimeout(function () { next.querySelector(".next-x").focus({ preventScroll: true }); }, 400);
+  }
+  function launch(btn) {
+    if (busy) return;
+    busy = true; fromBtn = btn; dlUrl = btn.href;
+    var r = btn.getBoundingClientRect(), cs = getComputedStyle(btn), d = r.height;
+    var tok = document.createElement("div");
+    tok.className = "fly";
+    tok.style.cssText = "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px;height:" + d + "px;font:" + cs.font;
+    tok.innerHTML = '<span class="fly-label"></span><span class="fly-arrow">' + arrowSvg + "</span>";
+    tok.firstChild.textContent = btn.textContent;
+    document.body.appendChild(tok);
+    btn.style.visibility = "hidden";
+    requestAnimationFrame(function () { tok.classList.add("fold"); });
+    var fold = tok.animate([{ left: r.left + "px", width: r.width + "px" }, { left: r.left + (r.width - d) / 2 + "px", width: d + "px" }],
+      { duration: 420, delay: 60, easing: "cubic-bezier(.6,0,.25,1)", fill: "forwards" });
+    fold.onfinish = function () {
+      var cx = r.left + r.width / 2, cy = r.top + d / 2;
+      corner = { x: innerWidth - 64, y: 0 };
+      var dx = corner.x - cx, dy = corner.y - 8 - cy;
+      var fly = tok.animate([
+        { transform: "translate(0,0) scale(1)", opacity: 1 },
+        { transform: "translate(0,4px) scale(1.06)", opacity: 1, offset: .12 },
+        { transform: "translate(" + dx * .3 + "px," + (dy * .62 - 30) + "px) scale(.78)", opacity: 1, offset: .55 },
+        { transform: "translate(" + dx + "px," + dy + "px) scale(.32)", opacity: .2 }
+      ], { duration: 860, easing: "cubic-bezier(.45,0,.25,1)", fill: "forwards" });
+      setTimeout(function () { startDownload(dlUrl); }, 500);
+      fly.onfinish = function () { tok.remove(); ping(corner.x); setTimeout(reveal, 120); };
+    };
+  }
+  function closeNext() {
+    if (next.hidden) return;
+    next.classList.remove("open");
+    var shape = function (r) { return "circle(" + r + "px at " + corner.x + "px " + corner.y + "px)"; };
+    var R = Math.hypot(Math.max(corner.x, innerWidth - corner.x), innerHeight) * 1.05;
+    var a = next.animate([{ clipPath: shape(R) }, { clipPath: shape(0) }], { duration: 560, easing: "cubic-bezier(.5,0,.3,1)", fill: "forwards" });
+    a.onfinish = function () {
+      next.hidden = true; a.cancel();
+      document.body.classList.remove("lock");
+      if (fromBtn) {
+        fromBtn.style.visibility = "";
+        if (fromBtn.animate) fromBtn.animate([{ opacity: 0, transform: "scale(.9)" }, { opacity: 1, transform: "none" }], { duration: 380, easing: ease });
+        fromBtn.focus({ preventScroll: true });
+      }
+      busy = false;
+    };
   }
   qsa(".dl-btn").forEach(function (a) {
     a.addEventListener("click", function (e) {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
       e.preventDefault();
-      openDl(a);
+      launch(a);
     });
   });
-  qsa("[data-close]", dl).forEach(function (el) { el.addEventListener("click", closeDl); });
-  $("dl-again").addEventListener("click", function (e) { e.preventDefault(); runIcon(); startDownload(dlUrl || this.href); });
+  qsa("[data-close]", next).forEach(function (el) { el.addEventListener("click", closeNext); });
+  $("dl-again").addEventListener("click", function (e) { e.preventDefault(); startDownload(dlUrl || this.href); ping(innerWidth - 64); });
   document.addEventListener("keydown", function (e) {
-    if (dl.hidden) return;
-    if (e.key === "Escape") closeDl();
+    if (next.hidden) return;
+    if (e.key === "Escape") closeNext();
     if (e.key === "Tab") {
-      var f = qsa("button, a[href]", card), first = f[0], last = f[f.length - 1];
+      var f = qsa("button, a[href]", next), first = f[0], last = f[f.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }

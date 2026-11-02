@@ -75,13 +75,12 @@
   var field = document.getElementById("field");
   var typed = document.getElementById("typed");
   var thread = document.getElementById("thread");
-  var status = document.getElementById("status");
   var timers = [];
   var scene = 0;
 
   function after(list, ms, fn) { list.push(setTimeout(fn, ms)); }
   function stop(list) { list.forEach(clearTimeout); list.length = 0; }
-  function set(state, label) { stage.dataset.state = state; status.textContent = label || ""; }
+  function set(state) { stage.dataset.state = state; }
   function tap() { bud.classList.remove("tap"); void bud.offsetWidth; bud.classList.add("tap"); }
   function bubble(cls, text, anim) {
     var m = document.createElement("p");

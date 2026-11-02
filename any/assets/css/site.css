@@ -312,3 +312,61 @@ body.lock{overflow:hidden}
 .next-links a,.next-links button{border:0;background:none;color:#b5b5b2;font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .next-links a:hover,.next-links button:hover{color:#fff}
 @media (max-width:760px){.next{place-items:start center}.next-steps{grid-template-columns:1fr}.ill{height:120px}}
+
+/* v11: frameless app marks, first-style speed card, matching price button, in-button download motion */
+.logos{max-width:640px}
+.logos img{width:60px;height:60px;filter:none}
+.light .logos figure{gap:9px}
+.price .cta .btn{display:inline-block;max-width:none;margin:0}
+.spd{max-width:600px;margin:clamp(32px,4vw,48px) auto 0;padding:clamp(30px,3.4vw,40px) clamp(22px,3.6vw,44px) clamp(24px,3vw,32px);border-radius:32px}
+.spd-num{font-size:clamp(72px,9vw,120px);line-height:1;font-weight:600;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.spd-num small{margin-left:8px;font-size:.28em;font-weight:500;letter-spacing:0;color:#cfcfcc}
+.spd-cap{margin-top:12px;font-size:clamp(15px,1.4vw,17px);line-height:1.4;color:#cfcfcc}
+.spd-bar{position:relative;height:10px;margin-top:clamp(26px,3vw,34px);border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;transform-origin:left;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.spd-fill{position:absolute;inset:0 auto 0 0;width:16%;border-radius:99px;background:var(--paper);box-shadow:0 0 18px rgba(255,255,255,.5)}
+.spd[data-phase=ready] .spd-fill{width:0;transition:none}
+.spd[data-phase=ready] .spd-bar{transform:scaleX(1)}
+.spd[data-phase=run] .spd-fill{width:16%;transition:width .16s linear}
+.spd[data-phase=done] .spd-fill{animation:glint .9s ease-out}
+@keyframes glint{0%{box-shadow:0 0 30px rgba(255,255,255,.95)}100%{box-shadow:0 0 18px rgba(255,255,255,.5)}}
+.spd-scale{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--mute)}
+.spd[data-phase=ready] .spd-num{opacity:.4}
+.spd-num{transition:opacity .3s}
+
+.fly{position:fixed;z-index:50;border-radius:999px;pointer-events:none;background:none;box-shadow:none;display:block;overflow:visible}
+.fly>span{position:absolute;border-radius:inherit}
+.fly>.fly-glow{inset:-10px;background:conic-gradient(from var(--spin),#9e73ff,#4d8cff,#ff73bf,#9e73ff);filter:blur(16px);opacity:0;transition:opacity .45s ease;animation:spin 1.6s linear infinite}
+.fly>.fly-ring{inset:0;background:conic-gradient(from var(--spin),#9e73ff,#4d8cff,#ff73bf,#9e73ff);opacity:0;transition:opacity .35s ease;animation:spin 1.6s linear infinite}
+.fly>.fly-core{inset:0;display:grid;place-items:center;overflow:hidden;background:var(--paper);color:var(--ink);box-shadow:0 14px 34px rgba(0,0,0,.35);transition:inset .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes spin{to{--spin:360deg}}
+.fly.on .fly-ring{opacity:1}
+.fly.on .fly-glow{opacity:.7}
+.fly.on .fly-core{inset:2.5px}
+.fly-core>span{grid-area:1/1;display:grid;place-items:center;white-space:nowrap;transition:opacity .3s,transform .5s cubic-bezier(.2,.8,.2,1),filter .3s}
+.fly-label{transform:none}
+.fly-arrow{opacity:0;transform:translateY(-120%)}
+.fly-arrow svg{width:18px;height:18px}
+.fly.on .fly-label{opacity:0;transform:translateY(-120%);filter:blur(4px)}
+.fly.on .fly-arrow{opacity:1;transform:none;transition-delay:.16s,.16s,0s;animation:nudge 1s .7s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(3px)}}
+.fly.drop .fly-arrow{animation:none;transform:translateY(130%);opacity:0;transition-delay:0s}
+.ping{background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(190,170,255,.5) 55%,rgba(255,255,255,0))}
+
+.next-steps li{display:flex;flex-direction:column}
+.ill .wm{display:block;width:100%;height:100%}
+.file{position:relative;display:grid;place-items:center;width:64px;height:80px;border-radius:10px 22px 10px 10px;background:linear-gradient(160deg,#fbfbf8,#e2e2dd);box-shadow:0 12px 24px rgba(0,0,0,.28)}
+.file .wm{width:36px;height:18px;color:#1c1c1c}
+.file img{display:none}
+.mv-word{position:absolute;left:calc(50% - 96px);top:58px;width:44px;height:22px;color:#fff;animation:mvw 3.2s cubic-bezier(.45,0,.25,1) infinite}
+@keyframes mvw{0%{transform:translateX(-6px);opacity:0}10%,22%{transform:none;opacity:1}58%{transform:translateX(146px) translateY(-4px) scale(.55);opacity:1}66%,100%{transform:translateX(146px) translateY(-4px) scale(.45);opacity:0}}
+.mv-app{display:none}
+.mv-folder svg{filter:drop-shadow(0 6px 12px rgba(0,0,0,.25))}
+.run{display:none}
+.launch{position:relative;display:block;width:120px;height:80px}
+.lw{position:absolute;left:24px;top:22px;width:72px;height:36px;color:#fff;animation:lw 3.2s ease-in-out infinite}
+@keyframes lw{0%,40%,100%{transform:none}46%{transform:scale(.94)}52%{transform:none}58%{transform:scale(.94)}64%{transform:scale(1.04)}72%{transform:none}}
+.rip{position:absolute;left:60px;top:40px;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);opacity:0;animation:rip 3.2s ease-out infinite}
+@keyframes rip{0%,44%{opacity:0;transform:scale(.4)}48%{opacity:.9;transform:scale(.5)}62%{opacity:0;transform:scale(1.6)}100%{opacity:0}}
+.cur{position:absolute;left:58px;top:38px;width:22px;height:22px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.35));animation:cur 3.2s cubic-bezier(.45,0,.25,1) infinite}
+@keyframes cur{0%{transform:translate(46px,34px);opacity:0}12%{opacity:1}36%,80%{transform:none;opacity:1}46%,58%{transform:scale(.88)}52%,64%{transform:none}92%,100%{transform:translate(46px,34px);opacity:0}}
+.mv-folder{z-index:2}

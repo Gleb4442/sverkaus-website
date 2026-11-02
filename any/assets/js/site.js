@@ -245,30 +245,33 @@
   agTabs.forEach(function (t, k) { t.addEventListener("click", function () { if (k !== agentIndex) agentPlay(k, true); }); });
   window.addEventListener("resize", moveInd);
 
-  /* ---------- Speed: you speak, you stop, the text is there ---------- */
-  var sd = $("sd"), sdTimers = [], sdOn = false;
-  function sdReset() { stop(sdTimers); sd.dataset.phase = "idle"; if (sdOn) after(sdTimers, 300, sdPlay); }
+  /* ---------- Speed: 0 → 0.16 s on a one-second bar ---------- */
+  var sd = $("sd"), sdNum = $("sd-num"), sdTimers = [], sdOn = false;
+  function fmt(sec) { var v = sec.toFixed(2); return tr("sp.num").indexOf(",") >= 0 ? v.replace(".", ",") : v; }
+  function sdReset() { stop(sdTimers); sd.dataset.phase = "idle"; sdNum.textContent = tr("sp.num"); }
   function sdPlay() {
     stop(sdTimers);
-    sd.dataset.phase = "talk";
-    after(sdTimers, 2400, function () {
-      sd.dataset.phase = "gap";
-      after(sdTimers, 160, function () {
-        sd.dataset.phase = "in";
-        after(sdTimers, 3200, function () {
-          sd.dataset.phase = "out";
-          after(sdTimers, 450, function () { if (sdOn) sdPlay(); });
-        });
-      });
+    sd.dataset.phase = "ready";
+    sdNum.textContent = fmt(0);
+    after(sdTimers, 900, function () {
+      sd.dataset.phase = "run";
+      var t0 = performance.now();
+      (function tick() {
+        var ms = Math.min(160, performance.now() - t0);
+        sdNum.textContent = fmt(ms / 1000);
+        if (ms < 160) { requestAnimationFrame(tick); return; }
+        sdNum.textContent = tr("sp.num");
+        sd.dataset.phase = "done";
+      })();
     });
   }
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(function (e) {
       var vis = e[0].isIntersecting;
       if (vis && !sdOn) { sdOn = true; sdPlay(); }
-      if (!vis && sdOn) { sdOn = false; stop(sdTimers); sd.dataset.phase = "idle"; }
+      if (!vis && sdOn) { sdOn = false; sdReset(); }
     }, { threshold: .6 }).observe(sd);
-  } else { sdOn = true; sdPlay(); }
+  }
 
   /* ---------- Nav: the section you are reading ---------- */
   var navLinks = qsa(".nav-link");
@@ -314,24 +317,28 @@
     var tok = document.createElement("div");
     tok.className = "fly";
     tok.style.cssText = "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px;height:" + d + "px;font:" + cs.font;
-    tok.innerHTML = '<span class="fly-label"></span><span class="fly-arrow">' + arrowSvg + "</span>";
-    tok.firstChild.textContent = btn.textContent;
+    tok.innerHTML = '<span class="fly-glow"></span><span class="fly-ring"></span><span class="fly-core"><span class="fly-label"></span><span class="fly-arrow">' + arrowSvg + "</span></span>";
+    tok.querySelector(".fly-label").textContent = btn.textContent;
     document.body.appendChild(tok);
     btn.style.visibility = "hidden";
-    requestAnimationFrame(function () { tok.classList.add("fold"); });
+    // 1. Inside the button: a soft press, the label lifts away, the arrow drops in, the agent's colours run around the edge.
+    tok.animate([{ transform: "scale(1)" }, { transform: "scale(.94)", offset: .3 }, { transform: "scale(1.02)", offset: .7 }, { transform: "scale(1)" }], { duration: 460, easing: "ease-out" });
+    requestAnimationFrame(function () { tok.classList.add("on"); });
+    // 2. The pill folds into a circle.
     var fold = tok.animate([{ left: r.left + "px", width: r.width + "px" }, { left: r.left + (r.width - d) / 2 + "px", width: d + "px" }],
-      { duration: 420, delay: 60, easing: "cubic-bezier(.6,0,.25,1)", fill: "forwards" });
+      { duration: 560, delay: 720, easing: "cubic-bezier(.65,0,.2,1.15)", fill: "forwards" });
     fold.onfinish = function () {
+      // 3. It lifts off towards the browser's downloads, top right.
       var cx = r.left + r.width / 2, cy = r.top + d / 2;
       corner = { x: innerWidth - 64, y: 0 };
       var dx = corner.x - cx, dy = corner.y - 8 - cy;
       var fly = tok.animate([
         { transform: "translate(0,0) scale(1)", opacity: 1 },
-        { transform: "translate(0,4px) scale(1.06)", opacity: 1, offset: .12 },
-        { transform: "translate(" + dx * .3 + "px," + (dy * .62 - 30) + "px) scale(.78)", opacity: 1, offset: .55 },
-        { transform: "translate(" + dx + "px," + dy + "px) scale(.32)", opacity: .2 }
-      ], { duration: 860, easing: "cubic-bezier(.45,0,.25,1)", fill: "forwards" });
-      setTimeout(function () { startDownload(dlUrl); }, 500);
+        { transform: "translate(0,6px) scale(.96)", opacity: 1, offset: .14 },
+        { transform: "translate(" + dx * .28 + "px," + (dy * .6 - 34) + "px) scale(.8)", opacity: 1, offset: .55 },
+        { transform: "translate(" + dx + "px," + dy + "px) scale(.3)", opacity: .25 }
+      ], { duration: 900, delay: 260, easing: "cubic-bezier(.45,0,.25,1)", fill: "forwards" });
+      setTimeout(function () { startDownload(dlUrl); }, 700);
       fly.onfinish = function () { tok.remove(); ping(corner.x); setTimeout(reveal, 120); };
     };
   }

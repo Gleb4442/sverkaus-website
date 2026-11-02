@@ -138,6 +138,8 @@ h1{font-size:clamp(40px,5.6vw,78px);line-height:1.03;font-weight:600;letter-spac
   .nav-link{display:none}
   .nav-link[href="#agent"]{display:inline}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rings i,.pinch i,.touch,.wave b,.bud img,.msg,.field-text .w,.field-text::after{animation:none!important}.win{transition:none}}
+@keyframes fade{from{opacity:0}}
+@keyframes blink{40%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rings i,.wave b,.bud.tap img{animation:none!important}.win,.win.out{transform:none;filter:none;transition:opacity .5s ease}.msg.out:not(.old),.field-text .w{animation:fade .4s ease both!important}.bud.tap .pinch i,.bud.tap .touch{animation:blink .75s ease!important;transform:none}}
 @media (prefers-reduced-transparency:reduce){.glass{-webkit-backdrop-filter:none;backdrop-filter:none;background:#333}}
 .credit{margin-top:8px;font-size:12px;color:#8a8a87}.credit a{color:inherit}

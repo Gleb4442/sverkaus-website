@@ -64,7 +64,6 @@
   var status = document.getElementById("status");
   var timers = [];
   var scene = 0;
-  var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function after(ms, fn) { timers.push(setTimeout(fn, ms)); }
   function stop() { timers.forEach(clearTimeout); timers = []; }
@@ -95,12 +94,6 @@
     stop();
     var sc = scenes[scene], u = ui[lang], words = sc.text[lang].split(" ");
     setup(sc);
-    if (still) {
-      typed.textContent = sc.text[lang];
-      field.classList.add("ready");
-      win.className = "win glass in";
-      return;
-    }
     win.className = "win glass";
     void win.offsetWidth;
     win.classList.add("in");

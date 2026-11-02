@@ -6,10 +6,7 @@
   };
   var lang = store.get() || ((navigator.language || "").toLowerCase().indexOf("ru") === 0 ? "ru" : "en");
   var button = document.getElementById("lang");
-  var phrases = {
-    ru: { press: "Нажатие", listen: "Слушаю", done: "Вставлено", text: "Давайте перенесём созвон на 15:00 и пришлём отчёт до обеда." },
-    en: { press: "Press", listen: "Listening", done: "Inserted", text: "Let’s move the call to 3 pm and send the report before noon." }
-  };
+
 
   document.querySelectorAll("[data-en],[data-en-html],[data-en-aria]").forEach(function (el) {
     el.dataset.ruHtml = el.innerHTML;
@@ -40,37 +37,109 @@
     play();
   });
 
+  var ui = {
+    ru: { press: "Нажатие", listen: "Слушаю", sent: "Отправлено", ph: "Сообщение" },
+    en: { press: "Press", listen: "Listening", sent: "Sent", ph: "Message" }
+  };
+  var scenes = [
+    { icon: "/any/assets/img/apps/telegram-app.png", app: "Telegram", to: { ru: "Анна", en: "Anna" },
+      thread: [["inc", { ru: "Привет! Ты сегодня в офисе?", en: "Hi! Are you at the office today?" }],
+               ["out", { ru: "Нет, работаю из дома", en: "No, working from home" }],
+               ["inc", { ru: "Во сколько тогда созвон?", en: "So what time is the call?" }]],
+      text: { ru: "Давай в 15:00, а отчёт пришлю до обеда.", en: "Let’s do 3 pm, and I’ll send the report before lunch." } },
+    { icon: "/any/assets/img/apps/claude.png", app: "Claude", to: { ru: "", en: "" },
+      hello: { ru: "Чем могу помочь?", en: "How can I help?" }, ph: { ru: "Спросите что-нибудь", en: "Ask anything" },
+      text: { ru: "Составь план поездки в Лиссабон на три дня, без музеев и ранних подъёмов.", en: "Plan three days in Lisbon for me, no museums and no early mornings." } },
+    { icon: "/any/assets/img/apps/slack.svg", app: "Slack", to: { ru: "# дизайн", en: "# design" },
+      thread: [["inc", { ru: "Сайт выкатываем после обеда", en: "The site ships after lunch" }],
+               ["inc", { ru: "Макет шапки готов?", en: "Is the header mockup ready?" }]],
+      text: { ru: "Почти, ссылку кину через десять минут.", en: "Almost, I’ll drop the link in ten minutes." } }
+  ];
   var stage = document.getElementById("stage");
-  var status = document.getElementById("status");
+  var win = document.getElementById("win");
+  var bud = document.getElementById("bud");
+  var field = document.getElementById("field");
   var typed = document.getElementById("typed");
-  var timer = null;
+  var thread = document.getElementById("thread");
+  var status = document.getElementById("status");
+  var timers = [];
+  var scene = 0;
   var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  function set(state, label) { stage.dataset.state = state; status.textContent = label; }
-  function after(ms, fn) { timer = setTimeout(fn, ms); }
+  function after(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  function stop() { timers.forEach(clearTimeout); timers = []; }
+  function set(state, label) { stage.dataset.state = state; status.textContent = label || ""; }
+  function tap() { bud.classList.remove("tap"); void bud.offsetWidth; bud.classList.add("tap"); }
+  function bubble(cls, text, anim) {
+    var m = document.createElement("p");
+    m.className = cls === "hello" ? cls : "msg " + cls + (anim ? "" : " old");
+    m.textContent = text;
+    thread.appendChild(m);
+  }
+  function setup(sc) {
+    var u = ui[lang];
+    document.getElementById("win-icon").src = sc.icon;
+    document.getElementById("win-app").textContent = sc.app;
+    document.getElementById("win-to").textContent = sc.to[lang];
+    thread.textContent = "";
+    (sc.thread || []).forEach(function (t) { bubble(t[0], t[1][lang]); });
+    if (sc.hello) bubble("hello", sc.hello[lang]);
+    typed.textContent = "";
+    typed.dataset.ph = sc.ph ? sc.ph[lang] : u.ph;
+    field.className = "field";
+    stage.classList.remove("focus");
+    set("idle");
+  }
 
   function play() {
-    clearTimeout(timer);
-    var p = phrases[lang];
-    typed.textContent = "";
-    if (still) { set("idle", p.done); typed.textContent = p.text; return; }
-    set("idle", "");
-    after(700, function () {
-      set("press", p.press);
-      after(850, function () {
-        set("listen", p.listen);
+    stop();
+    var sc = scenes[scene], u = ui[lang], words = sc.text[lang].split(" ");
+    setup(sc);
+    if (still) {
+      typed.textContent = sc.text[lang];
+      field.classList.add("ready");
+      win.className = "win glass in";
+      return;
+    }
+    win.className = "win glass";
+    void win.offsetWidth;
+    win.classList.add("in");
+    after(900, function () {
+      tap(); set("press", u.press);
+      after(420, function () {
+        set("listen", u.listen);
+        stage.classList.add("focus");
         var i = 0;
-        (function type() {
-          typed.textContent = p.text.slice(0, ++i);
-          if (i < p.text.length) { after(34, type); return; }
-          after(650, function () {
-            set("done", p.done);
-            after(3600, play);
+        (function next() {
+          if (i) typed.appendChild(document.createTextNode(" "));
+          var w = document.createElement("span");
+          w.className = "w";
+          w.textContent = words[i];
+          typed.appendChild(w);
+          if (i === 0) field.classList.add("ready");
+          if (++i < words.length) { after(150 + words[i - 1].length * 16, next); return; }
+          after(700, function () {
+            tap(); set("press", u.press);
+            field.classList.add("go");
+            after(300, function () {
+              stage.classList.remove("focus");
+              field.className = "field";
+              typed.textContent = "";
+              var h = thread.querySelector(".hello");
+              if (h) h.remove();
+              bubble("out", sc.text[lang], true);
+              set("sent", u.sent);
+              after(2000, function () {
+                win.classList.add("out");
+                after(600, function () { scene = (scene + 1) % scenes.length; play(); });
+              });
+            });
           });
         })();
       });
     });
   }
+  document.addEventListener("visibilitychange", function () { if (document.hidden) stop(); else play(); });
 
   var examples = {
     ru: [

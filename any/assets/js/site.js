@@ -1,46 +1,100 @@
 (function () {
-  var root = document.documentElement;
+  var I = window.ANY_I18N, LANGS = I.langs, root = document.documentElement;
+  var $ = function (id) { return document.getElementById(id); };
+  var qsa = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
+  // The founder's Mac runs with Reduce Motion on and the page must still move, so motion stays on (and gentle).
+  var reduced = false;
+  var ease = "cubic-bezier(.2,.8,.2,1)";
   var store = {
     get: function () { try { return localStorage.getItem("any-lang"); } catch (e) { return null; } },
     set: function (v) { try { localStorage.setItem("any-lang", v); } catch (e) {} }
   };
-  var lang = store.get() || ((navigator.language || "").toLowerCase().indexOf("ru") === 0 ? "ru" : "en");
-  var button = document.getElementById("lang");
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function detect() {
+    var saved = store.get();
+    if (saved && LANGS.indexOf(saved) >= 0) return saved;
+    var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+    for (var i = 0; i < list.length; i++) {
+      var c = String(list[i] || "").toLowerCase().split("-")[0];
+      if (LANGS.indexOf(c) >= 0) return c;
+    }
+    return "en";
+  }
+  var lang = detect();
+  function tr(k) { var e = I.t[k]; return e ? (e[lang] != null ? e[lang] : e.en) : ""; }
+  function pick(o) { return o ? (o[lang] != null ? o[lang] : o.en) : ""; }
+  function after(list, ms, fn) { list.push(setTimeout(fn, ms)); }
+  function stop(list) { list.forEach(clearTimeout); list.length = 0; }
 
-  document.querySelectorAll("[data-en],[data-en-html],[data-en-aria]").forEach(function (el) {
-    el.dataset.ruHtml = el.innerHTML;
-    if (el.hasAttribute("aria-label")) el.dataset.ruAria = el.getAttribute("aria-label");
-  });
-  var ruTitle = document.title;
-
+  /* ---------- Language ---------- */
+  var langBtn = $("lang"), langCode = $("lang-code"), menu = $("lang-menu");
+  var items = qsa("[data-lang]", menu);
   function apply() {
-    root.lang = lang;
-    document.querySelectorAll("[data-ru-html]").forEach(function (el) {
-      if (lang === "en") {
-        if (el.dataset.enHtml) el.innerHTML = el.dataset.enHtml;
-        else if (el.dataset.en) el.textContent = el.dataset.en;
-        if (el.dataset.enAria) el.setAttribute("aria-label", el.dataset.enAria);
-      } else {
-        if (el.dataset.en || el.dataset.enHtml) el.innerHTML = el.dataset.ruHtml;
-        if (el.dataset.ruAria) el.setAttribute("aria-label", el.dataset.ruAria);
+    root.lang = lang === "zh" ? "zh-Hans" : lang;
+    qsa("[data-t]").forEach(function (el) { el.textContent = tr(el.dataset.t); });
+    qsa("[data-th]").forEach(function (el) { el.innerHTML = tr(el.dataset.th); });
+    qsa("[data-ta]").forEach(function (el) { el.setAttribute("aria-label", tr(el.dataset.ta)); });
+    document.title = tr("meta.title");
+    langCode.textContent = lang.toUpperCase();
+    items.forEach(function (b) { b.setAttribute("aria-checked", b.dataset.lang === lang ? "true" : "false"); });
+    $("sd-num").textContent = tr("sp.num");
+    moveInd();
+  }
+  function place() {
+    var r = langBtn.getBoundingClientRect();
+    menu.style.top = Math.round(r.bottom + 14) + "px";
+    menu.style.right = Math.max(10, Math.round(window.innerWidth - r.right - 18)) + "px";
+  }
+  function openMenu() {
+    place();
+    menu.hidden = false;
+    langBtn.setAttribute("aria-expanded", "true");
+    requestAnimationFrame(function () { requestAnimationFrame(function () { menu.classList.add("open"); }); });
+    var cur = menu.querySelector('[aria-checked="true"]') || items[0];
+    setTimeout(function () { cur.focus({ preventScroll: true }); }, 30);
+  }
+  function closeMenu(back) {
+    if (menu.hidden) return;
+    menu.classList.remove("open");
+    langBtn.setAttribute("aria-expanded", "false");
+    setTimeout(function () { if (!menu.classList.contains("open")) menu.hidden = true; }, 280);
+    if (back) langBtn.focus({ preventScroll: true });
+  }
+  langBtn.addEventListener("click", function (e) { e.stopPropagation(); if (menu.hidden || !menu.classList.contains("open")) openMenu(); else closeMenu(false); });
+  items.forEach(function (b, k) {
+    b.addEventListener("click", function () {
+      if (b.dataset.lang !== lang) {
+        lang = b.dataset.lang;
+        store.set(lang);
+        apply();
+        play();
+        agentPlay(agentIndex, true);
+        sdReset();
+      }
+      closeMenu(true);
+    });
+    b.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        items[(k + (e.key === "ArrowDown" ? 1 : items.length - 1)) % items.length].focus();
       }
     });
-    document.title = lang === "en" ? "any — dictation with one press on your AirPods" : ruTitle;
-    button.textContent = lang === "en" ? "RU" : "EN";
-    button.setAttribute("aria-label", lang === "en" ? "Переключить на русский" : "Switch to English");
-  }
-  button.addEventListener("click", function () {
-    lang = lang === "en" ? "ru" : "en";
-    store.set(lang);
-    apply();
-    play();
-    agentPlay(agentIndex);
   });
+  document.addEventListener("click", function (e) { if (!menu.hidden && !menu.contains(e.target)) closeMenu(false); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && !menu.hidden) closeMenu(true); });
+  window.addEventListener("resize", function () { if (!menu.hidden) place(); });
+  window.addEventListener("scroll", function () { if (!menu.hidden) place(); }, { passive: true });
 
+  /* ---------- Words appear one by one (CJK split into words too) ---------- */
+  function parts(text) {
+    if ((lang === "zh" || lang === "ja") && window.Intl && Intl.Segmenter) {
+      var out = [], it = new Intl.Segmenter(lang, { granularity: "word" }).segment(text);
+      for (var s of it) out.push(s.segment);
+      return out;
+    }
+    return text.split(/(\s+)/).filter(Boolean);
+  }
   function words(text, into, cls) {
-    // Appends text word by word; keeps line breaks.
-    return text.split(/(\s+)/).filter(Boolean).map(function (part) {
+    return parts(text).map(function (part) {
       if (/^\s+$/.test(part)) return function () { into.appendChild(document.createTextNode(part)); };
       return function () {
         var w = document.createElement("span");
@@ -50,36 +104,15 @@
       };
     });
   }
+  function pause(node) {
+    if (!node || node.nodeType === 3) return 0;
+    var n = node.textContent.length;
+    return lang === "zh" || lang === "ja" ? 110 + n * 45 : 150 + n * 16;
+  }
 
   /* ---------- Hero: press the stem, words land in an app, it sends ---------- */
-  var ui = {
-    ru: { press: "Нажатие", listen: "Слушаю", sent: "Отправлено", ph: "Сообщение" },
-    en: { press: "Press", listen: "Listening", sent: "Sent", ph: "Message" }
-  };
-  var scenes = [
-    { icon: "/any/assets/img/apps/tiles/telegram.png", app: "Telegram", to: { ru: "Анна", en: "Anna" },
-      thread: [["inc", { ru: "Привет! Ты сегодня в офисе?", en: "Hi! Are you at the office today?" }],
-               ["out", { ru: "Нет, работаю из дома", en: "No, working from home" }],
-               ["inc", { ru: "Во сколько тогда созвон?", en: "So what time is the call?" }]],
-      text: { ru: "Давай в 15:00, а отчёт пришлю до обеда.", en: "Let’s do 3 pm, and I’ll send the report before lunch." } },
-    { icon: "/any/assets/img/apps/tiles/claude.png", app: "Claude", to: { ru: "", en: "" },
-      hello: { ru: "Чем могу помочь?", en: "How can I help?" }, ph: { ru: "Спросите что-нибудь", en: "Ask anything" },
-      text: { ru: "Составь план поездки в Лиссабон на три дня, без музеев и ранних подъёмов.", en: "Plan three days in Lisbon for me, no museums and no early mornings." } },
-    { icon: "/any/assets/img/apps/tiles/codex.png", app: "Codex", to: { ru: "", en: "" },
-      hello: { ru: "Что сделаем?", en: "What should we build?" }, ph: { ru: "Опишите задачу", en: "Describe a task" },
-      text: { ru: "Добавь тёмную тему в настройки и прогони тесты.", en: "Add a dark theme to settings and run the tests." } }
-  ];
-  var stage = document.getElementById("stage");
-  var win = document.getElementById("win");
-  var bud = document.getElementById("bud");
-  var field = document.getElementById("field");
-  var typed = document.getElementById("typed");
-  var thread = document.getElementById("thread");
-  var timers = [];
-  var scene = 0;
-
-  function after(list, ms, fn) { list.push(setTimeout(fn, ms)); }
-  function stop(list) { list.forEach(clearTimeout); list.length = 0; }
+  var stage = $("stage"), win = $("win"), bud = $("bud"), field = $("field"), typed = $("typed"), thread = $("thread");
+  var timers = [], scene = 0;
   function set(state) { stage.dataset.state = state; }
   function tap() { bud.classList.remove("tap"); void bud.offsetWidth; bud.classList.add("tap"); }
   function bubble(cls, text, anim) {
@@ -89,38 +122,37 @@
     thread.appendChild(m);
   }
   function setup(sc) {
-    document.getElementById("win-icon").src = sc.icon;
-    document.getElementById("win-app").textContent = sc.app;
-    document.getElementById("win-to").textContent = sc.to[lang];
+    $("win-icon").src = sc.icon;
+    $("win-app").textContent = sc.app;
+    $("win-to").textContent = pick(sc.to);
     thread.textContent = "";
-    (sc.thread || []).forEach(function (t) { bubble(t[0], t[1][lang]); });
-    if (sc.hello) bubble("hello", sc.hello[lang]);
+    (sc.thread || []).forEach(function (m) { bubble(m[0], pick(m[1])); });
+    if (sc.hello) bubble("hello", pick(sc.hello));
     typed.textContent = "";
-    typed.dataset.ph = sc.ph ? sc.ph[lang] : ui[lang].ph;
+    typed.dataset.ph = sc.ph ? pick(sc.ph) : tr("ui.ph");
     field.className = "field";
     stage.classList.remove("focus");
     set("idle");
   }
   function play() {
     stop(timers);
-    var sc = scenes[scene], u = ui[lang], steps = words(sc.text[lang], typed, "w");
+    var sc = I.scenes[scene], text = pick(sc.text), steps = words(text, typed, "w");
     setup(sc);
     win.classList.remove("in", "out");
     void win.offsetWidth;
     win.classList.add("in");
     after(timers, 900, function () {
-      tap(); set("press", u.press);
+      tap(); set("press");
       after(timers, 420, function () {
-        set("listen", u.listen);
+        set("listen");
         stage.classList.add("focus");
         var i = 0;
         (function next() {
           steps[i]();
           if (i === 0) field.classList.add("ready");
-          var last = typed.lastChild;
-          if (++i < steps.length) { after(timers, last.nodeType === 3 ? 0 : 150 + last.textContent.length * 16, next); return; }
+          if (++i < steps.length) { after(timers, pause(typed.lastChild), next); return; }
           after(timers, 700, function () {
-            tap(); set("press", u.press);
+            tap(); set("press");
             field.classList.add("go");
             after(timers, 300, function () {
               stage.classList.remove("focus");
@@ -128,11 +160,11 @@
               typed.textContent = "";
               var h = thread.querySelector(".hello");
               if (h) h.remove();
-              bubble("out", sc.text[lang], true);
-              set("sent", u.sent);
+              bubble("out", text, true);
+              set("sent");
               after(timers, 2000, function () {
                 win.classList.add("out");
-                after(timers, 600, function () { scene = (scene + 1) % scenes.length; play(); });
+                after(timers, 600, function () { scene = (scene + 1) % I.scenes.length; play(); });
               });
             });
           });
@@ -142,85 +174,159 @@
   }
 
   /* ---------- Agent: the orb takes a spoken task and writes into the field ---------- */
-  var agentCases = [
-    { title: { ru: "Новое письмо · Анне", en: "New email · to Anna" },
-      said: { ru: "Напиши вежливый отказ кандидату", en: "Write a polite rejection for a candidate" },
-      answer: { ru: "Анна, здравствуйте!\nСпасибо за отклик и время на задание. Мы продолжим с другим кандидатом, но будем рады вернуться к вам с новыми вакансиями.", en: "Hi Anna,\nThank you for applying and for your time on the assignment. We’re moving forward with another candidate, and we’d be glad to reach out when new roles open." } },
-    { title: { ru: "Заметки", en: "Notes" },
-      said: { ru: "Чем отличаются Supabase и Firebase? Коротко", en: "How do Supabase and Firebase differ? Briefly" },
-      answer: { ru: "Supabase: Postgres, SQL, открытый код.\nFirebase: NoSQL, сервисы Google.\nОба: вход и хранение файлов.", en: "Supabase: Postgres, SQL, open source.\nFirebase: NoSQL, Google services.\nBoth: auth and file storage." } },
-    { title: { ru: "Письмо Анне", en: "Email to Anna" },
-      ctx: { ru: "Анна, добрый день! Простите, пожалуйста, за задержку. К сожалению, отчёт ещё не готов, извините. Постараемся прислать его завтра до обеда. Ещё раз простите!", en: "Hi Anna! I’m so sorry for the delay. Unfortunately the report isn’t ready yet, apologies. We’ll try to send it tomorrow before noon. Sorry again!" },
-      said: { ru: "Короче и без извинений", en: "Shorter, no apologies" },
-      answer: { ru: "Анна, отчёт будет у вас завтра до обеда.", en: "Anna, you’ll have the report tomorrow before noon." } }
-  ];
-  var agentUi = { ru: { think: "Пишу…", done: "Готово" }, en: { think: "Writing…", done: "Done" } };
-  var ag = document.getElementById("agent-stage");
-  var agTabs = document.querySelectorAll("#agent-tabs button");
-  var agSaid = document.getElementById("agent-said");
-  var agBody = document.getElementById("agent-body");
-  var agTitle = document.getElementById("agent-title");
-  var agTimers = [];
-  var agentIndex = 0;
-  function agentPlay(i) {
-    if (!ag) return;
-    stop(agTimers);
-    agentIndex = i;
-    var c = agentCases[i], u = agentUi[lang];
-    agTabs.forEach(function (t, k) { t.setAttribute("aria-selected", k === i ? "true" : "false"); });
-    agTitle.textContent = c.title[lang];
+  var ag = $("agent-stage"), agWin = $("agent-win"), agIn = $("agent-in"), notch = $("notch");
+  var agTabs = qsa("#agent-tabs button[role=tab]"), ind = document.querySelector("#agent-tabs .tab-ind");
+  var agSaid = $("agent-said"), agBody = $("agent-body"), agTitle = $("agent-title");
+  var agTimers = [], agentIndex = 0;
+  function moveInd() {
+    var b = agTabs[agentIndex];
+    if (!b || !ind) return;
+    ind.style.width = b.offsetWidth + "px";
+    ind.style.transform = "translateX(" + b.offsetLeft + "px)";
+  }
+  function morph(el, change, ms) {
+    // Animates an element's width/height between its old and new natural size.
+    var w0 = el.offsetWidth, h0 = el.offsetHeight;
+    change();
+    var w1 = el.offsetWidth, h1 = el.offsetHeight;
+    if (reduced || !el.animate || (w0 === w1 && h0 === h1)) return;
+    el.animate([{ width: w0 + "px", height: h0 + "px" }, { width: w1 + "px", height: h1 + "px" }], { duration: ms || 420, easing: ease });
+  }
+  function say(text) {
+    morph(notch, function () { agSaid.textContent = text; }, 380);
+    if (!reduced && agSaid.animate) agSaid.animate([{ opacity: 0, filter: "blur(4px)" }, { opacity: 1, filter: "blur(0)" }], { duration: 320, easing: "ease-out" });
+  }
+  function render(c) {
+    agTitle.textContent = pick(c.title);
     agBody.textContent = "";
-    if (c.ctx) { var s = document.createElement("span"); s.className = "sel"; s.textContent = c.ctx[lang]; agBody.appendChild(s); }
+    if (c.ctx) { var s = document.createElement("span"); s.className = "sel"; s.textContent = pick(c.ctx); agBody.appendChild(s); }
+  }
+  function run(c) {
     ag.dataset.state = "listen";
-    agSaid.textContent = "«" + c.said[lang] + "»";
+    say("«" + pick(c.said) + "»");
     after(agTimers, 1800, function () {
       ag.dataset.state = "think";
-      agSaid.textContent = u.think;
+      say(tr("ag.think"));
       after(agTimers, 700, function () {
-        agBody.textContent = "";
-        var steps = words(c.answer[lang], agBody, "w"), k = 0;
-        (function next() {
-          steps[k]();
-          if (++k < steps.length) { after(agTimers, 55, next); return; }
-          after(agTimers, 400, function () {
-            ag.dataset.state = "done";
-            agSaid.textContent = u.done;
-            after(agTimers, 3200, function () { agentPlay((agentIndex + 1) % agentCases.length); });
-          });
-        })();
+        var hasSel = !!agBody.querySelector(".sel");
+        var write = function () {
+          agBody.textContent = "";
+          var steps = words(pick(c.answer), agBody, "w"), k = 0;
+          (function next() {
+            steps[k]();
+            if (++k < steps.length) { after(agTimers, lang === "zh" || lang === "ja" ? 70 : 55, next); return; }
+            after(agTimers, 400, function () {
+              ag.dataset.state = "done";
+              say(tr("ag.done"));
+              after(agTimers, 3200, function () { agentPlay((agentIndex + 1) % I.agent.length, true); });
+            });
+          })();
+        };
+        if (hasSel && !reduced) { agBody.classList.add("fade"); after(agTimers, 220, function () { agBody.classList.remove("fade"); write(); }); }
+        else write();
       });
     });
   }
-  agTabs.forEach(function (t, k) { t.addEventListener("click", function () { agentPlay(k); }); });
+  function agentPlay(i, smooth) {
+    if (!ag) return;
+    stop(agTimers);
+    agentIndex = i;
+    var c = I.agent[i];
+    agTabs.forEach(function (t, k) { t.setAttribute("aria-selected", k === i ? "true" : "false"); });
+    moveInd();
+    if (!smooth || reduced) { render(c); run(c); return; }
+    agIn.classList.add("swap");
+    after(agTimers, 280, function () {
+      morph(agWin, function () { render(c); }, 460);
+      agIn.classList.remove("swap");
+      run(c);
+    });
+  }
+  agTabs.forEach(function (t, k) { t.addEventListener("click", function () { if (k !== agentIndex) agentPlay(k, true); }); });
+  window.addEventListener("resize", moveInd);
 
-  /* ---------- Speed: feel 160 ms ---------- */
-  var tryBtn = document.getElementById("speed-try");
-  var meterFill = document.getElementById("meter-fill");
-  var speedOut = document.getElementById("speed-out");
-  var speedMs = document.getElementById("speed-ms");
-  function feel() {
-    if (!tryBtn) return;
-    speedOut.classList.remove("on");
-    meterFill.style.transition = "none";
-    meterFill.style.width = "0";
-    void meterFill.offsetWidth;
-    meterFill.style.transition = "width 160ms linear";
-    meterFill.style.width = "16%";
-    var t0 = performance.now();
-    (function tick() {
-      var ms = Math.min(160, Math.round(performance.now() - t0));
-      speedMs.textContent = ms;
-      if (ms < 160) requestAnimationFrame(tick);
-      else speedOut.classList.add("on");
-    })();
+  /* ---------- Speed: last word → text in the field ---------- */
+  var sd = $("sd"), sdNum = $("sd-num"), sdTimers = [], sdOn = false;
+  function fmt(sec) { var s = sec.toFixed(2); return tr("sp.num").indexOf(",") >= 0 ? s.replace(".", ",") : s; }
+  function sdReset() { stop(sdTimers); sd.dataset.phase = "idle"; sdNum.textContent = tr("sp.num"); if (sdOn) after(sdTimers, 400, sdPlay); }
+  function sdPlay() {
+    stop(sdTimers);
+    sd.dataset.phase = "talk";
+    sdNum.textContent = fmt(0);
+    after(sdTimers, 1800, function () {
+      sd.dataset.phase = "gap";
+      var t0 = performance.now();
+      (function tick() {
+        var ms = Math.min(160, performance.now() - t0);
+        sdNum.textContent = fmt(ms / 1000);
+        if (ms < 160) { requestAnimationFrame(tick); return; }
+        sdNum.textContent = tr("sp.num");
+        sd.dataset.phase = "in";
+        after(sdTimers, 3600, function () { if (sdOn) sdPlay(); });
+      })();
+    });
   }
-  if (tryBtn) {
-    tryBtn.addEventListener("click", feel);
-    if ("IntersectionObserver" in window) {
-      var seen = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { feel(); seen.disconnect(); } }, { threshold: .6 });
-      seen.observe(tryBtn);
+  $("sd-again").addEventListener("click", function () { sdOn = true; sdPlay(); });
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (e) {
+      var vis = e[0].isIntersecting;
+      if (vis && !sdOn) { sdOn = true; sdPlay(); }
+      if (!vis && sdOn) { sdOn = false; stop(sdTimers); }
+    }, { threshold: .45 }).observe(sd);
+  } else { sdOn = true; sdPlay(); }
+
+  /* ---------- Download: the button opens into a glass sheet ---------- */
+  var dl = $("dl"), card = $("dl-card"), dlFrom = null, dlUrl = null;
+  function startDownload(url) {
+    var f = document.createElement("iframe");
+    f.hidden = true; f.src = url;
+    document.body.appendChild(f);
+    setTimeout(function () { f.remove(); }, 60000);
+  }
+  function runIcon() { dl.classList.remove("run"); void dl.offsetWidth; dl.classList.add("run"); }
+  function openDl(btn) {
+    dlFrom = btn; dlUrl = btn.href;
+    dl.hidden = false;
+    runIcon();
+    var r1 = card.getBoundingClientRect(), r0 = btn.getBoundingClientRect();
+    if (!reduced && card.animate) {
+      var dx = r0.left + r0.width / 2 - (r1.left + r1.width / 2), dy = r0.top + r0.height / 2 - (r1.top + r1.height / 2);
+      card.animate([
+        { transform: "translate(" + dx + "px," + dy + "px) scale(" + (r0.width / r1.width) + "," + (r0.height / r1.height) + ")", borderRadius: "999px", opacity: .5 },
+        { transform: "none", borderRadius: "34px", opacity: 1 }
+      ], { duration: 620, easing: "cubic-bezier(.22,.9,.2,1)" });
     }
+    requestAnimationFrame(function () { dl.classList.add("open"); });
+    setTimeout(function () { startDownload(dlUrl); }, 450);
+    setTimeout(function () { card.querySelector(".dl-x").focus({ preventScroll: true }); }, 60);
+    document.body.classList.add("lock");
   }
+  function closeDl() {
+    if (dl.hidden) return;
+    dl.classList.remove("open");
+    if (!reduced && card.animate) card.animate([{ transform: "none", opacity: 1 }, { transform: "scale(.96)", opacity: 0 }], { duration: 220, easing: "ease-in", fill: "forwards" });
+    setTimeout(function () { dl.hidden = true; card.getAnimations && card.getAnimations().forEach(function (a) { a.cancel(); }); }, 230);
+    document.body.classList.remove("lock");
+    if (dlFrom) dlFrom.focus({ preventScroll: true });
+  }
+  qsa(".dl-btn").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
+      e.preventDefault();
+      openDl(a);
+    });
+  });
+  qsa("[data-close]", dl).forEach(function (el) { el.addEventListener("click", closeDl); });
+  $("dl-again").addEventListener("click", function (e) { e.preventDefault(); runIcon(); startDownload(dlUrl || this.href); });
+  document.addEventListener("keydown", function (e) {
+    if (dl.hidden) return;
+    if (e.key === "Escape") closeDl();
+    if (e.key === "Tab") {
+      var f = qsa("button, a[href]", card), first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
 
   /* ---------- Liquid glass: refraction at the edges (Chromium only) ---------- */
   var refract = !!window.chrome && window.CSS && CSS.supports("backdrop-filter", "url(#a)");
@@ -280,18 +386,17 @@
       var blur = el.dataset.blur || "18";
       el.style.backdropFilter = el.style.webkitBackdropFilter = "url(#" + id + ") blur(" + blur + "px) saturate(170%)";
     };
-    var glass = document.querySelectorAll(".glass");
     var ro = new ResizeObserver(function (list) { list.forEach(function (e) { lens(e.target); }); });
-    glass.forEach(function (el) { ro.observe(el); });
+    qsa(".glass").forEach(function (el) { ro.observe(el); });
   }
 
   document.addEventListener("visibilitychange", function () {
-    if (document.hidden) { stop(timers); stop(agTimers); }
-    else { play(); agentPlay(agentIndex); }
+    if (document.hidden) { stop(timers); stop(agTimers); stop(sdTimers); }
+    else { play(); agentPlay(agentIndex); if (sdOn) sdPlay(); }
   });
 
   apply();
   play();
   agentPlay(0);
-  void reduced;
+  requestAnimationFrame(function () { ind && ind.classList.add("ready"); });
 })();

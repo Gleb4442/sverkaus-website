@@ -6,7 +6,7 @@
   };
   var lang = store.get() || ((navigator.language || "").toLowerCase().indexOf("ru") === 0 ? "ru" : "en");
   var button = document.getElementById("lang");
-
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   document.querySelectorAll("[data-en],[data-en-html],[data-en-aria]").forEach(function (el) {
     el.dataset.ruHtml = el.innerHTML;
@@ -35,25 +35,39 @@
     store.set(lang);
     apply();
     play();
+    agentPlay(agentIndex);
   });
 
+  function words(text, into, cls) {
+    // Appends text word by word; keeps line breaks.
+    return text.split(/(\s+)/).filter(Boolean).map(function (part) {
+      if (/^\s+$/.test(part)) return function () { into.appendChild(document.createTextNode(part)); };
+      return function () {
+        var w = document.createElement("span");
+        w.className = cls;
+        w.textContent = part;
+        into.appendChild(w);
+      };
+    });
+  }
+
+  /* ---------- Hero: press the stem, words land in an app, it sends ---------- */
   var ui = {
     ru: { press: "Нажатие", listen: "Слушаю", sent: "Отправлено", ph: "Сообщение" },
     en: { press: "Press", listen: "Listening", sent: "Sent", ph: "Message" }
   };
   var scenes = [
-    { icon: "/any/assets/img/apps/telegram-app.png", app: "Telegram", to: { ru: "Анна", en: "Anna" },
+    { icon: "/any/assets/img/apps/tiles/telegram.png", app: "Telegram", to: { ru: "Анна", en: "Anna" },
       thread: [["inc", { ru: "Привет! Ты сегодня в офисе?", en: "Hi! Are you at the office today?" }],
                ["out", { ru: "Нет, работаю из дома", en: "No, working from home" }],
                ["inc", { ru: "Во сколько тогда созвон?", en: "So what time is the call?" }]],
       text: { ru: "Давай в 15:00, а отчёт пришлю до обеда.", en: "Let’s do 3 pm, and I’ll send the report before lunch." } },
-    { icon: "/any/assets/img/apps/claude.png", app: "Claude", to: { ru: "", en: "" },
+    { icon: "/any/assets/img/apps/tiles/claude.png", app: "Claude", to: { ru: "", en: "" },
       hello: { ru: "Чем могу помочь?", en: "How can I help?" }, ph: { ru: "Спросите что-нибудь", en: "Ask anything" },
       text: { ru: "Составь план поездки в Лиссабон на три дня, без музеев и ранних подъёмов.", en: "Plan three days in Lisbon for me, no museums and no early mornings." } },
-    { icon: "/any/assets/img/apps/slack.svg", app: "Slack", to: { ru: "# дизайн", en: "# design" },
-      thread: [["inc", { ru: "Сайт выкатываем после обеда", en: "The site ships after lunch" }],
-               ["inc", { ru: "Макет шапки готов?", en: "Is the header mockup ready?" }]],
-      text: { ru: "Почти, ссылку кину через десять минут.", en: "Almost, I’ll drop the link in ten minutes." } }
+    { icon: "/any/assets/img/apps/tiles/codex.png", app: "Codex", to: { ru: "", en: "" },
+      hello: { ru: "Что сделаем?", en: "What should we build?" }, ph: { ru: "Опишите задачу", en: "Describe a task" },
+      text: { ru: "Добавь тёмную тему в настройки и прогони тесты.", en: "Add a dark theme to settings and run the tests." } }
   ];
   var stage = document.getElementById("stage");
   var win = document.getElementById("win");
@@ -65,8 +79,8 @@
   var timers = [];
   var scene = 0;
 
-  function after(ms, fn) { timers.push(setTimeout(fn, ms)); }
-  function stop() { timers.forEach(clearTimeout); timers = []; }
+  function after(list, ms, fn) { list.push(setTimeout(fn, ms)); }
+  function stop(list) { list.forEach(clearTimeout); list.length = 0; }
   function set(state, label) { stage.dataset.state = state; status.textContent = label || ""; }
   function tap() { bud.classList.remove("tap"); void bud.offsetWidth; bud.classList.add("tap"); }
   function bubble(cls, text, anim) {
@@ -76,7 +90,6 @@
     thread.appendChild(m);
   }
   function setup(sc) {
-    var u = ui[lang];
     document.getElementById("win-icon").src = sc.icon;
     document.getElementById("win-app").textContent = sc.app;
     document.getElementById("win-to").textContent = sc.to[lang];
@@ -84,37 +97,33 @@
     (sc.thread || []).forEach(function (t) { bubble(t[0], t[1][lang]); });
     if (sc.hello) bubble("hello", sc.hello[lang]);
     typed.textContent = "";
-    typed.dataset.ph = sc.ph ? sc.ph[lang] : u.ph;
+    typed.dataset.ph = sc.ph ? sc.ph[lang] : ui[lang].ph;
     field.className = "field";
     stage.classList.remove("focus");
     set("idle");
   }
-
   function play() {
-    stop();
-    var sc = scenes[scene], u = ui[lang], words = sc.text[lang].split(" ");
+    stop(timers);
+    var sc = scenes[scene], u = ui[lang], steps = words(sc.text[lang], typed, "w");
     setup(sc);
-    win.className = "win glass";
+    win.classList.remove("in", "out");
     void win.offsetWidth;
     win.classList.add("in");
-    after(900, function () {
+    after(timers, 900, function () {
       tap(); set("press", u.press);
-      after(420, function () {
+      after(timers, 420, function () {
         set("listen", u.listen);
         stage.classList.add("focus");
         var i = 0;
         (function next() {
-          if (i) typed.appendChild(document.createTextNode(" "));
-          var w = document.createElement("span");
-          w.className = "w";
-          w.textContent = words[i];
-          typed.appendChild(w);
+          steps[i]();
           if (i === 0) field.classList.add("ready");
-          if (++i < words.length) { after(150 + words[i - 1].length * 16, next); return; }
-          after(700, function () {
+          var last = typed.lastChild;
+          if (++i < steps.length) { after(timers, last.nodeType === 3 ? 0 : 150 + last.textContent.length * 16, next); return; }
+          after(timers, 700, function () {
             tap(); set("press", u.press);
             field.classList.add("go");
-            after(300, function () {
+            after(timers, 300, function () {
               stage.classList.remove("focus");
               field.className = "field";
               typed.textContent = "";
@@ -122,9 +131,9 @@
               if (h) h.remove();
               bubble("out", sc.text[lang], true);
               set("sent", u.sent);
-              after(2000, function () {
+              after(timers, 2000, function () {
                 win.classList.add("out");
-                after(600, function () { scene = (scene + 1) % scenes.length; play(); });
+                after(timers, 600, function () { scene = (scene + 1) % scenes.length; play(); });
               });
             });
           });
@@ -132,34 +141,158 @@
       });
     });
   }
-  document.addEventListener("visibilitychange", function () { if (document.hidden) stop(); else play(); });
 
-  var examples = {
-    ru: [
-      ["Напиши вежливый отказ кандидату на вакансию дизайнера", "Анна, здравствуйте!\nСпасибо за отклик и время, которое вы уделили заданию. Мы решили продолжить с другим кандидатом. Будем рады вернуться к вам, когда откроем новые позиции."],
-      ["Чем отличаются Supabase и Firebase? Коротко", "- Supabase: Postgres, SQL, открытый код\n- Firebase: NoSQL, сервисы Google, закрытый код\n- Оба дают авторизацию и хранение файлов"],
-      ["Выделено письмо. «Сделай короче и убери извинения»", "Анна, отчёт будет у вас завтра до обеда. Если нужны правки, напишите сегодня."]
-    ],
-    en: [
-      ["Write a polite rejection for a designer candidate", "Hi Anna,\nThank you for applying and for the time you gave the assignment. We’ve decided to move forward with another candidate, and we’d be glad to reconnect when new roles open."],
-      ["How do Supabase and Firebase differ? Keep it short", "- Supabase: Postgres, SQL, open source\n- Firebase: NoSQL, Google services, closed source\n- Both offer auth and file storage"],
-      ["Email selected. “Shorten this and drop the apologies”", "Hi Anna, you’ll have the report by noon tomorrow. If you need changes, let me know today."]
-    ]
-  };
-  var tabs = document.querySelectorAll("#agent-tabs button");
-  var current = 0;
-  function showExample() {
-    var e = examples[lang][current];
-    document.getElementById("agent-said").textContent = "«" + e[0].replace(/[«»“”]/g, "") + "»";
-    document.getElementById("agent-answer").textContent = e[1];
-    tabs.forEach(function (t, i) { t.setAttribute("aria-selected", i === current ? "true" : "false"); });
+  /* ---------- Agent: the orb takes a spoken task and writes into the field ---------- */
+  var agentCases = [
+    { title: { ru: "Новое письмо · Анне", en: "New email · to Anna" },
+      said: { ru: "Напиши вежливый отказ кандидату", en: "Write a polite rejection for a candidate" },
+      answer: { ru: "Анна, здравствуйте!\nСпасибо за отклик и время на задание. Мы продолжим с другим кандидатом, но будем рады вернуться к вам с новыми вакансиями.", en: "Hi Anna,\nThank you for applying and for your time on the assignment. We’re moving forward with another candidate, and we’d be glad to reach out when new roles open." } },
+    { title: { ru: "Заметки", en: "Notes" },
+      said: { ru: "Чем отличаются Supabase и Firebase? Коротко", en: "How do Supabase and Firebase differ? Briefly" },
+      answer: { ru: "Supabase: Postgres, SQL, открытый код.\nFirebase: NoSQL, сервисы Google.\nОба: вход и хранение файлов.", en: "Supabase: Postgres, SQL, open source.\nFirebase: NoSQL, Google services.\nBoth: auth and file storage." } },
+    { title: { ru: "Письмо Анне", en: "Email to Anna" },
+      ctx: { ru: "Анна, добрый день! Простите, пожалуйста, за задержку. К сожалению, отчёт ещё не готов, извините. Постараемся прислать его завтра до обеда. Ещё раз простите!", en: "Hi Anna! I’m so sorry for the delay. Unfortunately the report isn’t ready yet, apologies. We’ll try to send it tomorrow before noon. Sorry again!" },
+      said: { ru: "Короче и без извинений", en: "Shorter, no apologies" },
+      answer: { ru: "Анна, отчёт будет у вас завтра до обеда.", en: "Anna, you’ll have the report tomorrow before noon." } }
+  ];
+  var agentUi = { ru: { think: "Пишу…", done: "Готово" }, en: { think: "Writing…", done: "Done" } };
+  var ag = document.getElementById("agent-stage");
+  var agTabs = document.querySelectorAll("#agent-tabs button");
+  var agSaid = document.getElementById("agent-said");
+  var agBody = document.getElementById("agent-body");
+  var agTitle = document.getElementById("agent-title");
+  var agTimers = [];
+  var agentIndex = 0;
+  function agentPlay(i) {
+    if (!ag) return;
+    stop(agTimers);
+    agentIndex = i;
+    var c = agentCases[i], u = agentUi[lang];
+    agTabs.forEach(function (t, k) { t.setAttribute("aria-selected", k === i ? "true" : "false"); });
+    agTitle.textContent = c.title[lang];
+    agBody.textContent = "";
+    if (c.ctx) { var s = document.createElement("span"); s.className = "sel"; s.textContent = c.ctx[lang]; agBody.appendChild(s); }
+    ag.dataset.state = "listen";
+    agSaid.textContent = "«" + c.said[lang] + "»";
+    after(agTimers, 1800, function () {
+      ag.dataset.state = "think";
+      agSaid.textContent = u.think;
+      after(agTimers, 700, function () {
+        agBody.textContent = "";
+        var steps = words(c.answer[lang], agBody, "w"), k = 0;
+        (function next() {
+          steps[k]();
+          if (++k < steps.length) { after(agTimers, 55, next); return; }
+          after(agTimers, 400, function () {
+            ag.dataset.state = "done";
+            agSaid.textContent = u.done;
+            after(agTimers, 3200, function () { agentPlay((agentIndex + 1) % agentCases.length); });
+          });
+        })();
+      });
+    });
   }
-  tabs.forEach(function (t, i) {
-    t.addEventListener("click", function () { current = i; showExample(); });
+  agTabs.forEach(function (t, k) { t.addEventListener("click", function () { agentPlay(k); }); });
+
+  /* ---------- Speed: feel 160 ms ---------- */
+  var tryBtn = document.getElementById("speed-try");
+  var meterFill = document.getElementById("meter-fill");
+  var speedOut = document.getElementById("speed-out");
+  var speedMs = document.getElementById("speed-ms");
+  function feel() {
+    if (!tryBtn) return;
+    speedOut.classList.remove("on");
+    meterFill.style.transition = "none";
+    meterFill.style.width = "0";
+    void meterFill.offsetWidth;
+    meterFill.style.transition = "width 160ms linear";
+    meterFill.style.width = "16%";
+    var t0 = performance.now();
+    (function tick() {
+      var ms = Math.min(160, Math.round(performance.now() - t0));
+      speedMs.textContent = ms;
+      if (ms < 160) requestAnimationFrame(tick);
+      else speedOut.classList.add("on");
+    })();
+  }
+  if (tryBtn) {
+    tryBtn.addEventListener("click", feel);
+    if ("IntersectionObserver" in window) {
+      var seen = new IntersectionObserver(function (e) { if (e[0].isIntersecting) { feel(); seen.disconnect(); } }, { threshold: .6 });
+      seen.observe(tryBtn);
+    }
+  }
+
+  /* ---------- Liquid glass: refraction at the edges (Chromium only) ---------- */
+  var refract = !!window.chrome && window.CSS && CSS.supports("backdrop-filter", "url(#a)");
+  if (refract) {
+    root.classList.add("refract");
+    var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("width", "0"); svg.setAttribute("height", "0");
+    svg.setAttribute("aria-hidden", "true");
+    svg.style.position = "absolute";
+    document.body.appendChild(svg);
+    var n = 0;
+    var lens = function (el) {
+      var w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
+      if (!w || !h) return;
+      var r = Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, h / 2, w / 2);
+      var bezel = Math.max(10, Math.min(r * 0.9, 28)), scale = Math.round(bezel * 1.5);
+      var c = document.createElement("canvas"); c.width = w; c.height = h;
+      var x2 = c.getContext("2d"), img = x2.createImageData(w, h), d = img.data;
+      var hw = w / 2, hh = h / 2;
+      for (var y = 0; y < h; y++) {
+        for (var x = 0; x < w; x++) {
+          var dx = x + .5 - hw, dy = y + .5 - hh, sx = dx < 0 ? -1 : 1, sy = dy < 0 ? -1 : 1;
+          var px = Math.abs(dx) - (hw - r), py = Math.abs(dy) - (hh - r);
+          var ox = Math.max(px, 0), oy = Math.max(py, 0), out = Math.sqrt(ox * ox + oy * oy);
+          var depth = r - out - Math.min(Math.max(px, py), 0);
+          var o = (y * w + x) * 4, vx = 0, vy = 0;
+          if (depth < bezel) {
+            var t = 1 - Math.max(depth, 0) / bezel, m = t * t;
+            if (px > 0 && py > 0) { vx = sx * ox / (out || 1); vy = sy * oy / (out || 1); }
+            else if (px > py) vx = sx; else vy = sy;
+            vx *= -m; vy *= -m;
+          }
+          d[o] = 128 + vx * 127; d[o + 1] = 128 + vy * 127; d[o + 2] = 128; d[o + 3] = 255;
+        }
+      }
+      x2.putImageData(img, 0, 0);
+      var id = el.dataset.lens || ("lens" + (++n));
+      el.dataset.lens = id;
+      var old = document.getElementById(id);
+      if (old) old.remove();
+      var ns = "http://www.w3.org/2000/svg";
+      var f = document.createElementNS(ns, "filter");
+      f.id = id;
+      f.setAttribute("x", "0"); f.setAttribute("y", "0"); f.setAttribute("width", w); f.setAttribute("height", h);
+      f.setAttribute("filterUnits", "userSpaceOnUse");
+      f.setAttribute("color-interpolation-filters", "sRGB");
+      var fi = document.createElementNS(ns, "feImage");
+      fi.setAttribute("href", c.toDataURL());
+      fi.setAttribute("x", "0"); fi.setAttribute("y", "0"); fi.setAttribute("width", w); fi.setAttribute("height", h);
+      fi.setAttribute("preserveAspectRatio", "none");
+      fi.setAttribute("result", "map");
+      var dm = document.createElementNS(ns, "feDisplacementMap");
+      dm.setAttribute("in", "SourceGraphic"); dm.setAttribute("in2", "map");
+      dm.setAttribute("scale", scale);
+      dm.setAttribute("xChannelSelector", "R"); dm.setAttribute("yChannelSelector", "G");
+      f.appendChild(fi); f.appendChild(dm); svg.appendChild(f);
+      var blur = el.dataset.blur || "18";
+      el.style.backdropFilter = el.style.webkitBackdropFilter = "url(#" + id + ") blur(" + blur + "px) saturate(170%)";
+    };
+    var glass = document.querySelectorAll(".glass");
+    var ro = new ResizeObserver(function (list) { list.forEach(function (e) { lens(e.target); }); });
+    glass.forEach(function (el) { ro.observe(el); });
+  }
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) { stop(timers); stop(agTimers); }
+    else { play(); agentPlay(agentIndex); }
   });
-  button.addEventListener("click", showExample);
 
   apply();
-  showExample();
   play();
+  agentPlay(0);
+  void reduced;
 })();

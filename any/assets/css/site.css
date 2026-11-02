@@ -105,7 +105,6 @@ h1{font-size:clamp(40px,5.6vw,78px);line-height:1.03;font-weight:600;letter-spac
 .credit{margin-top:8px;font-size:12px;color:#8a8a87}.credit a{color:inherit}
 
 /* agent */
-@property --spin{syntax:"<angle>";inherits:false;initial-value:0deg}
 .orb{position:relative;display:inline-block;width:16px;height:16px;flex:none;vertical-align:-3px;margin-right:8px;animation:breathe 1.5s ease-in-out infinite}
 .orb::before{content:"";position:absolute;inset:-45%;border-radius:50%;background:conic-gradient(from 90deg,#9e73ff,#4d8cff,#ff73bf,#9e73ff);filter:blur(4px);opacity:.7;animation:turn 3s linear infinite}
 .orb i{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 90deg,#9e73ff,#4d8cff,#ff73bf,#9e73ff);animation:turn 3s linear infinite}
@@ -114,6 +113,7 @@ h1{font-size:clamp(40px,5.6vw,78px);line-height:1.03;font-weight:600;letter-spac
 @keyframes breathe{50%{transform:scale(1.07)}}
 .agent-stage{position:relative;max-width:720px;margin:0 auto;padding-top:30px}
 .agent .tabs{margin-top:clamp(22px,3vw,30px)}
+@property --spin{syntax:"<angle>";inherits:false;initial-value:0deg}
 .aura{position:absolute;inset:40px 6% -10px;border-radius:40px;background:conic-gradient(from var(--spin),#9e73ff,#4d8cff,#ff73bf,#9e73ff);filter:blur(42px);opacity:0;transition:opacity .8s;animation:aura 6s linear infinite}
 @keyframes aura{to{--spin:360deg}}
 .agent-stage[data-state=think] .aura,.agent-stage[data-state=listen] .aura{opacity:.42}
@@ -265,14 +265,6 @@ h1{font-size:clamp(40px,5.6vw,78px);line-height:1.03;font-weight:600;letter-spac
 .sp-field[data-phase=in] .sp-chip,.sp-field[data-phase=idle] .sp-chip{opacity:1;transform:none}
 @media (max-width:620px){.sp-field{align-items:center}.sp-text{position:static;display:none;transform:none}.sp-field[data-phase=in] .sp-text,.sp-field[data-phase=idle] .sp-text{display:inline;animation-name:fade}.sp-field[data-phase=in] .sp-talk,.sp-field[data-phase=idle] .sp-talk,.sp-field[data-phase=out] .sp-talk{display:none}}
 
-.fly{position:fixed;z-index:50;display:grid;place-items:center;overflow:hidden;border-radius:999px;background:var(--paper);color:var(--ink);box-shadow:0 14px 34px rgba(0,0,0,.35);pointer-events:none}
-.fly>span{grid-area:1/1;display:grid;place-items:center;white-space:nowrap;transition:opacity .2s,transform .35s cubic-bezier(.2,.8,.2,1)}
-.fly-arrow{opacity:0;transform:translateY(-8px)}
-.fly-arrow svg{width:18px;height:18px}
-.fly.fold .fly-label{opacity:0;transform:scale(.9)}
-.fly.fold .fly-arrow{opacity:1;transform:none;transition-delay:.18s}
-.ping{position:fixed;top:-14px;z-index:50;width:28px;height:28px;margin-left:-14px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.9),rgba(255,255,255,0));pointer-events:none;animation:ping .8s ease-out forwards}
-@keyframes ping{0%{opacity:1;transform:scale(.4)}100%{opacity:0;transform:scale(3)}}
 body.lock{overflow:hidden}
 .next{position:fixed;inset:0;z-index:40;overflow-y:auto;display:grid;place-items:center;padding:72px clamp(16px,4vw,40px) 40px;background:radial-gradient(60% 70% at 70% 20%,#5d5d5b 0,#343433 48%,#1f1f1e 100%);text-align:center}
 .next[hidden]{display:none}
@@ -333,24 +325,6 @@ body.lock{overflow:hidden}
 .spd[data-phase=ready] .spd-num{opacity:.4}
 .spd-num{transition:opacity .3s}
 
-.fly{position:fixed;z-index:50;border-radius:999px;pointer-events:none;background:none;box-shadow:none;display:block;overflow:visible}
-.fly>span{position:absolute;border-radius:inherit}
-.fly>.fly-glow{inset:-10px;background:conic-gradient(from var(--spin),#9e73ff,#4d8cff,#ff73bf,#9e73ff);filter:blur(16px);opacity:0;transition:opacity .45s ease;animation:spin 1.6s linear infinite}
-.fly>.fly-ring{inset:0;background:conic-gradient(from var(--spin),#9e73ff,#4d8cff,#ff73bf,#9e73ff);opacity:0;transition:opacity .35s ease;animation:spin 1.6s linear infinite}
-.fly>.fly-core{inset:0;display:grid;place-items:center;overflow:hidden;background:var(--paper);color:var(--ink);box-shadow:0 14px 34px rgba(0,0,0,.35);transition:inset .35s cubic-bezier(.2,.8,.2,1)}
-@keyframes spin{to{--spin:360deg}}
-.fly.on .fly-ring{opacity:1}
-.fly.on .fly-glow{opacity:.7}
-.fly.on .fly-core{inset:2.5px}
-.fly-core>span{grid-area:1/1;display:grid;place-items:center;white-space:nowrap;transition:opacity .3s,transform .5s cubic-bezier(.2,.8,.2,1),filter .3s}
-.fly-label{transform:none}
-.fly-arrow{opacity:0;transform:translateY(-120%)}
-.fly-arrow svg{width:18px;height:18px}
-.fly.on .fly-label{opacity:0;transform:translateY(-120%);filter:blur(4px)}
-.fly.on .fly-arrow{opacity:1;transform:none;transition-delay:.16s,.16s,0s;animation:nudge 1s .7s ease-in-out infinite}
-@keyframes nudge{50%{transform:translateY(3px)}}
-.fly.drop .fly-arrow{animation:none;transform:translateY(130%);opacity:0;transition-delay:0s}
-.ping{background:radial-gradient(closest-side,rgba(255,255,255,.95),rgba(190,170,255,.5) 55%,rgba(255,255,255,0))}
 
 .next-steps li{display:flex;flex-direction:column}
 .ill .wm{display:block;width:100%;height:100%}
@@ -370,3 +344,42 @@ body.lock{overflow:hidden}
 .cur{position:absolute;left:58px;top:38px;width:22px;height:22px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.35));animation:cur 3.2s cubic-bezier(.45,0,.25,1) infinite}
 @keyframes cur{0%{transform:translate(46px,34px);opacity:0}12%{opacity:1}36%,80%{transform:none;opacity:1}46%,58%{transform:scale(.88)}52%,64%{transform:none}92%,100%{transform:translate(46px,34px);opacity:0}}
 .mv-folder{z-index:2}
+
+/* v12: one price card with a plan switch; a quiet monochrome download button */
+.buy{position:relative;width:min(470px,100%);margin:clamp(32px,4vw,48px) auto 0;padding:8px 8px clamp(22px,2.6vw,28px);border-radius:34px;text-align:left;box-shadow:0 24px 64px rgba(0,0,0,.34)}
+.seg{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:4px;border-radius:999px;background:rgba(0,0,0,.22)}
+.seg button{position:relative;z-index:1;height:38px;border:0;border-radius:999px;background:none;color:#b5b5b2;font:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:color .35s ease}
+.seg button[aria-selected="true"]{color:var(--ink)}
+.seg-ind{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:var(--paper);box-shadow:0 4px 14px rgba(0,0,0,.25);transition:transform .5s cubic-bezier(.3,1.25,.4,1)}
+.buy[data-plan="month"] .seg-ind{transform:translateX(100%)}
+.panes{display:grid;padding:22px clamp(16px,2.4vw,24px) 0}
+.pane{grid-area:1/1;transition:opacity .35s ease,transform .5s cubic-bezier(.2,.8,.2,1),filter .35s ease}
+.buy[data-plan="life"] .pane[data-plan="month"],.buy[data-plan="month"] .pane[data-plan="life"]{opacity:0;transform:translateY(8px);filter:blur(4px);pointer-events:none}
+.buy .amount{margin-top:0;align-items:baseline}
+.buy .tag{margin-left:auto;align-self:center;letter-spacing:0;font-size:12px}
+.pane{display:flex;flex-direction:column}
+.buy .ticks{margin-top:18px;padding-top:16px}
+.buy .dl-btn{display:flex;justify-content:center;width:calc(100% - clamp(32px,4.8vw,48px));max-width:none;margin:24px auto 0}
+.buy .fine{margin-top:12px;text-align:center}
+.price .cta{display:none}
+
+.dlx{position:fixed;z-index:45;display:grid;place-items:center;border-radius:999px;background:var(--paper);color:var(--ink);pointer-events:none;box-shadow:0 10px 28px rgba(0,0,0,.28)}
+.dlx{grid-template:minmax(0,1fr)/minmax(0,1fr)}
+.dlx>*{grid-area:1/1;justify-self:center;align-self:center}
+.dlx-label{white-space:nowrap;transition:opacity .22s ease,transform .45s cubic-bezier(.2,.8,.2,1),filter .3s ease}
+.dlx-arrow,.dlx-check{width:20px;height:20px;opacity:0;transform:translateY(-14px);transition:opacity .25s ease,transform .55s cubic-bezier(.3,1.5,.5,1)}
+.dlx-ring{width:calc(100% - 8px);height:calc(100% - 8px);transform:rotate(-90deg);opacity:0;transition:opacity .25s ease}
+.dlx-ring circle{fill:none;stroke-width:2;stroke-linecap:round}
+.dlx-ring .track{stroke:rgba(28,28,28,.1)}
+.dlx-ring .bar{stroke:var(--ink);stroke-dasharray:100;stroke-dashoffset:100;transition:stroke-dashoffset 1s cubic-bezier(.45,0,.2,1)}
+.dlx-check path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .38s cubic-bezier(.4,0,.2,1) .05s}
+.dlx.on .dlx-label{opacity:0;transform:translateY(-10px);filter:blur(3px)}
+.dlx.on .dlx-arrow{opacity:1;transform:none;transition-delay:.12s}
+.dlx.load .dlx-ring{opacity:1}
+.dlx.load .dlx-ring .bar{stroke-dashoffset:0}
+.dlx.load .dlx-arrow{animation:dlx-bob 1s cubic-bezier(.45,0,.55,1) infinite}
+.dlx.done .dlx-ring{opacity:0;transition-duration:.4s}
+.dlx.done .dlx-arrow{animation:none;opacity:0;transform:translateY(10px);transition-duration:.2s,.3s;transition-delay:0s}
+.dlx.done .dlx-check{opacity:1;transform:none}
+.dlx.done .dlx-check path{stroke-dashoffset:0}
+@keyframes dlx-bob{50%{transform:translateY(2.5px)}}

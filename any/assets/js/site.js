@@ -286,88 +286,105 @@
     spy.observe(document.querySelector(".hero"));
   }
 
-  /* ---------- Download: the button folds, flies to the browser's downloads, the next screen opens from there ---------- */
+  /* ---------- Download: everything happens inside the button, then the next screen grows out of it ---------- */
   var next = $("next"), fromBtn = null, dlUrl = null, busy = false, corner = { x: 0, y: 0 };
-  var arrowSvg = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.8v9.4M3.8 8.2 8 12.4l4.2-4.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var arrowSvg = '<svg class="dlx-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.8v9.4M3.8 8.2 8 12.4l4.2-4.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var ringSvg = '<svg class="dlx-ring" viewBox="0 0 40 40" aria-hidden="true"><circle class="track" cx="20" cy="20" r="18"/><circle class="bar" cx="20" cy="20" r="18" pathLength="100"/></svg>';
+  var checkSvg = '<svg class="dlx-check" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.6 8.4 6.6 11.4 12.4 5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   function startDownload(url) {
     var f = document.createElement("iframe");
     f.hidden = true; f.src = url;
     document.body.appendChild(f);
     setTimeout(function () { f.remove(); }, 60000);
   }
-  function ping(x) {
-    var p = document.createElement("span");
-    p.className = "ping"; p.style.left = x + "px";
-    document.body.appendChild(p);
-    setTimeout(function () { p.remove(); }, 900);
-  }
-  function reveal() {
-    var R = Math.hypot(Math.max(corner.x, innerWidth - corner.x), innerHeight) * 1.05;
+  function radius() { return Math.hypot(Math.max(corner.x, innerWidth - corner.x), Math.max(corner.y, innerHeight - corner.y)) * 1.02; }
+  function shape(r) { return "circle(" + r + "px at " + corner.x + "px " + corner.y + "px)"; }
+  function reveal(after) {
     next.hidden = false;
     document.body.classList.add("lock");
-    var shape = function (r) { return "circle(" + r + "px at " + corner.x + "px " + corner.y + "px)"; };
-    next.animate([{ clipPath: shape(0) }, { clipPath: shape(R) }], { duration: 820, easing: "cubic-bezier(.6,0,.2,1)" });
+    var a = next.animate([{ clipPath: shape(0) }, { clipPath: shape(radius()) }], { duration: 760, easing: "cubic-bezier(.65,0,.2,1)" });
+    a.onfinish = after;
     requestAnimationFrame(function () { next.classList.add("open"); });
     setTimeout(function () { next.querySelector(".next-x").focus({ preventScroll: true }); }, 400);
   }
   function launch(btn) {
     if (busy) return;
-    busy = true; fromBtn = btn; dlUrl = btn.href;
+    busy = true; fromBtn = btn; dlUrl = btn.dataset.href;
     var r = btn.getBoundingClientRect(), cs = getComputedStyle(btn), d = r.height;
     var tok = document.createElement("div");
-    tok.className = "fly";
-    tok.style.cssText = "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px;height:" + d + "px;font:" + cs.font;
-    tok.innerHTML = '<span class="fly-glow"></span><span class="fly-ring"></span><span class="fly-core"><span class="fly-label"></span><span class="fly-arrow">' + arrowSvg + "</span></span>";
-    tok.querySelector(".fly-label").textContent = btn.textContent;
+    tok.className = "dlx";
+    tok.style.cssText = "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px;height:" + d + "px;font:" + cs.font + ";letter-spacing:" + cs.letterSpacing;
+    tok.innerHTML = '<span class="dlx-label"></span>' + arrowSvg + ringSvg + checkSvg;
+    tok.querySelector(".dlx-label").textContent = btn.textContent;
     document.body.appendChild(tok);
     btn.style.visibility = "hidden";
-    // 1. Inside the button: a soft press, the label lifts away, the arrow drops in, the agent's colours run around the edge.
-    tok.animate([{ transform: "scale(1)" }, { transform: "scale(.94)", offset: .3 }, { transform: "scale(1.02)", offset: .7 }, { transform: "scale(1)" }], { duration: 460, easing: "ease-out" });
-    requestAnimationFrame(function () { tok.classList.add("on"); });
-    // 2. The pill folds into a circle.
+    // 1. A short, firm press.
+    tok.animate([{ transform: "scale(1)" }, { transform: "scale(.96)", offset: .35 }, { transform: "scale(1)" }], { duration: 300, easing: "cubic-bezier(.3,0,.3,1)" });
+    // 2. The label leaves, the arrow drops in.
+    setTimeout(function () { tok.classList.add("on"); }, 90);
+    // 3. The pill closes into a circle around the arrow.
     var fold = tok.animate([{ left: r.left + "px", width: r.width + "px" }, { left: r.left + (r.width - d) / 2 + "px", width: d + "px" }],
-      { duration: 560, delay: 720, easing: "cubic-bezier(.65,0,.2,1.15)", fill: "forwards" });
+      { duration: 520, delay: 420, easing: "cubic-bezier(.7,0,.2,1)", fill: "forwards" });
     fold.onfinish = function () {
-      // 3. It lifts off towards the browser's downloads, top right.
-      var cx = r.left + r.width / 2, cy = r.top + d / 2;
-      corner = { x: innerWidth - 64, y: 0 };
-      var dx = corner.x - cx, dy = corner.y - 8 - cy;
-      var fly = tok.animate([
-        { transform: "translate(0,0) scale(1)", opacity: 1 },
-        { transform: "translate(0,6px) scale(.96)", opacity: 1, offset: .14 },
-        { transform: "translate(" + dx * .28 + "px," + (dy * .6 - 34) + "px) scale(.8)", opacity: 1, offset: .55 },
-        { transform: "translate(" + dx + "px," + dy + "px) scale(.3)", opacity: .25 }
-      ], { duration: 900, delay: 260, easing: "cubic-bezier(.45,0,.25,1)", fill: "forwards" });
-      setTimeout(function () { startDownload(dlUrl); }, 700);
-      fly.onfinish = function () { tok.remove(); ping(corner.x); setTimeout(reveal, 120); };
+      // 4. A thin ring fills once, the arrow becomes a check.
+      tok.classList.add("load");
+      setTimeout(function () {
+        tok.classList.add("done");
+        startDownload(dlUrl);
+        // 5. The next screen grows out of the circle.
+        corner = { x: r.left + r.width / 2, y: r.top + d / 2 };
+        setTimeout(function () { reveal(function () { tok.remove(); }); }, 520);
+      }, 1050);
     };
   }
   function closeNext() {
     if (next.hidden) return;
     next.classList.remove("open");
-    var shape = function (r) { return "circle(" + r + "px at " + corner.x + "px " + corner.y + "px)"; };
-    var R = Math.hypot(Math.max(corner.x, innerWidth - corner.x), innerHeight) * 1.05;
-    var a = next.animate([{ clipPath: shape(R) }, { clipPath: shape(0) }], { duration: 560, easing: "cubic-bezier(.5,0,.3,1)", fill: "forwards" });
+    if (fromBtn) {
+      var r = fromBtn.getBoundingClientRect();
+      corner = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    }
+    var a = next.animate([{ clipPath: shape(radius()) }, { clipPath: shape(0) }], { duration: 560, easing: "cubic-bezier(.5,0,.3,1)", fill: "forwards" });
     a.onfinish = function () {
       next.hidden = true; a.cancel();
       document.body.classList.remove("lock");
       if (fromBtn) {
         fromBtn.style.visibility = "";
-        if (fromBtn.animate) fromBtn.animate([{ opacity: 0, transform: "scale(.9)" }, { opacity: 1, transform: "none" }], { duration: 380, easing: ease });
+        if (fromBtn.animate) fromBtn.animate([{ opacity: 0, transform: "scale(.94)" }, { opacity: 1, transform: "none" }], { duration: 380, easing: ease });
         fromBtn.focus({ preventScroll: true });
       }
       busy = false;
     };
   }
-  qsa(".dl-btn").forEach(function (a) {
+  // The link stays in the HTML for no-JS visitors; with JS the button only starts the download at the end of its animation,
+  // so nothing (including a host page that opens links itself) can jump away before it plays.
+  function asButton(a, onPress) {
+    a.dataset.href = a.href;
+    a.removeAttribute("href");
+    a.setAttribute("role", "button");
+    a.tabIndex = 0;
     a.addEventListener("click", function (e) {
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button) return;
       e.preventDefault();
-      launch(a);
+      if (e.metaKey || e.ctrlKey || e.shiftKey) { startDownload(a.dataset.href); return; }
+      onPress(a);
+    });
+    a.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onPress(a); }
+    });
+  }
+  qsa(".dl-btn").forEach(function (a) { asButton(a, launch); });
+  asButton($("dl-again"), function (a) { startDownload(dlUrl || a.dataset.href); });
+  qsa("[data-close]", next).forEach(function (el) { el.addEventListener("click", closeNext); });
+
+  /* ---------- Price: Lifetime / Monthly ---------- */
+  var buy = $("buy");
+  if (buy) qsa(".seg button", buy).forEach(function (b) {
+    b.addEventListener("click", function () {
+      buy.dataset.plan = b.dataset.plan;
+      qsa(".seg button", buy).forEach(function (x) { x.setAttribute("aria-selected", x === b ? "true" : "false"); });
+      qsa(".pane", buy).forEach(function (p) { p.setAttribute("aria-hidden", p.dataset.plan === b.dataset.plan ? "false" : "true"); });
     });
   });
-  qsa("[data-close]", next).forEach(function (el) { el.addEventListener("click", closeNext); });
-  $("dl-again").addEventListener("click", function (e) { e.preventDefault(); startDownload(dlUrl || this.href); ping(innerWidth - 64); });
   document.addEventListener("keydown", function (e) {
     if (next.hidden) return;
     if (e.key === "Escape") closeNext();

@@ -123,29 +123,32 @@
   <section class="price" id="price">
     <h2 class="title" data-t="pr.title">30 дней бесплатно.</h2>
     <p class="price-sub" data-t="pr.sub">Без карты. Потом — один из двух планов.</p>
-    <div class="plans">
-      <div class="plan plan-main glass">
-        <div class="plan-head"><h3>Lifetime</h3><span class="tag" data-t="pr.tag">Выгоднее</span></div>
-        <p class="amount">$11.99<small data-t="pr.once">один раз</small></p>
-        <p class="anchor" data-t="pr.anchor">Как 6 месяцев подписки</p>
-        <ul class="ticks">
-          <li data-t="pr.l1">Лицензия навсегда на 1 Mac</li>
-          <li data-t="pr.l2">Все обновления включены</li>
-          <li data-t="pr.l3">14 дней гарантия возврата</li>
-        </ul>
+    <div class="buy glass" id="buy" data-plan="life" data-blur="12">
+      <div class="seg" role="tablist" aria-label="Lifetime / Monthly">
+        <span class="seg-ind" aria-hidden="true"></span>
+        <button type="button" role="tab" aria-selected="true" data-plan="life">Lifetime</button>
+        <button type="button" role="tab" aria-selected="false" data-plan="month">Monthly</button>
       </div>
-      <div class="plan glass">
-        <div class="plan-head"><h3>Monthly</h3></div>
-        <p class="amount">$1.99<small data-t="pr.month">/ мес</small></p>
-        <p class="anchor" data-t="pr.year">$23.88 в год</p>
-        <ul class="ticks">
-          <li data-t="pr.m1">Полный доступ на 1 Mac</li>
-          <li data-t="pr.m2">Отмена в любой момент, доступ до конца оплаченного периода</li>
-          <li data-t="pr.m3">14 дней на возврат любого списания</li>
-        </ul>
+      <div class="panes">
+        <div class="pane" data-plan="life">
+          <p class="amount">$11.99<small data-t="pr.once">один раз</small><span class="tag" data-t="pr.tag">Выгоднее</span></p>
+          <p class="anchor" data-t="pr.anchor">Как 6 месяцев подписки</p>
+          <ul class="ticks">
+            <li data-t="pr.l1">Лицензия навсегда на 1 Mac</li>
+            <li data-t="pr.l2">Все обновления включены</li>
+            <li data-t="pr.l3">14 дней гарантия возврата</li>
+          </ul>
+        </div>
+        <div class="pane" data-plan="month" aria-hidden="true">
+          <p class="amount">$1.99<small data-t="pr.month">/ мес</small></p>
+          <p class="anchor" data-t="pr.year">$23.88 в год</p>
+          <ul class="ticks">
+            <li data-t="pr.m1">Полный доступ на 1 Mac</li>
+            <li data-t="pr.m2">Отмена в любой момент, доступ до конца оплаченного периода</li>
+            <li data-t="pr.m3">14 дней на возврат любого списания</li>
+          </ul>
+        </div>
       </div>
-    </div>
-    <div class="cta">
       <a class="btn dl-btn" href="https://github.com/Gleb4442/any-releases/releases/download/v1.0.1/any-1.0.1.dmg" data-t="pr.cta">Скачать бесплатно</a>
       <p class="fine" data-t="pr.fine">Покупка внутри приложения, когда решите.</p>
     </div>
@@ -170,7 +173,6 @@
 <div class="next" id="next" role="dialog" aria-modal="true" aria-labelledby="next-title" hidden>
   <button class="next-x glass" type="button" data-close data-blur="5" aria-label="Закрыть" data-ta="dl.close"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
   <div class="next-in">
-    <p class="next-meta"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5 6.6 11.5 12.5 4.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>any 1.0.1 · <span data-t="dl.size">11 МБ</span></p>
     <h2 class="title" id="next-title" data-t="dl.title2">Почти готово.</h2>
     <p class="sub" data-t="dl.sub">Загрузка началась. Осталось три шага.</p>
     <ol class="next-steps">

@@ -383,3 +383,28 @@ body.lock{overflow:hidden}
 .dlx.done .dlx-check{opacity:1;transform:none}
 .dlx.done .dlx-check path{stroke-dashoffset:0}
 @keyframes dlx-bob{50%{transform:translateY(2.5px)}}
+
+/* v13: narrower, taller price card; step cards: picture centred, one line of text at the bottom; trail fades behind the word; small download button */
+.price{padding-bottom:clamp(48px,6vw,80px)}
+.buy{width:min(392px,100%);padding:8px 8px 20px;border-radius:32px}
+.panes{padding:30px 22px 0}
+.buy .amount{font-size:clamp(50px,5.4vw,60px)}
+.buy .anchor{margin-top:8px}
+.buy .ticks{margin-top:22px;padding-top:20px;gap:11px}
+.buy .dl-btn{width:calc(100% - 44px);margin-top:28px}
+.buy .fine{margin-top:12px}
+.next-in{width:min(1120px,100%)}
+.next-steps li{min-height:236px;padding:18px 22px 22px}
+.next-steps .ill{height:150px;margin:0}
+.next-steps .n{margin-top:auto}
+.next-steps p{font-size:15px;text-wrap:balance}
+@media (min-width:1100px){.next-steps p{white-space:nowrap}}
+.mv-path{transform-origin:right center;animation:mvp 3.2s cubic-bezier(.45,0,.25,1) infinite}
+@keyframes mvp{0%{opacity:0;transform:scaleX(1)}10%,22%{opacity:1;transform:scaleX(1)}58%{opacity:.6;transform:scaleX(0)}59%,100%{opacity:0;transform:scaleX(0)}}
+.btn-sm{padding:7px 16px}
+.dlx.sm .dlx-arrow,.dlx.sm .dlx-check{width:13px;height:13px}
+.dlx.sm .dlx-ring{width:calc(100% - 5px);height:calc(100% - 5px)}
+.dlx.sm .dlx-ring circle{stroke-width:2.6}
+.dlx.under{z-index:39}
+.buy .amount small{white-space:nowrap}
+.buy .amount{font-size:clamp(48px,5vw,56px)}

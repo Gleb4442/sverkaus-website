@@ -273,18 +273,20 @@
     }, { threshold: .6 }).observe(sd);
   }
 
-  /* ---------- Nav: the section you are reading ---------- */
+  /* ---------- Nav: the section you are reading (the last one wins at the bottom of the page) ---------- */
   var navLinks = qsa(".nav-link");
-  if ("IntersectionObserver" in window) {
-    var spy = new IntersectionObserver(function (list) {
-      list.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        navLinks.forEach(function (a) { a.toggleAttribute("aria-current", a.getAttribute("href") === "#" + e.target.id); });
-      });
-    }, { rootMargin: "-45% 0px -50% 0px" });
-    ["how", "agent", "apps", "speed", "price"].forEach(function (id) { var el = $(id); if (el) spy.observe(el); });
-    spy.observe(document.querySelector(".hero"));
+  var spyIds = ["how", "agent", "apps", "speed", "price"];
+  function mark(id) { navLinks.forEach(function (a) { a.toggleAttribute("aria-current", a.getAttribute("href") === "#" + id); }); }
+  function spy() {
+    var line = innerHeight * .4, cur = null;
+    spyIds.forEach(function (id) { var el = $(id); if (el && el.getBoundingClientRect().top <= line) cur = id; });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) cur = "price";
+    mark(cur);
   }
+  var spyRaf = 0, spyLock = 0;
+  window.addEventListener("scroll", function () { if (Date.now() < spyLock) return; cancelAnimationFrame(spyRaf); spyRaf = requestAnimationFrame(spy); }, { passive: true });
+  navLinks.forEach(function (a) { a.addEventListener("click", function () { mark(a.getAttribute("href").slice(1)); spyLock = Date.now() + 900; setTimeout(spy, 950); }); });
+  spy();
 
   /* ---------- Download: everything happens inside the button, then the next screen grows out of it ---------- */
   var next = $("next"), fromBtn = null, dlUrl = null, busy = false, corner = { x: 0, y: 0 };
@@ -312,7 +314,7 @@
     busy = true; fromBtn = btn; dlUrl = btn.dataset.href;
     var r = btn.getBoundingClientRect(), cs = getComputedStyle(btn), d = r.height;
     var tok = document.createElement("div");
-    tok.className = "dlx";
+    tok.className = "dlx" + (d < 40 ? " sm" : "");
     tok.style.cssText = "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px;height:" + d + "px;font:" + cs.font + ";letter-spacing:" + cs.letterSpacing;
     tok.innerHTML = '<span class="dlx-label"></span>' + arrowSvg + ringSvg + checkSvg;
     tok.querySelector(".dlx-label").textContent = btn.textContent;
@@ -333,7 +335,7 @@
         startDownload(dlUrl);
         // 5. The next screen grows out of the circle.
         corner = { x: r.left + r.width / 2, y: r.top + d / 2 };
-        setTimeout(function () { reveal(function () { tok.remove(); }); }, 520);
+        setTimeout(function () { tok.classList.add("under"); reveal(function () { tok.remove(); }); }, 380);
       }, 1050);
     };
   }

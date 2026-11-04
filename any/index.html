@@ -22,6 +22,7 @@
   <div class="nav-right">
     <nav class="nav-links" aria-label="any">
       <a class="nav-link" href="#how" data-t="nav.how">Как работает</a>
+      <a class="nav-link" href="#dev" data-t="nav.dev">Промпты</a>
       <a class="nav-link" href="#agent" data-t="nav.agent">Агент</a>
       <a class="nav-link" href="#apps" data-t="nav.apps">Приложения</a>
       <a class="nav-link" href="#speed" data-t="nav.speed">Скорость</a>
@@ -74,6 +75,46 @@
     <div class="glass step"><span>3</span><h2 data-t="s3h">Нажмите ещё раз</h2><p data-t="s3p">Текст появится под курсором.</p></div>
   </section>
   <p class="aside" data-th="aside">Включается в Настройках → Дополнительно. Без AirPods зажмите <kbd>fn</kbd>.</p>
+
+  <section class="dev" id="dev">
+    <div class="dev-head">
+      <p class="kick" data-t="dev.kick">Для вайбкодинга</p>
+      <h2 class="title" data-th="dev.title">Говорите промпт.<br>Бросайте скрин.</h2>
+      <p class="dev-sub" data-t="dev.sub">Перетащите картинку прямо во время диктовки — она встанет в то место фразы, где вы её бросили. any соберёт промпт и вставит его обратно в Claude Code, Codex или Cursor.</p>
+    </div>
+    <div class="dv" id="dv" data-step="idle" role="img" aria-label="Во время диктовки скриншот перетаскивают на нижнюю панель any. В готовом промпте он стоит там, где его бросили, и промпт вставляется в терминал." data-ta="dev.aria">
+      <div class="dv-term glass" data-blur="10" aria-hidden="true">
+        <p class="dv-bar"><span class="tg">&gt;_</span><b>Terminal</b><span>~/app — claude</span></p>
+        <div class="dv-body">
+          <p class="dim">~/app $ claude</p>
+          <div class="dv-box"><span class="gt">&gt;</span><span class="dv-out" id="dv-out"></span><i class="dv-caret"></i></div>
+        </div>
+      </div>
+      <div class="dv-fog" aria-hidden="true"><svg class="dv-aim" viewBox="0 0 24 24"><path d="M12 3.5v15M5.5 12.5 12 19l6.5-6.5" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="dv-said" id="dv-said" aria-hidden="true"></div>
+      <div class="dv-card" id="dv-card" aria-hidden="true">
+        <p class="dv-text" id="dv-text"></p>
+        <div class="dv-btns">
+          <span class="dv-grip"><svg viewBox="0 0 24 24"><path d="M9 11V5.6a1.6 1.6 0 0 1 3.2 0V11m0-1.4V4.6a1.6 1.6 0 0 1 3.2 0V11m0-.8V6.6a1.6 1.6 0 0 1 3.2 0v6.6c0 4-2.6 7-6.4 7-2.6 0-4-1.2-5.5-3.4L4.4 13a1.6 1.6 0 0 1 2.6-1.8L9 13.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="dv-b"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 5.5A2.5 2.5 0 0 0 13.5 3h-7A2.5 2.5 0 0 0 4 5.5v7A2.5 2.5 0 0 0 6.5 15" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span data-t="dev.copy">Скопировать</span></span>
+          <span class="dv-b dv-go"><span class="tg">&gt;_</span><span data-t="dev.paste">Вставить в Терминал</span><span class="ret">⏎</span></span>
+        </div>
+      </div>
+      <div class="dv-panel" aria-hidden="true">
+        <span class="dv-stack" id="dv-stack"><span class="shot"><b></b><i></i><i></i></span></span>
+        <span class="dv-rec"><i class="dv-wave"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i><span class="dv-time" id="dv-time">00:00</span><span class="orb"><i></i></span></span>
+        <span class="dv-ctl"><span class="sq"><i></i></span><span class="x"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span></span>
+        <span class="dv-mic"><svg viewBox="0 0 24 24"><rect x="8.5" y="2.5" width="7" height="12" rx="3.5" fill="currentColor"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span class="dv-edit"><svg viewBox="0 0 24 24"><path d="M12 4.5H7A2.5 2.5 0 0 0 4.5 7v10A2.5 2.5 0 0 0 7 19.5h10a2.5 2.5 0 0 0 2.5-2.5v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M17.6 3.8a1.9 1.9 0 0 1 2.7 2.7L12.6 14.2 9.5 15l.8-3.1Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
+      </div>
+      <div class="dv-file" id="dv-file" aria-hidden="true"><span class="shot"><b></b><i></i><i></i></span><svg class="cur" viewBox="0 0 24 24"><path d="M5 3.2v15.6l4.3-4.1 2.7 6.1 2.6-1.1-2.6-6h5.9Z" fill="#fff" stroke="#1c1c1c" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+    </div>
+    <ul class="dv-facts">
+      <li data-t="dev.f1">Скрины, видео, PDF</li>
+      <li data-t="dev.f2">Встают туда, где вы их бросили</li>
+      <li data-t="dev.f3">Enter — и промпт в терминале</li>
+    </ul>
+  </section>
 
   <section class="agent" id="agent">
     <div class="agent-head">
@@ -161,13 +202,10 @@
 
 <footer class="footer">
   <div class="ft-top">
-    <div class="ft-brand">
-      <a class="ft-logo" href="#top" aria-label="any"><img src="/any/assets/img/any-icon-64.png" alt="" width="40" height="40"><svg viewBox="140 322.5 745 370" width="66" height="33" aria-hidden="true"><path fill="currentColor" d="M 225.92 622.00 Q 203.69 622.00 186.78 613.19 Q 169.86 604.38 160.35 589.27 Q 150.84 574.15 150.84 555.13 L 150.84 554.93 Q 150.84 533.51 161.55 518.70 Q 172.26 503.88 192.68 495.38 Q 213.10 486.87 242.53 484.87 L 332.82 478.86 L 332.82 524.50 L 256.14 529.91 Q 243.13 530.71 237.03 535.72 Q 230.92 540.72 230.92 548.93 L 230.92 549.13 Q 230.92 557.74 237.73 562.34 Q 244.53 566.95 255.94 566.95 Q 265.75 566.95 273.16 563.64 Q 280.57 560.34 284.77 554.53 Q 288.98 548.73 288.98 541.52 L 288.98 472.85 Q 288.98 463.24 282.77 457.64 Q 276.56 452.03 263.95 452.03 Q 251.34 452.03 244.33 456.84 Q 237.33 461.64 235.92 468.45 L 235.52 470.45 L 162.25 470.45 L 162.45 467.85 Q 164.25 445.23 177.17 428.51 Q 190.08 411.79 213.20 402.59 Q 236.33 393.38 268.56 393.38 Q 299.39 393.38 322.41 402.89 Q 345.43 412.39 358.24 429.41 Q 371.06 446.43 371.06 468.85 L 371.06 619.20 L 288.98 619.20 L 288.98 589.17 L 287.38 589.17 Q 281.17 599.58 272.26 606.98 Q 263.35 614.39 251.74 618.20 Q 240.13 622.00 225.92 622.00 Z M 395.89 619.20 L 395.89 398.18 L 477.97 398.18 L 477.97 439.22 L 479.57 439.22 Q 487.78 416.80 504.59 405.09 Q 521.41 393.38 546.43 393.38 Q 582.87 393.38 602.59 415.40 Q 622.31 437.42 622.31 477.26 L 622.31 619.20 L 540.23 619.20 L 540.23 495.28 Q 540.23 478.66 532.42 469.05 Q 524.61 459.44 509.20 459.44 Q 499.59 459.44 492.58 464.05 Q 485.57 468.65 481.77 476.66 Q 477.97 484.67 477.97 495.08 L 477.97 619.20 Z M 691.18 690.47 Q 679.17 690.47 668.26 689.37 Q 657.35 688.26 650.34 687.06 L 650.34 628.61 Q 654.34 629.41 661.45 630.31 Q 668.56 631.21 678.37 631.21 Q 687.98 631.21 693.38 628.31 Q 698.79 625.40 700.19 621.40 L 700.99 619.20 L 626.72 398.18 L 717.81 398.18 L 754.64 575.75 L 746.63 560.34 L 758.05 560.34 L 749.84 575.75 L 786.47 398.18 L 873.16 398.18 L 807.29 613.99 Q 797.88 644.62 781.67 661.24 Q 765.45 677.85 742.83 684.16 Q 720.21 690.47 691.18 690.47 Z "/></svg></a>
-      <p class="ft-copy">© 2026 any by Hleb Hosha</p>
-    </div>
     <nav class="ft-col" aria-labelledby="ft-hp">
       <h3 id="ft-hp" data-t="ft.hp">Продукт</h3>
       <a href="#how" data-t="nav.how">Как работает</a>
+      <a href="#dev" data-t="nav.dev">Промпты</a>
       <a href="#agent" data-t="nav.agent">Агент</a>
       <a href="#apps" data-t="nav.apps">Приложения</a>
       <a href="#speed" data-t="nav.speed">Скорость</a>
@@ -187,12 +225,11 @@
       <a href="/any/third-party-notices.txt" data-t="ft.lic">Лицензии</a>
     </nav>
   </div>
-  <div class="ft-legal">
-    <p data-th="ft.pay">Платежи обрабатывает <a href="https://creem.io" target="_blank" rel="noopener">Creem</a> (Merchant of Record). Контент сексуального характера в any запрещён, включая голосовые команды и составление текста с ИИ (<a href="/any/terms">Условия, §5</a>).</p>
-    <p data-th="ft.op">Оператор: Глеб Хоша (Hleb Hosha), физическое лицо, Украина · <a href="mailto:main@sverkaus.com">main@sverkaus.com</a></p>
-    <p data-t="ft.tm">AirPods и Mac — товарные знаки Apple Inc. any не связан с Apple и другими показанными компаниями. Их названия и значки принадлежат владельцам и лишь показывают приложения, в которых any может печатать.</p>
-    <p class="credit" data-th="ft.credit">3D-модель AirPods Pro: <a href="https://sketchfab.com/3d-models/airpods-pro-with-magsafe-charging-case-ios15-52e5f28b37f94f05b6c0768773137689" target="_blank" rel="noopener">polyman</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>, отрисована и обрезана нами.</p>
+  <div class="ft-base">
+    <p data-t="ft.c">© 2026 Hleb Hosha, Украина</p>
+    <p data-th="ft.pay2">Платежи обрабатывает <a href="https://creem.io" target="_blank" rel="noopener">Creem</a> (Merchant of Record)</p>
   </div>
+  <p class="ft-fine" data-th="ft.fine">Сексуальный контент в any запрещён (<a href="/any/terms">Условия, §5</a>). AirPods и Mac — товарные знаки Apple Inc.; any не связан с Apple и другими показанными компаниями. 3D-модель AirPods: <a href="https://sketchfab.com/3d-models/airpods-pro-with-magsafe-charging-case-ios15-52e5f28b37f94f05b6c0768773137689" target="_blank" rel="noopener">polyman</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (обработана нами).</p>
   <div class="ft-mark" aria-hidden="true">
     <svg viewBox="140 322.5 745 370"><defs><linearGradient id="ftg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".13"/><stop offset=".75" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><path fill="url(#ftg)" d="M 225.92 622.00 Q 203.69 622.00 186.78 613.19 Q 169.86 604.38 160.35 589.27 Q 150.84 574.15 150.84 555.13 L 150.84 554.93 Q 150.84 533.51 161.55 518.70 Q 172.26 503.88 192.68 495.38 Q 213.10 486.87 242.53 484.87 L 332.82 478.86 L 332.82 524.50 L 256.14 529.91 Q 243.13 530.71 237.03 535.72 Q 230.92 540.72 230.92 548.93 L 230.92 549.13 Q 230.92 557.74 237.73 562.34 Q 244.53 566.95 255.94 566.95 Q 265.75 566.95 273.16 563.64 Q 280.57 560.34 284.77 554.53 Q 288.98 548.73 288.98 541.52 L 288.98 472.85 Q 288.98 463.24 282.77 457.64 Q 276.56 452.03 263.95 452.03 Q 251.34 452.03 244.33 456.84 Q 237.33 461.64 235.92 468.45 L 235.52 470.45 L 162.25 470.45 L 162.45 467.85 Q 164.25 445.23 177.17 428.51 Q 190.08 411.79 213.20 402.59 Q 236.33 393.38 268.56 393.38 Q 299.39 393.38 322.41 402.89 Q 345.43 412.39 358.24 429.41 Q 371.06 446.43 371.06 468.85 L 371.06 619.20 L 288.98 619.20 L 288.98 589.17 L 287.38 589.17 Q 281.17 599.58 272.26 606.98 Q 263.35 614.39 251.74 618.20 Q 240.13 622.00 225.92 622.00 Z M 395.89 619.20 L 395.89 398.18 L 477.97 398.18 L 477.97 439.22 L 479.57 439.22 Q 487.78 416.80 504.59 405.09 Q 521.41 393.38 546.43 393.38 Q 582.87 393.38 602.59 415.40 Q 622.31 437.42 622.31 477.26 L 622.31 619.20 L 540.23 619.20 L 540.23 495.28 Q 540.23 478.66 532.42 469.05 Q 524.61 459.44 509.20 459.44 Q 499.59 459.44 492.58 464.05 Q 485.57 468.65 481.77 476.66 Q 477.97 484.67 477.97 495.08 L 477.97 619.20 Z M 691.18 690.47 Q 679.17 690.47 668.26 689.37 Q 657.35 688.26 650.34 687.06 L 650.34 628.61 Q 654.34 629.41 661.45 630.31 Q 668.56 631.21 678.37 631.21 Q 687.98 631.21 693.38 628.31 Q 698.79 625.40 700.19 621.40 L 700.99 619.20 L 626.72 398.18 L 717.81 398.18 L 754.64 575.75 L 746.63 560.34 L 758.05 560.34 L 749.84 575.75 L 786.47 398.18 L 873.16 398.18 L 807.29 613.99 Q 797.88 644.62 781.67 661.24 Q 765.45 677.85 742.83 684.16 Q 720.21 690.47 691.18 690.47 Z "/></svg>
     <span class="ft-fog"></span>

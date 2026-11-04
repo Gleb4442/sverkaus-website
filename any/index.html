@@ -81,32 +81,8 @@
       <h2 class="title" data-t="dev.title">Скрин — прямо посреди фразы.</h2>
       <p class="dev-sub" data-t="dev.sub">Голосовые промпты для Claude Code, Codex и Cursor.</p>
     </div>
-    <div class="dv" id="dv" data-step="idle" role="img" aria-label="Во время диктовки скриншот перетаскивают на нижнюю панель any. В готовом промпте он стоит там, где его бросили, и промпт вставляется в терминал." data-ta="dev.aria">
-      <div class="dv-term glass" data-blur="10" aria-hidden="true">
-        <p class="dv-bar"><span class="tg">&gt;_</span><b>Terminal</b><span>~/app — claude</span></p>
-        <div class="dv-body">
-          <p class="dim">~/app $ claude</p>
-          <div class="dv-box"><span class="gt">&gt;</span><span class="dv-out" id="dv-out"></span><i class="dv-caret"></i></div>
-        </div>
-      </div>
-      <div class="dv-fog" aria-hidden="true"><svg class="dv-aim" viewBox="0 0 24 24"><path d="M12 3.5v15M5.5 12.5 12 19l6.5-6.5" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="dv-said" id="dv-said" aria-hidden="true"></div>
-      <div class="dv-card" id="dv-card" aria-hidden="true">
-        <p class="dv-text" id="dv-text"></p>
-        <div class="dv-btns">
-          <span class="dv-grip"><svg viewBox="0 0 24 24"><path d="M9 11V5.6a1.6 1.6 0 0 1 3.2 0V11m0-1.4V4.6a1.6 1.6 0 0 1 3.2 0V11m0-.8V6.6a1.6 1.6 0 0 1 3.2 0v6.6c0 4-2.6 7-6.4 7-2.6 0-4-1.2-5.5-3.4L4.4 13a1.6 1.6 0 0 1 2.6-1.8L9 13.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="dv-b"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 5.5A2.5 2.5 0 0 0 13.5 3h-7A2.5 2.5 0 0 0 4 5.5v7A2.5 2.5 0 0 0 6.5 15" fill="none" stroke="currentColor" stroke-width="1.8"/></svg><span data-t="dev.copy">Скопировать</span></span>
-          <span class="dv-b dv-go"><span class="tg">&gt;_</span><span data-t="dev.paste">Вставить в Терминал</span><span class="ret">⏎</span></span>
-        </div>
-      </div>
-      <div class="dv-panel" aria-hidden="true">
-        <span class="dv-stack" id="dv-stack"><span class="shot"><b></b><i></i><i></i></span></span>
-        <span class="dv-rec"><i class="dv-wave"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i><span class="dv-time" id="dv-time">00:00</span><span class="orb"><i></i></span></span>
-        <span class="dv-ctl"><span class="sq"><i></i></span><span class="x"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span></span>
-        <span class="dv-mic"><svg viewBox="0 0 24 24"><rect x="8.5" y="2.5" width="7" height="12" rx="3.5" fill="currentColor"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
-        <span class="dv-edit"><svg viewBox="0 0 24 24"><path d="M12 4.5H7A2.5 2.5 0 0 0 4.5 7v10A2.5 2.5 0 0 0 7 19.5h10a2.5 2.5 0 0 0 2.5-2.5v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M17.6 3.8a1.9 1.9 0 0 1 2.7 2.7L12.6 14.2 9.5 15l.8-3.1Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
-      </div>
-      <div class="dv-file" id="dv-file" aria-hidden="true"><span class="shot"><b></b><i></i><i></i></span><svg class="cur" viewBox="0 0 24 24"><path d="M5 3.2v15.6l4.3-4.1 2.7 6.1 2.6-1.1-2.6-6h5.9Z" fill="#fff" stroke="#1c1c1c" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+    <div class="dv-video">
+      <video id="dv-video" src="/any/assets/video/dev.mp4" poster="/any/assets/video/dev-poster.jpg" muted loop playsinline preload="auto" aria-label="Во время диктовки скриншот перетаскивают на нижнюю панель any. В готовом промпте он стоит там, где его бросили, и промпт вставляется в терминал." data-ta="dev.aria"></video>
     </div>
   </section>
 

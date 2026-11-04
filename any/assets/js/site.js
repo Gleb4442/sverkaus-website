@@ -246,89 +246,16 @@
   agTabs.forEach(function (t, k) { t.addEventListener("click", function () { if (k !== agentIndex) agentPlay(k, true); }); });
   window.addEventListener("resize", moveInd);
 
-  /* ---------- Prompting: a screenshot dropped mid-sentence lands in the prompt ---------- */
-  var dv = $("dv"), dvFile = $("dv-file"), dvSaid = $("dv-said"), dvText = $("dv-text"), dvOut = $("dv-out");
-  var dvTime = $("dv-time"), dvStack = $("dv-stack"), dvAim = dv.querySelector(".dv-aim");
-  var dvTimers = [], dvClock = 0, dvOn = false;
-  var SHOT = '<span class="shot"><b></b><i></i><i></i></span>';
-  var IMG = "[Image 1: ~/.any/draft-images/3f2a9c1b.png]";
-  function esc(s) { var d = document.createElement("i"); d.textContent = s; return d.innerHTML; }
-  function dvStep(s) { dv.dataset.step = s; }
-  function dvReset() {
-    stop(dvTimers); clearInterval(dvClock);
-    if (dvFile.getAnimations) dvFile.getAnimations().forEach(function (a) { a.cancel(); });
-    dv.classList.remove("dropped", "stopped", "press-go");
-    dvSaid.textContent = ""; dvText.textContent = ""; dvOut.textContent = ""; dvTime.textContent = "00:00";
-    dvStep("idle");
-  }
-  function dvSay(text, done) {
-    var steps = words(text, dvSaid, "w"), i = 0;
-    (function n() { steps[i](); if (++i < steps.length) { after(dvTimers, pause(dvSaid.lastChild), n); return; } done(); })();
-  }
-  function centre(r) { return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
-  function dvDrag(done) {
-    dvStep("near");
-    var f = centre(dvFile.querySelector(".shot").getBoundingClientRect()), a = centre(dvAim.getBoundingClientRect());
-    var dx = a.x - f.x, dy = a.y - f.y - dvAim.getBoundingClientRect().height * 1.7;
-    var mv = dvFile.animate([{ transform: "translate(0,0)" }, { transform: "translate(" + dx + "px," + dy + "px)" }], { duration: 1150, easing: "cubic-bezier(.45,.05,.25,1)", fill: "forwards" });
-    mv.onfinish = function () {
-      if (dv.dataset.step !== "near") return;
-      after(dvTimers, 260, function () {
-        dvStep("drop");
-        var s = centre(dvStack.getBoundingClientRect()), f2 = centre(dvFile.querySelector(".shot").getBoundingClientRect());
-        dvFile.animate([{ transform: "translate(" + dx + "px," + dy + "px) scale(1)", opacity: 1 },
-                        { transform: "translate(" + (dx + s.x - f2.x) + "px," + (dy + s.y - f2.y) + "px) scale(.34)", opacity: 0 }],
-                       { duration: 440, easing: ease, fill: "forwards" });
-        after(dvTimers, 380, function () { dv.classList.add("dropped"); done(); });
-      });
-    };
-  }
-  function dvPlay() {
-    dvReset();
-    var p1 = tr("dev.p1"), p2 = tr("dev.p2");
-    after(dvTimers, 1100, function () {
-      dvStep("rec");
-      var sec = 0;
-      dvClock = setInterval(function () { sec++; dvTime.textContent = "00:" + (sec < 10 ? "0" : "") + sec; }, 1000);
-      after(dvTimers, 450, function () {
-        dvSay(p1, function () {
-          after(dvTimers, 150, function () {
-            dvDrag(function () {
-              dvSaid.insertAdjacentHTML("beforeend", " " + SHOT + " ");
-              after(dvTimers, 450, function () {
-                dvSay(p2, function () {
-                  after(dvTimers, 800, function () {
-                    dv.classList.add("stopped"); clearInterval(dvClock);
-                    after(dvTimers, 320, function () {
-                      dvText.innerHTML = esc(p1) + ": " + SHOT + " " + esc(p2);
-                      dvStep("card");
-                      after(dvTimers, 2600, function () {
-                        dv.classList.add("press-go");
-                        after(dvTimers, 240, function () {
-                          dvOut.innerHTML = esc(p1) + ': <span class="ref">' + IMG + "</span> " + esc(p2);
-                          dvStep("paste");
-                          after(dvTimers, 4600, function () {
-                            dv.classList.add("fade");
-                            after(dvTimers, 600, function () { dvPlay(); after(dvTimers, 60, function () { dv.classList.remove("fade"); }); });
-                          });
-                        });
-                      });
-                    });
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
-    });
-  }
+  /* ---------- Prompting: the real recording plays only while it is on screen ---------- */
+  var dvVideo = $("dv-video"), dvOn = false;
+  function dvPlay() { var p = dvVideo.play(); if (p && p.catch) p.catch(function () {}); }
+  function dvReset() { dvVideo.pause(); }
   if ("IntersectionObserver" in window) {
     new IntersectionObserver(function (e) {
       var vis = e[0].isIntersecting;
       if (vis && !dvOn) { dvOn = true; dvPlay(); }
       if (!vis && dvOn) { dvOn = false; dvReset(); }
-    }, { threshold: .3 }).observe(dv);
+    }, { threshold: .25 }).observe(dvVideo);
   } else { dvOn = true; dvPlay(); }
 
   /* ---------- Speed: 0 → 0.16 s on a one-second bar ---------- */

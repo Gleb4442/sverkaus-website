@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>any — диктовка одним нажатием на AirPods</title>
-  <meta name="description" content="any — диктовка и голосовой агент для Mac. Нажмите на ножку AirPods, скажите, нажмите ещё раз — текст появится там, где стоит курсор.">
+  <title>any — диктовка для Mac: зажмите fn и говорите</title>
+  <meta name="description" content="any — диктовка и голосовой агент для Mac. Зажмите fn, скажите, отпустите — текст появится там, где стоит курсор.">
   <meta name="theme-color" content="#1c1c1c">
-  <meta property="og:title" content="any — диктовка одним нажатием на AirPods">
+  <meta property="og:title" content="any — диктовка для Mac: зажмите fn и говорите">
   <meta property="og:description" content="Нажмите. Скажите. Текст уже под курсором. Диктовка и голосовой агент для Mac.">
   <meta property="og:image" content="https://www.sverkaus.com/any/assets/img/any-icon-512.png">
   <meta property="og:url" content="https://www.sverkaus.com/any">
@@ -22,10 +22,8 @@
   <div class="nav-right">
     <nav class="nav-links" aria-label="any">
       <a class="nav-link" href="#how" data-t="nav.how">Как работает</a>
-      <a class="nav-link" href="#dev" data-t="nav.dev">Промпты</a>
       <a class="nav-link" href="#agent" data-t="nav.agent">Агент</a>
       <a class="nav-link" href="#apps" data-t="nav.apps">Приложения</a>
-      <a class="nav-link" href="#speed" data-t="nav.speed">Скорость</a>
       <a class="nav-link" href="#price" data-t="nav.price">Цены</a>
     </nav>
     <button class="lang" id="lang" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="lang-menu" aria-label="Язык" data-ta="lang"><span id="lang-code">RU</span></button>
@@ -48,11 +46,11 @@
   <section class="hero panel">
     <div class="hero-copy">
       <h1 data-th="hero.h1">Нажмите. Скажите.<br>Готово.</h1>
-      <p class="lede" data-t="hero.lede">Диктовка для Mac на расстоянии одного нажатия на ножку AirPods.</p>
+      <p class="lede" data-t="hero.lede">Диктовка для Mac. Зажмите fn, говорите, отпустите — текст уже под курсором.</p>
       <a class="btn dl-btn" href="https://github.com/Gleb4442/any-releases/releases/download/v1.0.1/any-1.0.1.dmg" data-t="hero.cta">Скачать для Mac</a>
       <p class="fine" data-t="hero.fine">30 дней бесплатно · без карты · macOS 14+ · Apple Silicon</p>
     </div>
-    <div class="stage" id="stage" data-state="idle" role="img" aria-label="Нажатие на ножку AirPods: текст появляется в поле ввода и отправляется" data-ta="hero.aria">
+    <div class="stage" id="stage" data-state="idle" role="img" aria-label="Клавиша fn зажата: слова появляются в поле ввода; клавишу отпускают — текст остаётся в поле" data-ta="hero.aria">
       <div class="win-float">
       <div class="win glass" id="win" aria-hidden="true">
         <div class="win-bar"><img id="win-icon" src="/any/assets/img/apps/tiles/telegram.png" alt="" width="22" height="22"><b id="win-app">Telegram</b><span class="to" id="win-to"></span></div>
@@ -60,31 +58,21 @@
         <div class="field" id="field"><p class="field-text" id="typed" data-ph=""></p><span class="send"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
       </div>
       </div>
-      <div class="bud" id="bud" aria-hidden="true">
-        <span class="halo"></span>
-        <img src="/any/assets/img/airpods-pro.webp" width="794" height="986" alt="">
-        <span class="dent"></span>
-        <span class="ring"></span>
+      <div class="key-float" aria-hidden="true">
+        <div class="key" id="key">
+          <span class="key-fn">fn</span>
+          <svg class="key-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3 12h18M12 3c2.6 2.7 3.9 5.7 3.9 9s-1.3 6.3-3.9 9c-2.6-2.7-3.9-5.7-3.9-9s1.3-6.3 3.9-9z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="strip" id="how">
-    <div class="glass step"><span>1</span><h2 data-t="s1h">Нажмите на ножку</h2><p data-t="s1p">Клавиатура не нужна.</p></div>
-    <div class="glass step"><span>2</span><h2 data-t="s2h">Говорите</h2><p data-t="s2p">Ходите. Думайте вслух.</p></div>
-    <div class="glass step"><span>3</span><h2 data-t="s3h">Нажмите ещё раз</h2><p data-t="s3p">Текст появится под курсором.</p></div>
+    <div class="glass step"><span>1</span><h2 data-t="s1h">Зажмите fn</h2><p data-t="s1p">Или нажмите дважды — без рук.</p></div>
+    <div class="glass step"><span>2</span><h2 data-t="s2h">Говорите</h2><p data-t="s2p">Думайте вслух. Языки можно смешивать.</p></div>
+    <div class="glass step"><span>3</span><h2 data-t="s3h">Отпустите</h2><p data-t="s3p">Текст появится под курсором.</p></div>
   </section>
-  <p class="aside" data-th="aside">Включается в Настройках → Дополнительно. Без AirPods зажмите <kbd>fn</kbd>.</p>
-
-  <section class="dev" id="dev">
-    <div class="dev-head">
-      <h2 class="title" data-t="dev.title">Скрин — прямо посреди фразы.</h2>
-      <p class="dev-sub" data-t="dev.sub">Голосовые промпты для Claude Code, Codex и Cursor.</p>
-    </div>
-    <div class="dv-video">
-      <video id="dv-video" src="/any/assets/video/dev.mp4" poster="/any/assets/video/dev-poster.jpg" muted loop playsinline preload="auto" aria-label="Во время диктовки скриншот перетаскивают на нижнюю панель any. В готовом промпте он стоит там, где его бросили, и промпт вставляется в терминал." data-ta="dev.aria"></video>
-    </div>
-  </section>
+  <p class="aside" data-th="aside">Нет клавиши fn? <kbd>⌃⌥D</kbd> включает и выключает запись. <kbd>Esc</kbd> — отмена.</p>
 
   <section class="agent" id="agent">
     <div class="agent-head">
@@ -101,6 +89,7 @@
       <button type="button" role="tab" aria-selected="false" data-t="tab2">Найти</button>
       <button type="button" role="tab" aria-selected="false" data-t="tab3">Поправить</button>
     </div>
+    <p class="agent-fine" data-t="agent.fine">Работает на модели Qwen прямо на Mac или через Groq с вашим ключом.</p>
   </section>
 
   <section class="light panel" id="apps">
@@ -115,19 +104,9 @@
       <figure><img src="/any/assets/img/apps/glyphs/telegram.png" alt="" width="60" height="60"><figcaption>Telegram</figcaption></figure>
     </div>
     <div class="grid">
-      <div><h3 data-t="g1h">Перевод</h3><p data-t="g1p">Выделите текст, назовите язык.</p></div>
+      <div><h3 data-t="g1h">Перевод</h3><p data-t="g1p">Выделите текст, назовите язык. macOS 15+.</p></div>
       <div><h3 data-t="g2h">Ваши слова</h3><p data-t="g2p">Имена и термины, как пишете вы.</p></div>
       <div><h3 data-t="g3h">На вашем Mac</h3><p data-t="g3p">Речь может не покидать устройство.</p></div>
-    </div>
-  </section>
-
-  <section class="speed" id="speed">
-    <h2 class="title" data-t="sp.title">Договорили — текст уже на месте.</h2>
-    <div class="spd glass" id="sd" data-phase="idle" data-blur="12">
-      <p class="spd-num"><span id="sd-num">0,16</span><small data-t="sp.unit">с</small></p>
-      <p class="spd-cap" data-t="sp.cap">Столько проходит от последнего слова до текста в поле.</p>
-      <div class="spd-bar" aria-hidden="true"><span class="spd-fill"></span></div>
-      <div class="spd-scale" aria-hidden="true"><span>0</span><span>1&nbsp;<span data-t="sp.unit">с</span></span></div>
     </div>
   </section>
 
@@ -160,7 +139,7 @@
             <li data-t="pr.m2">Агент прямо в поле ввода</li>
             <li data-t="pr.m3">Распознавание без интернета</li>
             <li data-t="pr.m4">Отмена в любой момент</li>
-            <li data-t="pr.m5">Возврат 14 дней на каждый платёж</li>
+            <li data-t="pr.m5">Возврат последнего платежа за 14 дней</li>
           </ul>
         </div>
       </div>
@@ -175,10 +154,8 @@
     <nav class="ft-col" aria-labelledby="ft-hp">
       <h3 id="ft-hp" data-t="ft.hp">Продукт</h3>
       <a href="#how" data-t="nav.how">Как работает</a>
-      <a href="#dev" data-t="nav.dev">Промпты</a>
       <a href="#agent" data-t="nav.agent">Агент</a>
       <a href="#apps" data-t="nav.apps">Приложения</a>
-      <a href="#speed" data-t="nav.speed">Скорость</a>
       <a href="#price" data-t="nav.price">Цены</a>
     </nav>
     <nav class="ft-col" aria-labelledby="ft-hs">
@@ -199,7 +176,7 @@
     <p data-t="ft.c">© 2026 Hleb Hosha, Украина</p>
     <p data-th="ft.pay2">Платежи обрабатывает <a href="https://creem.io" target="_blank" rel="noopener">Creem</a> (Merchant of Record)</p>
   </div>
-  <p class="ft-fine" data-th="ft.fine">Сексуальный контент в any запрещён (<a href="/any/terms">Условия, §5</a>). AirPods и Mac — товарные знаки Apple Inc.; any не связан с Apple и другими показанными компаниями. 3D-модель AirPods: <a href="https://sketchfab.com/3d-models/airpods-pro-with-magsafe-charging-case-ios15-52e5f28b37f94f05b6c0768773137689" target="_blank" rel="noopener">polyman</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (обработана нами).</p>
+  <p class="ft-fine" data-th="ft.fine">Сексуальный контент в any запрещён (<a href='/any/terms'>Условия, §5</a>). Mac — товарный знак Apple Inc.; any не связан с Apple и другими показанными компаниями.</p>
   <div class="ft-mark" aria-hidden="true">
     <svg viewBox="140 322.5 745 370"><defs><linearGradient id="ftg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".13"/><stop offset=".75" stop-color="#fff" stop-opacity=".04"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs><path fill="url(#ftg)" d="M 225.92 622.00 Q 203.69 622.00 186.78 613.19 Q 169.86 604.38 160.35 589.27 Q 150.84 574.15 150.84 555.13 L 150.84 554.93 Q 150.84 533.51 161.55 518.70 Q 172.26 503.88 192.68 495.38 Q 213.10 486.87 242.53 484.87 L 332.82 478.86 L 332.82 524.50 L 256.14 529.91 Q 243.13 530.71 237.03 535.72 Q 230.92 540.72 230.92 548.93 L 230.92 549.13 Q 230.92 557.74 237.73 562.34 Q 244.53 566.95 255.94 566.95 Q 265.75 566.95 273.16 563.64 Q 280.57 560.34 284.77 554.53 Q 288.98 548.73 288.98 541.52 L 288.98 472.85 Q 288.98 463.24 282.77 457.64 Q 276.56 452.03 263.95 452.03 Q 251.34 452.03 244.33 456.84 Q 237.33 461.64 235.92 468.45 L 235.52 470.45 L 162.25 470.45 L 162.45 467.85 Q 164.25 445.23 177.17 428.51 Q 190.08 411.79 213.20 402.59 Q 236.33 393.38 268.56 393.38 Q 299.39 393.38 322.41 402.89 Q 345.43 412.39 358.24 429.41 Q 371.06 446.43 371.06 468.85 L 371.06 619.20 L 288.98 619.20 L 288.98 589.17 L 287.38 589.17 Q 281.17 599.58 272.26 606.98 Q 263.35 614.39 251.74 618.20 Q 240.13 622.00 225.92 622.00 Z M 395.89 619.20 L 395.89 398.18 L 477.97 398.18 L 477.97 439.22 L 479.57 439.22 Q 487.78 416.80 504.59 405.09 Q 521.41 393.38 546.43 393.38 Q 582.87 393.38 602.59 415.40 Q 622.31 437.42 622.31 477.26 L 622.31 619.20 L 540.23 619.20 L 540.23 495.28 Q 540.23 478.66 532.42 469.05 Q 524.61 459.44 509.20 459.44 Q 499.59 459.44 492.58 464.05 Q 485.57 468.65 481.77 476.66 Q 477.97 484.67 477.97 495.08 L 477.97 619.20 Z M 691.18 690.47 Q 679.17 690.47 668.26 689.37 Q 657.35 688.26 650.34 687.06 L 650.34 628.61 Q 654.34 629.41 661.45 630.31 Q 668.56 631.21 678.37 631.21 Q 687.98 631.21 693.38 628.31 Q 698.79 625.40 700.19 621.40 L 700.99 619.20 L 626.72 398.18 L 717.81 398.18 L 754.64 575.75 L 746.63 560.34 L 758.05 560.34 L 749.84 575.75 L 786.47 398.18 L 873.16 398.18 L 807.29 613.99 Q 797.88 644.62 781.67 661.24 Q 765.45 677.85 742.83 684.16 Q 720.21 690.47 691.18 690.47 Z "/></svg>
     <span class="ft-fog"></span>

@@ -36,7 +36,6 @@
     document.title = tr("meta.title");
     langCode.textContent = lang.toUpperCase();
     items.forEach(function (b) { b.setAttribute("aria-checked", b.dataset.lang === lang ? "true" : "false"); });
-    $("sd-num").textContent = tr("sp.num");
     moveInd();
   }
   function place() {
@@ -68,8 +67,6 @@
         apply();
         play();
         agentPlay(agentIndex, true);
-        sdReset();
-        if (dvOn) dvPlay();
       }
       closeMenu(true);
     });
@@ -111,11 +108,10 @@
     return lang === "zh" || lang === "ja" ? 110 + n * 45 : 150 + n * 16;
   }
 
-  /* ---------- Hero: press the stem, words land in an app, it sends ---------- */
-  var stage = $("stage"), win = $("win"), bud = $("bud"), field = $("field"), typed = $("typed"), thread = $("thread");
+  /* ---------- Hero: hold fn, words land in an app, let go and the text stays ---------- */
+  var stage = $("stage"), win = $("win"), field = $("field"), typed = $("typed"), thread = $("thread");
   var timers = [], scene = 0;
   function set(state) { stage.dataset.state = state; }
-  function tap() { bud.classList.remove("tap"); void bud.offsetWidth; bud.classList.add("tap"); }
   function bubble(cls, text, anim) {
     var m = document.createElement("p");
     m.className = cls === "hello" ? cls : "msg " + cls + (anim ? "" : " old");
@@ -143,7 +139,7 @@
     void win.offsetWidth;
     win.classList.add("in");
     after(timers, 900, function () {
-      tap(); set("press");
+      set("press");
       after(timers, 420, function () {
         set("listen");
         stage.classList.add("focus");
@@ -153,20 +149,12 @@
           if (i === 0) field.classList.add("ready");
           if (++i < steps.length) { after(timers, pause(typed.lastChild), next); return; }
           after(timers, 700, function () {
-            tap(); set("press");
-            field.classList.add("go");
-            after(timers, 300, function () {
-              stage.classList.remove("focus");
-              field.className = "field";
-              typed.textContent = "";
-              var h = thread.querySelector(".hello");
-              if (h) h.remove();
-              bubble("out", text, true);
-              set("sent");
-              after(timers, 2000, function () {
-                win.classList.add("out");
-                after(timers, 600, function () { scene = (scene + 1) % I.scenes.length; play(); });
-              });
+            // Let go of fn: the key comes up, the caret leaves, the text stays in the field.
+            set("done");
+            stage.classList.remove("focus");
+            after(timers, 2400, function () {
+              win.classList.add("out");
+              after(timers, 600, function () { scene = (scene + 1) % I.scenes.length; play(); });
             });
           });
         })();
@@ -246,49 +234,9 @@
   agTabs.forEach(function (t, k) { t.addEventListener("click", function () { if (k !== agentIndex) agentPlay(k, true); }); });
   window.addEventListener("resize", moveInd);
 
-  /* ---------- Prompting: the real recording plays only while it is on screen ---------- */
-  var dvVideo = $("dv-video"), dvOn = false;
-  function dvPlay() { var p = dvVideo.play(); if (p && p.catch) p.catch(function () {}); }
-  function dvReset() { dvVideo.pause(); }
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (e) {
-      var vis = e[0].isIntersecting;
-      if (vis && !dvOn) { dvOn = true; dvPlay(); }
-      if (!vis && dvOn) { dvOn = false; dvReset(); }
-    }, { threshold: .25 }).observe(dvVideo);
-  } else { dvOn = true; dvPlay(); }
-
-  /* ---------- Speed: 0 → 0.16 s on a one-second bar ---------- */
-  var sd = $("sd"), sdNum = $("sd-num"), sdTimers = [], sdOn = false;
-  function fmt(sec) { var v = sec.toFixed(2); return tr("sp.num").indexOf(",") >= 0 ? v.replace(".", ",") : v; }
-  function sdReset() { stop(sdTimers); sd.dataset.phase = "idle"; sdNum.textContent = tr("sp.num"); }
-  function sdPlay() {
-    stop(sdTimers);
-    sd.dataset.phase = "ready";
-    sdNum.textContent = fmt(0);
-    after(sdTimers, 900, function () {
-      sd.dataset.phase = "run";
-      var t0 = performance.now();
-      (function tick() {
-        var ms = Math.min(160, performance.now() - t0);
-        sdNum.textContent = fmt(ms / 1000);
-        if (ms < 160) { requestAnimationFrame(tick); return; }
-        sdNum.textContent = tr("sp.num");
-        sd.dataset.phase = "done";
-      })();
-    });
-  }
-  if ("IntersectionObserver" in window) {
-    new IntersectionObserver(function (e) {
-      var vis = e[0].isIntersecting;
-      if (vis && !sdOn) { sdOn = true; sdPlay(); }
-      if (!vis && sdOn) { sdOn = false; sdReset(); }
-    }, { threshold: .6 }).observe(sd);
-  }
-
   /* ---------- Nav: the section you are reading (the last one wins at the bottom of the page) ---------- */
   var navLinks = qsa(".nav-link");
-  var spyIds = ["how", "dev", "agent", "apps", "speed", "price"];
+  var spyIds = ["how", "agent", "apps", "price"];
   function mark(id) { navLinks.forEach(function (a) { a.toggleAttribute("aria-current", a.getAttribute("href") === "#" + id); }); }
   function spy() {
     var line = innerHeight * .4, cur = null;
@@ -473,8 +421,8 @@
   }
 
   document.addEventListener("visibilitychange", function () {
-    if (document.hidden) { stop(timers); stop(agTimers); stop(sdTimers); dvReset(); }
-    else { play(); agentPlay(agentIndex); if (sdOn) sdPlay(); if (dvOn) dvPlay(); }
+    if (document.hidden) { stop(timers); stop(agTimers); }
+    else { play(); agentPlay(agentIndex); }
   });
 
   apply();

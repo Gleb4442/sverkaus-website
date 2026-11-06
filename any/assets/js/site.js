@@ -33,6 +33,7 @@
     qsa("[data-t]").forEach(function (el) { el.textContent = tr(el.dataset.t); });
     qsa("[data-th]").forEach(function (el) { el.innerHTML = tr(el.dataset.th); });
     qsa("[data-ta]").forEach(function (el) { el.setAttribute("aria-label", tr(el.dataset.ta)); });
+    qsa("[data-tp]").forEach(function (el) { el.setAttribute("placeholder", tr(el.dataset.tp)); });
     document.title = tr("meta.title");
     langCode.textContent = lang.toUpperCase();
     items.forEach(function (b) { b.setAttribute("aria-checked", b.dataset.lang === lang ? "true" : "false"); });
@@ -250,7 +251,19 @@
   spy();
 
   /* ---------- Download: everything happens inside the button, then the next screen grows out of it ---------- */
-  var next = $("next"), fromBtn = null, dlUrl = null, busy = false, corner = { x: 0, y: 0 };
+  var next = $("next"), mob = $("mob"), sheet = next, fromBtn = null, dlUrl = null, busy = false, corner = { x: 0, y: 0 };
+  // Phones and tablets cannot open a Mac disk image: the button opens the iPhone waitlist instead.
+  // iPadOS asks for desktop sites and says "Macintosh"; only touch tells it apart. ?device=ios|android previews it on a Mac.
+  var platform = (function () {
+    var ua = navigator.userAgent || "", forced = (location.search.match(/[?&]device=(ios|ipados|android|other)\b/) || [])[1];
+    if (forced) return forced;
+    if (/iPhone|iPod/.test(ua)) return "ios";
+    if (/iPad/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) return "ipados";
+    if (/Android/i.test(ua)) return "android";
+    if (/Mobi|Windows Phone|webOS|BlackBerry/i.test(ua)) return "other";
+    return null;
+  })();
+  if (platform === "android" || platform === "other") { $("mob-title").dataset.t = "mob.titleA"; $("mob-sub").dataset.t = "mob.subA"; }
   var arrowSvg = '<svg class="dlx-arrow" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.8v9.4M3.8 8.2 8 12.4l4.2-4.2" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var ringSvg = '<svg class="dlx-ring" viewBox="0 0 40 40" aria-hidden="true"><circle class="track" cx="20" cy="20" r="18"/><circle class="bar" cx="20" cy="20" r="18" pathLength="100"/></svg>';
   var checkSvg = '<svg class="dlx-check" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.6 8.4 6.6 11.4 12.4 5" pathLength="1" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -263,6 +276,7 @@
   function radius() { return Math.hypot(Math.max(corner.x, innerWidth - corner.x), Math.max(corner.y, innerHeight - corner.y)) * 1.02; }
   function shape(r) { return "circle(" + r + "px at " + corner.x + "px " + corner.y + "px)"; }
   function reveal(after) {
+    var next = sheet;
     next.hidden = false;
     document.body.classList.add("lock");
     var a = next.animate([{ clipPath: shape(0) }, { clipPath: shape(radius()) }], { duration: 760, easing: "cubic-bezier(.65,0,.2,1)" });
@@ -272,6 +286,7 @@
   }
   function launch(btn) {
     if (busy) return;
+    if (platform) { openWaitlist(btn); return; }
     busy = true; fromBtn = btn; dlUrl = btn.dataset.href;
     var r = btn.getBoundingClientRect(), cs = getComputedStyle(btn), d = r.height;
     var tok = document.createElement("div");
@@ -301,6 +316,7 @@
     };
   }
   function closeNext() {
+    var next = sheet;
     if (next.hidden) return;
     next.classList.remove("open");
     if (fromBtn) {
@@ -309,7 +325,7 @@
     }
     var a = next.animate([{ clipPath: shape(radius()) }, { clipPath: shape(0) }], { duration: 560, easing: "cubic-bezier(.5,0,.3,1)", fill: "forwards" });
     a.onfinish = function () {
-      next.hidden = true; a.cancel();
+      next.hidden = true; a.cancel(); sheet = $("next");
       document.body.classList.remove("lock");
       if (fromBtn) {
         fromBtn.style.visibility = "";
@@ -337,7 +353,44 @@
   }
   qsa(".dl-btn").forEach(function (a) { asButton(a, launch); });
   asButton($("dl-again"), function (a) { startDownload(dlUrl || a.dataset.href); });
-  qsa("[data-close]", next).forEach(function (el) { el.addEventListener("click", closeNext); });
+  qsa("[data-close]", next).concat(qsa("[data-close]", mob)).forEach(function (el) { el.addEventListener("click", closeNext); });
+
+  /* ---------- Phone: iPhone waitlist instead of the Mac download ---------- */
+  var WAITLIST = "https://any-trial-production.glebw2008.workers.dev/waitlist";
+  var wl = $("wl"), wlMsg = $("wl-msg"), wlInput = wl.querySelector("input[type=email]"), wlBtn = wl.querySelector("button");
+  function wlSay(key, kind) { wlMsg.textContent = key ? tr(key) : ""; wlMsg.className = "wl-msg" + (kind ? " " + kind : ""); }
+  function openWaitlist(btn) {
+    busy = true; fromBtn = btn; sheet = mob;
+    var r = btn.getBoundingClientRect();
+    corner = { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    if (!wl.classList.contains("sent")) wlSay("");
+    reveal(function () {});
+  }
+  wl.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (wl.getAttribute("aria-busy") === "true") return;
+    var email = wlInput.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { wlSay("mob.bad", "err"); wlInput.focus(); return; }
+    wl.setAttribute("aria-busy", "true"); wlBtn.disabled = true; wlSay("");
+    // text/plain keeps this a simple request: no CORS preflight round trip on a slow phone connection.
+    fetch(WAITLIST, { method: "POST", headers: { "Content-Type": "text/plain;charset=UTF-8" },
+      body: JSON.stringify({ email: email, platform: platform || "other", lang: lang, company: wl.elements.company.value }) })
+      .then(function (r) { return r.json().then(function (b) { return { ok: r.ok, status: r.status, body: b }; }); })
+      .then(function (res) {
+        if (res.ok) { wl.classList.add("sent"); wlInput.blur(); wlSay(res.body && res.body.already ? "mob.already" : "mob.done", "ok"); }
+        else wlSay(res.status === 400 ? "mob.bad" : "mob.fail", "err");
+      })
+      .catch(function () { wlSay("mob.fail", "err"); })
+      .then(function () { wl.removeAttribute("aria-busy"); wlBtn.disabled = false; });
+  });
+  $("mob-share").addEventListener("click", function () {
+    var b = this, url = "https://www.sverkaus.com/any";
+    if (navigator.share) { navigator.share({ title: "any", url: url }).catch(function () {}); return; }
+    if (navigator.clipboard) navigator.clipboard.writeText(url).then(function () {
+      b.textContent = tr("mob.copied");
+      setTimeout(function () { b.textContent = tr("mob.share"); }, 2200);
+    }).catch(function () {});
+  });
 
   /* ---------- Price: Lifetime / Monthly ---------- */
   var buy = $("buy");
@@ -349,10 +402,11 @@
     });
   });
   document.addEventListener("keydown", function (e) {
+    var next = sheet;
     if (next.hidden) return;
     if (e.key === "Escape") closeNext();
     if (e.key === "Tab") {
-      var f = qsa("button, a[href]", next), first = f[0], last = f[f.length - 1];
+      var f = qsa("button:not([disabled]), a[href], input:not(.hp)", next), first = f[0], last = f[f.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }

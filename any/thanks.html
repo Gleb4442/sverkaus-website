@@ -3,48 +3,231 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>any — спасибо за покупку / Thank you</title>
+  <title>any — спасибо за покупку</title>
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#06070b">
+  <meta name="theme-color" content="#1c1c1c">
   <link rel="icon" type="image/png" sizes="32x32" href="/any/assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="/any/assets/img/apple-touch-icon.png">
-  <link rel="stylesheet" href="/any/assets/css/any.css">
+  <link rel="stylesheet" href="/any/assets/css/site.css">
+  <script defer src="/any/assets/js/i18n.js"></script>
+  <style>
+    /* Thanks: the notch takes the payment, turns into a check, says thank you. */
+    html,body{height:100%}
+    body{display:flex;flex-direction:column;min-height:100svh;background:radial-gradient(70% 55% at 50% 40%,#3b3b3a 0,#262625 52%,var(--graphite) 100%) fixed,var(--graphite)}
+    .nav{width:min(560px,calc(100% - 20px))}
+    .ty-home{font:400 13px var(--font);color:#cfcfcc;text-decoration:none;white-space:nowrap;transition:color .2s}
+    .ty-home:hover{color:#fff}
+
+    .ty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(24px,6vh,72px) 20px clamp(40px,8vh,96px);text-align:center}
+
+    /* stage: aura + notch */
+    .ty-stage{position:relative;display:grid;place-items:center;width:100%;height:clamp(120px,18vh,170px);margin-bottom:clamp(18px,3vh,30px)}
+    @property --spin{syntax:"<angle>";inherits:false;initial-value:0deg}
+    .ty-aura{position:absolute;left:50%;top:50%;width:min(440px,90vw);height:150px;border-radius:50%;background:conic-gradient(from var(--spin),#9e73ff,#4d8cff,#ff73bf,#8fd1ff,#9e73ff);filter:blur(52px);opacity:0;transform:translate(-50%,-50%) scale(.4);pointer-events:none}
+    .go .ty-aura{animation:ty-bloom 1.6s cubic-bezier(.2,.8,.2,1) 1s both,ty-spin 9s linear 1s infinite,ty-glow 6s ease-in-out 2.6s infinite}
+    @keyframes ty-bloom{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}45%{opacity:.75}100%{opacity:.38;transform:translate(-50%,-50%) scale(1)}}
+    @keyframes ty-spin{to{--spin:360deg}}
+    @keyframes ty-glow{50%{opacity:.5}}
+
+    .ty-notch{position:relative;z-index:2;display:flex;align-items:center;justify-content:flex-start;gap:12px;width:58px;height:58px;padding:0 15px;border:0;border-radius:999px;background:#050505;color:#fff;cursor:pointer;overflow:hidden;box-shadow:0 22px 50px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.07);opacity:0;-webkit-tap-highlight-color:transparent}
+    .go .ty-notch{animation:ty-drop .7s cubic-bezier(.34,1.4,.64,1) .1s both;transition:width .62s cubic-bezier(.3,1.25,.4,1) 1s}
+    .go .ty-notch.wide{width:var(--wide,180px)}
+    @keyframes ty-drop{0%{opacity:0;transform:translateY(-46px) scale(.55)}60%{opacity:1}100%{opacity:1;transform:none}}
+    .ty-notch:focus-visible{outline:2px solid #9dbcff;outline-offset:4px}
+
+    .ty-icon{position:relative;flex:none;width:28px;height:28px}
+    .ty-icon .orb{position:absolute;inset:3px;width:auto;height:auto;margin:0;vertical-align:0}
+    .go .ty-icon .orb{animation:breathe 1.5s ease-in-out infinite,ty-out .32s ease-in 1s forwards}
+    @keyframes ty-out{to{opacity:0;transform:scale(.2);filter:blur(4px)}}
+    .ty-check{position:absolute;inset:0;width:28px;height:28px;opacity:0;transform:scale(.3)}
+    .ty-check circle{fill:#33c773}
+    .ty-check path{fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:20;stroke-dashoffset:20}
+    .go .ty-check{animation:ty-pop .55s cubic-bezier(.34,1.56,.64,1) 1.08s forwards}
+    .go .ty-check path{animation:ty-draw .38s cubic-bezier(.65,0,.35,1) 1.3s forwards}
+    @keyframes ty-pop{to{opacity:1;transform:none}}
+    @keyframes ty-draw{to{stroke-dashoffset:0}}
+
+    .ty-label{font:600 19px/1 var(--font);letter-spacing:-.01em;white-space:nowrap;opacity:0;filter:blur(6px);transform:translateX(-6px)}
+    .go .ty-label{animation:ty-in .5s cubic-bezier(.2,.8,.2,1) 1.3s forwards}
+    @keyframes ty-in{to{opacity:1;filter:none;transform:none}}
+
+    /* one ring, a few sparks: the moment the check lands */
+    .ty-ring{position:absolute;left:50%;top:50%;z-index:1;width:var(--wide,180px);height:58px;border-radius:999px;box-shadow:0 0 0 1.5px rgba(255,255,255,.55);opacity:0;transform:translate(-50%,-50%);pointer-events:none}
+    .go .ty-ring{animation:ty-ring 1s cubic-bezier(.2,.7,.2,1) 1.32s}
+    @keyframes ty-ring{0%{opacity:.7;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.45,1.9)}}
+    #sparks{position:absolute;inset:0;pointer-events:none}
+    .ty-spark{position:absolute;left:50%;top:50%;z-index:1;width:var(--s,6px);height:var(--s,6px);margin:calc(var(--s,6px) / -2);border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c);opacity:0;pointer-events:none}
+    .go .ty-spark{animation:ty-fly 1.1s cubic-bezier(.15,.75,.3,1) var(--d,1.34s) both}
+    @keyframes ty-fly{0%{opacity:0;transform:translate(0,0) scale(.4)}15%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1)}}
+
+    /* words */
+    .ty h1{text-wrap:balance;font-size:clamp(52px,9vw,112px);line-height:1;letter-spacing:-.045em;font-weight:600}
+    .ty h1 .w{display:inline-block;opacity:0}
+    .ty.go h1 .w{animation:ty-word .8s cubic-bezier(.2,.8,.2,1) calc(1.5s + var(--i,0) * .09s) both}
+    @keyframes ty-word{from{opacity:0;filter:blur(8px);transform:translateY(.28em)}to{opacity:1;filter:none;transform:none}}
+    .ty-sub{max-width:26em;text-wrap:balance;margin-top:clamp(14px,2vh,20px);font-size:clamp(17px,1.7vw,21px);line-height:1.4;color:#d5d5d2;opacity:0}
+    .go .ty-sub{animation:ty-rise .7s cubic-bezier(.2,.8,.2,1) 1.85s both}
+    @keyframes ty-rise{from{opacity:0;transform:translateY(12px);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+
+    /* the help, folded */
+    .ty-help{width:min(460px,100%);margin-top:clamp(26px,4vh,40px);opacity:0}
+    .go .ty-help{animation:ty-rise .7s cubic-bezier(.2,.8,.2,1) 2.1s both}
+    .ty-help summary{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;font-size:14px;color:#cfcfcc;cursor:pointer;list-style:none;transition:background .2s,color .2s}
+    .ty-help summary::-webkit-details-marker{display:none}
+    .ty-help summary:hover,.ty-help[open] summary{background:rgba(255,255,255,.08);color:#fff}
+    .ty-help summary svg{width:12px;height:12px;transition:transform .35s cubic-bezier(.3,1.3,.4,1)}
+    .ty-help[open] summary svg{transform:rotate(180deg)}
+    .ty-help-card{margin-top:10px;padding:16px 20px;border-radius:22px;font-size:14.5px;line-height:1.5;color:#d5d5d2;text-align:left}
+    .ty-help[open] .ty-help-card{animation:ty-rise .45s cubic-bezier(.2,.8,.2,1) both}
+    .ty-help-card a{color:#fff}
+
+    :lang(ja) .ty-sub,:lang(ja) .ty-help-card{word-break:auto-phrase}
+    .ty-foot{padding:0 20px 26px;text-align:center;font-size:12px;line-height:1.6;color:#7c7c79}
+    .ty-foot nav{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;margin-bottom:8px}
+    .ty-foot nav a{color:#9a9a97;text-decoration:none;transition:color .2s}
+    .ty-foot a:hover{color:#fff}
+    .ty-foot p a{color:#9a9a97}
+  </style>
 </head>
 <body>
-<div class="sky" aria-hidden="true"></div>
-
-<header class="nav is-scrolled">
-  <div class="wrap nav-inner">
-    <a class="brand" href="/any/" aria-label="any">
-      <img src="/any/assets/img/any-icon-64.png" alt="" width="34" height="34">
-      <span>any</span>
-    </a>
-    <div class="nav-actions">
-      <a class="btn btn-ghost" href="/any/">На главную / Home</a>
-    </div>
+<header class="nav glass">
+  <a class="brand" href="/any/" aria-label="any"><svg viewBox="140 322.5 745 370" width="42" height="21" aria-hidden="true"><path fill="currentColor" d="M 225.92 622.00 Q 203.69 622.00 186.78 613.19 Q 169.86 604.38 160.35 589.27 Q 150.84 574.15 150.84 555.13 L 150.84 554.93 Q 150.84 533.51 161.55 518.70 Q 172.26 503.88 192.68 495.38 Q 213.10 486.87 242.53 484.87 L 332.82 478.86 L 332.82 524.50 L 256.14 529.91 Q 243.13 530.71 237.03 535.72 Q 230.92 540.72 230.92 548.93 L 230.92 549.13 Q 230.92 557.74 237.73 562.34 Q 244.53 566.95 255.94 566.95 Q 265.75 566.95 273.16 563.64 Q 280.57 560.34 284.77 554.53 Q 288.98 548.73 288.98 541.52 L 288.98 472.85 Q 288.98 463.24 282.77 457.64 Q 276.56 452.03 263.95 452.03 Q 251.34 452.03 244.33 456.84 Q 237.33 461.64 235.92 468.45 L 235.52 470.45 L 162.25 470.45 L 162.45 467.85 Q 164.25 445.23 177.17 428.51 Q 190.08 411.79 213.20 402.59 Q 236.33 393.38 268.56 393.38 Q 299.39 393.38 322.41 402.89 Q 345.43 412.39 358.24 429.41 Q 371.06 446.43 371.06 468.85 L 371.06 619.20 L 288.98 619.20 L 288.98 589.17 L 287.38 589.17 Q 281.17 599.58 272.26 606.98 Q 263.35 614.39 251.74 618.20 Q 240.13 622.00 225.92 622.00 Z M 395.89 619.20 L 395.89 398.18 L 477.97 398.18 L 477.97 439.22 L 479.57 439.22 Q 487.78 416.80 504.59 405.09 Q 521.41 393.38 546.43 393.38 Q 582.87 393.38 602.59 415.40 Q 622.31 437.42 622.31 477.26 L 622.31 619.20 L 540.23 619.20 L 540.23 495.28 Q 540.23 478.66 532.42 469.05 Q 524.61 459.44 509.20 459.44 Q 499.59 459.44 492.58 464.05 Q 485.57 468.65 481.77 476.66 Q 477.97 484.67 477.97 495.08 L 477.97 619.20 Z M 691.18 690.47 Q 679.17 690.47 668.26 689.37 Q 657.35 688.26 650.34 687.06 L 650.34 628.61 Q 654.34 629.41 661.45 630.31 Q 668.56 631.21 678.37 631.21 Q 687.98 631.21 693.38 628.31 Q 698.79 625.40 700.19 621.40 L 700.99 619.20 L 626.72 398.18 L 717.81 398.18 L 754.64 575.75 L 746.63 560.34 L 758.05 560.34 L 749.84 575.75 L 786.47 398.18 L 873.16 398.18 L 807.29 613.99 Q 797.88 644.62 781.67 661.24 Q 765.45 677.85 742.83 684.16 Q 720.21 690.47 691.18 690.47 Z "/></svg></a>
+  <div class="nav-right">
+    <a class="ty-home" href="/any/" data-k="home">На сайт</a>
   </div>
 </header>
 
-<main class="document wrap">
-  <h1>Спасибо!<br>Thank you!</h1>
-  <p>Оплата прошла. Вернитесь в any — лицензия активируется сама в течение минуты, перезапуск не нужен. Чек от Creem придёт на вашу почту.</p>
-  <p>Your payment went through. Switch back to any — your license activates on its own within a minute, no relaunch needed. Creem will email you a receipt.</p>
-  <h2>Не активировалось? / Not activated?</h2>
-  <p>Убедитесь, что Mac в сети, и откройте меню any → «Активировать лицензию…». Если через несколько минут ничего не изменилось, напишите на <a href="mailto:main@sverkaus.com">main@sverkaus.com</a> и приложите номер заказа из письма Creem.</p>
-  <p>Make sure your Mac is online and open the any menu → Activate License. If nothing changes within a few minutes, email <a href="mailto:main@sverkaus.com">main@sverkaus.com</a> with the order ID from your Creem receipt.</p>
+<main class="ty" id="ty">
+  <div class="ty-stage">
+    <div class="ty-aura" aria-hidden="true"></div>
+    <span class="ty-ring" aria-hidden="true"></span>
+    <div id="sparks" aria-hidden="true"></div>
+    <button class="ty-notch" id="notch" type="button" aria-label="">
+      <span class="ty-icon" aria-hidden="true">
+        <span class="orb"><i></i></span>
+        <svg class="ty-check" viewBox="0 0 28 28"><circle cx="14" cy="14" r="14"/><path d="M8.6 14.4l3.6 3.6 7.2-7.6"/></svg>
+      </span>
+      <span class="ty-label" id="paid" data-k="paid">Оплачено</span>
+    </button>
+  </div>
+  <h1 id="title" data-k="h1">Спасибо!</h1>
+  <p class="ty-sub" data-k="sub">Вернитесь в any — всё включится само за минуту.</p>
+  <details class="ty-help">
+    <summary><span data-k="q">Не включилось?</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+    <div class="ty-help-card glass" data-kh="a">Проверьте интернет и откройте меню any → «Активировать лицензию…». Не помогло — напишите на <a href="mailto:main@sverkaus.com">main@sverkaus.com</a> с номером заказа из письма Creem.</div>
+  </details>
 </main>
 
-<footer class="footer">
-  <div class="wrap footer-inner">
-    <a class="brand" href="/any/"><img src="/any/assets/img/any-icon-64.png" alt="" width="24" height="24"><span>any</span></a>
-    <a href="/any/privacy">Privacy</a>
-    <a href="/any/terms">Terms</a>
-    <a href="/any/refund">Refunds</a>
-    <a href="https://t.me/gennetysupport" target="_blank" rel="noopener">Support</a>
-    <a href="/any/help">Help</a>
-    <a href="/any/third-party-notices.txt">Licenses</a>
-    <span class="footer-note">Оператор: Глеб Хоша (Hleb Hosha), физическое лицо, Украина / Operated by Hleb Hosha (individual), Ukraine · <a href="mailto:main@sverkaus.com">main@sverkaus.com</a></span>
-  </div>
+<footer class="ty-foot">
+  <nav aria-label="any">
+    <a href="/any/help" data-t="ft.help">Помощь</a>
+    <a href="https://t.me/gennetysupport" target="_blank" rel="noopener">Telegram</a>
+    <a href="/any/privacy" data-t="ft.privacy">Конфиденциальность</a>
+    <a href="/any/terms" data-t="ft.terms">Условия</a>
+    <a href="/any/refund" data-t="ft.refund">Возврат</a>
+  </nav>
+  <p><span data-t="ft.c">© 2026 Hleb Hosha, Украина</span> · <span data-th="ft.pay2">Платежи обрабатывает <a href="https://creem.io" target="_blank" rel="noopener">Creem</a> (Merchant of Record)</span></p>
 </footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var M = "<a href='mailto:main@sverkaus.com'>main@sverkaus.com</a>";
+  var K = {
+    title: { ru: "any — спасибо за покупку", en: "any — thank you", zh: "any — 感谢购买", hi: "any — धन्यवाद", fr: "any — merci", de: "any – danke", es: "any — gracias", ko: "any — 감사합니다", ja: "any — ありがとうございます" },
+    home: { ru: "На сайт", en: "Back to site", zh: "返回网站", hi: "साइट पर लौटें", fr: "Retour au site", de: "Zur Website", es: "Volver al sitio", ko: "사이트로", ja: "サイトへ" },
+    paid: { ru: "Оплачено", en: "Paid", zh: "已付款", hi: "भुगतान हो गया", fr: "Payé", de: "Bezahlt", es: "Pagado", ko: "결제 완료", ja: "支払い完了" },
+    h1: { ru: "Спасибо!", en: "Thank you!", zh: "谢谢！", hi: "धन्यवाद!", fr: "Merci !", de: "Danke!", es: "¡Gracias!", ko: "감사합니다!", ja: "ありがとうございます！" },
+    sub: {
+      ru: "Вернитесь в any — всё включится само за минуту.",
+      en: "Switch back to any — it unlocks on its own within a minute.",
+      zh: "回到 any，一分钟内会自动解锁。",
+      hi: "any पर लौटें — एक मिनट में यह अपने-आप अनलॉक हो जाएगा।",
+      fr: "Revenez dans any : tout se débloque seul en une minute.",
+      de: "Zurück zu any – in einer Minute ist alles von selbst freigeschaltet.",
+      es: "Vuelve a any: se desbloquea solo en un minuto.",
+      ko: "any로 돌아가세요. 1분 안에 자동으로 활성화됩니다.",
+      ja: "any に戻ってください。1 分以内に自動で有効になります。"
+    },
+    q: { ru: "Не включилось?", en: "Didn’t unlock?", zh: "没有解锁？", hi: "अनलॉक नहीं हुआ?", fr: "Rien ne change ?", de: "Nicht freigeschaltet?", es: "¿No se activó?", ko: "활성화되지 않았나요?", ja: "有効にならない場合" },
+    a: {
+      ru: "Проверьте интернет и откройте меню any → «Активировать лицензию…». Не помогло — напишите на " + M + " с номером заказа из письма Creem.",
+      en: "Check your connection and open the any menu → Activate License…. Still nothing? Email " + M + " with the order ID from your Creem receipt.",
+      zh: "请检查网络连接，然后在 any 菜单中激活许可证。仍未解决？请发邮件至 " + M + "，并附上 Creem 收据中的订单号。",
+      hi: "इंटरनेट जाँचें और any मेनू से लाइसेंस सक्रिय करें। फिर भी नहीं? Creem रसीद का ऑर्डर नंबर लेकर " + M + " पर लिखें।",
+      fr: "Vérifiez votre connexion et activez la licence depuis le menu any. Toujours rien ? Écrivez à " + M + " avec le numéro de commande du reçu Creem.",
+      de: "Prüfen Sie die Verbindung und aktivieren Sie die Lizenz im any-Menü. Immer noch nichts? Schreiben Sie an " + M + " mit der Bestellnummer aus der Creem-Quittung.",
+      es: "Comprueba la conexión y activa la licencia desde el menú de any. ¿Nada? Escribe a " + M + " con el número de pedido del recibo de Creem.",
+      ko: "인터넷 연결을 확인하고 any 메뉴에서 라이선스를 활성화하세요. 그래도 안 되면 Creem 영수증의 주문 번호와 함께 " + M + "로 메일을 보내 주세요.",
+      ja: "接続を確認し、any メニューからライセンスを有効にしてください。それでも駄目なら、Creem の領収書の注文番号を添えて " + M + " までご連絡ください。"
+    }
+  };
+  var I = window.ANY_I18N || { langs: Object.keys(K.h1), t: {} };
+  var LANGS = I.langs;
+  function detect() {
+    var saved = null;
+    try { saved = localStorage.getItem("any-lang"); } catch (e) {}
+    if (saved && LANGS.indexOf(saved) >= 0) return saved;
+    var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+    for (var i = 0; i < list.length; i++) {
+      var c = String(list[i] || "").toLowerCase().split("-")[0];
+      if (LANGS.indexOf(c) >= 0) return c;
+    }
+    return "en";
+  }
+  var lang = detect();
+  function pick(o) { return o ? (o[lang] != null ? o[lang] : o.en) : null; }
+  var qsa = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  document.documentElement.lang = lang === "zh" ? "zh-Hans" : lang;
+  document.title = pick(K.title);
+  qsa("[data-k]").forEach(function (el) { el.textContent = pick(K[el.dataset.k]); });
+  qsa("[data-kh]").forEach(function (el) { el.innerHTML = pick(K[el.dataset.kh]); });
+  qsa("[data-t]").forEach(function (el) { var v = pick(I.t[el.dataset.t]); if (v) el.textContent = v; });
+  qsa("[data-th]").forEach(function (el) { var v = pick(I.t[el.dataset.th]); if (v) el.innerHTML = v; });
+
+  // Headline rises word by word (whole word for CJK, where spaces are rare).
+  var title = document.getElementById("title");
+  title.innerHTML = title.textContent.split(/(\s+)/).map(function (w, i) {
+    return /^\s+$/.test(w) ? w : '<span class="w" style="--i:' + i + '">' + w.replace(/&/g, "&amp;").replace(/</g, "&lt;") + "</span>";
+  }).join("");
+
+  var root = document.getElementById("ty"), notch = document.getElementById("notch"), paid = document.getElementById("paid");
+  notch.setAttribute("aria-label", pick(K.paid));
+
+  // A small burst in the agent colours, thrown sideways from the pill.
+  var colours = ["#9e73ff", "#4d8cff", "#ff73bf", "#8fd1ff", "#33c773", "#ffffff"];
+  var sparks = document.getElementById("sparks");
+  function burst() {
+    sparks.innerHTML = "";
+    var wide = parseFloat(root.style.getPropertyValue("--wide")) || 180;
+    for (var i = 0; i < 16; i++) {
+      var a = (i / 16) * Math.PI * 2 + (Math.random() - .5) * .35;
+      var r = 60 + Math.random() * 110;
+      var s = document.createElement("i");
+      s.className = "ty-spark";
+      var x = Math.cos(a) * (wide / 2 + r), y = Math.sin(a) * (r * .6 + 30);
+      s.style.cssText = "--x:" + x.toFixed(1) + "px;--y:" + y.toFixed(1) + "px;--c:" + colours[i % colours.length] +
+        ";--s:" + (4 + Math.random() * 5).toFixed(1) + "px;--d:" + (1.32 + Math.random() * .12).toFixed(2) + "s";
+      sparks.appendChild(s);
+    }
+  }
+  function measure() {
+    // icon 28 + gap 12 + label + side padding 2*15 (+2 so the label never clips)
+    var w = Math.ceil(28 + 12 + paid.scrollWidth + 30 + 2);
+    root.style.setProperty("--wide", w + "px");
+  }
+  function play() {
+    root.classList.remove("go");
+    notch.classList.remove("wide");
+    void root.offsetWidth;
+    measure();
+    burst();
+    root.classList.add("go");
+    requestAnimationFrame(function () { notch.classList.add("wide"); });
+  }
+  function start() { (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(play); }
+  if (document.readyState === "complete") start(); else window.addEventListener("load", start);
+  notch.addEventListener("click", play);
+});
+</script>
 </body>
 </html>

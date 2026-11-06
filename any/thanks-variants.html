@@ -3,28 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Страница оплаты — варианты</title>
+  <title>Страница оплаты — концепции</title>
   <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" sizes="32x32" href="/any/assets/img/favicon-32.png">
   <style>
     :root{--bg:#161616;--card:#202020;--text:#f4f4f1;--mute:#9a9a97;--font:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif}
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:var(--bg);color:var(--text);font:400 15px/1.5 var(--font);-webkit-font-smoothing:antialiased;padding:clamp(20px,4vw,48px) clamp(16px,4vw,48px) 56px}
-    header{max-width:1400px;margin:0 auto 28px;display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px}
+    header{max-width:1500px;margin:0 auto 24px;display:grid;gap:16px}
     h1{font-size:clamp(26px,3vw,36px);font-weight:600;letter-spacing:-.02em}
-    header p{color:var(--mute);max-width:44em}
+    header p{color:var(--mute);max-width:52em}
+    .controls{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center}
+    .ctl{display:flex;align-items:center;gap:10px;color:var(--mute);font-size:13px}
     .seg{display:inline-flex;padding:3px;border-radius:999px;background:#262626}
-    .seg button{border:0;background:none;color:var(--mute);font:500 13px var(--font);padding:7px 14px;border-radius:999px;cursor:pointer}
+    .seg button{border:0;background:none;color:var(--mute);font:500 13px var(--font);padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap}
     .seg button[aria-pressed=true]{background:#3a3a39;color:#fff}
-    .grid{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:20px}
-    .grid.phone{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+    .grid{max-width:1500px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:18px}
+    .grid.phone{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));max-width:900px}
     figure{background:var(--card);border-radius:24px;padding:12px;display:flex;flex-direction:column;gap:12px}
     .frame{position:relative;overflow:hidden;border-radius:14px;background:#1c1c1c}
     .frame iframe{position:absolute;top:0;left:0;border:0;transform-origin:0 0}
-    figcaption{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 6px 4px}
+    figcaption{display:flex;flex-direction:column;gap:10px;padding:2px 6px 4px}
     figcaption b{display:block;font-size:16px;font-weight:600}
     figcaption span{display:block;color:var(--mute);font-size:13.5px;line-height:1.4;margin-top:2px}
-    .acts{display:flex;gap:8px;flex:none}
+    .acts{display:flex;gap:8px}
     .acts button,.acts a{border:0;background:#2e2e2d;color:#fff;font:500 13px var(--font);padding:8px 14px;border-radius:999px;cursor:pointer;text-decoration:none;white-space:nowrap}
     .acts button:hover,.acts a:hover{background:#3a3a39}
   </style>
@@ -32,36 +34,36 @@
 <body>
 <header>
   <div>
-    <h1>Страница оплаты — 4 варианта</h1>
-    <p>Всё монохромное: графит, белый и свет. Нажмите «Повторить», чтобы увидеть анимацию ещё раз, или «Открыть» — во весь экран.</p>
+    <h1>Страница после оплаты — 3 концепции</h1>
+    <p>Без «спасибо за покупку»: страница показывает, что человек получил, и что делать дальше. Текст и план переключаются отдельно от картинки — их можно сочетать как угодно.</p>
   </div>
-  <div class="seg" role="group" aria-label="Размер">
-    <button type="button" data-size="desk" aria-pressed="true">Компьютер</button>
-    <button type="button" data-size="phone" aria-pressed="false">Телефон</button>
+  <div class="controls">
+    <div class="ctl">Текст <div class="seg" data-key="w"><button type="button" data-val="1" aria-pressed="true">Теперь ваш / any — ваш</button><button type="button" data-val="2" aria-pressed="false">Готово</button><button type="button" data-val="3" aria-pressed="false">Открыт целиком</button></div></div>
+    <div class="ctl">План <div class="seg" data-key="plan"><button type="button" data-val="life" aria-pressed="true">Lifetime</button><button type="button" data-val="month" aria-pressed="false">Monthly</button><button type="button" data-val="none" aria-pressed="false">Не знаем</button></div></div>
+    <div class="ctl">Экран <div class="seg" data-key="size"><button type="button" data-val="desk" aria-pressed="true">Компьютер</button><button type="button" data-val="phone" aria-pressed="false">Телефон</button></div></div>
   </div>
 </header>
 
 <div class="grid" id="grid">
-  <figure data-v="a"><div class="frame"></div><figcaption><div><b>A · Линия</b><span>Тонкое кольцо рисуется одной линией, внутри — галочка.</span></div><div class="acts"><button type="button">Повторить</button><a target="_blank">Открыть</a></div></figcaption></figure>
-  <figure data-v="b"><div class="frame"></div><figcaption><div><b>B · Чёлка</b><span>Чёлка вырастает из края экрана, говорит «Оплачено» и уходит — как сам any.</span></div><div class="acts"><button type="button">Повторить</button><a target="_blank">Открыть</a></div></figcaption></figure>
-  <figure data-v="c"><div class="frame"></div><figcaption><div><b>C · Блик</b><span>По слову «Спасибо!» один раз проходит свет.</span></div><div class="acts"><button type="button">Повторить</button><a target="_blank">Открыть</a></div></figcaption></figure>
-  <figure data-v="d"><div class="frame"></div><figcaption><div><b>D · Карта</b><span>Стеклянная карта-лицензия поднимается и ловит блик; следует за курсором.</span></div><div class="acts"><button type="button">Повторить</button><a target="_blank">Открыть</a></div></figcaption></figure>
+  <figure data-c="a"><div class="frame"></div><figcaption><div><b>A · Проявление</b><span>Призрачный знак any (как в подвале сайта) снизу вверх заполняется светом и становится цельным — из пробного в ваш.</span></div><div class="acts"><button type="button">Повторить</button><a target="_blank">Открыть</a></div></figcaption></figure>
+  <figure data-c="b"><div class="frame"></div><figcaption><div><b>B · Иконка</b><span>Настоящая иконка приложения спокойно встаёт на место и отбрасывает тень — как приложение, которое легло в Dock.</span></div><div class="acts"><button type="button">Повторить</button><a target="_blank">Открыть</a></div></figcaption></figure>
+  <figure data-c="c"><div class="frame"></div><figcaption><div><b>C · Тишина</b><span>Только типографика, по левому краю. Заголовок выезжает из-под строки — и всё.</span></div><div class="acts"><button type="button">Повторить</button><a target="_blank">Открыть</a></div></figcaption></figure>
 </div>
 
 <script>
 (function () {
   var page = location.pathname.replace(/thanks-variants(\.html)?$/, "thanks" + (/\.html$/.test(location.pathname) ? ".html" : ""));
   var sizes = { desk: [1440, 900], phone: [390, 844] };
-  var size = "desk";
+  var st = { w: "1", plan: "life", size: "desk" };
   var figs = Array.prototype.slice.call(document.querySelectorAll("figure"));
-  function url(v) { return page + "?v=" + v; }
+  function url(c) { return page + "?c=" + c + "&w=" + st.w + (st.plan === "none" ? "" : "&plan=" + st.plan); }
   function layout() {
-    var s = sizes[size];
+    var s = sizes[st.size];
     figs.forEach(function (f) {
       var frame = f.querySelector(".frame"), ifr = frame.querySelector("iframe");
-      if (!ifr) return;
       var k = frame.clientWidth / s[0];
       frame.style.height = Math.round(s[1] * k) + "px";
+      if (!ifr) return;
       ifr.style.width = s[0] + "px"; ifr.style.height = s[1] + "px";
       ifr.style.transform = "scale(" + k + ")";
     });
@@ -70,25 +72,23 @@
     var frame = f.querySelector(".frame"), old = frame.querySelector("iframe");
     var ifr = document.createElement("iframe");
     ifr.title = f.querySelector("b").textContent;
-    ifr.src = url(f.dataset.v) + "&r=" + Date.now();
+    ifr.src = url(f.dataset.c) + "&r=" + Date.now();
     if (old) frame.replaceChild(ifr, old); else frame.appendChild(ifr);
+    f.querySelector("a").href = url(f.dataset.c);
   }
-  figs.forEach(function (f) {
-    f.querySelector("a").href = url(f.dataset.v);
-    f.querySelector("button").addEventListener("click", function () { load(f); layout(); });
-    load(f);
-  });
-  layout();
-  Array.prototype.slice.call(document.querySelectorAll(".seg button")).forEach(function (b) {
-    b.addEventListener("click", function () {
-      size = b.dataset.size;
-      document.querySelectorAll(".seg button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
-      document.getElementById("grid").classList.toggle("phone", size === "phone");
-      figs.forEach(load);
-      layout();
+  function all() { figs.forEach(load); layout(); }
+  figs.forEach(function (f) { f.querySelector("button").addEventListener("click", function () { load(f); layout(); }); });
+  Array.prototype.slice.call(document.querySelectorAll(".seg")).forEach(function (seg) {
+    seg.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      st[seg.dataset.key] = b.dataset.val;
+      seg.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      document.getElementById("grid").classList.toggle("phone", st.size === "phone");
+      all();
     });
   });
   window.addEventListener("resize", layout);
+  all();
 })();
 </script>
 </body>

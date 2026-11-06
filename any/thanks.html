@@ -1,148 +1,71 @@
 <!doctype html>
-<html lang="ru" data-c="a">
+<html lang="ru">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>any — оплата прошла</title>
+  <title>any</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#1c1c1c">
   <link rel="icon" type="image/png" sizes="32x32" href="/any/assets/img/favicon-32.png">
   <link rel="apple-touch-icon" href="/any/assets/img/apple-touch-icon.png">
-  <link rel="stylesheet" href="/any/assets/css/site.css">
-  <script defer src="/any/assets/js/i18n.js"></script>
   <style>
-    /* After payment: no thanks, no confetti. Show what the person now has, say what happens next. */
-    :root{--e:cubic-bezier(.22,1,.36,1);--e2:cubic-bezier(.65,0,.35,1);--ink:#f4f4f1;--soft:#a9a9a6;--quiet:#7f7f7c}
+    /* After payment: the ghost wordmark fills with light and becomes solid. One line. Nothing else. */
+    :root{--ink:#f4f4f1;--soft:#9d9d9a;--quiet:#6f6f6c;--e:cubic-bezier(.22,1,.36,1);--e2:cubic-bezier(.65,0,.35,1);
+      --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Inter","Helvetica Neue",Arial,sans-serif}
+    *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
-    body{display:flex;flex-direction:column;min-height:100svh;background:radial-gradient(80% 60% at 50% 38%,#2a2a29 0,#212120 55%,var(--graphite) 100%) fixed,var(--graphite)}
-    .nav{width:min(560px,calc(100% - 20px))}
-    .ty-home{font:400 13px var(--font);color:#cfcfcc;text-decoration:none;white-space:nowrap;transition:color .2s}
-    .ty-home:hover{color:#fff}
+    body{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px 72px;
+      background:radial-gradient(80% 60% at 50% 42%,#2a2a29 0,#212120 55%,#1c1c1c 100%) fixed,#1c1c1c;color:var(--ink);
+      font:400 17px/1.5 var(--font);-webkit-font-smoothing:antialiased;text-align:center}
+    :focus-visible{outline:2px solid #9dbcff;outline-offset:3px;border-radius:8px}
 
-    .ty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(24px,6vh,72px) 20px clamp(40px,8vh,96px);text-align:center}
-    .c{display:none}
-    [data-c=a] .c-a,[data-c=b] .c-b{display:block}
-
-    .ty-h{font-size:clamp(40px,5.4vw,68px);line-height:1.02;letter-spacing:-.04em;font-weight:600;color:var(--ink);text-wrap:balance}
-    .ty-plan{margin-top:14px;font-size:13.5px;letter-spacing:.01em;color:var(--quiet)}
-    .ty-plan:empty{display:none}
-    .ty-sub{max-width:24em;margin-top:clamp(18px,2.6vh,26px);font-size:clamp(16px,1.5vw,19px);line-height:1.45;color:var(--soft);text-wrap:balance}
-    :lang(ja) .ty-sub,:lang(ja) .ty-help-card{word-break:auto-phrase}
-    .ty-help{width:min(440px,100%);margin-top:clamp(22px,3.4vh,34px)}
-    .ty-help summary{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;font-size:13.5px;color:var(--quiet);cursor:pointer;list-style:none;transition:background .2s,color .2s}
-    .ty-help summary::-webkit-details-marker{display:none}
-    .ty-help summary:hover,.ty-help[open] summary{background:rgba(255,255,255,.06);color:#e8e8e5}
-    .ty-help summary svg{width:11px;height:11px;transition:transform .35s var(--e)}
-    .ty-help[open] summary svg{transform:rotate(180deg)}
-    .ty-help-card{margin-top:10px;padding:16px 20px;border-radius:22px;font-size:14px;line-height:1.5;color:#cfcfcc;text-align:left}
-    .ty-help[open] .ty-help-card{animation:rise .45s var(--e) both}
-    .ty-help-card a{color:#fff}
-
-    /* the text after the hero arrives once, quietly */
-    .after{opacity:0}
-    .go .after{animation:rise 1s var(--e) var(--d,1.6s) both}
-    .go .ty-help.after{animation-delay:calc(var(--d,1.6s) + .3s)}
-    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-    @keyframes fade{from{opacity:0}to{opacity:1}}
-
-    /* ---------- A · The mark fills: the ghost wordmark from the footer becomes solid ---------- */
-    .wm{position:relative;width:min(560px,80vw);aspect-ratio:745/370;margin-bottom:clamp(14px,2.4vh,26px)}
+    .wm{position:relative;width:min(560px,80vw);aspect-ratio:745/370;cursor:default}
     .wm svg{position:absolute;inset:0;width:100%;height:100%}
     .wm-ghost{opacity:0}
     .go .wm-ghost{animation:fade 1s ease .1s both}
-    .wm-solid{color:var(--ink);-webkit-mask-image:linear-gradient(to top,#000 42%,transparent 58%);mask-image:linear-gradient(to top,#000 42%,transparent 58%);-webkit-mask-size:100% 260%;mask-size:100% 260%;-webkit-mask-position:0 0;mask-position:0 0;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat}
+    .wm-solid{color:var(--ink);-webkit-mask-image:linear-gradient(to top,#000 42%,transparent 58%);mask-image:linear-gradient(to top,#000 42%,transparent 58%);
+      -webkit-mask-size:100% 260%;mask-size:100% 260%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:0 0;mask-position:0 0}
     .go .wm-solid{animation:fill 2.1s var(--e2) .45s both}
     @keyframes fill{from{-webkit-mask-position:0 0;mask-position:0 0}to{-webkit-mask-position:0 100%;mask-position:0 100%}}
-    [data-c=a] .after{--d:2.15s}
+    @keyframes fade{from{opacity:0}to{opacity:1}}
 
-    /* ---------- B · The icon settles, like an app landing in the Dock ---------- */
-    .icon{position:relative;width:clamp(120px,15vw,168px);aspect-ratio:1;margin-bottom:clamp(22px,3.4vh,34px)}
-    .icon img{position:relative;z-index:1;display:block;width:100%;height:100%;filter:drop-shadow(0 18px 28px rgba(0,0,0,.42));opacity:0}
-    .icon::after{content:"";position:absolute;left:14%;right:14%;bottom:2%;height:12%;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(14px);opacity:0;transform:scaleX(.6)}
-    .go .icon img{animation:land 1.4s var(--e) .2s both}
-    .go .icon::after{animation:shadow 1.4s var(--e) .2s both}
-    @keyframes land{from{opacity:0;transform:translateY(-22px) scale(.94)}to{opacity:1;transform:none}}
-    @keyframes shadow{from{opacity:0;transform:scaleX(.6)}to{opacity:1;transform:none}}
-    [data-c=b] .after{--d:1.05s}
+    .line{margin-top:clamp(18px,3vh,30px);font-size:clamp(22px,2.4vw,30px);font-weight:500;letter-spacing:-.02em;color:var(--soft);opacity:0}
+    .go .line{animation:rise 1s var(--e) 1.9s both}
+    @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-    /* ---------- C · Only type: left-aligned, the headline slides up from behind its line ---------- */
-    [data-c=c] .ty{align-items:stretch;text-align:left}
-    [data-c=c] .ty-col{width:min(640px,100%);margin:0 auto}
-    [data-c=c] .ty-h{font-size:clamp(48px,7vw,92px);letter-spacing:-.045em}
-    [data-c=c] .ty-plan{margin-top:20px}
-    [data-c=c] .ty-sub{margin-top:clamp(16px,2.4vh,22px)}
-    [data-c=c] .ty-help{margin-top:clamp(20px,3vh,30px)}
-    .line{display:block;overflow:hidden;padding-bottom:.08em}
-    .line > span{display:block}
-    [data-c=c] .ty-h .line > span{transform:translateY(105%)}
-    .go[data-c=c] .ty-h .line > span{animation:up 1.15s var(--e) calc(.25s + var(--i,0) * .12s) both}
-    @keyframes up{from{transform:translateY(105%)}to{transform:none}}
-    [data-c=c] .after{--d:1s}
-    .ty-col{display:flex;flex-direction:column;align-items:inherit}
-    [data-c=c] .ty-col{align-items:flex-start}
-    [data-c=c] .ty-help summary{margin-left:-14px}
-
-    .ty-foot{padding:0 20px 26px;text-align:center;font-size:12px;line-height:1.6;color:#6f6f6c}
-    .ty-foot nav{display:flex;flex-wrap:wrap;justify-content:center;gap:4px 18px;margin-bottom:8px}
-    .ty-foot nav a{color:#8f8f8c;text-decoration:none;transition:color .2s}
-    .ty-foot a:hover{color:#fff}
-    .ty-foot p a{color:#8f8f8c}
+    /* the only other thing: a quiet way out if activation does not happen */
+    .help{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom));width:min(420px,calc(100% - 32px));transform:translateX(-50%);opacity:0}
+    .go .help{animation:fade 1s ease 2.6s both}
+    .help summary{display:inline-block;padding:7px 12px;border-radius:999px;font-size:13px;color:var(--quiet);cursor:pointer;list-style:none;transition:color .2s,background .2s}
+    .help summary::-webkit-details-marker{display:none}
+    .help summary:hover,.help[open] summary{color:#d8d8d5;background:rgba(255,255,255,.06)}
+    .help-card{position:absolute;left:0;right:0;bottom:calc(100% + 10px);padding:16px 20px;border-radius:22px;font-size:14px;line-height:1.5;color:#d5d5d2;text-align:left;
+      background:linear-gradient(145deg,rgba(64,64,62,.7),rgba(40,40,39,.6) 50%,rgba(56,56,54,.66));-webkit-backdrop-filter:blur(22px) saturate(160%);backdrop-filter:blur(22px) saturate(160%);
+      box-shadow:0 18px 44px rgba(0,0,0,.36)}
+    .help[open] .help-card{animation:rise .4s var(--e) both}
+    .help-card a{color:#fff}
+    :lang(ja) .help-card{word-break:auto-phrase}
   </style>
 </head>
 <body>
-<header class="nav glass">
-  <a class="brand" href="/any/" aria-label="any"><svg viewBox="140 322.5 745 370" width="42" height="21" aria-hidden="true"><path fill="currentColor" d="M 225.92 622.00 Q 203.69 622.00 186.78 613.19 Q 169.86 604.38 160.35 589.27 Q 150.84 574.15 150.84 555.13 L 150.84 554.93 Q 150.84 533.51 161.55 518.70 Q 172.26 503.88 192.68 495.38 Q 213.10 486.87 242.53 484.87 L 332.82 478.86 L 332.82 524.50 L 256.14 529.91 Q 243.13 530.71 237.03 535.72 Q 230.92 540.72 230.92 548.93 L 230.92 549.13 Q 230.92 557.74 237.73 562.34 Q 244.53 566.95 255.94 566.95 Q 265.75 566.95 273.16 563.64 Q 280.57 560.34 284.77 554.53 Q 288.98 548.73 288.98 541.52 L 288.98 472.85 Q 288.98 463.24 282.77 457.64 Q 276.56 452.03 263.95 452.03 Q 251.34 452.03 244.33 456.84 Q 237.33 461.64 235.92 468.45 L 235.52 470.45 L 162.25 470.45 L 162.45 467.85 Q 164.25 445.23 177.17 428.51 Q 190.08 411.79 213.20 402.59 Q 236.33 393.38 268.56 393.38 Q 299.39 393.38 322.41 402.89 Q 345.43 412.39 358.24 429.41 Q 371.06 446.43 371.06 468.85 L 371.06 619.20 L 288.98 619.20 L 288.98 589.17 L 287.38 589.17 Q 281.17 599.58 272.26 606.98 Q 263.35 614.39 251.74 618.20 Q 240.13 622.00 225.92 622.00 Z M 395.89 619.20 L 395.89 398.18 L 477.97 398.18 L 477.97 439.22 L 479.57 439.22 Q 487.78 416.80 504.59 405.09 Q 521.41 393.38 546.43 393.38 Q 582.87 393.38 602.59 415.40 Q 622.31 437.42 622.31 477.26 L 622.31 619.20 L 540.23 619.20 L 540.23 495.28 Q 540.23 478.66 532.42 469.05 Q 524.61 459.44 509.20 459.44 Q 499.59 459.44 492.58 464.05 Q 485.57 468.65 481.77 476.66 Q 477.97 484.67 477.97 495.08 L 477.97 619.20 Z M 691.18 690.47 Q 679.17 690.47 668.26 689.37 Q 657.35 688.26 650.34 687.06 L 650.34 628.61 Q 654.34 629.41 661.45 630.31 Q 668.56 631.21 678.37 631.21 Q 687.98 631.21 693.38 628.31 Q 698.79 625.40 700.19 621.40 L 700.99 619.20 L 626.72 398.18 L 717.81 398.18 L 754.64 575.75 L 746.63 560.34 L 758.05 560.34 L 749.84 575.75 L 786.47 398.18 L 873.16 398.18 L 807.29 613.99 Q 797.88 644.62 781.67 661.24 Q 765.45 677.85 742.83 684.16 Q 720.21 690.47 691.18 690.47 Z "/></svg></a>
-  <div class="nav-right">
-    <a class="ty-home" href="/any/" data-k="home">На сайт</a>
+<main id="ty">
+  <div class="wm" aria-hidden="true">
+    <svg class="wm-ghost" viewBox="140 322.5 745 370"><defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient></defs><path fill="url(#g)" d="M 225.92 622.00 Q 203.69 622.00 186.78 613.19 Q 169.86 604.38 160.35 589.27 Q 150.84 574.15 150.84 555.13 L 150.84 554.93 Q 150.84 533.51 161.55 518.70 Q 172.26 503.88 192.68 495.38 Q 213.10 486.87 242.53 484.87 L 332.82 478.86 L 332.82 524.50 L 256.14 529.91 Q 243.13 530.71 237.03 535.72 Q 230.92 540.72 230.92 548.93 L 230.92 549.13 Q 230.92 557.74 237.73 562.34 Q 244.53 566.95 255.94 566.95 Q 265.75 566.95 273.16 563.64 Q 280.57 560.34 284.77 554.53 Q 288.98 548.73 288.98 541.52 L 288.98 472.85 Q 288.98 463.24 282.77 457.64 Q 276.56 452.03 263.95 452.03 Q 251.34 452.03 244.33 456.84 Q 237.33 461.64 235.92 468.45 L 235.52 470.45 L 162.25 470.45 L 162.45 467.85 Q 164.25 445.23 177.17 428.51 Q 190.08 411.79 213.20 402.59 Q 236.33 393.38 268.56 393.38 Q 299.39 393.38 322.41 402.89 Q 345.43 412.39 358.24 429.41 Q 371.06 446.43 371.06 468.85 L 371.06 619.20 L 288.98 619.20 L 288.98 589.17 L 287.38 589.17 Q 281.17 599.58 272.26 606.98 Q 263.35 614.39 251.74 618.20 Q 240.13 622.00 225.92 622.00 Z M 395.89 619.20 L 395.89 398.18 L 477.97 398.18 L 477.97 439.22 L 479.57 439.22 Q 487.78 416.80 504.59 405.09 Q 521.41 393.38 546.43 393.38 Q 582.87 393.38 602.59 415.40 Q 622.31 437.42 622.31 477.26 L 622.31 619.20 L 540.23 619.20 L 540.23 495.28 Q 540.23 478.66 532.42 469.05 Q 524.61 459.44 509.20 459.44 Q 499.59 459.44 492.58 464.05 Q 485.57 468.65 481.77 476.66 Q 477.97 484.67 477.97 495.08 L 477.97 619.20 Z M 691.18 690.47 Q 679.17 690.47 668.26 689.37 Q 657.35 688.26 650.34 687.06 L 650.34 628.61 Q 654.34 629.41 661.45 630.31 Q 668.56 631.21 678.37 631.21 Q 687.98 631.21 693.38 628.31 Q 698.79 625.40 700.19 621.40 L 700.99 619.20 L 626.72 398.18 L 717.81 398.18 L 754.64 575.75 L 746.63 560.34 L 758.05 560.34 L 749.84 575.75 L 786.47 398.18 L 873.16 398.18 L 807.29 613.99 Q 797.88 644.62 781.67 661.24 Q 765.45 677.85 742.83 684.16 Q 720.21 690.47 691.18 690.47 Z "/></svg>
+    <svg class="wm-solid" viewBox="140 322.5 745 370"><path fill="currentColor" d="M 225.92 622.00 Q 203.69 622.00 186.78 613.19 Q 169.86 604.38 160.35 589.27 Q 150.84 574.15 150.84 555.13 L 150.84 554.93 Q 150.84 533.51 161.55 518.70 Q 172.26 503.88 192.68 495.38 Q 213.10 486.87 242.53 484.87 L 332.82 478.86 L 332.82 524.50 L 256.14 529.91 Q 243.13 530.71 237.03 535.72 Q 230.92 540.72 230.92 548.93 L 230.92 549.13 Q 230.92 557.74 237.73 562.34 Q 244.53 566.95 255.94 566.95 Q 265.75 566.95 273.16 563.64 Q 280.57 560.34 284.77 554.53 Q 288.98 548.73 288.98 541.52 L 288.98 472.85 Q 288.98 463.24 282.77 457.64 Q 276.56 452.03 263.95 452.03 Q 251.34 452.03 244.33 456.84 Q 237.33 461.64 235.92 468.45 L 235.52 470.45 L 162.25 470.45 L 162.45 467.85 Q 164.25 445.23 177.17 428.51 Q 190.08 411.79 213.20 402.59 Q 236.33 393.38 268.56 393.38 Q 299.39 393.38 322.41 402.89 Q 345.43 412.39 358.24 429.41 Q 371.06 446.43 371.06 468.85 L 371.06 619.20 L 288.98 619.20 L 288.98 589.17 L 287.38 589.17 Q 281.17 599.58 272.26 606.98 Q 263.35 614.39 251.74 618.20 Q 240.13 622.00 225.92 622.00 Z M 395.89 619.20 L 395.89 398.18 L 477.97 398.18 L 477.97 439.22 L 479.57 439.22 Q 487.78 416.80 504.59 405.09 Q 521.41 393.38 546.43 393.38 Q 582.87 393.38 602.59 415.40 Q 622.31 437.42 622.31 477.26 L 622.31 619.20 L 540.23 619.20 L 540.23 495.28 Q 540.23 478.66 532.42 469.05 Q 524.61 459.44 509.20 459.44 Q 499.59 459.44 492.58 464.05 Q 485.57 468.65 481.77 476.66 Q 477.97 484.67 477.97 495.08 L 477.97 619.20 Z M 691.18 690.47 Q 679.17 690.47 668.26 689.37 Q 657.35 688.26 650.34 687.06 L 650.34 628.61 Q 654.34 629.41 661.45 630.31 Q 668.56 631.21 678.37 631.21 Q 687.98 631.21 693.38 628.31 Q 698.79 625.40 700.19 621.40 L 700.99 619.20 L 626.72 398.18 L 717.81 398.18 L 754.64 575.75 L 746.63 560.34 L 758.05 560.34 L 749.84 575.75 L 786.47 398.18 L 873.16 398.18 L 807.29 613.99 Q 797.88 644.62 781.67 661.24 Q 765.45 677.85 742.83 684.16 Q 720.21 690.47 691.18 690.47 Z "/></svg>
   </div>
-</header>
-
-<main class="ty" id="ty">
-  <div class="ty-col">
-    <div class="c c-a" aria-hidden="true">
-      <div class="wm">
-        <svg class="wm-ghost" viewBox="140 322.5 745 370"><defs><linearGradient id="g-ghost" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset="1" stop-color="#fff" stop-opacity=".05"/></linearGradient></defs><path fill="url(#g-ghost)" d="M 225.92 622.00 Q 203.69 622.00 186.78 613.19 Q 169.86 604.38 160.35 589.27 Q 150.84 574.15 150.84 555.13 L 150.84 554.93 Q 150.84 533.51 161.55 518.70 Q 172.26 503.88 192.68 495.38 Q 213.10 486.87 242.53 484.87 L 332.82 478.86 L 332.82 524.50 L 256.14 529.91 Q 243.13 530.71 237.03 535.72 Q 230.92 540.72 230.92 548.93 L 230.92 549.13 Q 230.92 557.74 237.73 562.34 Q 244.53 566.95 255.94 566.95 Q 265.75 566.95 273.16 563.64 Q 280.57 560.34 284.77 554.53 Q 288.98 548.73 288.98 541.52 L 288.98 472.85 Q 288.98 463.24 282.77 457.64 Q 276.56 452.03 263.95 452.03 Q 251.34 452.03 244.33 456.84 Q 237.33 461.64 235.92 468.45 L 235.52 470.45 L 162.25 470.45 L 162.45 467.85 Q 164.25 445.23 177.17 428.51 Q 190.08 411.79 213.20 402.59 Q 236.33 393.38 268.56 393.38 Q 299.39 393.38 322.41 402.89 Q 345.43 412.39 358.24 429.41 Q 371.06 446.43 371.06 468.85 L 371.06 619.20 L 288.98 619.20 L 288.98 589.17 L 287.38 589.17 Q 281.17 599.58 272.26 606.98 Q 263.35 614.39 251.74 618.20 Q 240.13 622.00 225.92 622.00 Z M 395.89 619.20 L 395.89 398.18 L 477.97 398.18 L 477.97 439.22 L 479.57 439.22 Q 487.78 416.80 504.59 405.09 Q 521.41 393.38 546.43 393.38 Q 582.87 393.38 602.59 415.40 Q 622.31 437.42 622.31 477.26 L 622.31 619.20 L 540.23 619.20 L 540.23 495.28 Q 540.23 478.66 532.42 469.05 Q 524.61 459.44 509.20 459.44 Q 499.59 459.44 492.58 464.05 Q 485.57 468.65 481.77 476.66 Q 477.97 484.67 477.97 495.08 L 477.97 619.20 Z M 691.18 690.47 Q 679.17 690.47 668.26 689.37 Q 657.35 688.26 650.34 687.06 L 650.34 628.61 Q 654.34 629.41 661.45 630.31 Q 668.56 631.21 678.37 631.21 Q 687.98 631.21 693.38 628.31 Q 698.79 625.40 700.19 621.40 L 700.99 619.20 L 626.72 398.18 L 717.81 398.18 L 754.64 575.75 L 746.63 560.34 L 758.05 560.34 L 749.84 575.75 L 786.47 398.18 L 873.16 398.18 L 807.29 613.99 Q 797.88 644.62 781.67 661.24 Q 765.45 677.85 742.83 684.16 Q 720.21 690.47 691.18 690.47 Z "/></svg>
-        <svg class="wm-solid" viewBox="140 322.5 745 370"><path fill="currentColor" d="M 225.92 622.00 Q 203.69 622.00 186.78 613.19 Q 169.86 604.38 160.35 589.27 Q 150.84 574.15 150.84 555.13 L 150.84 554.93 Q 150.84 533.51 161.55 518.70 Q 172.26 503.88 192.68 495.38 Q 213.10 486.87 242.53 484.87 L 332.82 478.86 L 332.82 524.50 L 256.14 529.91 Q 243.13 530.71 237.03 535.72 Q 230.92 540.72 230.92 548.93 L 230.92 549.13 Q 230.92 557.74 237.73 562.34 Q 244.53 566.95 255.94 566.95 Q 265.75 566.95 273.16 563.64 Q 280.57 560.34 284.77 554.53 Q 288.98 548.73 288.98 541.52 L 288.98 472.85 Q 288.98 463.24 282.77 457.64 Q 276.56 452.03 263.95 452.03 Q 251.34 452.03 244.33 456.84 Q 237.33 461.64 235.92 468.45 L 235.52 470.45 L 162.25 470.45 L 162.45 467.85 Q 164.25 445.23 177.17 428.51 Q 190.08 411.79 213.20 402.59 Q 236.33 393.38 268.56 393.38 Q 299.39 393.38 322.41 402.89 Q 345.43 412.39 358.24 429.41 Q 371.06 446.43 371.06 468.85 L 371.06 619.20 L 288.98 619.20 L 288.98 589.17 L 287.38 589.17 Q 281.17 599.58 272.26 606.98 Q 263.35 614.39 251.74 618.20 Q 240.13 622.00 225.92 622.00 Z M 395.89 619.20 L 395.89 398.18 L 477.97 398.18 L 477.97 439.22 L 479.57 439.22 Q 487.78 416.80 504.59 405.09 Q 521.41 393.38 546.43 393.38 Q 582.87 393.38 602.59 415.40 Q 622.31 437.42 622.31 477.26 L 622.31 619.20 L 540.23 619.20 L 540.23 495.28 Q 540.23 478.66 532.42 469.05 Q 524.61 459.44 509.20 459.44 Q 499.59 459.44 492.58 464.05 Q 485.57 468.65 481.77 476.66 Q 477.97 484.67 477.97 495.08 L 477.97 619.20 Z M 691.18 690.47 Q 679.17 690.47 668.26 689.37 Q 657.35 688.26 650.34 687.06 L 650.34 628.61 Q 654.34 629.41 661.45 630.31 Q 668.56 631.21 678.37 631.21 Q 687.98 631.21 693.38 628.31 Q 698.79 625.40 700.19 621.40 L 700.99 619.20 L 626.72 398.18 L 717.81 398.18 L 754.64 575.75 L 746.63 560.34 L 758.05 560.34 L 749.84 575.75 L 786.47 398.18 L 873.16 398.18 L 807.29 613.99 Q 797.88 644.62 781.67 661.24 Q 765.45 677.85 742.83 684.16 Q 720.21 690.47 691.18 690.47 Z "/></svg>
-      </div>
-    </div>
-    <div class="c c-b" aria-hidden="true">
-      <div class="icon"><img src="/any/assets/img/any-icon-512.png" alt="" width="168" height="168"></div>
-    </div>
-    <h1 class="ty-h" id="title">Теперь ваш.</h1>
-    <p class="ty-plan after" id="plan"></p>
-    <p class="ty-sub after" data-k="sub">Вернитесь в any — он включится сам за минуту.</p>
-    <details class="ty-help after">
-      <summary><span data-k="q">Не включилось?</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
-      <div class="ty-help-card glass" data-kh="a">Проверьте интернет и откройте меню any → «Активировать лицензию…». Не помогло — напишите на <a href="mailto:main@sverkaus.com">main@sverkaus.com</a> с номером заказа из письма Creem.</div>
-    </details>
-  </div>
+  <h1 class="line" data-k="line">Теперь ваш.</h1>
 </main>
 
-<footer class="ty-foot">
-  <nav aria-label="any">
-    <a href="/any/help" data-t="ft.help">Помощь</a>
-    <a href="https://t.me/gennetysupport" target="_blank" rel="noopener">Telegram</a>
-    <a href="/any/privacy" data-t="ft.privacy">Конфиденциальность</a>
-    <a href="/any/terms" data-t="ft.terms">Условия</a>
-    <a href="/any/refund" data-t="ft.refund">Возврат</a>
-  </nav>
-  <p><span data-t="ft.c">© 2026 Hleb Hosha, Украина</span> · <span data-th="ft.pay2">Платежи обрабатывает <a href="https://creem.io" target="_blank" rel="noopener">Creem</a> (Merchant of Record)</span></p>
-</footer>
+<details class="help">
+  <summary data-k="q">Не включилось?</summary>
+  <div class="help-card" data-kh="a">Проверьте интернет и откройте меню any → «Активировать лицензию…». Не помогло — напишите на <a href="mailto:main@sverkaus.com">main@sverkaus.com</a> с номером заказа из письма Creem.</div>
+</details>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+(function () {
   var M = "<a href='mailto:main@sverkaus.com'>main@sverkaus.com</a>";
-  // Review copy is RU + EN; other languages fall back to EN until a direction is chosen.
   var K = {
-    title: { ru: "any — оплата прошла", en: "any — payment complete" },
-    home: { ru: "На сайт", en: "Back to site", zh: "返回网站", hi: "साइट पर लौटें", fr: "Retour au site", de: "Zur Website", es: "Volver al sitio", ko: "사이트로", ja: "サイトへ" },
-    // headline: short = under the mark or icon (they already say "any"), full = type only
-    w1: { short: { ru: "Теперь ваш.", en: "Yours now." }, full: { ru: "any — ваш.", en: "any is yours." } },
-    w2: { short: { ru: "Готово.", en: "All set." }, full: { ru: "Готово.", en: "All set." } },
-    w3: { short: { ru: "Открыт целиком.", en: "Fully unlocked." }, full: { ru: "any открыт целиком.", en: "any, fully unlocked." } },
-    life: { ru: "Lifetime · все обновления включены", en: "Lifetime · every update included" },
-    month: { ru: "Monthly · отмена в любой момент", en: "Monthly · cancel any time" },
-    sub: { ru: "Вернитесь в any — он включится сам за минуту.", en: "Switch back to any — it unlocks itself within a minute." },
+    line: { ru: "Теперь ваш.", en: "Yours now.", zh: "现在归你了。", hi: "अब यह आपका है।", fr: "Il est à vous.", de: "Jetzt gehört es Ihnen.", es: "Ya es tuyo.", ko: "이제 당신의 것입니다.", ja: "これであなたのものです。" },
     q: { ru: "Не включилось?", en: "Didn’t unlock?", zh: "没有解锁？", hi: "अनलॉक नहीं हुआ?", fr: "Rien ne change ?", de: "Nicht freigeschaltet?", es: "¿No se activó?", ko: "활성화되지 않았나요?", ja: "有効にならない場合" },
     a: {
       ru: "Проверьте интернет и откройте меню any → «Активировать лицензию…». Не помогло — напишите на " + M + " с номером заказа из письма Creem.",
@@ -156,59 +79,24 @@ document.addEventListener("DOMContentLoaded", function () {
       ja: "接続を確認し、any メニューからライセンスを有効にしてください。それでも駄目なら、Creem の領収書の注文番号を添えて " + M + " までご連絡ください。"
     }
   };
-  var html = document.documentElement;
-  var q = new URLSearchParams(location.search);
-  var c = /^[abc]$/.test(q.get("c") || "") ? q.get("c") : (html.dataset.c || "a");
-  var w = /^[123]$/.test(q.get("w") || "") ? q.get("w") : "1";
-  html.dataset.c = c;
-
-  // Creem returns subscription_id for a subscription and leaves it out for a one-time purchase.
-  function present(k) { var x = q.get(k); return x && x !== "null" && x !== "undefined"; }
-  var plan = q.get("plan");
-  if (!/^(life|month)$/.test(plan || "")) plan = present("subscription_id") ? "month" : (present("order_id") || present("checkout_id")) ? "life" : "";
-
-  var I = window.ANY_I18N || { langs: ["ru", "en"], t: {} };
-  var LANGS = I.langs;
-  function detect() {
-    var saved = null;
-    try { saved = localStorage.getItem("any-lang"); } catch (e) {}
-    if (saved && LANGS.indexOf(saved) >= 0) return saved;
+  // Same language choice as the site: saved pick (any-lang), then the browser's languages.
+  var LANGS = Object.keys(K.line), lang = "en", saved = null;
+  try { saved = localStorage.getItem("any-lang"); } catch (e) {}
+  if (saved && LANGS.indexOf(saved) >= 0) lang = saved;
+  else {
     var list = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || "en"];
-    for (var i = 0; i < list.length; i++) {
-      var x = String(list[i] || "").toLowerCase().split("-")[0];
-      if (LANGS.indexOf(x) >= 0) return x;
-    }
-    return "en";
+    for (var i = 0; i < list.length; i++) { var c = String(list[i] || "").toLowerCase().split("-")[0]; if (LANGS.indexOf(c) >= 0) { lang = c; break; } }
   }
-  var lang = detect();
-  function pick(o) { return o ? (o[lang] != null ? o[lang] : o.en) : ""; }
-  var qsa = function (s) { return Array.prototype.slice.call(document.querySelectorAll(s)); };
+  var html = document.documentElement;
   html.lang = lang === "zh" ? "zh-Hans" : lang;
-  document.title = pick(K.title);
-  qsa("[data-k]").forEach(function (el) { el.textContent = pick(K[el.dataset.k]); });
-  qsa("[data-kh]").forEach(function (el) { el.innerHTML = pick(K[el.dataset.kh]); });
-  qsa("[data-t]").forEach(function (el) { var x = pick(I.t[el.dataset.t]); if (x) el.textContent = x; });
-  qsa("[data-th]").forEach(function (el) { var x = pick(I.t[el.dataset.th]); if (x) el.innerHTML = x; });
-  qsa(".c").forEach(function (el) { if (!el.classList.contains("c-" + c)) el.remove(); });
-  document.getElementById("plan").textContent = plan ? pick(K[plan]) : "";
-
-  var title = document.getElementById("title");
-  var head = pick(K["w" + w][c === "c" ? "full" : "short"]);
-  if (c === "c") {
-    // one masked line per word group so the headline can rise from behind its baseline
-    title.innerHTML = '<span class="line"><span style="--i:0"></span></span>';
-    title.querySelector(".line > span").textContent = head;
-  } else {
-    title.textContent = head;
-    title.classList.add("after");
-    title.style.setProperty("--d", c === "a" ? "1.75s" : ".75s");
-  }
+  document.querySelectorAll("[data-k]").forEach(function (el) { el.textContent = K[el.dataset.k][lang]; });
+  document.querySelectorAll("[data-kh]").forEach(function (el) { el.innerHTML = K[el.dataset.kh][lang]; });
 
   function play() { html.classList.remove("go"); void html.offsetWidth; html.classList.add("go"); }
   function start() { (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(play); }
   if (document.readyState === "complete") start(); else window.addEventListener("load", start);
-  document.getElementById("ty").addEventListener("click", function (e) { if (!e.target.closest("details, a, button")) play(); });
-});
+  document.querySelector(".wm").addEventListener("click", play);
+})();
 </script>
 </body>
 </html>

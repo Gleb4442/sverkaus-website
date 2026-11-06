@@ -577,3 +577,12 @@ body.lock{overflow:hidden}
 .stage[data-state=listen] .key{background:linear-gradient(180deg,#38383b 0%,#28282b 55%,#212124 100%)}
 .agent-fine{margin:18px auto 0;max-width:44em;text-wrap:balance;text-align:center;font-size:14px;color:rgba(236,236,234,.5)}
 @media (max-width:720px){.key-float{left:50%;bottom:0;width:92px;margin-left:-46px}}
+/* v19: footer on one axis — columns spread edge/centre/edge, legal lines centred with air */
+.ft-top{grid-template-columns:1fr auto 1fr;gap:32px clamp(32px,6vw,96px)}
+.ft-top>.ft-col:nth-child(2){justify-self:center}
+.ft-top>.ft-col:nth-child(3){justify-self:end}
+.ft-base{justify-content:center;align-items:baseline;gap:6px 0;margin-top:clamp(56px,7vw,88px);text-align:center}
+.ft-base p+p::before{content:"";display:inline-block;width:3px;height:3px;margin:0 14px;border-radius:50%;background:currentColor;opacity:.55;vertical-align:middle}
+.ft-fine{max-width:64em;margin-top:14px;text-align:center;text-wrap:balance}
+.ft-fine a{white-space:nowrap}
+@media (max-width:760px){.ft-top{grid-template-columns:1fr 1fr}.ft-top>.ft-col:nth-child(n){justify-self:start}.ft-base{flex-direction:column;align-items:center}.ft-base p+p::before{display:none}}

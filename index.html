@@ -981,6 +981,22 @@
             gap: 6px;
         }
 
+        .vacancy-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            align-self: flex-start;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent-color);
+            background: rgba(163, 230, 53, 0.1);
+            padding: 3px 9px;
+            border-radius: 9999px;
+            margin-bottom: 2px;
+        }
+
         .vacancy-title {
             font-family: 'Outfit', sans-serif;
             font-size: clamp(24px, 4.5vw, 32px);
@@ -1366,6 +1382,7 @@
             </button>
             <button class="nav-tab" data-tab="careers" id="tab-careers" role="tab" aria-selected="false">
                 <span class="tab-label" id="label-nav-careers">Careers</span>
+                <span class="tab-badge">4</span>
             </button>
         </nav>
 
@@ -1450,11 +1467,226 @@
                 <!-- Careers Header -->
                 <div class="careers-header">
                     <h1 class="careers-title" id="txt-careers-title">CAREERS</h1>
-                    <p class="careers-subtitle" id="txt-careers-tagline">Simplifying Human Computer Interaction.</p>
+                    <p class="careers-subtitle" id="txt-careers-tagline">Physical AI Data Lab · Teach robots with real-world human experience.</p>
                 </div>
 
                 <!-- Expandable Vacancies List -->
                 <div class="vacancies-list">
+                    <!-- 1. Partnership Opportunity: Data Collection Site Partner -->
+                    <div class="vacancy-item expanded" id="vacancy-data-partner">
+                        <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="true" aria-controls="body-data-partner" onclick="toggleVacancy('vacancy-data-partner')">
+                            <div class="vacancy-info-col">
+                                <span class="vacancy-eyebrow">Partnership Opportunity</span>
+                                <h2 class="vacancy-title">Data Collection Site Partner</h2>
+                                <div class="vacancy-meta"><strong>Ukraine</strong> · Paid Partnership · Project-based</div>
+                            </div>
+                            <div class="vacancy-toggle-indicator">
+                                <span class="toggle-text">Close</span>
+                                <span class="toggle-icon" aria-hidden="true">+</span>
+                            </div>
+                        </div>
+                        <div class="vacancy-expandable-body" id="body-data-partner">
+                            <div class="vacancy-expandable-content">
+                                <div class="content-group">
+                                    <div class="group-title">Overview</div>
+                                    <p class="group-text">
+                                        We're looking for business owners and industry professionals who can provide access to workspaces, equipment, and specialized expertise for robotics data collection.
+                                    </p>
+                                    <p class="group-text">
+                                        We welcome partnerships with workshops, warehouses, restaurants, manufacturing facilities, and other real-world environments.
+                                    </p>
+                                </div>
+                                <div class="content-group">
+                                    <div class="requirements-split">
+                                        <div>
+                                            <div class="subgroup-title">Coordination</div>
+                                            <ul class="clean-list">
+                                                <li><strong>Sverkaus coordinates data collection:</strong> recording procedures, quality control, and on-site execution stay under our management.</li>
+                                                <li><strong>Provide access, not datasets:</strong> partners provide access to real workspaces, equipment, and specialized expertise.</li>
+                                                <li><strong>Permissions &amp; agreements:</strong> necessary permissions and agreements are arranged for each collaboration.</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <div class="subgroup-title">Terms</div>
+                                            <ul class="clean-list">
+                                                <li><strong>Project-based:</strong> flexible scheduling and compensation agreed individually for each project.</li>
+                                                <li><strong>Real-world focus:</strong> workshops, warehouses, restaurants, manufacturing facilities, and skilled workflows.</li>
+                                                <li><strong>Low operational overhead:</strong> planned around your regular schedule.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content-group apply-group">
+                                    <div class="group-title">Contact</div>
+                                    <p class="group-text">
+                                        Interested? Contact us at <a href="mailto:main@sverkaus.com?subject=Data%20Collection%20Site%20Partner" class="bold-link">main@sverkaus.com</a>.
+                                    </p>
+                                    <p class="apply-note">
+                                        Share a brief overview of your workspace, equipment, or domain expertise and your location in Ukraine.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2. Robotics Data & Sensor Pipeline Engineer -->
+                    <div class="vacancy-item" id="vacancy-data-pipeline">
+                        <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-data-pipeline" onclick="toggleVacancy('vacancy-data-pipeline')">
+                            <div class="vacancy-info-col">
+                                <h2 class="vacancy-title">Robotics Data &amp; Sensor Pipeline Engineer</h2>
+                                <div class="vacancy-meta"><strong>Remote</strong> · Full-time / Contract · Python / C++ / Multi-Camera &amp; Telemetry</div>
+                            </div>
+                            <div class="vacancy-toggle-indicator">
+                                <span class="toggle-text">Details</span>
+                                <span class="toggle-icon" aria-hidden="true">+</span>
+                            </div>
+                        </div>
+                        <div class="vacancy-expandable-body" id="body-data-pipeline">
+                            <div class="vacancy-expandable-content">
+                                <div class="content-group">
+                                    <div class="group-title">Overview</div>
+                                    <p class="group-text">
+                                        Build reliable capture and ingestion pipelines for multi-camera and egocentric human demonstrations — turning raw field recordings into structured, time-synchronized robotics datasets.
+                                    </p>
+                                </div>
+                                <div class="content-group">
+                                    <div class="requirements-split">
+                                        <div>
+                                            <div class="subgroup-title">What You'll Work On</div>
+                                            <ul class="clean-list">
+                                                <li>Time-synchronization and calibration across multi-view cameras, depth streams, and wearable sensors.</li>
+                                                <li>Automated validation checks for dropped frames, motion blur, calibration drift, and episode integrity.</li>
+                                                <li>Dataset packaging, compression, and storage pipelines for training-ready episodes.</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <div class="subgroup-title">What Matters</div>
+                                            <ul class="clean-list">
+                                                <li>Strong production experience with <strong>Python / C++</strong> and high-throughput video or sensor streams.</li>
+                                                <li>Practical understanding of camera intrinsics/extrinsics, sync, or robotics data formats.</li>
+                                                <li>Focus on repeatability and clean failure handling in real-world environments.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content-group apply-group">
+                                    <div class="group-title">How To Apply</div>
+                                    <p class="group-text">
+                                        Write to <a href="mailto:main@sverkaus.com?subject=Robotics%20Data%20%26%20Sensor%20Pipeline%20Engineer" class="bold-link">main@sverkaus.com</a>.
+                                    </p>
+                                    <p class="apply-note">
+                                        Send links to 2–3 relevant projects, repositories, or data pipelines you've built.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. Computer Vision & 3D Annotation Engineer -->
+                    <div class="vacancy-item" id="vacancy-cv-tooling">
+                        <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-cv-tooling" onclick="toggleVacancy('vacancy-cv-tooling')">
+                            <div class="vacancy-info-col">
+                                <h2 class="vacancy-title">Computer Vision &amp; 3D Annotation Engineer</h2>
+                                <div class="vacancy-meta"><strong>Remote</strong> · Contract / Project · Python / PyTorch / Egocentric Video</div>
+                            </div>
+                            <div class="vacancy-toggle-indicator">
+                                <span class="toggle-text">Details</span>
+                                <span class="toggle-icon" aria-hidden="true">+</span>
+                            </div>
+                        </div>
+                        <div class="vacancy-expandable-body" id="body-cv-tooling">
+                            <div class="vacancy-expandable-content">
+                                <div class="content-group">
+                                    <div class="group-title">Overview</div>
+                                    <p class="group-text">
+                                        Develop post-processing models and internal review tools for real-world manipulation footage — extracting structured hand, tool, and object trajectories from complex physical environments.
+                                    </p>
+                                </div>
+                                <div class="content-group">
+                                    <div class="requirements-split">
+                                        <div>
+                                            <div class="subgroup-title">What You'll Work On</div>
+                                            <ul class="clean-list">
+                                                <li>Hand/object pose estimation, 3D trajectory recovery, and action segmentation on real-world video.</li>
+                                                <li>Quality scoring heuristics and visual review interfaces for verifying episode labels.</li>
+                                                <li>Adapting tracking pipelines to challenging lighting and cluttered workshop or kitchen scenes.</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <div class="subgroup-title">What Matters</div>
+                                            <ul class="clean-list">
+                                                <li>Hands-on experience shipping <strong>CV / 3D vision</strong> pipelines (PyTorch, OpenCV, spatial tracking).</li>
+                                                <li>Ability to diagnose model failure modes on messy real-world video rather than clean benchmarks.</li>
+                                                <li>Preference for fast, pragmatic tooling over heavy process.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content-group apply-group">
+                                    <div class="group-title">How To Apply</div>
+                                    <p class="group-text">
+                                        Write to <a href="mailto:main@sverkaus.com?subject=Computer%20Vision%20%26%203D%20Annotation%20Engineer" class="bold-link">main@sverkaus.com</a>.
+                                    </p>
+                                    <p class="apply-note">
+                                        Share repositories, demos, or brief notes on vision or tracking systems you've shipped.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. Systems & Field Capture Engineer -->
+                    <div class="vacancy-item" id="vacancy-capture-systems">
+                        <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-capture-systems" onclick="toggleVacancy('vacancy-capture-systems')">
+                            <div class="vacancy-info-col">
+                                <h2 class="vacancy-title">Systems &amp; Field Capture Engineer</h2>
+                                <div class="vacancy-meta"><strong>Remote</strong> · Full-time / Contract · Swift / C++ / Capture Tooling</div>
+                            </div>
+                            <div class="vacancy-toggle-indicator">
+                                <span class="toggle-text">Details</span>
+                                <span class="toggle-icon" aria-hidden="true">+</span>
+                            </div>
+                        </div>
+                        <div class="vacancy-expandable-body" id="body-capture-systems">
+                            <div class="vacancy-expandable-content">
+                                <div class="content-group">
+                                    <div class="group-title">Overview</div>
+                                    <p class="group-text">
+                                        Build fast, dependable software for on-site recording setups and internal Sverkaus tools — prioritizing low-friction operator workflows, local storage resilience, and zero-bloat performance.
+                                    </p>
+                                </div>
+                                <div class="content-group">
+                                    <div class="requirements-split">
+                                        <div>
+                                            <div class="subgroup-title">What You'll Work On</div>
+                                            <ul class="clean-list">
+                                                <li>Lightweight capture utilities and responsive status interfaces for field operators.</li>
+                                                <li>Resilient local disk buffering, hardware health checks, and resumable data offload.</li>
+                                                <li>Performance profiling and reliability across real-world recording hardware.</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <div class="subgroup-title">What Matters</div>
+                                            <ul class="clean-list">
+                                                <li>Strong systems background in <strong>Swift, C++, or Rust</strong> with media or device I/O experience.</li>
+                                                <li>Care for crisp, minimal interfaces and clean recovery when hardware disconnects.</li>
+                                                <li>Ownership from architecture through deployment.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="content-group apply-group">
+                                    <div class="group-title">How To Apply</div>
+                                    <p class="group-text">
+                                        Write to <a href="mailto:main@sverkaus.com?subject=Systems%20%26%20Field%20Capture%20Engineer" class="bold-link">main@sverkaus.com</a>.
+                                    </p>
+                                    <p class="apply-note">
+                                        No formal CV needed — send links to apps, tools, or systems code you've built.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="careers-footer-note">
@@ -1483,7 +1715,7 @@
                 },
                 careers: {
                     title: "CAREERS",
-                    tagline: "Simplifying Human Computer Interaction."
+                    tagline: "Physical AI Data Lab · Teach robots with real-world human experience."
                 }
             },
             zh: {
@@ -1499,7 +1731,7 @@
                 },
                 careers: {
                     title: "招贤纳士",
-                    tagline: "简化人机交互。"
+                    tagline: "Physical AI Data Lab · 用真实世界的人类经验训练机器人。"
                 }
             },
             hi: {
@@ -1515,7 +1747,7 @@
                 },
                 careers: {
                     title: "करियर",
-                    tagline: "मानव-कंप्यूटर संपर्क को सरल बनाना।"
+                    tagline: "Physical AI Data Lab · वास्तविक दुनिया के मानवीय अनुभव से रोबोट को सिखाना।"
                 }
             },
             ko: {
@@ -1531,7 +1763,7 @@
                 },
                 careers: {
                     title: "채용 정보",
-                    tagline: "인간과 컴퓨터 간의 상호작용을 단순화합니다."
+                    tagline: "Physical AI Data Lab · 실제 인간의 경험으로 로봇을 가르칩니다."
                 }
             },
             de: {
@@ -1547,7 +1779,7 @@
                 },
                 careers: {
                     title: "KARRIERE",
-                    tagline: "Vereinfachung der Mensch-Computer-Interaktion."
+                    tagline: "Physical AI Data Lab · Robotern echte menschliche Erfahrung beibringen."
                 }
             },
             pl: {
@@ -1563,7 +1795,7 @@
                 },
                 careers: {
                     title: "KARIERA",
-                    tagline: "Upraszczanie interakcji człowiek-komputer."
+                    tagline: "Physical AI Data Lab · Uczymy roboty na prawdziwym ludzkim doświadczeniu."
                 }
             }
         };

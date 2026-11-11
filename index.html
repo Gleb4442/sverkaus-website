@@ -313,13 +313,13 @@
 
         /* Borderless Overview Details (Matches Careers Minimalist Rhythm) */
         .overview-details {
-            max-width: 780px;
+            max-width: 840px;
             margin: 0 auto;
             width: 100%;
             padding: 36px 24px 96px;
             display: flex;
             flex-direction: column;
-            gap: 44px;
+            gap: 36px;
             scroll-margin-top: 88px;
         }
 
@@ -343,11 +343,439 @@
 
         .overview-heading {
             font-family: 'Outfit', sans-serif;
-            font-size: clamp(22px, 3.6vw, 30px);
+            font-size: clamp(24px, 3.8vw, 32px);
             font-weight: 700;
             letter-spacing: 0.01em;
             color: #ffffff;
             line-height: 1.2;
+        }
+
+        /* Flow Pills (Soft Rounded Fills, Borderless) */
+        .flow-pills {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .flow-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 13px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 11.5px;
+            color: #d8d8d8;
+            letter-spacing: 0.01em;
+        }
+
+        .flow-pill strong {
+            color: var(--accent-color);
+            font-weight: 800;
+        }
+
+        .flow-arrow {
+            color: #666666;
+            font-size: 12px;
+        }
+
+        /* Interactive Capture Visualization (Soft Fills, Rounded Lines, Zero Hard Boxes) */
+        .viz-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .viz-stage {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 22px;
+            overflow: hidden;
+            background: #141414;
+            user-select: none;
+        }
+
+        .viz-stage::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 22px;
+            box-shadow: inset 0 0 54px 18px #1c1c1c;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .viz-media-lock {
+            position: absolute;
+            inset: 0;
+            transform-origin: 48% 49%;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .viz-base-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.35s ease, filter 0.35s ease;
+        }
+
+        .viz-base-img.rgb-off {
+            opacity: 0.16;
+            filter: grayscale(1) contrast(1.1);
+        }
+
+        .viz-overlay-svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .viz-layer-group {
+            transition: opacity 0.25s ease;
+        }
+
+        .viz-layer-group.hidden {
+            opacity: 0;
+        }
+
+        .viz-hud-top {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            right: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .viz-hud-bottom {
+            position: absolute;
+            bottom: 14px;
+            left: 14px;
+            right: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .hud-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            background: rgba(20, 20, 20, 0.72);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            font-size: 10.5px;
+            color: #e4e4e4;
+            letter-spacing: 0.02em;
+            transition: opacity 0.2s ease;
+        }
+
+        .hud-pill.hidden {
+            opacity: 0;
+        }
+
+        .hud-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .hud-dot.amber { background: #f59e0b; }
+        .hud-dot.lime { background: var(--accent-color); }
+        .hud-dot.cyan { background: #38bdf8; }
+
+        /* Modality Pills (Soft Translucent Fills, Borderless) */
+        .modality-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .modality-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .mod-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 13px;
+            border-radius: 9999px;
+            border: none;
+            background: rgba(255, 255, 255, 0.04);
+            color: #888888;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .mod-pill:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #f0f0f0;
+        }
+
+        .mod-pill[aria-pressed="true"].tier-base {
+            background: rgba(163, 230, 53, 0.14);
+            color: #f4fce3;
+        }
+
+        .mod-pill[aria-pressed="true"].tier-hw {
+            background: rgba(245, 158, 11, 0.14);
+            color: #fef3c7;
+        }
+
+        .mod-tier-tag {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            opacity: 0.72;
+        }
+
+        .preset-pills {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mini-pill {
+            padding: 5px 10px;
+            border-radius: 9999px;
+            border: none;
+            background: rgba(255, 255, 255, 0.04);
+            color: #888888;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mini-pill:hover,
+        .mini-pill.active {
+            background: rgba(255, 255, 255, 0.11);
+            color: #ffffff;
+        }
+
+        .viz-caption {
+            font-size: 12px;
+            line-height: 1.65;
+            color: #9a9a9a;
+            padding: 12px 16px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .viz-caption strong {
+            color: #ffffff;
+        }
+
+        /* Layer 3: Soft Rounded Area-Filled Timeline */
+        .viz-timeline {
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.035);
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .transport-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .play-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            border: none;
+            background: var(--accent-color);
+            color: #0e1606;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.15s ease, opacity 0.15s ease;
+        }
+
+        .play-pill:hover {
+            transform: scale(1.02);
+        }
+
+        .phase-pills {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .phase-chip {
+            padding: 5px 10px;
+            border-radius: 9999px;
+            border: none;
+            background: rgba(255, 255, 255, 0.04);
+            color: #888888;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10.5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .phase-chip:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .phase-chip.active {
+            background: rgba(163, 230, 53, 0.16);
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+
+        .scrubber-input {
+            flex: 1;
+            min-width: 110px;
+            accent-color: var(--accent-color);
+            cursor: pointer;
+        }
+
+        .time-readout {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: #999999;
+            white-space: nowrap;
+        }
+
+        .waveform-box {
+            position: relative;
+            width: 100%;
+            height: 116px;
+            border-radius: 12px;
+            background: rgba(18, 18, 18, 0.65);
+            overflow: hidden;
+        }
+
+        .waveform-svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .wave-curve {
+            transition: opacity 0.25s ease;
+        }
+
+        .wave-curve.inactive {
+            opacity: 0.12;
+        }
+
+        .wave-playhead {
+            position: absolute;
+            top: 8px;
+            bottom: 8px;
+            width: 2px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.9);
+            pointer-events: none;
+            transform: translateX(-1px);
+        }
+
+        .wave-playhead::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -3px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ffffff;
+        }
+
+        .schema-soft-box {
+            max-width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: rgba(18, 18, 18, 0.72);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11.5px;
+            line-height: 1.6;
+            color: #c8cdd6;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        @media (max-width: 640px) {
+            .flow-arrow { display: none; }
+            .flow-pills { gap: 6px; }
+            .viz-stage { aspect-ratio: 16 / 10; border-radius: 16px; }
+            .viz-stage::after { border-radius: 16px; box-shadow: inset 0 0 36px 12px #1c1c1c; }
+            .viz-hud-top { top: 8px; left: 8px; right: 8px; flex-wrap: nowrap; gap: 6px; }
+            .viz-hud-bottom { bottom: 8px; left: 8px; right: 8px; flex-wrap: nowrap; gap: 6px; }
+            .hud-long { display: none; }
+            .hud-pill { padding: 3px 8px; font-size: 9.5px; gap: 5px; white-space: nowrap; }
+            .viz-timeline { padding: 12px; }
+            .schema-soft-box { padding: 11px 12px; font-size: 10px; }
+        }
+
+        .sk { color: #93c5fd; }
+        .sv { color: var(--accent-color); }
+        .sw { color: #f59e0b; }
+        .sc { color: #666666; }
+
+        /* Expandable Overview Accordions (Compact & Hidden by Default) */
+        .overview-accordions {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .env-card-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .env-icon {
+            width: 30px;
+            height: 30px;
+            padding: 6px;
+            border-radius: 10px;
+            background: rgba(163, 230, 53, 0.09);
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        .env-card-head .subgroup-title {
+            margin-bottom: 0;
         }
 
         .pipeline-line {
@@ -365,11 +793,11 @@
         .subtle-note {
             font-size: 12px;
             line-height: 1.65;
-            color: #777777;
+            color: #888888;
         }
 
         .subtle-note strong {
-            color: #b8b8b8;
+            color: #d0d0d0;
             font-weight: 600;
         }
 
@@ -1576,114 +2004,346 @@
                 </div>
             </div>
 
-            <!-- Concise Borderless Overview Details -->
+            <!-- Visual Pipeline + Concise Collapsible Details -->
             <div id="lab-details" class="overview-details">
                 <p class="lang-fallback-note" id="lang-fallback-overview">Technical overview and specifications below are provided in English.</p>
 
-                <!-- 01. Positioning & Deliverable -->
-                <div class="overview-block">
-                    <div class="overview-kicker">01 · Positioning &amp; Deliverable</div>
-                    <h2 class="overview-heading">Specialized, ML-Ready Data for Robot Learning</h2>
-                    <p class="group-text">
-                        Real-world demonstrations from skilled operators, captured and processed into structured robotics datasets with documented provenance, permissions, and quality controls—focused on training suitability rather than raw hours of footage.
-                    </p>
-                    <p class="pipeline-line">
-                        Skilled Professional Task <span class="arrow">&rarr;</span> Multimodal Capture <span class="arrow">&rarr;</span> ML-Ready Dataset
-                    </p>
-                    <ul class="clean-list">
-                        <li><strong>Skilled operators:</strong> Access to participants with relevant professional expertise rather than relying exclusively on general-purpose crowdsourced contributors.</li>
-                        <li><strong>Task-specific modalities:</strong> Baseline RGB video and task events; project-scoped depth, pose, trajectories, or force/tactile measurements where dedicated hardware is deployed <em>(physical contact signals cannot be inferred reliably from RGB alone)</em>.</li>
-                        <li><strong>ML-ready delivery:</strong> Synchronized streams, timestamps, annotations, and metadata agreed per pilot—not raw video alone.</li>
-                    </ul>
-                </div>
+                <!-- 01. Interactive Capture Visualization -->
+                <div class="overview-block" id="capture-viz">
+                    <div class="overview-kicker">Conceptual Model · Synthetic Demo · Precision Assembly</div>
+                    <h2 class="overview-heading">Skilled Tasks. Structured Data.</h2>
+                    <div class="flow-pills" aria-label="Data pipeline stages">
+                        <span class="flow-pill"><strong>01</strong> Skilled Professional Task</span>
+                        <span class="flow-arrow" aria-hidden="true">&rarr;</span>
+                        <span class="flow-pill"><strong>02</strong> Multimodal Capture</span>
+                        <span class="flow-arrow" aria-hidden="true">&rarr;</span>
+                        <span class="flow-pill"><strong>03</strong> ML-Ready Dataset</span>
+                    </div>
 
-                <!-- 02. Target Collection Environments -->
-                <div class="overview-block">
-                    <div class="overview-kicker">02 · Target Environments (Illustrative, Not Pre-Existing Datasets)</div>
-                    <h2 class="overview-heading">Data Built Around Specialized Tasks</h2>
-                    <div class="requirements-split">
-                        <div>
-                            <div class="subgroup-title">Manufacturing &amp; Assembly</div>
-                            <ul class="clean-list">
-                                <li>Component assembly &amp; precision manipulation</li>
-                                <li>Tool handling &amp; contact-rich interactions</li>
-                            </ul>
+                    <div class="viz-wrap">
+                        <!-- Layer 1: Photorealistic POV Base + Rounded Soft-Filled SVG Telemetry -->
+                        <div class="viz-stage">
+                            <div class="viz-media-lock" id="viz-media-lock">
+                            <img src="/assets/capture-pov.jpg" alt="Conceptual first-person POV of a gloved technician aligning a locking industrial connector into an anodized receptacle" class="viz-base-img" id="viz-base-img">
+
+                            <svg class="viz-overlay-svg" viewBox="0 0 1000 558" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+                                <defs>
+                                    <radialGradient id="depthGlow" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.22" />
+                                        <stop offset="70%" stop-color="#f59e0b" stop-opacity="0.06" />
+                                        <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+                                    </radialGradient>
+                                    <radialGradient id="forcePulse" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.55" />
+                                        <stop offset="55%" stop-color="#f59e0b" stop-opacity="0.18" />
+                                        <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
+                                    </radialGradient>
+                                    <linearGradient id="trajGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#a3e635" stop-opacity="0.95" />
+                                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.65" />
+                                    </linearGradient>
+                                </defs>
+
+                                <!-- Depth Layer (Project-Dependent) -->
+                                <g class="viz-layer-group" id="svg-layer-depth">
+                                    <ellipse cx="475" cy="268" rx="150" ry="108" fill="url(#depthGlow)" />
+                                    <ellipse cx="458" cy="262" rx="68" ry="50" fill="none" stroke="rgba(245,158,11,0.45)" stroke-width="1.6" stroke-dasharray="6 6" stroke-linecap="round" />
+                                    <ellipse cx="458" cy="262" rx="112" ry="82" fill="none" stroke="rgba(245,158,11,0.28)" stroke-width="1.4" stroke-dasharray="6 6" stroke-linecap="round" />
+                                    <rect x="336" y="328" width="128" height="26" rx="13" fill="rgba(20,20,20,0.75)" />
+                                    <text x="400" y="345" text-anchor="middle" fill="#fbbf24" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">z_socket 0.42m</text>
+                                </g>
+
+                                <!-- Motion Trajectory Layer (Project-Dependent) -->
+                                <g class="viz-layer-group" id="svg-layer-trajectory">
+                                    <path d="M 458 262 C 505 268, 540 278, 610 296 C 655 308, 690 322, 725 338" fill="none" stroke="rgba(163,230,53,0.18)" stroke-width="14" stroke-linecap="round" />
+                                    <path d="M 458 262 C 505 268, 540 278, 610 296 C 655 308, 690 322, 725 338" fill="none" stroke="url(#trajGrad)" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 7" />
+                                    <circle id="traj-marker" cx="522" cy="274" r="7" fill="#a3e635" fill-opacity="0.95" />
+                                    <circle id="traj-marker-halo" cx="522" cy="274" r="15" fill="#a3e635" fill-opacity="0.22" />
+                                </g>
+
+                                <!-- Hand & Object Pose Layer (Project-Dependent) -->
+                                <g class="viz-layer-group" id="svg-layer-pose" stroke-linecap="round" stroke-linejoin="round">
+                                    <!-- Lower gloved hand skeleton -->
+                                    <path d="M 676 508 L 622 418 L 598 352 L 624 302" fill="none" stroke="rgba(56,189,248,0.72)" stroke-width="2.5" />
+                                    <path d="M 622 418 L 574 378 L 592 325" fill="none" stroke="rgba(56,189,248,0.72)" stroke-width="2.5" />
+                                    <!-- Upper gloved hand skeleton -->
+                                    <path d="M 940 236 L 814 198 L 716 226 L 664 264" fill="none" stroke="rgba(56,189,248,0.72)" stroke-width="2.5" />
+                                    <path d="M 814 198 L 765 276 L 740 338" fill="none" stroke="rgba(56,189,248,0.55)" stroke-width="2" />
+                                    <!-- Soft joint halos -->
+                                    <g fill="#38bdf8">
+                                        <circle cx="676" cy="508" r="5" /><circle cx="622" cy="418" r="5" /><circle cx="598" cy="352" r="4.5" /><circle cx="624" cy="302" r="5.5" />
+                                        <circle cx="574" cy="378" r="4.5" /><circle cx="592" cy="325" r="5" />
+                                        <circle cx="940" cy="236" r="5" /><circle cx="814" cy="198" r="5" /><circle cx="716" cy="226" r="4.5" /><circle cx="664" cy="264" r="5.5" />
+                                        <circle cx="765" cy="276" r="4.5" /><circle cx="740" cy="338" r="4.5" />
+                                    </g>
+                                    <!-- 6-DoF Receptacle Triad -->
+                                    <g transform="translate(458,262)">
+                                        <line x1="0" y1="0" x2="34" y2="6" stroke="#ef4444" stroke-width="2.6" />
+                                        <line x1="0" y1="0" x2="2" y2="-34" stroke="#a3e635" stroke-width="2.6" />
+                                        <line x1="0" y1="0" x2="-22" y2="18" stroke="#38bdf8" stroke-width="2.6" />
+                                        <circle cx="0" cy="0" r="4" fill="#ffffff" />
+                                    </g>
+                                    <!-- 6-DoF Plug Triad -->
+                                    <g transform="translate(550,278)">
+                                        <line x1="0" y1="0" x2="-34" y2="-6" stroke="#ef4444" stroke-width="2.6" />
+                                        <line x1="0" y1="0" x2="3" y2="-32" stroke="#a3e635" stroke-width="2.6" />
+                                        <line x1="0" y1="0" x2="24" y2="18" stroke="#38bdf8" stroke-width="2.6" />
+                                        <circle cx="0" cy="0" r="4" fill="#ffffff" />
+                                    </g>
+                                </g>
+
+                                <!-- Force & Tactile Measurements Layer (Project-Dependent) -->
+                                <g class="viz-layer-group" id="svg-layer-force" stroke-linecap="round">
+                                    <circle id="force-glow-circle" cx="488" cy="268" r="56" fill="url(#forcePulse)" />
+                                    <!-- Grip pressure halos on thumb & index -->
+                                    <circle cx="624" cy="302" r="14" fill="rgba(245,158,11,0.16)" stroke="rgba(245,158,11,0.75)" stroke-width="2" />
+                                    <circle cx="664" cy="264" r="14" fill="rgba(245,158,11,0.16)" stroke="rgba(245,158,11,0.75)" stroke-width="2" />
+                                    <!-- Smooth Axial Force Arrow -->
+                                    <line id="force-arrow-line" x1="518" y1="271" x2="462" y2="262" stroke="#f59e0b" stroke-width="3.5" />
+                                    <circle cx="462" cy="262" r="4.5" fill="#f59e0b" />
+                                    <rect x="428" y="218" width="128" height="24" rx="12" fill="rgba(20,20,20,0.82)" />
+                                    <text id="force-label" x="492" y="234" text-anchor="middle" fill="#fbbf24" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">F_axial</text>
+                                </g>
+                            </svg>
+                            </div>
+
+                            <div class="viz-hud-top">
+                                <span class="hud-pill" id="hud-rgb-pill"><span class="hud-dot lime"></span><span class="hud-long">Egocentric </span>RGB · <span id="hud-frame">f116</span></span>
+                                <span class="hud-pill"><span class="hud-dot amber"></span><span class="hud-long">Conceptual Illustration · </span><span id="hud-phase-time">03 Insert · 3.85s</span></span>
+                            </div>
+                            <div class="viz-hud-bottom">
+                                <span class="hud-pill" id="hud-event-pill"><span class="hud-dot lime"></span>event: <span id="hud-event-name">axial_insert</span></span>
+                                <span class="hud-pill" id="hud-clearance-pill">clearance ≈ <span id="hud-clearance">14.2 mm</span></span>
+                            </div>
                         </div>
-                        <div>
-                            <div class="subgroup-title">Food Preparation</div>
-                            <ul class="clean-list">
-                                <li>Cutting, sorting &amp; ingredient manipulation</li>
-                                <li>Tool use &amp; object transfer</li>
-                            </ul>
+
+                        <!-- Layer 2: Soft Rounded Modality Pills -->
+                        <div class="modality-bar">
+                            <div class="modality-pills" role="group" aria-label="Capture modality toggles">
+                                <button type="button" class="mod-pill tier-base" data-channel="rgb" aria-pressed="true"><span class="hud-dot lime"></span>RGB video <span class="mod-tier-tag">Baseline</span></button>
+                                <button type="button" class="mod-pill tier-base" data-channel="events" aria-pressed="true"><span class="hud-dot lime"></span>Task events <span class="mod-tier-tag">Baseline</span></button>
+                                <button type="button" class="mod-pill tier-hw" data-channel="depth" aria-pressed="true"><span class="hud-dot amber"></span>Stereo / depth <span class="mod-tier-tag">Hardware</span></button>
+                                <button type="button" class="mod-pill tier-hw" data-channel="pose" aria-pressed="true"><span class="hud-dot cyan"></span>Hand &amp; obj pose <span class="mod-tier-tag">Hardware</span></button>
+                                <button type="button" class="mod-pill tier-hw" data-channel="trajectory" aria-pressed="true"><span class="hud-dot lime"></span>Trajectories <span class="mod-tier-tag">Hardware</span></button>
+                                <button type="button" class="mod-pill tier-hw" data-channel="force" aria-pressed="true"><span class="hud-dot amber"></span>Force / tactile <span class="mod-tier-tag">Hardware</span></button>
+                            </div>
+                            <div class="preset-pills">
+                                <button type="button" class="mini-pill" data-preset="baseline">Baseline only</button>
+                                <button type="button" class="mini-pill active" data-preset="full">All channels</button>
+                            </div>
                         </div>
-                        <div>
-                            <div class="subgroup-title">Warehouse &amp; Logistics</div>
-                            <ul class="clean-list">
-                                <li>Picking, packing &amp; sorting</li>
-                                <li>Object manipulation &amp; repetitive handling</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <div class="subgroup-title">Maintenance &amp; Tool Use</div>
-                            <ul class="clean-list">
-                                <li>Fastening &amp; repair operations</li>
-                                <li>Equipment handling &amp; technical maintenance</li>
-                            </ul>
+
+                        <p class="viz-caption" id="viz-caption" aria-live="polite">
+                            <strong>Physical sensing active (project-dependent):</strong> Video shows connector alignment, while force/tactile sensing captures insertion resistance and detent snap—signals requiring dedicated hardware rather than RGB alone.
+                        </p>
+
+                        <!-- Layer 3: Smooth Area-Filled Waveform Timeline + Expandable Schema -->
+                        <div class="viz-timeline">
+                            <div class="transport-row">
+                                <button type="button" class="play-pill" id="viz-play-btn">Pause</button>
+                                <div class="phase-pills">
+                                    <button type="button" class="phase-chip" data-phase="approach_grasp" data-time="0.6">01 Grasp</button>
+                                    <button type="button" class="phase-chip" data-phase="align_keyway" data-time="2.3">02 Align</button>
+                                    <button type="button" class="phase-chip active" data-phase="axial_insert" data-time="3.9">03 Insert</button>
+                                    <button type="button" class="phase-chip" data-phase="lock_verify" data-time="5.3">04 Lock</button>
+                                </div>
+                                <input type="range" class="scrubber-input" id="viz-scrubber" min="0" max="6" step="0.03" value="3.85" aria-label="Scrub capture timeline">
+                                <span class="time-readout" id="viz-readout">3.85s / 6.00s</span>
+                            </div>
+
+                            <div class="waveform-box">
+                                <svg class="waveform-svg" viewBox="0 0 800 116" preserveAspectRatio="none" aria-hidden="true">
+                                    <defs>
+                                        <linearGradient id="forceAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.34" />
+                                            <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0" />
+                                        </linearGradient>
+                                        <linearGradient id="poseAreaGrad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.24" />
+                                            <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0" />
+                                        </linearGradient>
+                                    </defs>
+
+                                    <!-- Event phase pills along bottom -->
+                                    <g class="wave-curve" id="wave-events">
+                                        <rect x="8" y="92" width="190" height="14" rx="7" fill="rgba(163,230,53,0.12)" />
+                                        <rect x="204" y="92" width="218" height="14" rx="7" fill="rgba(163,230,53,0.18)" />
+                                        <rect x="428" y="92" width="206" height="14" rx="7" fill="rgba(163,230,53,0.28)" />
+                                        <rect x="640" y="92" width="152" height="14" rx="7" fill="rgba(163,230,53,0.15)" />
+                                    </g>
+
+                                    <!-- Smooth rounded Pose / Trajectory clearance curve with soft fill -->
+                                    <g class="wave-curve" id="wave-pose">
+                                        <path d="M 0 22 C 140 24, 210 38, 340 58 C 440 72, 520 76, 800 76 L 800 84 L 0 84 Z" fill="url(#poseAreaGrad)" />
+                                        <path d="M 0 22 C 140 24, 210 38, 340 58 C 440 72, 520 76, 800 76" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
+                                    </g>
+
+                                    <!-- Smooth rounded Axial Force curve peaking on detent seating with soft fill -->
+                                    <g class="wave-curve" id="wave-force">
+                                        <path d="M 0 82 L 380 82 C 430 82, 465 56, 518 18 C 548 16, 575 68, 620 71 C 680 71, 710 56, 738 71 L 800 74 L 800 84 L 0 84 Z" fill="url(#forceAreaGrad)" />
+                                        <path d="M 0 82 L 380 82 C 430 82, 465 56, 518 18 C 548 16, 575 68, 620 71 C 680 71, 710 56, 738 71 L 800 74" fill="none" stroke="#f59e0b" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
+                                    </g>
+                                </svg>
+                                <div class="wave-playhead" id="wave-playhead" style="left: 64%;"></div>
+                            </div>
+
+                            <!-- Collapsible Episode Output Schema (Hidden by default to reduce visual clutter) -->
+                            <div class="vacancy-item" id="acc-schema" style="border-bottom: none; padding-bottom: 0;">
+                                <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-schema" onclick="toggleVacancy('acc-schema')">
+                                    <div class="vacancy-info-col">
+                                        <div class="vacancy-meta"><strong>ML-Ready Episode Schema</strong> · Conceptual JSON structure synced to active channels</div>
+                                    </div>
+                                    <div class="vacancy-toggle-indicator">
+                                        <span class="toggle-text">Details</span>
+                                        <span class="toggle-icon" aria-hidden="true">+</span>
+                                    </div>
+                                </div>
+                                <div class="vacancy-expandable-body" id="body-schema">
+                                    <pre class="schema-soft-box"><code id="viz-schema-code"></code></pre>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <p class="subtle-note">
-                        <strong>Camera placement &amp; framing:</strong> Recording setups depend on the task. Views centered on hands, tools, and objects can often reduce unrelated personal data, though framing alone is not universally sufficient.
-                    </p>
                 </div>
 
-                <!-- 03. Data Provenance & Quality Assurance -->
-                <div class="overview-block" id="data-approach">
-                    <div class="overview-kicker">03 · Provenance, Privacy &amp; Quality Assurance</div>
-                    <h2 class="overview-heading">Real-world data. Verifiable foundations.</h2>
-                    <p class="group-text">
-                        Data provenance matters. For each project, we aim to establish a clear record of where data comes from, how it was collected and processed, and which permissions and quality checks apply—agreed upon for each engagement.
-                    </p>
-                    <div class="requirements-split">
-                        <div>
-                            <div class="subgroup-title">Authorized Collection</div>
-                            <p class="subtle-note">Planned around site permissions, participant rights, and project-specific recording requirements.</p>
+                <!-- 02. Concise Expandable Details (Collapsed by Default) -->
+                <div class="overview-accordions">
+                    <!-- Environments & Target Use Cases -->
+                    <div class="vacancy-item" id="acc-environments">
+                        <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-environments" onclick="toggleVacancy('acc-environments')">
+                            <div class="vacancy-info-col">
+                                <h2 class="vacancy-title" style="font-size: clamp(20px, 3.5vw, 26px);">Target Environments &amp; Use Cases</h2>
+                                <div class="vacancy-meta">Manufacturing · Food Prep · Warehouse · Maintenance <strong>(illustrative categories)</strong></div>
+                            </div>
+                            <div class="vacancy-toggle-indicator">
+                                <span class="toggle-text">Details</span>
+                                <span class="toggle-icon" aria-hidden="true">+</span>
+                            </div>
                         </div>
-                        <div>
-                            <div class="subgroup-title">Privacy-Aware Recording</div>
-                            <p class="subtle-note">Controlled environments minimizing unrelated personal data; review, cropping, or obscuring before delivery <em>(face obscuring alone does not guarantee complete anonymization)</em>.</p>
+                        <div class="vacancy-expandable-body" id="body-environments">
+                            <div class="vacancy-expandable-content">
+                                <p class="group-text">
+                                    Examples of environments and workflows we can explore with prospective partners—not pre-existing datasets or guaranteed facility access. Camera placement and modalities depend on the task; hand/tool/object views can often reduce unrelated personal information, though framing alone is not universally sufficient.
+                                </p>
+                                <div class="requirements-split">
+                                    <div>
+                                        <div class="env-card-head">
+                                            <svg class="env-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" fill-opacity="0.14" /><circle cx="12" cy="12" r="3.5" /></svg>
+                                            <div class="subgroup-title">Manufacturing &amp; Assembly</div>
+                                        </div>
+                                        <ul class="clean-list">
+                                            <li>Component assembly &amp; precision manipulation</li>
+                                            <li>Tool handling &amp; contact-rich interactions</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <div class="env-card-head">
+                                            <svg class="env-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="currentColor" fill-opacity="0.14" /><path d="M8 14c1.5 1.5 6.5 1.5 8 0" /></svg>
+                                            <div class="subgroup-title">Food Preparation</div>
+                                        </div>
+                                        <ul class="clean-list">
+                                            <li>Cutting, sorting &amp; ingredient manipulation</li>
+                                            <li>Tool use &amp; object transfer</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <div class="env-card-head">
+                                            <svg class="env-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5L12 4l8 4.5v7L12 20l-8-4.5z" fill="currentColor" fill-opacity="0.14" /><path d="M12 12v8M4 8.5L12 12l8-3.5" /></svg>
+                                            <div class="subgroup-title">Warehouse &amp; Logistics</div>
+                                        </div>
+                                        <ul class="clean-list">
+                                            <li>Picking, packing &amp; sorting</li>
+                                            <li>Object manipulation &amp; repetitive handling</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <div class="env-card-head">
+                                            <svg class="env-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2z" fill="currentColor" fill-opacity="0.14" /></svg>
+                                            <div class="subgroup-title">Maintenance &amp; Tool Use</div>
+                                        </div>
+                                        <ul class="clean-list">
+                                            <li>Fastening &amp; repair operations</li>
+                                            <li>Equipment handling &amp; technical maintenance</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <div class="subgroup-title">Quality Assurance</div>
-                            <p class="subtle-note">Checks for completeness, task relevance, consistency, synchronization, and annotation quality where applicable.</p>
+                    </div>
+
+                    <!-- Provenance, Privacy & Quality Assurance -->
+                    <div class="vacancy-item" id="acc-provenance">
+                        <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-provenance" onclick="toggleVacancy('acc-provenance')">
+                            <div class="vacancy-info-col">
+                                <h2 class="vacancy-title" style="font-size: clamp(20px, 3.5vw, 26px);">Provenance, Privacy &amp; Quality Assurance</h2>
+                                <div class="vacancy-meta">Real-world data. Verifiable foundations. · <strong>Authorized · Privacy-aware · QA</strong></div>
+                            </div>
+                            <div class="vacancy-toggle-indicator">
+                                <span class="toggle-text">Details</span>
+                                <span class="toggle-icon" aria-hidden="true">+</span>
+                            </div>
                         </div>
-                        <div>
-                            <div class="subgroup-title">Documented Provenance</div>
-                            <p class="subtle-note">Traceable origins, permissions, processing steps, and QA records agreed per pilot—without unverified certification or network-scale claims.</p>
+                        <div class="vacancy-expandable-body" id="body-provenance">
+                            <div class="vacancy-expandable-content">
+                                <p class="group-text">
+                                    Specialized robotics datasets built around specific learning needs, not just hours of footage. For each engagement, we aim to establish clear documentation of data origins, permissions, processing steps, and quality checks.
+                                </p>
+                                <div class="requirements-split">
+                                    <div>
+                                        <div class="subgroup-title">Authorized Collection</div>
+                                        <p class="subtle-note">Planned around site permissions, participant rights, and project-specific recording requirements.</p>
+                                    </div>
+                                    <div>
+                                        <div class="subgroup-title">Privacy-Aware Recording</div>
+                                        <p class="subtle-note">Controlled environments minimizing unrelated personal data; review, cropping, or obscuring before delivery <em>(face obscuring alone does not guarantee complete anonymization)</em>.</p>
+                                    </div>
+                                    <div>
+                                        <div class="subgroup-title">Quality Assurance</div>
+                                        <p class="subtle-note">Checks for completeness, task relevance, consistency, synchronization, and annotation quality where applicable.</p>
+                                    </div>
+                                    <div>
+                                        <div class="subgroup-title">Documented Provenance</div>
+                                        <p class="subtle-note">Traceable origins, permissions, processing, and QA records agreed per pilot—without unverified certification or network-scale claims.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coverage, Pilot Workflow & Technical Specs -->
+                    <div class="vacancy-item" id="acc-pilot-specs">
+                        <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-pilot-specs" onclick="toggleVacancy('acc-pilot-specs')">
+                            <div class="vacancy-info-col">
+                                <h2 class="vacancy-title" style="font-size: clamp(20px, 3.5vw, 26px);">Coverage, Pilot Flow &amp; Technical Specs</h2>
+                                <div class="vacancy-meta"><strong>Ukraine</strong> (Primary) · <strong>Germany</strong> (Project-specific) · 4-step pilot · Joint spec sign-off</div>
+                            </div>
+                            <div class="vacancy-toggle-indicator">
+                                <span class="toggle-text">Details</span>
+                                <span class="toggle-icon" aria-hidden="true">+</span>
+                            </div>
+                        </div>
+                        <div class="vacancy-expandable-body" id="body-pilot-specs">
+                            <div class="vacancy-expandable-content">
+                                <p class="group-text">
+                                    Primary access to skilled participants in <strong>Ukraine</strong>; project-specific collection in <strong>Germany</strong> when scope justifies cost. Participant access is distinct from industrial facility access—workplaces, permissions, and hardware are confirmed per project.
+                                </p>
+                                <p class="pipeline-line">
+                                    01 Share task &amp; requirements <span class="arrow">&rarr;</span> 02 Confirm access &amp; hardware <span class="arrow">&rarr;</span> 03 Agree scope, price &amp; QA <span class="arrow">&rarr;</span> 04 Collect, validate &amp; deliver
+                                </p>
+                                <p class="subtle-note">
+                                    <strong>Parameters defined together before recording:</strong> Task definition &amp; environment · Sensor modalities &amp; camera setup · Resolution, frame rate &amp; timestamps · Calibration &amp; sync · Data schema &amp; delivery format · Quality checks &amp; acceptance criteria · Hardware ownership &amp; logistics.
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 04. Coverage, Pilot Flow & Technical Specs -->
-                <div class="overview-block">
-                    <div class="overview-kicker">04 · Coverage, Pilot Workflow &amp; Technical Scope</div>
-                    <h2 class="overview-heading">Flexible Collection, Starting in Ukraine</h2>
-                    <p class="group-text">
-                        Primary collection base in <strong>Ukraine</strong> with confirmed access to skilled participants; project-specific collection in <strong>Germany</strong> when scope justifies cost. Access to participants is distinct from access to industrial facilities—workplaces, permissions, and hardware are confirmed per pilot.
-                    </p>
-                    <p class="pipeline-line">
-                        01 Share task &amp; requirements <span class="arrow">&rarr;</span> 02 Confirm access &amp; hardware <span class="arrow">&rarr;</span> 03 Agree scope, price &amp; QA <span class="arrow">&rarr;</span> 04 Collect, validate &amp; deliver
-                    </p>
-                    <p class="subtle-note">
-                        <strong>Specs defined jointly before recording:</strong> Task definition &amp; environment · Sensor modalities &amp; cameras · Resolution, FPS &amp; timestamps · Calibration &amp; sync · Schema &amp; delivery format · Quality checks &amp; acceptance criteria · Hardware ownership &amp; logistics.
-                    </p>
-                </div>
-
-                <!-- 05. Contact -->
+                <!-- 03. Compact Contact Line -->
                 <div class="overview-block" id="contact">
-                    <div class="overview-kicker">05 · Contact</div>
+                    <div class="overview-kicker">Contact</div>
                     <h2 class="overview-heading">Let’s discuss the data your robots actually need.</h2>
-                    <p class="group-text">
-                        Send a short description of the task, required modalities, expected volume, and available recording hardware.
+                    <p class="subtle-note">
+                        Share a short description of your task, required modalities, expected pilot volume, and recording hardware.
                     </p>
                     <div class="contact-inline">
                         <a href="mailto:gleb@sverkaus.com?subject=Data%20Collection%20Pilot%20-%20Sverkaus" class="bold-link">gleb@sverkaus.com</a>
@@ -2222,6 +2882,262 @@
                 }
             });
         });
+
+        // Interactive POV Capture Visualization Controller
+        (() => {
+            const DURATION = 6.0;
+            const FPS = 30;
+            const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            const viz = {
+                time: 3.85,
+                playing: !reduced,
+                lastTs: null,
+                inView: true,
+                channels: {
+                    rgb: true,
+                    events: true,
+                    depth: true,
+                    pose: true,
+                    trajectory: true,
+                    force: true
+                }
+            };
+
+            const mediaLock = document.getElementById('viz-media-lock');
+            const baseImg = document.getElementById('viz-base-img');
+            const hudRgb = document.getElementById('hud-rgb-pill');
+            const hudEvent = document.getElementById('hud-event-pill');
+            const hudClearancePill = document.getElementById('hud-clearance-pill');
+            const hudFrame = document.getElementById('hud-frame');
+            const hudPhaseTime = document.getElementById('hud-phase-time');
+            const hudEventName = document.getElementById('hud-event-name');
+            const hudClearance = document.getElementById('hud-clearance');
+            const captionEl = document.getElementById('viz-caption');
+            const playBtn = document.getElementById('viz-play-btn');
+            const scrubber = document.getElementById('viz-scrubber');
+            const readoutEl = document.getElementById('viz-readout');
+            const playheadEl = document.getElementById('wave-playhead');
+            const schemaCode = document.getElementById('viz-schema-code');
+
+            const svgDepth = document.getElementById('svg-layer-depth');
+            const svgPose = document.getElementById('svg-layer-pose');
+            const svgTraj = document.getElementById('svg-layer-trajectory');
+            const svgForce = document.getElementById('svg-layer-force');
+            const trajMarker = document.getElementById('traj-marker');
+            const trajHalo = document.getElementById('traj-marker-halo');
+            const forceGlow = document.getElementById('force-glow-circle');
+            const forceArrow = document.getElementById('force-arrow-line');
+            const forceLabel = document.getElementById('force-label');
+
+            const wavePose = document.getElementById('wave-pose');
+            const waveForce = document.getElementById('wave-force');
+            const waveEvents = document.getElementById('wave-events');
+            const modButtons = document.querySelectorAll('.mod-pill[data-channel]');
+            const presetButtons = document.querySelectorAll('.mini-pill[data-preset]');
+            const phaseButtons = document.querySelectorAll('.phase-chip[data-phase]');
+
+            function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+            function getPhase(t) {
+                if (t < 1.5) return { id: 'approach_grasp', label: '01 Grasp' };
+                if (t < 3.2) return { id: 'align_keyway', label: '02 Align' };
+                if (t < 4.8) return { id: 'axial_insert', label: '03 Insert' };
+                return { id: 'lock_verify', label: '04 Lock' };
+            }
+
+            function sampleState(t) {
+                const u = clamp(t / DURATION, 0, 1);
+                const phase = getPhase(t);
+                // Trajectory progress along the spline (starts far right -> seats at socket)
+                const progress = clamp(t / 4.8, 0, 1);
+                const mx = 725 - (725 - 458) * Math.pow(progress, 0.9);
+                const my = 338 - (338 - 262) * Math.pow(progress, 0.9);
+                const clearance = Math.max(0, (1 - progress) * 16.0);
+
+                // Illustrative axial contact force peaking around t=3.9s (detent insertion)
+                let forceNorm = 0.0;
+                if (t >= 2.8 && t < 4.8) {
+                    const p = (t - 2.8) / 2.0;
+                    forceNorm = Math.exp(-Math.pow((p - 0.56) / 0.22, 2));
+                } else if (t >= 4.8) {
+                    forceNorm = 0.14 + 0.18 * Math.exp(-Math.pow((t - 5.5) / 0.18, 2));
+                }
+
+                return { u, phase, mx, my, clearance, forceNorm };
+            }
+
+            function updateCaption() {
+                if (!captionEl) return;
+                const ch = viz.channels;
+                if (ch.force) {
+                    captionEl.innerHTML = '<strong>Physical sensing active (project-dependent):</strong> Video shows connector alignment, while force/tactile sensing captures insertion resistance and detent snap—signals requiring dedicated hardware rather than RGB alone.';
+                } else if (ch.depth || ch.pose || ch.trajectory) {
+                    captionEl.innerHTML = '<strong>Spatial capture active (project-dependent):</strong> Metric depth, 6-DoF pose, or trajectories require calibrated camera or tracking rigs. Physical insertion forces remain unmeasured unless F/T or tactile sensors are included.';
+                } else {
+                    captionEl.innerHTML = '<strong>Baseline observation only:</strong> Synchronized RGB frames, timestamps, and task events capture visual sequence, while metric 3D trajectories and contact forces require project-dependent sensor hardware.';
+                }
+            }
+
+            function updateSchema(t, s) {
+                if (!schemaCode) return;
+                const ch = viz.channels;
+                const frame = Math.min(180, Math.round(t * FPS));
+                const lines = [
+                    `<span class="sc">// Conceptual ML-ready episode (agreed per project)</span>`,
+                    `{`,
+                    `  <span class="sk">"dataset_profile"</span>: <span class="sv">"ml_ready_conceptual"</span>, <span class="sk">"frame"</span>: ${frame}, <span class="sk">"ts_ns"</span>: ${Math.round(t * 1e9)},`,
+                    `  <span class="sk">"streams"</span>: { <span class="sk">"rgb"</span>: ${ch.rgb ? `<span class="sv">"cam0/${String(frame).padStart(5, '0')}.jpg"</span>` : `<span class="sc">null</span>`}, <span class="sk">"depth_m"</span>: ${ch.depth ? `<span class="sw">"depth/${String(frame).padStart(5, '0')}.png"</span>` : `<span class="sc">null</span>`} },`,
+                    `  <span class="sk">"measurements"</span>: { <span class="sk">"pose_clearance_mm"</span>: ${ch.pose || ch.trajectory ? s.clearance.toFixed(1) : `<span class="sc">null</span>`}, <span class="sk">"force_axial_norm"</span>: ${ch.force ? s.forceNorm.toFixed(2) : `<span class="sc">null /* requires F/T rig */</span>`} },`,
+                    `  <span class="sk">"annotations"</span>: ${ch.events ? `<span class="sv">"${s.phase.id}"</span>` : `<span class="sc">null</span>`}`,
+                    `}`
+                ];
+                schemaCode.innerHTML = lines.join('\n');
+            }
+
+            function renderViz() {
+                const t = viz.time;
+                const s = sampleState(t);
+                const ch = viz.channels;
+                const frame = Math.min(180, Math.round(t * FPS));
+
+                if (baseImg) {
+                    baseImg.classList.toggle('rgb-off', !ch.rgb);
+                }
+                if (mediaLock && !reduced) {
+                    const zoom = s.phase.id === 'axial_insert' ? 1.04 : (s.phase.id === 'lock_verify' ? 1.02 : 1.0);
+                    mediaLock.style.transform = `scale(${zoom})`;
+                }
+
+                if (svgDepth) svgDepth.classList.toggle('hidden', !ch.depth);
+                if (svgPose) svgPose.classList.toggle('hidden', !ch.pose);
+                if (svgTraj) svgTraj.classList.toggle('hidden', !ch.trajectory);
+                if (svgForce) svgForce.classList.toggle('hidden', !ch.force);
+
+                if (trajMarker && trajHalo) {
+                    trajMarker.setAttribute('cx', s.mx.toFixed(1));
+                    trajMarker.setAttribute('cy', s.my.toFixed(1));
+                    trajHalo.setAttribute('cx', s.mx.toFixed(1));
+                    trajHalo.setAttribute('cy', s.my.toFixed(1));
+                }
+
+                if (forceGlow && forceArrow && forceLabel) {
+                    const r = 24 + s.forceNorm * 44;
+                    forceGlow.setAttribute('r', r.toFixed(1));
+                    forceGlow.setAttribute('opacity', (0.25 + s.forceNorm * 0.75).toFixed(2));
+                    const x1 = 492 + s.forceNorm * 32;
+                    forceArrow.setAttribute('x1', x1.toFixed(1));
+                    forceLabel.textContent = s.forceNorm > 0.45 ? 'F_axial · detent' : 'F_axial';
+                }
+
+                if (hudRgb) hudRgb.classList.toggle('hidden', !ch.rgb);
+                if (hudEvent) hudEvent.classList.toggle('hidden', !ch.events);
+                if (hudClearancePill) hudClearancePill.classList.toggle('hidden', !(ch.pose || ch.trajectory));
+                if (hudFrame) hudFrame.textContent = `f${String(frame).padStart(3, '0')}`;
+                if (hudPhaseTime) hudPhaseTime.textContent = `${s.phase.label} · ${t.toFixed(2)}s`;
+                if (hudEventName) hudEventName.textContent = s.phase.id;
+                if (hudClearance) hudClearance.textContent = `${s.clearance.toFixed(1)} mm`;
+
+                if (scrubber) scrubber.value = t.toFixed(2);
+                if (readoutEl) readoutEl.textContent = `${t.toFixed(2)}s / ${DURATION.toFixed(2)}s`;
+                if (playBtn) playBtn.textContent = viz.playing ? 'Pause' : 'Play';
+                if (playheadEl) playheadEl.style.left = `${(s.u * 100).toFixed(2)}%`;
+
+                if (wavePose) wavePose.classList.toggle('inactive', !(ch.pose || ch.trajectory));
+                if (waveForce) waveForce.classList.toggle('inactive', !ch.force);
+                if (waveEvents) waveEvents.classList.toggle('inactive', !ch.events);
+
+                phaseButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-phase') === s.phase.id);
+                });
+
+                const isBaseOnly = ch.rgb && ch.events && !ch.depth && !ch.pose && !ch.trajectory && !ch.force;
+                const isFull = ch.rgb && ch.events && ch.depth && ch.pose && ch.trajectory && ch.force;
+                presetButtons.forEach(btn => {
+                    const p = btn.getAttribute('data-preset');
+                    btn.classList.toggle('active', (p === 'baseline' && isBaseOnly) || (p === 'full' && isFull));
+                });
+
+                updateSchema(t, s);
+            }
+
+            modButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const key = btn.getAttribute('data-channel');
+                    if (!(key in viz.channels)) return;
+                    viz.channels[key] = !viz.channels[key];
+                    btn.setAttribute('aria-pressed', viz.channels[key] ? 'true' : 'false');
+                    updateCaption();
+                    renderViz();
+                });
+            });
+
+            presetButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const full = btn.getAttribute('data-preset') === 'full';
+                    viz.channels.rgb = true;
+                    viz.channels.events = true;
+                    viz.channels.depth = full;
+                    viz.channels.pose = full;
+                    viz.channels.trajectory = full;
+                    viz.channels.force = full;
+                    modButtons.forEach(m => {
+                        m.setAttribute('aria-pressed', viz.channels[m.getAttribute('data-channel')] ? 'true' : 'false');
+                    });
+                    updateCaption();
+                    renderViz();
+                });
+            });
+
+            phaseButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    viz.time = parseFloat(btn.getAttribute('data-time')) || 0;
+                    renderViz();
+                });
+            });
+
+            if (playBtn) {
+                playBtn.addEventListener('click', () => {
+                    viz.playing = !viz.playing;
+                    viz.lastTs = null;
+                    renderViz();
+                });
+            }
+
+            if (scrubber) {
+                scrubber.addEventListener('input', () => {
+                    viz.playing = false;
+                    viz.time = parseFloat(scrubber.value) || 0;
+                    renderViz();
+                });
+            }
+
+            const vizEl = document.getElementById('capture-viz');
+            if ('IntersectionObserver' in window && vizEl) {
+                new IntersectionObserver(entries => {
+                    entries.forEach(e => { viz.inView = e.isIntersecting; });
+                }, { threshold: 0.05 }).observe(vizEl);
+            }
+
+            function loop(ts) {
+                if (viz.playing && viz.inView && currentTab === 'overview') {
+                    if (viz.lastTs !== null) {
+                        const dt = Math.min((ts - viz.lastTs) / 1000, 0.1);
+                        viz.time += dt;
+                        if (viz.time > DURATION) viz.time = 0;
+                        renderViz();
+                    }
+                    viz.lastTs = ts;
+                } else {
+                    viz.lastTs = null;
+                }
+                window.requestAnimationFrame(loop);
+            }
+
+            updateCaption();
+            renderViz();
+            window.requestAnimationFrame(loop);
+        })();
     </script>
 </body>
 </html>

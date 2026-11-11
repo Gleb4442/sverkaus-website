@@ -37,6 +37,7 @@
             <nav class="header-nav" aria-label="Primary navigation">
                 <a href="#visualization" class="nav-link" data-nav-target="overview">Approach</a>
                 <a href="#capabilities" class="nav-link" data-nav-target="overview">What We Collect</a>
+                <a href="#data-approach" class="nav-link" data-nav-target="overview">Provenance &amp; QA</a>
                 <a href="#coverage" class="nav-link" data-nav-target="overview">Coverage</a>
                 <a href="#pilot" class="nav-link" data-nav-target="overview">How It Works</a>
                 <a href="#requirements" class="nav-link" data-nav-target="overview">Specs</a>
@@ -58,6 +59,7 @@
         <nav class="mobile-drawer" id="mobile-drawer" aria-label="Mobile navigation">
             <a href="#visualization" class="nav-link" data-nav-target="overview">Approach</a>
             <a href="#capabilities" class="nav-link" data-nav-target="overview">What We Collect</a>
+            <a href="#data-approach" class="nav-link" data-nav-target="overview">Provenance &amp; QA</a>
             <a href="#coverage" class="nav-link" data-nav-target="overview">Where We Operate</a>
             <a href="#pilot" class="nav-link" data-nav-target="overview">How a Pilot Works</a>
             <a href="#requirements" class="nav-link" data-nav-target="overview">Technical Requirements</a>
@@ -441,6 +443,121 @@
             </div>
         </section>
 
+        <!-- Section C2: Data Approach — Provenance, Privacy & Quality Assurance -->
+        <section id="data-approach" class="page-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-eyebrow">Data Approach · Provenance &amp; Quality Assurance</div>
+                    <h2 class="section-title">Real-world data. Verifiable foundations.</h2>
+                    <p class="section-lead">
+                        Specialized robotics datasets with documented provenance, permissions, and quality controls. We focus on task-relevant real-world human demonstrations built around specific robotic learning requirements—prioritizing traceability and suitability over raw hours of footage.
+                    </p>
+                </div>
+
+                <div class="approach-block">
+                    <div class="approach-subhead">
+                        <h3 class="approach-subtitle">Target Collection Environments</h3>
+                        <span class="approach-subnote">Examples of workflows we can explore with prospective partners — not pre-existing datasets</span>
+                    </div>
+
+                    <div class="env-grid">
+                        <article class="env-cell">
+                            <h4 class="env-title">Manufacturing &amp; Assembly</h4>
+                            <ul class="env-list">
+                                <li>Component assembly</li>
+                                <li>Precision manipulation</li>
+                                <li>Tool handling</li>
+                                <li>Contact-rich interactions</li>
+                            </ul>
+                        </article>
+
+                        <article class="env-cell">
+                            <h4 class="env-title">Food Preparation</h4>
+                            <ul class="env-list">
+                                <li>Cutting and sorting</li>
+                                <li>Ingredient manipulation</li>
+                                <li>Tool use</li>
+                                <li>Object transfer and handling</li>
+                            </ul>
+                        </article>
+
+                        <article class="env-cell">
+                            <h4 class="env-title">Warehouse &amp; Logistics</h4>
+                            <ul class="env-list">
+                                <li>Picking and packing</li>
+                                <li>Sorting</li>
+                                <li>Object manipulation</li>
+                                <li>Repetitive handling tasks</li>
+                            </ul>
+                        </article>
+
+                        <article class="env-cell">
+                            <h4 class="env-title">Maintenance &amp; Tool Use</h4>
+                            <ul class="env-list">
+                                <li>Fastening</li>
+                                <li>Repair operations</li>
+                                <li>Equipment handling</li>
+                                <li>Technical maintenance</li>
+                            </ul>
+                        </article>
+                    </div>
+
+                    <p class="task-framing-note">
+                        <strong>Task-dependent framing &amp; modalities:</strong> Camera placement and recording setups depend on the specific robotics task. Task-focused views centered on hands, tools, and objects can often reduce unnecessary personal information, though framing alone is not universally sufficient across all environments or privacy needs.
+                    </p>
+                </div>
+
+                <div class="approach-block">
+                    <div class="approach-subhead">
+                        <h3 class="approach-subtitle">Data Provenance &amp; Responsible Collection</h3>
+                        <span class="approach-subnote">Project-scoped controls agreed upon before collection begins</span>
+                    </div>
+
+                    <div class="principles-grid">
+                        <article class="principle-card">
+                            <span class="principle-kicker">01 · Permissions</span>
+                            <h4 class="principle-title">Authorized Collection</h4>
+                            <p class="principle-body">
+                                Collection is planned around appropriate site permissions, participant rights, and project-specific recording requirements—established per engagement rather than assumed upfront.
+                            </p>
+                        </article>
+
+                        <article class="principle-card">
+                            <span class="principle-kicker">02 · Privacy Controls</span>
+                            <h4 class="principle-title">Privacy-Aware Recording</h4>
+                            <p class="principle-body">
+                                Recording setups are designed around the task to prioritize controlled environments and minimize unrelated personal or sensitive information. Where necessary, identifying details can be reviewed, cropped, obscured, or excluded before delivery, noting that face obscuring alone does not guarantee complete anonymization.
+                            </p>
+                        </article>
+
+                        <article class="principle-card">
+                            <span class="principle-kicker">03 · Verification</span>
+                            <h4 class="principle-title">Quality Assurance</h4>
+                            <p class="principle-body">
+                                Recordings are evaluated against agreed checks for completeness, task relevance, consistency, and technical requirements such as stream synchronization or annotation quality where applicable.
+                            </p>
+                        </article>
+
+                        <article class="principle-card">
+                            <span class="principle-kicker">04 · Traceability</span>
+                            <h4 class="principle-title">Documented Provenance</h4>
+                            <p class="principle-body">
+                                Data provenance matters. For each project, we aim to establish a clear record of where data comes from, how it was collected and processed, and which permissions and quality checks apply—with supporting documentation agreed upon for each engagement.
+                            </p>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="approach-closing">
+                    <div class="approach-closing-copy">
+                        <div class="approach-closing-title">Let’s discuss the data your robots actually need.</div>
+                        <div class="approach-closing-sub">Share your task specification, provenance requirements, and target QA criteria.</div>
+                    </div>
+                    <a href="mailto:main@sverkaus.com?subject=Robotics%20Data%20Collection%20%26%20Provenance%20Inquiry" class="btn btn-secondary">Contact main@sverkaus.com</a>
+                </div>
+            </div>
+        </section>
+
         <!-- Section D: Where We Operate -->
         <section id="coverage" class="page-section">
             <div class="container">
@@ -688,6 +805,7 @@
             <div class="footer-links">
                 <a href="#overview" data-nav-target="overview">Overview</a>
                 <a href="#visualization" data-nav-target="overview">Approach</a>
+                <a href="#data-approach" data-nav-target="overview">Provenance &amp; QA</a>
                 <a href="#requirements" data-nav-target="overview">Technical Specs</a>
                 <a href="#careers" data-nav-target="careers">Site Partners</a>
                 <a href="mailto:gleb@sverkaus.com">gleb@sverkaus.com</a>

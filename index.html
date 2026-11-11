@@ -906,6 +906,51 @@
             text-decoration-color: var(--accent-color);
         }
 
+
+        /* Data Approach: clear, buyer-facing overview */
+        .approach-section {
+            min-height: 100vh;
+            padding: 130px 24px 90px;
+        }
+        .approach-inner { max-width: 920px; margin: 0 auto; }
+        .approach-kicker {
+            color: var(--accent-color);
+            font-size: 11px; font-weight: 700;
+            letter-spacing: .16em; text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .approach-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(36px, 6.4vw, 64px);
+            font-weight: 800; line-height: 1.08;
+            letter-spacing: -.025em; margin-bottom: 20px;
+        }
+        .approach-lead { font-size: 14px; line-height: 1.9; color: #bdbdbd; max-width: 760px; }
+        .approach-heading {
+            font-family: 'Outfit', sans-serif;
+            font-size: 25px; font-weight: 700; margin: 54px 0 14px;
+        }
+        .approach-intro { color: #999; font-size: 13px; line-height: 1.8; }
+        .approach-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 22px; }
+        .approach-card { border: 1px solid rgba(255,255,255,.11); border-radius: 12px; padding: 22px; background: rgba(255,255,255,.018); }
+        .approach-card-number { color: var(--accent-color); font-size: 10px; letter-spacing: .18em; margin-bottom: 16px; }
+        .approach-card h3 { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 9px; }
+        .approach-card p { color: #999; font-size: 12px; line-height: 1.8; }
+        .approach-process { border-top: 1px solid rgba(255,255,255,.1); margin-top: 25px; }
+        .approach-step { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 18px; padding: 19px 0; border-bottom: 1px solid rgba(255,255,255,.1); }
+        .approach-step strong { font-size: 12px; color: #f0f0f0; }
+        .approach-step p { font-size: 12px; line-height: 1.8; color: #999; }
+        .approach-footer { font-size: 12px; line-height: 1.9; color: #888; margin-top: 30px; }
+        .approach-footer a { color: #eee; text-underline-offset: 3px; }
+        @media (max-width: 650px) {
+            .approach-section { padding: 105px 20px 60px; }
+            .approach-grid { grid-template-columns: 1fr; }
+            .approach-step { grid-template-columns: 1fr; gap: 7px; }
+            .approach-card { padding: 18px; }
+            .nav-tabs { gap: 13px; }
+            .nav-tab { font-size: 10px; letter-spacing: .08em; }
+        }
+
         /* Careers Section (Ultra-Minimalist & Borderless Expandable) */
         .careers-section {
             min-height: 100vh;
@@ -1380,6 +1425,9 @@
             <button class="nav-tab active" data-tab="overview" id="tab-overview" role="tab" aria-selected="true">
                 <span class="tab-label" id="label-nav-overview">Overview</span>
             </button>
+            <button class="nav-tab" data-tab="approach" id="tab-approach" role="tab" aria-selected="false">
+                <span class="tab-label" id="label-nav-approach">Data Approach</span>
+            </button>
             <button class="nav-tab" data-tab="careers" id="tab-careers" role="tab" aria-selected="false">
                 <span class="tab-label" id="label-nav-careers">Careers</span>
             </button>
@@ -1459,7 +1507,71 @@
 
         </section>
 
-        <!-- Tab 2: Careers Section (Minimalist, Borderless & Expandable) -->
+        <!-- Data Approach: intended collection and delivery practices -->
+        <section id="view-approach" class="view-section approach-section" aria-labelledby="approach-title">
+            <div class="approach-inner">
+                <p class="approach-kicker">Sverkaus / Physical AI Data Lab</p>
+                <h1 class="approach-title" id="approach-title">Real-world data.<br>Verifiable foundations.</h1>
+                <p class="approach-lead">
+                    We focus on robotics datasets built around specific learning needs, not just hours of footage.
+                    Our approach is to document where data comes from, secure the necessary permissions, and check
+                    quality before delivery. Collection requirements and permitted uses are agreed for each project.
+                </p>
+
+                <h2 class="approach-heading">Collection environments</h2>
+                <p class="approach-intro">Examples of real-world workflows we may organize with qualified professionals and authorized site partners, depending on the dataset requirements.</p>
+                <div class="approach-grid">
+                    <article class="approach-card">
+                        <div class="approach-card-number">01 / ASSEMBLY</div>
+                        <h3>Manufacturing &amp; Assembly</h3>
+                        <p>Component assembly, tool handling, and precision manipulation. Recording can focus on hands, objects, and task-relevant movement.</p>
+                    </article>
+                    <article class="approach-card">
+                        <div class="approach-card-number">02 / FOOD</div>
+                        <h3>Food Preparation</h3>
+                        <p>Cutting, sorting, handling, and transferring ingredients in controlled work areas, avoiding unrelated staff and customers.</p>
+                    </article>
+                    <article class="approach-card">
+                        <div class="approach-card-number">03 / LOGISTICS</div>
+                        <h3>Warehouse &amp; Logistics</h3>
+                        <p>Picking, packing, sorting, and object handling, with checks for shipping labels, addresses, and other unrelated information.</p>
+                    </article>
+                    <article class="approach-card">
+                        <div class="approach-card-number">04 / TOOL USE</div>
+                        <h3>Maintenance &amp; Tool Use</h3>
+                        <p>Tool operation, fastening, repair, and maintenance tasks recorded in authorized, controlled environments.</p>
+                    </article>
+                </div>
+
+                <h2 class="approach-heading">From collection to delivery</h2>
+                <p class="approach-intro">Our intended project workflow prioritizes data utility, traceability, and responsible handling from the outset.</p>
+                <div class="approach-process">
+                    <div class="approach-step">
+                        <strong>01 — Scope &amp; permissions</strong>
+                        <p>Define task requirements, confirm site authorization and participant permissions, and identify any restrictions on recording or use.</p>
+                    </div>
+                    <div class="approach-step">
+                        <strong>02 — Privacy-aware capture</strong>
+                        <p>Prefer task-focused viewpoints that exclude unnecessary personal or sensitive information. Where needed, review, crop, remove, or obscure identifying details.</p>
+                    </div>
+                    <div class="approach-step">
+                        <strong>03 — Processing &amp; quality checks</strong>
+                        <p>Check dataset completeness, recording consistency, annotations or sensor alignment where applicable, and compliance with agreed specifications.</p>
+                    </div>
+                    <div class="approach-step">
+                        <strong>04 — Documented provenance</strong>
+                        <p>Maintain collection and processing records so the origin, relevant permissions, permitted uses, and QA steps can be verified for the delivered dataset.</p>
+                    </div>
+                </div>
+                <p class="approach-footer">
+                    Dataset modalities, collection controls, and documentation are defined per engagement.
+                    Identifying information is minimized where feasible; blurring alone is not a guarantee of anonymization.
+                    <br>Discuss a project: <a href="mailto:main@sverkaus.com?subject=Robotics%20Data%20Project">main@sverkaus.com</a>
+                </p>
+            </div>
+        </section>
+
+        <!-- Tab 3: Careers Section (Minimalist, Borderless & Expandable) -->
         <section id="view-careers" class="view-section careers-section">
             <div class="careers-inner">
                 
@@ -1551,6 +1663,7 @@
                 badgeInfo: "Details →",
                 nav: {
                     overview: "Overview",
+                    approach: "Data Approach",
                     careers: "Careers"
                 },
                 careers: {
@@ -1567,6 +1680,7 @@
                 badgeInfo: "详情 →",
                 nav: {
                     overview: "概览",
+                    approach: "数据方法",
                     careers: "招聘"
                 },
                 careers: {
@@ -1583,6 +1697,7 @@
                 badgeInfo: "विवरण →",
                 nav: {
                     overview: "अवलोकन",
+                    approach: "डेटा प्रक्रिया",
                     careers: "करियर"
                 },
                 careers: {
@@ -1599,6 +1714,7 @@
                 badgeInfo: "상세보기 →",
                 nav: {
                     overview: "개요",
+                    approach: "데이터 접근법",
                     careers: "채용"
                 },
                 careers: {
@@ -1615,6 +1731,7 @@
                 badgeInfo: "Details →",
                 nav: {
                     overview: "Übersicht",
+                    approach: "Datenansatz",
                     careers: "Karriere"
                 },
                 careers: {
@@ -1631,6 +1748,7 @@
                 badgeInfo: "Szczegóły →",
                 nav: {
                     overview: "Przegląd",
+                    approach: "Podejście do danych",
                     careers: "Kariera"
                 },
                 careers: {
@@ -1651,7 +1769,7 @@
         let introFinished = false;
 
         function switchTab(tabName, updateHash = true) {
-            if (tabName !== 'overview' && tabName !== 'careers') {
+            if (tabName !== 'overview' && tabName !== 'approach' && tabName !== 'careers') {
                 tabName = 'overview';
             }
             
@@ -1697,7 +1815,9 @@
         // Handle hash navigation
         function handleHashChange() {
             const hash = window.location.hash.replace('#', '').toLowerCase();
-            if (hash === 'careers') {
+            if (hash === 'approach') {
+                switchTab('approach', false);
+            } else if (hash === 'careers') {
                 switchTab('careers', false);
             } else {
                 switchTab('overview', false);
@@ -1837,8 +1957,10 @@
 
             // Update Nav Labels
             const labelOverview = document.getElementById('label-nav-overview');
+            const labelApproach = document.getElementById('label-nav-approach');
             const labelCareers = document.getElementById('label-nav-careers');
             if (labelOverview) labelOverview.textContent = t.nav.overview;
+            if (labelApproach) labelApproach.textContent = t.nav.approach;
             if (labelCareers) labelCareers.textContent = t.nav.careers;
 
             // Update Careers Header Text

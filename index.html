@@ -61,9 +61,9 @@
             top: 0;
             left: 0;
             width: 100%;
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            justify-content: space-between;
             padding: 24px 30px;
             z-index: 1000;
             pointer-events: none;
@@ -74,6 +74,23 @@
 
         .header-left, .nav-tabs, .header-right {
             pointer-events: auto;
+        }
+
+        .header-left {
+            justify-self: start;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            min-width: 96px;
+            height: 28px;
+        }
+
+        .nav-tabs {
+            justify-self: center;
+        }
+
+        .header-right {
+            justify-self: end;
         }
 
         .brand-link {
@@ -88,6 +105,22 @@
             animation: fadeIn 0.8s ease forwards 1.6s;
             display: inline-flex;
             align-items: center;
+        }
+
+        .brand-text {
+            display: inline-block;
+            will-change: opacity, transform;
+        }
+
+        .header-star-slot {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            pointer-events: none;
+            display: block;
         }
 
         .brand-link:hover {
@@ -750,44 +783,259 @@
         .sw { color: #f59e0b; }
         .sc { color: #666666; }
 
-        /* Expandable Overview Accordions (Compact & Hidden by Default) */
-        .overview-accordions {
+        /* Visual Informational Blocks Below Viz (Soft Fills, Wireframe SVGs, Ultra-Concise Copy) */
+        .env-visual-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .env-tile {
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
+            transition: background 0.2s ease;
         }
 
-        .env-card-head {
+        .env-tile:hover {
+            background: rgba(255, 255, 255, 0.048);
+        }
+
+        .env-blueprint {
+            width: 100%;
+            height: 86px;
+            border-radius: 12px;
+            background: rgba(16, 16, 16, 0.62);
+            overflow: hidden;
+            display: block;
+        }
+
+        .env-tile-head {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             gap: 10px;
-            margin-bottom: 10px;
         }
 
-        .env-icon {
-            width: 30px;
-            height: 30px;
-            padding: 6px;
-            border-radius: 10px;
-            background: rgba(163, 230, 53, 0.09);
+        .env-tile-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.01em;
+        }
+
+        .env-idx {
+            font-size: 10px;
+            font-weight: 700;
             color: var(--accent-color);
+            letter-spacing: 0.08em;
+        }
+
+        .env-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .mini-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.05);
+            font-size: 10.5px;
+            color: #b8b8b8;
+        }
+
+        .mini-tag.accent {
+            background: rgba(163, 230, 53, 0.12);
+            color: #ecfccb;
+        }
+
+        .mini-tag.amber {
+            background: rgba(245, 158, 11, 0.12);
+            color: #fef3c7;
+        }
+
+        /* Visual 4-Node Provenance & QA Chain */
+        .qa-chain-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .qa-node {
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .qa-node-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .qa-node-icon {
+            width: 28px;
+            height: 28px;
+            padding: 5px;
+            border-radius: 9px;
+            background: rgba(163, 230, 53, 0.10);
+            color: var(--accent-color);
+        }
+
+        .qa-step-num {
+            font-size: 10px;
+            font-weight: 700;
+            color: #666666;
+        }
+
+        .qa-node-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .qa-node-desc {
+            font-size: 11px;
+            line-height: 1.5;
+            color: #909090;
+        }
+
+        /* Dual Visual Block: Geo Coverage Schematic + 4-Step Pilot Track */
+        .pilot-coverage-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 1fr;
+            gap: 14px;
+        }
+
+        .info-panel {
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .geo-svg-box {
+            width: 100%;
+            height: 128px;
+            border-radius: 12px;
+            background: rgba(16, 16, 16, 0.62);
+            display: block;
+        }
+
+        .geo-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .geo-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 7px 11px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.035);
+            font-size: 11px;
+            color: #d4d4d4;
+        }
+
+        .geo-row-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .geo-row-meta {
+            font-size: 10px;
+            color: #8c8c8c;
+            text-align: right;
+        }
+
+        .pilot-track {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+        }
+
+        .pilot-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 9px 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.035);
+        }
+
+        .pilot-step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 9999px;
+            background: rgba(163, 230, 53, 0.14);
+            color: var(--accent-color);
+            font-size: 10px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             flex-shrink: 0;
         }
 
-        .env-card-head .subgroup-title {
-            margin-bottom: 0;
+        .pilot-step-body {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
-        .pipeline-line {
+        .pilot-step-title {
             font-size: 12px;
-            color: #d4d4d4;
-            letter-spacing: 0.03em;
-            line-height: 1.7;
+            font-weight: 700;
+            color: #f0f0f0;
         }
 
-        .pipeline-line .arrow {
-            color: var(--accent-color);
-            margin: 0 6px;
+        .pilot-step-sub {
+            font-size: 10.5px;
+            color: #888888;
+        }
+
+        .spec-pills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-top: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .qa-chain-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .pilot-coverage-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .env-visual-grid,
+            .qa-chain-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .subtle-note {
@@ -840,11 +1088,18 @@
             padding: 80px 20px 150px;
         }
 
-        /* Star Logo & Intro Choreography */
-        .logo-icon-container {
+        /* Star Logo & Scroll-Linked Header Dock */
+        .logo-hero-slot {
             width: 130px;
             height: 130px;
             margin-bottom: 25px;
+            flex-shrink: 0;
+            pointer-events: none;
+        }
+
+        .logo-icon-container {
+            width: 130px;
+            height: 130px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -853,6 +1108,17 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             overflow: visible;
+        }
+
+        .logo-dock-carrier {
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin: 0;
+            z-index: 1005;
+            opacity: 0;
+            transform-origin: center center;
+            will-change: transform;
         }
 
         .logo-icon {
@@ -1832,7 +2098,16 @@
                 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             }
             .header-left {
+                display: inline-flex;
+                min-width: 24px;
+                height: 24px;
+            }
+            .brand-link {
                 display: none;
+            }
+            .header-star-slot {
+                width: 24px;
+                height: 24px;
             }
             .nav-tabs {
                 gap: 16px;
@@ -1854,9 +2129,12 @@
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
+            .logo-hero-slot,
             .logo-icon-container {
                 width: 90px;
                 height: 90px;
+            }
+            .logo-hero-slot {
                 margin-bottom: 20px;
             }
             .logo-center {
@@ -1920,7 +2198,8 @@
     <!-- Header Navigation (Borderless) -->
     <header class="site-header">
         <div class="header-left">
-            <a href="#overview" class="brand-link" id="brand-link">SVERKAUS</a>
+            <a href="#overview" class="brand-link" id="brand-link"><span class="brand-text" id="brand-text">SVERKAUS</span></a>
+            <span class="header-star-slot" id="header-logo-slot" aria-hidden="true"></span>
         </div>
 
         <nav class="nav-tabs" role="tablist" aria-label="Main navigation">
@@ -1957,28 +2236,31 @@
         </div>
     </header>
 
+    <!-- Scroll-Linked Mascot Carrier (Glides smoothly from Hero Center into Header Left Slot) -->
+    <div class="logo-icon-container logo-dock-carrier animating" id="logo-dock-carrier" role="button" tabindex="0" aria-label="Sverkaus mascot — click to replay or return to top" title="Sverkaus">
+        <svg class="logo-icon" id="star-svg" viewBox="-30 -30 260 260">
+            <g id="star-root" class="star-root">
+                <g id="star-body" class="star-body">
+                    <polygon id="star-polygon" points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#ffffff" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="10" />
+                </g>
+                <g id="star-eyes" class="star-eyes">
+                    <ellipse id="star-eye-left" class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#ffffff" />
+                    <g id="star-eye-right-group" class="star-eye-right-group">
+                        <ellipse id="star-eye-right" class="star-eye star-eye-right" cx="115" cy="100" rx="13" ry="21" fill="#ffffff" />
+                        <path id="star-eye-right-wink" class="star-eye-wink" d="M 106 104 Q 115 90 124 104" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+
     <div class="main-wrapper">
         
         <!-- Tab 1: Overview Section -->
         <section id="view-overview" class="view-section hero-section active">
             <div class="hero-fold">
                 <div class="center-content">
-                    <div class="logo-icon-container animating" id="logo-icon-container" title="Click to replay animation">
-                        <svg class="logo-icon" id="star-svg" viewBox="-30 -30 260 260">
-                            <g id="star-root" class="star-root">
-                                <g id="star-body" class="star-body">
-                                    <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#ffffff" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="10" />
-                                </g>
-                                <g id="star-eyes" class="star-eyes">
-                                    <ellipse id="star-eye-left" class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#ffffff" />
-                                    <g id="star-eye-right-group" class="star-eye-right-group">
-                                        <ellipse id="star-eye-right" class="star-eye star-eye-right" cx="115" cy="100" rx="13" ry="21" fill="#ffffff" />
-                                        <path id="star-eye-right-wink" class="star-eye-wink" d="M 106 104 Q 115 90 124 104" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" />
-                                    </g>
-                                </g>
-                            </g>
-                        </svg>
-                    </div>
+                    <div class="logo-hero-slot" id="logo-hero-slot" aria-hidden="true"></div>
                     <div class="logo-center">
                         <span style="animation-delay: 1.8s">S</span>
                         <span style="animation-delay: 1.9s">V</span>
@@ -2134,7 +2416,7 @@
                         </div>
 
                         <p class="viz-caption" id="viz-caption" aria-live="polite">
-                            <strong>Physical sensing active (project-dependent):</strong> Video shows connector alignment, while force/tactile sensing captures insertion resistance and detent snap—signals requiring dedicated hardware rather than RGB alone.
+                            <strong>Physical sensing (project-dependent):</strong> Force/tactile sensors capture insertion resistance &amp; detent snap beyond RGB.
                         </p>
 
                         <!-- Layer 3: Smooth Area-Filled Waveform Timeline + Expandable Schema -->
@@ -2206,116 +2488,222 @@
                     </div>
                 </div>
 
-                <!-- 02. Concise Expandable Details (Collapsed by Default) -->
-                <div class="overview-accordions">
-                    <!-- Environments & Target Use Cases -->
-                    <div class="vacancy-item" id="acc-environments">
-                        <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-environments" onclick="toggleVacancy('acc-environments')">
-                            <div class="vacancy-info-col">
-                                <h2 class="vacancy-title" style="font-size: clamp(20px, 3.5vw, 26px);">Target Environments &amp; Use Cases</h2>
-                                <div class="vacancy-meta">Manufacturing · Food Prep · Warehouse · Maintenance <strong>(illustrative categories)</strong></div>
+                <!-- 02. Visual Wireframe Environments Grid (2x2 Illustrative Categories) -->
+                <div class="overview-block" id="environments-grid">
+                    <div class="overview-kicker">Target Environments · Illustrative Categories</div>
+                    <h2 class="overview-heading">Where We Collect.</h2>
+                    <div class="env-visual-grid">
+                        <!-- 01 Manufacturing -->
+                        <div class="env-tile">
+                            <svg class="env-blueprint" viewBox="0 0 280 86" fill="none" aria-hidden="true">
+                                <path d="M24 16 L88 38 M24 16 L88 64" stroke="rgba(163,230,53,0.22)" stroke-width="1.2" stroke-dasharray="4 4" stroke-linecap="round" />
+                                <circle cx="24" cy="16" r="3.5" fill="#a3e635" />
+                                <rect x="82" y="30" width="44" height="36" rx="6" stroke="rgba(255,255,255,0.28)" stroke-width="1.5" fill="rgba(255,255,255,0.04)" />
+                                <circle cx="104" cy="48" r="9" stroke="#f59e0b" stroke-width="1.6" stroke-dasharray="3 3" />
+                                <path d="M204 48 L114 48" stroke="#a3e635" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" />
+                                <rect x="176" y="39" width="38" height="18" rx="9" stroke="#38bdf8" stroke-width="1.5" fill="rgba(56,189,248,0.08)" />
+                                <circle cx="122" cy="48" r="14" fill="rgba(245,158,11,0.16)" />
+                                <circle cx="122" cy="48" r="3.5" fill="#f59e0b" />
+                                <text x="266" y="22" text-anchor="end" fill="#666666" font-family="JetBrains Mono, monospace" font-size="9">6-DoF + F/T</text>
+                            </svg>
+                            <div class="env-tile-head">
+                                <span class="env-tile-title">Manufacturing &amp; Assembly</span>
+                                <span class="env-idx">01</span>
                             </div>
-                            <div class="vacancy-toggle-indicator">
-                                <span class="toggle-text">Details</span>
-                                <span class="toggle-icon" aria-hidden="true">+</span>
+                            <div class="env-chips">
+                                <span class="mini-tag accent">Component mating</span>
+                                <span class="mini-tag">Precision tools</span>
+                                <span class="mini-tag amber">Contact force</span>
                             </div>
                         </div>
-                        <div class="vacancy-expandable-body" id="body-environments">
-                            <div class="vacancy-expandable-content">
-                                <p class="group-text">
-                                    Examples of environments and workflows we can explore with prospective partners—not pre-existing datasets or guaranteed facility access. Camera placement and modalities depend on the task; hand/tool/object views can often reduce unrelated personal information, though framing alone is not universally sufficient.
-                                </p>
-                                <div class="requirements-split">
-                                    <div>
-                                        <div class="env-card-head">
-                                            <svg class="env-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" fill-opacity="0.14" /><circle cx="12" cy="12" r="3.5" /></svg>
-                                            <div class="subgroup-title">Manufacturing &amp; Assembly</div>
-                                        </div>
-                                        <ul class="clean-list">
-                                            <li>Component assembly &amp; precision manipulation</li>
-                                            <li>Tool handling &amp; contact-rich interactions</li>
-                                        </ul>
+
+                        <!-- 02 Food Prep -->
+                        <div class="env-tile">
+                            <svg class="env-blueprint" viewBox="0 0 280 86" fill="none" aria-hidden="true">
+                                <path d="M140 10 L76 66 M140 10 L204 66" stroke="rgba(163,230,53,0.2)" stroke-width="1.2" stroke-dasharray="4 4" stroke-linecap="round" />
+                                <circle cx="140" cy="10" r="3.5" fill="#a3e635" />
+                                <ellipse cx="140" cy="58" rx="76" ry="18" stroke="rgba(255,255,255,0.24)" stroke-width="1.5" fill="rgba(255,255,255,0.03)" />
+                                <path d="M98 54 C118 32, 160 32, 184 54" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" />
+                                <circle cx="98" cy="54" r="4" fill="#38bdf8" />
+                                <circle cx="184" cy="54" r="4" fill="#a3e635" />
+                                <text x="266" y="22" text-anchor="end" fill="#666666" font-family="JetBrains Mono, monospace" font-size="9">OVERHEAD POV</text>
+                            </svg>
+                            <div class="env-tile-head">
+                                <span class="env-tile-title">Food Preparation</span>
+                                <span class="env-idx">02</span>
+                            </div>
+                            <div class="env-chips">
+                                <span class="mini-tag accent">Cutting &amp; sorting</span>
+                                <span class="mini-tag">Prep flows</span>
+                                <span class="mini-tag">Utensil use</span>
+                            </div>
+                        </div>
+
+                        <!-- 03 Warehouse & Logistics -->
+                        <div class="env-tile">
+                            <svg class="env-blueprint" viewBox="0 0 280 86" fill="none" aria-hidden="true">
+                                <path d="M44 42 L74 30 L104 42 L104 70 L74 80 L44 70 Z" stroke="rgba(255,255,255,0.28)" stroke-width="1.4" fill="rgba(255,255,255,0.03)" stroke-linejoin="round" />
+                                <path d="M174 42 L204 30 L234 42 L234 70 L204 80 L174 70 Z" stroke="rgba(163,230,53,0.35)" stroke-width="1.4" fill="rgba(163,230,53,0.05)" stroke-linejoin="round" />
+                                <path d="M74 46 C108 12, 170 12, 204 46" stroke="#a3e635" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" />
+                                <circle cx="74" cy="46" r="4.5" fill="#f59e0b" />
+                                <circle cx="204" cy="46" r="4.5" fill="#a3e635" />
+                                <text x="266" y="22" text-anchor="end" fill="#666666" font-family="JetBrains Mono, monospace" font-size="9">STEREO DEPTH</text>
+                            </svg>
+                            <div class="env-tile-head">
+                                <span class="env-tile-title">Warehouse &amp; Logistics</span>
+                                <span class="env-idx">03</span>
+                            </div>
+                            <div class="env-chips">
+                                <span class="mini-tag accent">Pick &amp; pack</span>
+                                <span class="mini-tag">Sorting flows</span>
+                                <span class="mini-tag">Repetitive grasp</span>
+                            </div>
+                        </div>
+
+                        <!-- 04 Maintenance & Tool Use -->
+                        <div class="env-tile">
+                            <svg class="env-blueprint" viewBox="0 0 280 86" fill="none" aria-hidden="true">
+                                <rect x="86" y="48" width="108" height="24" rx="6" stroke="rgba(255,255,255,0.24)" stroke-width="1.4" fill="rgba(255,255,255,0.03)" />
+                                <polygon points="140,38 150,43 150,53 140,58 130,53 130,43" stroke="#38bdf8" stroke-width="1.5" fill="rgba(56,189,248,0.12)" />
+                                <path d="M116 32 A28 16 0 0 1 164 32" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" />
+                                <circle cx="164" cy="32" r="3.5" fill="#f59e0b" />
+                                <line x1="140" y1="12" x2="140" y2="48" stroke="#a3e635" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round" />
+                                <text x="266" y="22" text-anchor="end" fill="#666666" font-family="JetBrains Mono, monospace" font-size="9">TOOL TORQUE</text>
+                            </svg>
+                            <div class="env-tile-head">
+                                <span class="env-tile-title">Maintenance &amp; Tool Use</span>
+                                <span class="env-idx">04</span>
+                            </div>
+                            <div class="env-chips">
+                                <span class="mini-tag accent">Fastening &amp; repair</span>
+                                <span class="mini-tag">Tool vectors</span>
+                                <span class="mini-tag">Field service</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="subtle-note">
+                        <strong>Illustrative scope only</strong> — sites, permissions &amp; sensor setups confirmed per pilot. Hand/tool framing helps limit bystanders, though framing alone does not guarantee anonymization.
+                    </p>
+                </div>
+
+                <!-- 03. Visual 4-Node Provenance, Privacy & QA Chain -->
+                <div class="overview-block" id="provenance-visual">
+                    <div class="overview-kicker">Verifiable Foundations · Data Governance</div>
+                    <h2 class="overview-heading">Provenance, Privacy &amp; QA.</h2>
+                    <div class="qa-chain-grid">
+                        <div class="qa-node">
+                            <div class="qa-node-top">
+                                <svg class="qa-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z" fill="currentColor" fill-opacity="0.14" /><path d="M9 12l2 2 4-4" /></svg>
+                                <span class="qa-step-num">01</span>
+                            </div>
+                            <div class="qa-node-title">Authorized Access</div>
+                            <div class="qa-node-desc">Site permissions &amp; operator consent per pilot.</div>
+                        </div>
+                        <div class="qa-node">
+                            <div class="qa-node-top">
+                                <svg class="qa-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="3" fill="currentColor" fill-opacity="0.14" /><circle cx="12" cy="12" r="3" /></svg>
+                                <span class="qa-step-num">02</span>
+                            </div>
+                            <div class="qa-node-title">Privacy Review</div>
+                            <div class="qa-node-desc">Scoped FOV, cropping &amp; obscuring pre-delivery.*</div>
+                        </div>
+                        <div class="qa-node">
+                            <div class="qa-node-top">
+                                <svg class="qa-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2-5 4 10 3-5h5" /></svg>
+                                <span class="qa-step-num">03</span>
+                            </div>
+                            <div class="qa-node-title">Sync &amp; QA Gates</div>
+                            <div class="qa-node-desc">Checks for frame sync, task match &amp; labels.</div>
+                        </div>
+                        <div class="qa-node">
+                            <div class="qa-node-top">
+                                <svg class="qa-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="3" fill="currentColor" fill-opacity="0.16" /><circle cx="17" cy="17" r="3" fill="currentColor" fill-opacity="0.16" /><path d="M9.5 8.5l5 7" /></svg>
+                                <span class="qa-step-num">04</span>
+                            </div>
+                            <div class="qa-node-title">Origin Manifest</div>
+                            <div class="qa-node-desc">Traceable setup, rights &amp; QA records per batch.</div>
+                        </div>
+                    </div>
+                    <p class="subtle-note">
+                        *Face obscuring alone does not guarantee complete anonymization · Agreed per engagement without unverified certification claims.
+                    </p>
+                </div>
+
+                <!-- 04. Geographic Coverage Schematic + 4-Step Pilot Track -->
+                <div class="overview-block" id="pilot-coverage">
+                    <div class="overview-kicker">Operations &amp; Delivery · Project-Based</div>
+                    <h2 class="overview-heading">Coverage &amp; Pilot Execution.</h2>
+                    <div class="pilot-coverage-grid">
+                        <!-- Geographic Coverage Panel -->
+                        <div class="info-panel">
+                            <svg class="geo-svg-box" viewBox="0 0 360 128" fill="none" aria-hidden="true">
+                                <!-- Minimal geometric map grid -->
+                                <path d="M24 34 H336 M24 64 H336 M24 94 H336 M90 16 V112 M180 16 V112 M270 16 V112" stroke="rgba(255,255,255,0.04)" stroke-width="1" />
+                                <!-- Corridor Curve DE <-> UA -->
+                                <path d="M96 58 Q176 30 256 66" stroke="rgba(255,255,255,0.28)" stroke-width="1.8" stroke-dasharray="5 5" stroke-linecap="round" />
+                                <!-- Germany Node (Project-Specific) -->
+                                <circle cx="96" cy="58" r="18" fill="rgba(245,158,11,0.10)" stroke="rgba(245,158,11,0.45)" stroke-width="1.2" stroke-dasharray="3 3" />
+                                <circle cx="96" cy="58" r="5" fill="#f59e0b" />
+                                <text x="96" y="92" text-anchor="middle" fill="#f59e0b" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">GERMANY</text>
+                                <text x="96" y="106" text-anchor="middle" fill="#777777" font-family="JetBrains Mono, monospace" font-size="8.5">Project-specific</text>
+                                <!-- Ukraine Node (Primary Hub) -->
+                                <circle cx="256" cy="66" r="28" fill="rgba(163,230,53,0.08)" stroke="rgba(163,230,53,0.3)" stroke-width="1.2" />
+                                <circle cx="256" cy="66" r="14" fill="rgba(163,230,53,0.18)" />
+                                <circle cx="256" cy="66" r="6" fill="#a3e635" />
+                                <text x="256" y="108" text-anchor="middle" fill="#a3e635" font-family="JetBrains Mono, monospace" font-size="10" font-weight="800">UKRAINE · PRIMARY</text>
+                            </svg>
+                            <div class="geo-rows">
+                                <div class="geo-row">
+                                    <span class="geo-row-label"><span class="hud-dot lime"></span>Ukraine</span>
+                                    <span class="geo-row-meta">Primary · Confirmed operators</span>
+                                </div>
+                                <div class="geo-row">
+                                    <span class="geo-row-label"><span class="hud-dot amber"></span>Germany</span>
+                                    <span class="geo-row-meta">When scope justifies cost</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4-Step Pilot Track Panel -->
+                        <div class="info-panel">
+                            <div class="pilot-track">
+                                <div class="pilot-step">
+                                    <span class="pilot-step-num">01</span>
+                                    <div class="pilot-step-body">
+                                        <span class="pilot-step-title">Define Task &amp; Modalities</span>
+                                        <span class="pilot-step-sub">Target workflow, sensors &amp; schema</span>
                                     </div>
-                                    <div>
-                                        <div class="env-card-head">
-                                            <svg class="env-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="currentColor" fill-opacity="0.14" /><path d="M8 14c1.5 1.5 6.5 1.5 8 0" /></svg>
-                                            <div class="subgroup-title">Food Preparation</div>
-                                        </div>
-                                        <ul class="clean-list">
-                                            <li>Cutting, sorting &amp; ingredient manipulation</li>
-                                            <li>Tool use &amp; object transfer</li>
-                                        </ul>
+                                </div>
+                                <div class="pilot-step">
+                                    <span class="pilot-step-num">02</span>
+                                    <div class="pilot-step-body">
+                                        <span class="pilot-step-title">Confirm Site &amp; Rig</span>
+                                        <span class="pilot-step-sub">Workplace permissions &amp; hardware</span>
                                     </div>
-                                    <div>
-                                        <div class="env-card-head">
-                                            <svg class="env-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8.5L12 4l8 4.5v7L12 20l-8-4.5z" fill="currentColor" fill-opacity="0.14" /><path d="M12 12v8M4 8.5L12 12l8-3.5" /></svg>
-                                            <div class="subgroup-title">Warehouse &amp; Logistics</div>
-                                        </div>
-                                        <ul class="clean-list">
-                                            <li>Picking, packing &amp; sorting</li>
-                                            <li>Object manipulation &amp; repetitive handling</li>
-                                        </ul>
+                                </div>
+                                <div class="pilot-step">
+                                    <span class="pilot-step-num">03</span>
+                                    <div class="pilot-step-body">
+                                        <span class="pilot-step-title">Agree Scope &amp; QA Gate</span>
+                                        <span class="pilot-step-sub">Episode quota, price &amp; acceptance</span>
                                     </div>
-                                    <div>
-                                        <div class="env-card-head">
-                                            <svg class="env-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2z" fill="currentColor" fill-opacity="0.14" /></svg>
-                                            <div class="subgroup-title">Maintenance &amp; Tool Use</div>
-                                        </div>
-                                        <ul class="clean-list">
-                                            <li>Fastening &amp; repair operations</li>
-                                            <li>Equipment handling &amp; technical maintenance</li>
-                                        </ul>
+                                </div>
+                                <div class="pilot-step">
+                                    <span class="pilot-step-num">04</span>
+                                    <div class="pilot-step-body">
+                                        <span class="pilot-step-title">Collect &amp; Deliver ML Batch</span>
+                                        <span class="pilot-step-sub">Synced episodes + provenance log</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Provenance, Privacy & Quality Assurance -->
-                    <div class="vacancy-item" id="acc-provenance">
-                        <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-provenance" onclick="toggleVacancy('acc-provenance')">
-                            <div class="vacancy-info-col">
-                                <h2 class="vacancy-title" style="font-size: clamp(20px, 3.5vw, 26px);">Provenance, Privacy &amp; Quality Assurance</h2>
-                                <div class="vacancy-meta">Real-world data. Verifiable foundations. · <strong>Authorized · Privacy-aware · QA</strong></div>
-                            </div>
-                            <div class="vacancy-toggle-indicator">
-                                <span class="toggle-text">Details</span>
-                                <span class="toggle-icon" aria-hidden="true">+</span>
-                            </div>
-                        </div>
-                        <div class="vacancy-expandable-body" id="body-provenance">
-                            <div class="vacancy-expandable-content">
-                                <p class="group-text">
-                                    Specialized robotics datasets built around specific learning needs, not just hours of footage. For each engagement, we aim to establish clear documentation of data origins, permissions, processing steps, and quality checks.
-                                </p>
-                                <div class="requirements-split">
-                                    <div>
-                                        <div class="subgroup-title">Authorized Collection</div>
-                                        <p class="subtle-note">Planned around site permissions, participant rights, and project-specific recording requirements.</p>
-                                    </div>
-                                    <div>
-                                        <div class="subgroup-title">Privacy-Aware Recording</div>
-                                        <p class="subtle-note">Controlled environments minimizing unrelated personal data; review, cropping, or obscuring before delivery <em>(face obscuring alone does not guarantee complete anonymization)</em>.</p>
-                                    </div>
-                                    <div>
-                                        <div class="subgroup-title">Quality Assurance</div>
-                                        <p class="subtle-note">Checks for completeness, task relevance, consistency, synchronization, and annotation quality where applicable.</p>
-                                    </div>
-                                    <div>
-                                        <div class="subgroup-title">Documented Provenance</div>
-                                        <p class="subtle-note">Traceable origins, permissions, processing, and QA records agreed per pilot—without unverified certification or network-scale claims.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Coverage, Pilot Workflow & Technical Specs -->
-                    <div class="vacancy-item" id="acc-pilot-specs">
+                    <!-- Optional Compact Collapsible Checklist for Engineers -->
+                    <div class="vacancy-item" id="acc-pilot-specs" style="padding-top: 8px;">
                         <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-pilot-specs" onclick="toggleVacancy('acc-pilot-specs')">
                             <div class="vacancy-info-col">
-                                <h2 class="vacancy-title" style="font-size: clamp(20px, 3.5vw, 26px);">Coverage, Pilot Flow &amp; Technical Specs</h2>
-                                <div class="vacancy-meta"><strong>Ukraine</strong> (Primary) · <strong>Germany</strong> (Project-specific) · 4-step pilot · Joint spec sign-off</div>
+                                <div class="vacancy-meta"><strong>Technical Spec Sign-Off</strong> · 7 parameters aligned before recording</div>
                             </div>
                             <div class="vacancy-toggle-indicator">
                                 <span class="toggle-text">Details</span>
@@ -2323,27 +2711,25 @@
                             </div>
                         </div>
                         <div class="vacancy-expandable-body" id="body-pilot-specs">
-                            <div class="vacancy-expandable-content">
-                                <p class="group-text">
-                                    Primary access to skilled participants in <strong>Ukraine</strong>; project-specific collection in <strong>Germany</strong> when scope justifies cost. Participant access is distinct from industrial facility access—workplaces, permissions, and hardware are confirmed per project.
-                                </p>
-                                <p class="pipeline-line">
-                                    01 Share task &amp; requirements <span class="arrow">&rarr;</span> 02 Confirm access &amp; hardware <span class="arrow">&rarr;</span> 03 Agree scope, price &amp; QA <span class="arrow">&rarr;</span> 04 Collect, validate &amp; deliver
-                                </p>
-                                <p class="subtle-note">
-                                    <strong>Parameters defined together before recording:</strong> Task definition &amp; environment · Sensor modalities &amp; camera setup · Resolution, frame rate &amp; timestamps · Calibration &amp; sync · Data schema &amp; delivery format · Quality checks &amp; acceptance criteria · Hardware ownership &amp; logistics.
-                                </p>
+                            <div class="spec-pills-grid">
+                                <span class="mini-tag">01 Task &amp; environment</span>
+                                <span class="mini-tag">02 Sensors &amp; camera rig</span>
+                                <span class="mini-tag">03 Resolution, FPS &amp; timestamps</span>
+                                <span class="mini-tag">04 Calibration &amp; sync</span>
+                                <span class="mini-tag">05 Schema &amp; delivery format</span>
+                                <span class="mini-tag">06 QA &amp; acceptance criteria</span>
+                                <span class="mini-tag">07 Hardware ownership &amp; logistics</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 03. Compact Contact Line -->
+                <!-- 05. Compact Contact Line -->
                 <div class="overview-block" id="contact">
                     <div class="overview-kicker">Contact</div>
-                    <h2 class="overview-heading">Let’s discuss the data your robots actually need.</h2>
+                    <h2 class="overview-heading">Let’s scope your dataset.</h2>
                     <p class="subtle-note">
-                        Share a short description of your task, required modalities, expected pilot volume, and recording hardware.
+                        Share task details, target modalities, pilot volume &amp; sensor setup.
                     </p>
                     <div class="contact-inline">
                         <a href="mailto:gleb@sverkaus.com?subject=Data%20Collection%20Pilot%20-%20Sverkaus" class="bold-link">gleb@sverkaus.com</a>
@@ -2589,6 +2975,9 @@
             if (scrollTop) {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
+            if (typeof window.__updateSverkausLogoDock === 'function') {
+                window.requestAnimationFrame(window.__updateSverkausLogoDock);
+            }
         }
 
         // Handle hash navigation
@@ -2799,13 +3188,109 @@
         switchLanguage(currentLang);
         handleHashChange();
 
-        // Star Logo interactive click replay
-        const logoContainer = document.getElementById('logo-icon-container');
+        // Scroll-Linked Logo Dock & Interactive Mascot Replay
+        const logoContainer = document.getElementById('logo-dock-carrier');
+        const heroLogoSlot = document.getElementById('logo-hero-slot');
+        const headerLogoSlot = document.getElementById('header-logo-slot');
+        const brandTextEl = document.getElementById('brand-text');
+        const starPolygon = document.getElementById('star-polygon');
+        const starSvg = document.getElementById('star-svg');
+        let dockProgress = 0;
+        let dockRafPending = false;
+
+        function updateLogoDock() {
+            dockRafPending = false;
+            if (!logoContainer || !headerLogoSlot) return;
+            const sr = headerLogoSlot.getBoundingClientRect();
+            if (!sr.width) return;
+
+            const isMobile = window.innerWidth <= 768;
+            const baseSize = isMobile ? 90 : 130;
+            if (logoContainer.style.width !== baseSize + 'px') {
+                logoContainer.style.width = baseSize + 'px';
+                logoContainer.style.height = baseSize + 'px';
+            }
+
+            let p = 1;
+            let t = 1;
+            let cx = sr.left + sr.width / 2;
+            let cy = sr.top + sr.height / 2;
+            let scale = sr.width / baseSize;
+
+            if (currentTab === 'overview' && heroLogoSlot) {
+                const hr = heroLogoSlot.getBoundingClientRect();
+                if (hr.width > 0) {
+                    const heroDocCenterY = hr.top + window.scrollY + hr.height / 2;
+                    const navCenterY = sr.top + sr.height / 2;
+                    const scrollRange = Math.max(160, heroDocCenterY - navCenterY);
+                    p = Math.max(0, Math.min(1, window.scrollY / scrollRange));
+                    t = p * p * (3 - 2 * p);
+
+                    const heroCenterX = hr.left + hr.width / 2;
+                    const heroCenterY = hr.top + hr.height / 2;
+                    const navCenterX = sr.left + sr.width / 2;
+
+                    cx = heroCenterX + (navCenterX - heroCenterX) * t;
+                    cy = heroCenterY + (navCenterY - heroCenterY) * t;
+                    scale = 1 + (sr.width / hr.width - 1) * t;
+                }
+            }
+
+            dockProgress = p;
+            const half = baseSize / 2;
+            logoContainer.style.transform = `translate3d(${(cx - half).toFixed(2)}px, ${(cy - half).toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+            logoContainer.style.opacity = '1';
+
+            if (starPolygon) {
+                starPolygon.setAttribute('stroke-width', (14 + t * 5.5).toFixed(2));
+            }
+            if (starSvg) {
+                const glowAlpha = (0.08 * (1 - t)).toFixed(3);
+                starSvg.style.filter = `drop-shadow(0 0 14px rgba(255, 255, 255, ${glowAlpha}))`;
+            }
+            if (brandTextEl) {
+                const txtOpacity = currentTab === 'overview' ? Math.max(0, Math.min(1, 1 - p * 2.2)) : 0;
+                brandTextEl.style.opacity = txtOpacity.toFixed(3);
+                brandTextEl.style.transform = `translateX(${(-p * 10).toFixed(2)}px)`;
+            }
+            if (brandLink) {
+                brandLink.style.pointerEvents = (currentTab === 'overview' && p < 0.45) ? 'auto' : 'none';
+            }
+        }
+
+        function scheduleLogoDock() {
+            if (dockRafPending) return;
+            dockRafPending = true;
+            window.requestAnimationFrame(updateLogoDock);
+        }
+        window.__updateSverkausLogoDock = updateLogoDock;
+
+        window.addEventListener('scroll', updateLogoDock, { passive: true });
+        window.addEventListener('resize', scheduleLogoDock, { passive: true });
+        if ('ResizeObserver' in window && heroLogoSlot) {
+            new ResizeObserver(scheduleLogoDock).observe(heroLogoSlot);
+        }
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(scheduleLogoDock);
+        }
+        updateLogoDock();
+
         if (logoContainer) {
-            logoContainer.addEventListener('click', () => {
+            const handleLogoActivate = () => {
+                if (dockProgress > 0.35 || currentTab !== 'overview') {
+                    switchTab('overview', true, true);
+                    return;
+                }
                 logoContainer.classList.remove('animating');
                 void logoContainer.offsetWidth; // trigger reflow to restart CSS animation
                 logoContainer.classList.add('animating');
+            };
+            logoContainer.addEventListener('click', handleLogoActivate);
+            logoContainer.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleLogoActivate();
+                }
             });
         }
 
@@ -2971,11 +3456,11 @@
                 if (!captionEl) return;
                 const ch = viz.channels;
                 if (ch.force) {
-                    captionEl.innerHTML = '<strong>Physical sensing active (project-dependent):</strong> Video shows connector alignment, while force/tactile sensing captures insertion resistance and detent snap—signals requiring dedicated hardware rather than RGB alone.';
+                    captionEl.innerHTML = '<strong>Physical sensing (project-dependent):</strong> Force/tactile sensors capture insertion resistance &amp; detent snap beyond RGB.';
                 } else if (ch.depth || ch.pose || ch.trajectory) {
-                    captionEl.innerHTML = '<strong>Spatial capture active (project-dependent):</strong> Metric depth, 6-DoF pose, or trajectories require calibrated camera or tracking rigs. Physical insertion forces remain unmeasured unless F/T or tactile sensors are included.';
+                    captionEl.innerHTML = '<strong>Spatial capture (project-dependent):</strong> Depth &amp; 6-DoF tracking active; contact forces require F/T hardware.';
                 } else {
-                    captionEl.innerHTML = '<strong>Baseline observation only:</strong> Synchronized RGB frames, timestamps, and task events capture visual sequence, while metric 3D trajectories and contact forces require project-dependent sensor hardware.';
+                    captionEl.innerHTML = '<strong>Baseline only:</strong> RGB frames &amp; task events synced; 3D trajectories &amp; contact forces require extra sensors.';
                 }
             }
 

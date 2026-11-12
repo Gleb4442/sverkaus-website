@@ -218,24 +218,19 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
-            height: 30px;
-            padding: 0 11px;
-            border-radius: 9999px;
+            height: 28px;
+            padding: 4px 0;
             border: none;
             outline: none;
             cursor: pointer;
             font-family: inherit;
             font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.1em;
-            color: rgba(240, 240, 240, 0.68);
-            background: rgba(255, 255, 255, 0.035);
-            backdrop-filter: blur(16px) saturate(160%);
-            -webkit-backdrop-filter: blur(16px) saturate(160%);
+            letter-spacing: 0.14em;
+            color: rgba(240, 240, 240, 0.65);
+            background: transparent;
             transition:
-                color 0.2s ease,
-                background 0.22s ease,
+                color 0.25s ease,
                 transform 0.16s ease;
             -webkit-tap-highlight-color: transparent;
         }
@@ -244,52 +239,37 @@
             pointer-events: none;
         }
 
-        .select-chevron {
-            opacity: 0.55;
-            flex-shrink: 0;
-            transition: transform 0.24s cubic-bezier(0.22, 1.15, 0.36, 1), opacity 0.2s ease;
-        }
-
         .select-trigger:hover,
         .select-trigger:focus-visible,
         .custom-select.active .select-trigger {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.085);
-        }
-
-        .select-trigger:hover .select-chevron,
-        .custom-select.active .select-chevron {
-            opacity: 0.9;
+            background: transparent;
         }
 
         .select-trigger:active {
             transform: scale(0.96);
         }
 
-        .custom-select.active .select-chevron {
-            transform: rotate(180deg);
-        }
-
         .select-options {
             position: absolute;
-            top: calc(100% + 8px);
+            top: calc(100% + 10px);
             right: 0;
             margin: 0;
             padding: 6px;
             list-style: none;
-            width: 118px;
+            width: 114px;
             box-sizing: border-box;
             border: none;
             border-radius: 14px;
-            background: rgba(34, 34, 36, 0.72);
+            background: rgba(28, 28, 30, 0.68);
             backdrop-filter: blur(26px) saturate(185%);
             -webkit-backdrop-filter: blur(26px) saturate(185%);
-            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.44);
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
             transform-origin: top right;
-            transform: translateY(-6px) scale(0.95);
+            transform: translateY(-6px) scale(0.96);
             transition:
                 opacity 0.2s ease,
                 transform 0.24s cubic-bezier(0.22, 1.15, 0.36, 1),
@@ -313,24 +293,25 @@
             font-family: 'Outfit', sans-serif;
             font-size: 12.5px;
             font-weight: 500;
-            color: rgba(240, 240, 240, 0.58);
+            color: rgba(240, 240, 240, 0.54);
             cursor: pointer;
             transition: background 0.16s ease, color 0.16s ease;
             text-align: left;
             outline: none;
+            background: transparent;
             -webkit-tap-highlight-color: transparent;
         }
 
         .select-option:hover,
         .select-option:focus-visible {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.065);
+            background: rgba(255, 255, 255, 0.055);
         }
 
         .select-option.selected {
             color: #ffffff;
             font-weight: 600;
-            background: rgba(255, 255, 255, 0.09);
+            background: transparent;
         }
 
         /* Smooth View Switching */
@@ -1227,22 +1208,6 @@
             min-height: 20px;
         }
 
-        .cursor {
-            display: inline-block;
-            width: 8px;
-            height: 14px;
-            background-color: var(--accent-color);
-            vertical-align: middle;
-            margin-left: 4px;
-            animation: blink 1s step-end infinite;
-            visibility: hidden;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
         .update-badge-container {
             display: inline-flex;
             align-items: center;
@@ -1768,9 +1733,8 @@
                 gap: 16px;
             }
             .select-trigger {
-                height: 28px;
-                padding: 0 9px;
-                gap: 4px;
+                height: 26px;
+                padding: 4px 0;
                 font-size: 10.5px;
             }
             .center-content {
@@ -1855,9 +1819,6 @@
             <div class="custom-select" id="custom-lang-select">
                 <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language" id="lang-select-trigger">
                     <span class="selected-text" id="lang-selected-text">EN</span>
-                    <svg class="select-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
                 </button>
                 <ul class="select-options" role="listbox" aria-label="Language options" id="lang-select-options">
                     <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0">English</li>
@@ -1905,7 +1866,7 @@
                 <div class="center-content">
                     <div class="logo-hero-slot" id="logo-hero-slot" aria-hidden="true"></div>
                     <p class="lab-name">Physical AI Data Lab</p>
-                    <div class="tagline"><span id="typewriter"></span><span class="cursor"></span></div>
+                    <div class="tagline"><span id="typewriter"></span></div>
                 </div>
 
                 <div class="bottom-projects">
@@ -2455,26 +2416,18 @@
             });
         });
 
-        // Animation: Typing Effect
+        // Animation: Typing Effect (without blinking block cursor)
         const typeElement = document.getElementById('typewriter');
-        const cursorElement = document.querySelector('.cursor');
         let typeIndex = 0;
         let currentText = "";
         let typeTimeout = null;
-        let cursorTimeout = null;
 
         function startTypewriter(text) {
             clearTimeout(typeTimeout);
-            clearTimeout(cursorTimeout);
             if (!typeElement) return;
             typeElement.textContent = "";
             typeIndex = 0;
             currentText = text;
-            
-            if (cursorElement) {
-                cursorElement.style.visibility = 'visible';
-            }
-            
             typeWriter();
         }
 
@@ -2483,12 +2436,6 @@
                 typeElement.textContent += currentText.charAt(typeIndex);
                 typeIndex++;
                 typeTimeout = setTimeout(typeWriter, 40 + Math.random() * 40);
-            } else {
-                cursorTimeout = setTimeout(() => {
-                    if (cursorElement) {
-                        cursorElement.style.visibility = 'hidden';
-                    }
-                }, 1500);
             }
         }
 

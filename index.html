@@ -55,7 +55,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Top Header Navigation (Borderless & Minimalist) */
+        /* Top Header Navigation (Borderless & Liquid Glass) */
         .site-header {
             position: fixed;
             top: 0;
@@ -64,12 +64,13 @@
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             align-items: center;
-            padding: 24px 30px;
+            padding: 20px 30px;
             z-index: 1000;
             pointer-events: none;
-            background: rgba(28, 28, 28, 0.88);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(28, 28, 28, 0.64);
+            backdrop-filter: blur(22px) saturate(175%);
+            -webkit-backdrop-filter: blur(22px) saturate(175%);
+            box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.055);
         }
 
         .header-left, .nav-tabs, .header-right {
@@ -91,6 +92,9 @@
 
         .header-right {
             justify-self: end;
+            display: inline-flex;
+            align-items: center;
+            height: 28px;
         }
 
         .brand-link {
@@ -201,35 +205,46 @@
             animation: fadeIn 0.8s ease forwards 1.6s;
         }
 
-        /* Custom Select Styles (Borderless Minimal) */
+        /* Custom Select Styles (Dark Liquid Glass) */
         .custom-select {
             position: relative;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
             user-select: none;
-            width: 60px;
         }
 
         .select-trigger {
-            background: transparent;
-            color: #777777;
-            border: none;
-            padding: 4px 0;
-            cursor: pointer;
-            outline: none;
-            transition: color 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            text-align: right;
             position: relative;
-            width: 100%;
-            box-sizing: border-box;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            height: 28px;
+            padding: 0 10px 0 9px;
+            border-radius: 9999px;
+            border: none;
+            outline: none;
+            cursor: pointer;
             font-family: inherit;
-            font-size: inherit;
+            font-size: 10.5px;
             font-weight: 700;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
+            color: rgba(240, 240, 240, 0.86);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.035) 100%);
+            backdrop-filter: blur(20px) saturate(185%);
+            -webkit-backdrop-filter: blur(20px) saturate(185%);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.26),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+                0 0 0 1px rgba(255, 255, 255, 0.10),
+                0 4px 14px rgba(0, 0, 0, 0.28);
+            transition:
+                color 0.2s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease,
+                transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -237,59 +252,165 @@
             pointer-events: none;
         }
 
-        .select-trigger:hover, .select-trigger:focus, .custom-select.active .select-trigger {
+        .select-globe {
+            opacity: 0.68;
+            flex-shrink: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .select-chevron {
+            opacity: 0.58;
+            flex-shrink: 0;
+            transition: transform 0.26s cubic-bezier(0.22, 1.15, 0.36, 1), opacity 0.2s ease;
+        }
+
+        .select-trigger:hover,
+        .select-trigger:focus-visible,
+        .custom-select.active .select-trigger {
             color: #ffffff;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.055) 100%);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.34),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+                0 0 0 1px rgba(255, 255, 255, 0.18),
+                0 8px 22px rgba(0, 0, 0, 0.38);
+        }
+
+        .select-trigger:hover .select-globe,
+        .select-trigger:focus-visible .select-globe,
+        .custom-select.active .select-globe {
+            opacity: 0.95;
+        }
+
+        .select-trigger:active {
+            transform: scale(0.96);
+        }
+
+        .custom-select.active .select-chevron {
+            opacity: 0.95;
+            transform: rotate(180deg);
         }
 
         .select-options {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 10px);
             right: 0;
-            margin-top: 8px;
-            padding: 6px 0;
+            margin: 0;
+            padding: 6px;
             list-style: none;
-            background: rgba(24, 24, 24, 0.96);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            width: 148px;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(160deg, rgba(50, 50, 54, 0.72) 0%, rgba(24, 24, 27, 0.84) 100%);
+            backdrop-filter: blur(28px) saturate(200%);
+            -webkit-backdrop-filter: blur(28px) saturate(200%);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.26),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+                0 0 0 1px rgba(255, 255, 255, 0.11),
+                0 22px 48px rgba(0, 0, 0, 0.58),
+                0 4px 12px rgba(0, 0, 0, 0.32);
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-6px);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            transform-origin: top right;
+            transform: translateY(-6px) scale(0.94);
+            transition:
+                opacity 0.22s ease,
+                transform 0.28s cubic-bezier(0.22, 1.18, 0.36, 1),
+                visibility 0.22s;
             z-index: 1000;
-            width: 80px;
-            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
 
+        .select-options::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: radial-gradient(120% 70% at 80% 0%, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0) 60%);
+            pointer-events: none;
+        }
+
         .custom-select.active .select-options {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0);
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
         }
 
         .select-option {
-            padding: 6px 12px;
-            color: #777777;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 7px 10px;
+            border-radius: 10px;
+            color: rgba(240, 240, 240, 0.66);
             cursor: pointer;
-            transition: all 0.15s ease;
-            text-align: center;
-            font-weight: 500;
+            transition: background 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
+            outline: none;
             -webkit-tap-highlight-color: transparent;
         }
 
-        .select-option:hover {
+        .select-option .lang-label {
+            font-family: 'Outfit', sans-serif;
+            font-size: 12.5px;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
+
+        .select-option .lang-code {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9.5px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: rgba(255, 255, 255, 0.36);
+            transition: color 0.16s ease;
+        }
+
+        .select-option:hover,
+        .select-option:focus-visible {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .select-option:hover .lang-code,
+        .select-option:focus-visible .lang-code {
+            color: rgba(255, 255, 255, 0.72);
         }
 
         .select-option.selected {
             color: #ffffff;
-            font-weight: 700;
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.18),
+                0 0 0 1px rgba(255, 255, 255, 0.08);
+        }
+
+        .select-option.selected .lang-label {
+            font-weight: 600;
+        }
+
+        .select-option.selected .lang-code {
+            color: var(--accent-color);
+        }
+
+        .select-option.selected .lang-code::after {
+            content: '';
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            box-shadow: 0 0 8px rgba(163, 230, 53, 0.75);
         }
 
         /* Smooth View Switching */
@@ -1085,14 +1206,14 @@
             justify-content: center;
             z-index: 10;
             width: 100%;
-            padding: 80px 20px 150px;
+            padding: 76px 20px 108px;
         }
 
         /* Star Logo & Scroll-Linked Header Dock */
         .logo-hero-slot {
             width: 130px;
             height: 130px;
-            margin-bottom: 25px;
+            margin-bottom: 28px;
             flex-shrink: 0;
             pointer-events: none;
         }
@@ -1137,12 +1258,6 @@
         html.intro-done .bottom-projects,
         html.intro-done .update-badge-container {
             opacity: 1 !important;
-            animation: none !important;
-        }
-
-        html.intro-done .logo-center span {
-            opacity: 1 !important;
-            transform: none !important;
             animation: none !important;
         }
 
@@ -1459,39 +1574,17 @@
             }
         }
 
-        .logo-center {
-            font-family: 'Outfit', sans-serif;
-            font-size: clamp(32px, 5vw, 56px);
-            font-weight: 300;
-            letter-spacing: 0.25em;
-            margin-left: 0.25em;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #f0f0f0;
-            text-shadow: 0px 0px 20px rgba(163, 230, 53, 0.3);
-            white-space: nowrap;
-        }
-
-        .logo-center span {
-            opacity: 0;
-            display: inline-block;
-            animation: fadeIn 0.8s ease forwards;
-        }
-
         .lab-name {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
-            letter-spacing: 0.32em;
-            margin-left: 0.32em;
+            letter-spacing: 0.28em;
+            margin-left: 0.28em;
             text-transform: uppercase;
             color: #f0f0f0;
             text-align: center;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             opacity: 0;
-            animation: fadeIn 0.8s ease forwards 2.7s;
+            animation: fadeIn 0.8s ease forwards 1.75s;
         }
 
         .tagline {
@@ -1618,88 +1711,16 @@
 
         .bottom-projects {
             position: absolute;
-            bottom: 80px;
+            bottom: 52px;
             left: 0;
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
             z-index: 10;
             padding: 0 20px;
             opacity: 0;
-            animation: fadeIn 0.8s ease forwards 2.8s;
-        }
-
-        .project {
-            font-size: 12px;
-            color: var(--dim-color);
-            text-align: center;
-            line-height: 1.5;
-            width: max-content;
-            position: relative;
-            padding: 0 20px;
-            transition: color 0.2s;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-
-        .project::before, .project::after {
-            position: absolute;
-            opacity: 0;
-            color: var(--accent-color);
-            font-weight: bold;
-            transition: all 0.2s ease;
-            top: 0;
-        }
-        
-        .project::before {
-            content: "[";
-            left: 0;
-            transform: translateX(10px);
-        }
-        
-        .project::after {
-            content: "]";
-            right: 0;
-            transform: translateX(-10px);
-        }
-
-        .project:hover::before, .project:hover::after {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .project:hover {
-            color: #888;
-        }
-
-        .project a {
-            color: var(--text-color);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .project:hover a {
-            color: var(--accent-color);
-            text-decoration: underline;
-            text-decoration-color: var(--accent-color);
-        }
-
-        .project .diamond {
-            color: var(--text-color);
-            transition: color 0.2s;
-        }
-
-        .project:hover .diamond {
-            color: var(--accent-color);
-        }
-
-        .project .project-name {
-            color: var(--accent-color);
-            font-weight: 700;
-            display: inline-block;
-            min-width: 65px;
+            animation: fadeIn 0.8s ease forwards 1.95s;
         }
 
         a {
@@ -2091,11 +2112,11 @@
         /* Responsive Breakpoints */
         @media (max-width: 768px) {
             .site-header {
-                padding: 16px 20px;
-                background: rgba(28, 28, 28, 0.95);
-                backdrop-filter: blur(12px);
-                -webkit-backdrop-filter: blur(12px);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                padding: 14px 16px;
+                background: rgba(28, 28, 28, 0.68);
+                backdrop-filter: blur(22px) saturate(175%);
+                -webkit-backdrop-filter: blur(22px) saturate(175%);
+                box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.06);
             }
             .header-left {
                 display: inline-flex;
@@ -2112,9 +2133,19 @@
             .nav-tabs {
                 gap: 16px;
             }
+            .select-trigger {
+                height: 26px;
+                padding: 0 8px 0 7px;
+                gap: 5px;
+                font-size: 10px;
+            }
+            .select-globe {
+                width: 11px;
+                height: 11px;
+            }
             .center-content {
-                padding-top: 120px;
-                padding-bottom: 40px;
+                padding-top: 96px;
+                padding-bottom: 32px;
             }
             .overview-details {
                 padding: 20px 20px 72px;
@@ -2135,12 +2166,7 @@
                 height: 90px;
             }
             .logo-hero-slot {
-                margin-bottom: 20px;
-            }
-            .logo-center {
-                font-size: clamp(24px, 8vw, 42px);
-                letter-spacing: 0.15em;
-                margin-left: 0.15em;
+                margin-bottom: 22px;
             }
             .tagline {
                 padding: 0 20px;
@@ -2149,28 +2175,12 @@
             .bottom-projects {
                 position: relative;
                 bottom: 0;
-                padding: 20px;
-                margin-top: 40px;
+                padding: 12px 20px 28px;
+                margin-top: 24px;
                 display: flex;
                 flex-direction: column;
-                align-items: flex-start;
-                width: fit-content;
-                max-width: calc(100% - 40px);
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .project {
-                margin-bottom: 16px;
-                padding: 0;
-                width: 100%;
-                max-width: 550px;
-                white-space: normal;
-                word-break: normal;
-                display: block;
-                text-align: left;
-            }
-            .project::before, .project::after {
-                display: none;
+                align-items: center;
+                text-align: center;
             }
         }
 
@@ -2213,16 +2223,25 @@
 
         <div class="header-right">
             <div class="custom-select" id="custom-lang-select">
-                <button class="select-trigger" aria-haspopup="listbox" aria-expanded="false" id="lang-select-trigger">
+                <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language" id="lang-select-trigger">
+                    <svg class="select-globe" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9.5"></circle>
+                        <path d="M2.5 12h19"></path>
+                        <path d="M12 2.5a14 14 0 0 1 0 19"></path>
+                        <path d="M12 2.5a14 14 0 0 0 0 19"></path>
+                    </svg>
                     <span class="selected-text" id="lang-selected-text">EN</span>
+                    <svg class="select-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
                 </button>
-                <ul class="select-options" role="listbox" id="lang-select-options">
-                    <li class="select-option" data-value="en" role="option">EN</li>
-                    <li class="select-option" data-value="zh" role="option">中文</li>
-                    <li class="select-option" data-value="hi" role="option">हिन्दी</li>
-                    <li class="select-option" data-value="ko" role="option">한국어</li>
-                    <li class="select-option" data-value="de" role="option">DE</li>
-                    <li class="select-option" data-value="pl" role="option">PL</li>
+                <ul class="select-options" role="listbox" aria-label="Language options" id="lang-select-options">
+                    <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0"><span class="lang-label">English</span><span class="lang-code">EN</span></li>
+                    <li class="select-option" data-value="zh" data-short="中文" role="option" tabindex="0"><span class="lang-label">中文</span><span class="lang-code">ZH</span></li>
+                    <li class="select-option" data-value="hi" data-short="हिन्दी" role="option" tabindex="0"><span class="lang-label">हिन्दी</span><span class="lang-code">HI</span></li>
+                    <li class="select-option" data-value="ko" data-short="한국어" role="option" tabindex="0"><span class="lang-label">한국어</span><span class="lang-code">KO</span></li>
+                    <li class="select-option" data-value="de" data-short="DE" role="option" tabindex="0"><span class="lang-label">Deutsch</span><span class="lang-code">DE</span></li>
+                    <li class="select-option" data-value="pl" data-short="PL" role="option" tabindex="0"><span class="lang-label">Polski</span><span class="lang-code">PL</span></li>
                 </ul>
             </div>
             <select class="lang-select" id="lang-select" style="display: none;">
@@ -2261,28 +2280,12 @@
             <div class="hero-fold">
                 <div class="center-content">
                     <div class="logo-hero-slot" id="logo-hero-slot" aria-hidden="true"></div>
-                    <div class="logo-center">
-                        <span style="animation-delay: 1.8s">S</span>
-                        <span style="animation-delay: 1.9s">V</span>
-                        <span style="animation-delay: 2.0s">E</span>
-                        <span style="animation-delay: 2.1s">R</span>
-                        <span style="animation-delay: 2.2s">K</span>
-                        <span style="animation-delay: 2.3s">A</span>
-                        <span style="animation-delay: 2.4s">U</span>
-                        <span style="animation-delay: 2.5s">S</span>
-                    </div>
                     <p class="lab-name">Physical AI Data Lab</p>
                     <div class="tagline"><span id="typewriter"></span><span class="cursor"></span></div>
                 </div>
 
                 <div class="bottom-projects">
                     <div class="hero-summary-line">Specialized, ML-ready robotics datasets · Skilled operators · Ukraine &amp; Germany</div>
-                    <div class="project">
-                        <span class="diamond">◇</span> <span class="project-name" data-value="Approach">Approach</span> <span class="project-desc">Provenance, modalities, QA &amp; pilot scope</span> &gt; <a href="#lab-details">read below</a>
-                    </div>
-                    <div class="project">
-                        <span class="diamond">◇</span> <span class="project-name" data-value="Pilot">Pilot</span> <span class="project-desc">Discuss a specialized data collection pilot</span> &gt; <a href="mailto:gleb@sverkaus.com?subject=Data%20Collection%20Pilot%20-%20Sverkaus">gleb@sverkaus.com</a>
-                    </div>
                 </div>
             </div>
 
@@ -3082,12 +3085,12 @@
             const selectOptions = document.querySelectorAll('.select-option');
             const selectedText = document.getElementById('lang-selected-text');
             let selectedOptionText = "EN";
-            
+
             selectOptions.forEach(opt => {
                 if (opt.getAttribute('data-value') === lang) {
                     opt.classList.add('selected');
                     opt.setAttribute('aria-selected', 'true');
-                    selectedOptionText = opt.textContent;
+                    selectedOptionText = opt.getAttribute('data-short') || opt.textContent.trim();
                 } else {
                     opt.classList.remove('selected');
                     opt.removeAttribute('aria-selected');
@@ -3162,6 +3165,11 @@
         if (customSelect && selectTrigger) {
             updateCustomSelectUI(currentLang);
 
+            const closeLangMenu = () => {
+                customSelect.classList.remove('active');
+                selectTrigger.setAttribute('aria-expanded', 'false');
+            };
+
             selectTrigger.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const isActive = customSelect.classList.toggle('active');
@@ -3169,18 +3177,28 @@
             });
 
             selectOptions.forEach(option => {
-                option.addEventListener('click', (e) => {
+                const chooseLang = (e) => {
                     e.stopPropagation();
                     const lang = option.getAttribute('data-value');
                     switchLanguage(lang);
-                    customSelect.classList.remove('active');
-                    selectTrigger.setAttribute('aria-expanded', 'false');
+                    closeLangMenu();
+                };
+                option.addEventListener('click', chooseLang);
+                option.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        chooseLang(e);
+                        selectTrigger.focus();
+                    }
                 });
             });
 
-            document.addEventListener('click', () => {
-                customSelect.classList.remove('active');
-                selectTrigger.setAttribute('aria-expanded', 'false');
+            document.addEventListener('click', closeLangMenu);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && customSelect.classList.contains('active')) {
+                    closeLangMenu();
+                    selectTrigger.focus();
+                }
             });
         }
 
@@ -3316,57 +3334,8 @@
                         startTypewriter(translations[currentLang].tagline);
                     }
                 }
-            }, 3100);
+            }, 2250);
         }
-
-        // Matrix Decode (Glitch) and Click to open site
-        const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-        
-        document.querySelectorAll('.project').forEach(project => {
-            const el = project.querySelector('.project-name');
-            const link = project.querySelector('a');
-            
-            if (el) {
-                project.addEventListener('mouseenter', () => {
-                    let iterations = 0;
-                    const originalText = el.dataset.value;
-                    
-                    clearInterval(el.dataset.interval);
-                    
-                    el.dataset.interval = setInterval(() => {
-                        el.innerText = originalText.split("")
-                            .map((letter, index) => {
-                                if(index < iterations) {
-                                    return originalText[index];
-                                }
-                                return letters[Math.floor(Math.random() * letters.length)];
-                            })
-                            .join("");
-                        
-                        if(iterations >= originalText.length){
-                            clearInterval(el.dataset.interval);
-                        }
-                        
-                        iterations += 1 / 3;
-                    }, 30);
-                });
-            }
-
-            project.addEventListener('click', (event) => {
-                if (event.target.tagName === 'A') return;
-                if (link) {
-                    const href = link.getAttribute('href') || '';
-                    if (href.startsWith('#')) {
-                        const target = document.querySelector(href);
-                        if (target) target.scrollIntoView({ behavior: 'smooth' });
-                    } else if (href.startsWith('mailto:')) {
-                        window.location.href = href;
-                    } else {
-                        window.open(link.href, link.target || '_blank');
-                    }
-                }
-            });
-        });
 
         // Interactive POV Capture Visualization Controller
         (() => {

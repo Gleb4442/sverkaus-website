@@ -55,7 +55,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Top Header Navigation (Borderless & Liquid Glass) */
+        /* Top Header Navigation (Strictly Borderless Liquid Glass) */
         .site-header {
             position: fixed;
             top: 0;
@@ -67,10 +67,9 @@
             padding: 20px 30px;
             z-index: 1000;
             pointer-events: none;
-            background: rgba(28, 28, 28, 0.64);
-            backdrop-filter: blur(22px) saturate(175%);
-            -webkit-backdrop-filter: blur(22px) saturate(175%);
-            box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.055);
+            background: rgba(28, 28, 28, 0.56);
+            backdrop-filter: blur(22px) saturate(165%);
+            -webkit-backdrop-filter: blur(22px) saturate(165%);
         }
 
         .header-left, .nav-tabs, .header-right {
@@ -82,8 +81,8 @@
             position: relative;
             display: inline-flex;
             align-items: center;
-            min-width: 96px;
-            height: 28px;
+            min-width: 112px;
+            height: 38px;
         }
 
         .nav-tabs {
@@ -94,7 +93,7 @@
             justify-self: end;
             display: inline-flex;
             align-items: center;
-            height: 28px;
+            height: 38px;
         }
 
         .brand-link {
@@ -121,8 +120,8 @@
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 28px;
-            height: 28px;
+            width: 38px;
+            height: 38px;
             pointer-events: none;
             display: block;
         }
@@ -205,7 +204,7 @@
             animation: fadeIn 0.8s ease forwards 1.6s;
         }
 
-        /* Custom Select Styles (Dark Liquid Glass) */
+        /* Custom Select Styles (Borderless Minimal Liquid Glass) */
         .custom-select {
             position: relative;
             display: inline-flex;
@@ -216,35 +215,28 @@
         }
 
         .select-trigger {
-            position: relative;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            height: 28px;
-            padding: 0 10px 0 9px;
+            gap: 5px;
+            height: 30px;
+            padding: 0 11px;
             border-radius: 9999px;
             border: none;
             outline: none;
             cursor: pointer;
             font-family: inherit;
-            font-size: 10.5px;
+            font-size: 11px;
             font-weight: 700;
-            letter-spacing: 0.08em;
-            color: rgba(240, 240, 240, 0.86);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.035) 100%);
-            backdrop-filter: blur(20px) saturate(185%);
-            -webkit-backdrop-filter: blur(20px) saturate(185%);
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.26),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.04),
-                0 0 0 1px rgba(255, 255, 255, 0.10),
-                0 4px 14px rgba(0, 0, 0, 0.28);
+            letter-spacing: 0.1em;
+            color: rgba(240, 240, 240, 0.68);
+            background: rgba(255, 255, 255, 0.035);
+            backdrop-filter: blur(16px) saturate(160%);
+            -webkit-backdrop-filter: blur(16px) saturate(160%);
             transition:
                 color 0.2s ease,
-                background 0.25s ease,
-                box-shadow 0.25s ease,
-                transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+                background 0.22s ease,
+                transform 0.16s ease;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -252,34 +244,22 @@
             pointer-events: none;
         }
 
-        .select-globe {
-            opacity: 0.68;
-            flex-shrink: 0;
-            transition: opacity 0.2s ease;
-        }
-
         .select-chevron {
-            opacity: 0.58;
+            opacity: 0.55;
             flex-shrink: 0;
-            transition: transform 0.26s cubic-bezier(0.22, 1.15, 0.36, 1), opacity 0.2s ease;
+            transition: transform 0.24s cubic-bezier(0.22, 1.15, 0.36, 1), opacity 0.2s ease;
         }
 
         .select-trigger:hover,
         .select-trigger:focus-visible,
         .custom-select.active .select-trigger {
             color: #ffffff;
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.055) 100%);
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.34),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.06),
-                0 0 0 1px rgba(255, 255, 255, 0.18),
-                0 8px 22px rgba(0, 0, 0, 0.38);
+            background: rgba(255, 255, 255, 0.085);
         }
 
-        .select-trigger:hover .select-globe,
-        .select-trigger:focus-visible .select-globe,
-        .custom-select.active .select-globe {
-            opacity: 0.95;
+        .select-trigger:hover .select-chevron,
+        .custom-select.active .select-chevron {
+            opacity: 0.9;
         }
 
         .select-trigger:active {
@@ -287,52 +267,37 @@
         }
 
         .custom-select.active .select-chevron {
-            opacity: 0.95;
             transform: rotate(180deg);
         }
 
         .select-options {
             position: absolute;
-            top: calc(100% + 10px);
+            top: calc(100% + 8px);
             right: 0;
             margin: 0;
             padding: 6px;
             list-style: none;
-            width: 148px;
+            width: 118px;
             box-sizing: border-box;
             border: none;
-            border-radius: 16px;
-            background: linear-gradient(160deg, rgba(50, 50, 54, 0.72) 0%, rgba(24, 24, 27, 0.84) 100%);
-            backdrop-filter: blur(28px) saturate(200%);
-            -webkit-backdrop-filter: blur(28px) saturate(200%);
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.26),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.04),
-                0 0 0 1px rgba(255, 255, 255, 0.11),
-                0 22px 48px rgba(0, 0, 0, 0.58),
-                0 4px 12px rgba(0, 0, 0, 0.32);
+            border-radius: 14px;
+            background: rgba(34, 34, 36, 0.72);
+            backdrop-filter: blur(26px) saturate(185%);
+            -webkit-backdrop-filter: blur(26px) saturate(185%);
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.44);
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
             transform-origin: top right;
-            transform: translateY(-6px) scale(0.94);
+            transform: translateY(-6px) scale(0.95);
             transition:
-                opacity 0.22s ease,
-                transform 0.28s cubic-bezier(0.22, 1.18, 0.36, 1),
-                visibility 0.22s;
+                opacity 0.2s ease,
+                transform 0.24s cubic-bezier(0.22, 1.15, 0.36, 1),
+                visibility 0.2s;
             z-index: 1000;
             display: flex;
             flex-direction: column;
             gap: 2px;
-        }
-
-        .select-options::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: inherit;
-            background: radial-gradient(120% 70% at 80% 0%, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0) 60%);
-            pointer-events: none;
         }
 
         .custom-select.active .select-options {
@@ -343,74 +308,29 @@
         }
 
         .select-option {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            padding: 7px 10px;
-            border-radius: 10px;
-            color: rgba(240, 240, 240, 0.66);
-            cursor: pointer;
-            transition: background 0.16s ease, color 0.16s ease, box-shadow 0.16s ease;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .select-option .lang-label {
+            padding: 7px 12px;
+            border-radius: 9px;
             font-family: 'Outfit', sans-serif;
             font-size: 12.5px;
             font-weight: 500;
-            letter-spacing: 0.01em;
-        }
-
-        .select-option .lang-code {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 9.5px;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            color: rgba(255, 255, 255, 0.36);
-            transition: color 0.16s ease;
+            color: rgba(240, 240, 240, 0.58);
+            cursor: pointer;
+            transition: background 0.16s ease, color 0.16s ease;
+            text-align: left;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .select-option:hover,
         .select-option:focus-visible {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .select-option:hover .lang-code,
-        .select-option:focus-visible .lang-code {
-            color: rgba(255, 255, 255, 0.72);
+            background: rgba(255, 255, 255, 0.065);
         }
 
         .select-option.selected {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.12);
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, 0.18),
-                0 0 0 1px rgba(255, 255, 255, 0.08);
-        }
-
-        .select-option.selected .lang-label {
             font-weight: 600;
-        }
-
-        .select-option.selected .lang-code {
-            color: var(--accent-color);
-        }
-
-        .select-option.selected .lang-code::after {
-            content: '';
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: var(--accent-color);
-            box-shadow: 0 0 8px rgba(163, 230, 53, 0.75);
+            background: rgba(255, 255, 255, 0.09);
         }
 
         /* Smooth View Switching */
@@ -458,94 +378,64 @@
         }
 
         .hero-summary-line {
-            font-size: 11px;
-            color: var(--tagline-color);
-            letter-spacing: 0.04em;
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(15px, 1.8vw, 19px);
+            font-weight: 600;
+            color: #ececec;
+            letter-spacing: 0.01em;
             text-align: center;
-            margin-bottom: 4px;
+            line-height: 1.4;
         }
 
-        /* Borderless Overview Details (Matches Careers Minimalist Rhythm) */
+        /* Borderless Overview Details (Minimalist & Calm) */
         .overview-details {
-            max-width: 840px;
+            max-width: 780px;
             margin: 0 auto;
             width: 100%;
-            padding: 36px 24px 96px;
+            padding: 28px 24px 96px;
             display: flex;
             flex-direction: column;
-            gap: 36px;
+            gap: 64px;
             scroll-margin-top: 88px;
         }
 
         .overview-block {
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding-top: 32px;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            scroll-margin-top: 88px;
+            gap: 18px;
+            scroll-margin-top: 96px;
         }
 
         .overview-kicker {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 800;
+            font-size: 10.5px;
+            font-weight: 700;
             letter-spacing: 0.16em;
-            color: #666666;
+            color: #6e6e6e;
             text-transform: uppercase;
         }
 
         .overview-heading {
             font-family: 'Outfit', sans-serif;
             font-size: clamp(24px, 3.8vw, 32px);
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: 0.01em;
             color: #ffffff;
             line-height: 1.2;
         }
 
-        /* Flow Pills (Soft Rounded Fills, Borderless) */
-        .flow-pills {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .flow-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 6px 13px;
-            border-radius: 9999px;
-            background: rgba(255, 255, 255, 0.05);
-            font-size: 11.5px;
-            color: #d8d8d8;
-            letter-spacing: 0.01em;
-        }
-
-        .flow-pill strong {
-            color: var(--accent-color);
-            font-weight: 800;
-        }
-
-        .flow-arrow {
-            color: #666666;
-            font-size: 12px;
-        }
-
-        /* Interactive Capture Visualization (Soft Fills, Rounded Lines, Zero Hard Boxes) */
+        /* Simple Interactive Capture Visual */
         .viz-wrap {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
 
         .viz-stage {
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
-            border-radius: 22px;
+            border-radius: 20px;
             overflow: hidden;
             background: #141414;
             user-select: none;
@@ -555,17 +445,10 @@
             content: '';
             position: absolute;
             inset: 0;
-            border-radius: 22px;
-            box-shadow: inset 0 0 54px 18px #1c1c1c;
+            border-radius: 20px;
+            box-shadow: inset 0 0 48px 16px #1c1c1c;
             pointer-events: none;
             z-index: 3;
-        }
-
-        .viz-media-lock {
-            position: absolute;
-            inset: 0;
-            transform-origin: 48% 49%;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .viz-base-img {
@@ -574,12 +457,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: opacity 0.35s ease, filter 0.35s ease;
-        }
-
-        .viz-base-img.rgb-off {
-            opacity: 0.16;
-            filter: grayscale(1) contrast(1.1);
+            transition: filter 0.35s ease, opacity 0.35s ease;
         }
 
         .viz-overlay-svg {
@@ -592,58 +470,31 @@
         }
 
         .viz-layer-group {
-            transition: opacity 0.25s ease;
+            opacity: 1;
+            transition: opacity 0.3s ease;
         }
 
         .viz-layer-group.hidden {
             opacity: 0;
         }
 
-        .viz-hud-top {
+        .viz-stage-badge {
             position: absolute;
-            top: 14px;
             left: 14px;
-            right: 14px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
-            z-index: 4;
-            pointer-events: none;
-        }
-
-        .viz-hud-bottom {
-            position: absolute;
             bottom: 14px;
-            left: 14px;
-            right: 14px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 8px;
             z-index: 4;
-            pointer-events: none;
-        }
-
-        .hud-pill {
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            padding: 5px 12px;
+            padding: 5px 11px;
             border-radius: 9999px;
-            background: rgba(20, 20, 20, 0.72);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(20, 20, 20, 0.64);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             font-size: 10.5px;
-            color: #e4e4e4;
+            color: rgba(240, 240, 240, 0.85);
             letter-spacing: 0.02em;
-            transition: opacity 0.2s ease;
-        }
-
-        .hud-pill.hidden {
-            opacity: 0;
+            pointer-events: none;
         }
 
         .hud-dot {
@@ -655,28 +506,19 @@
 
         .hud-dot.amber { background: #f59e0b; }
         .hud-dot.lime { background: var(--accent-color); }
-        .hud-dot.cyan { background: #38bdf8; }
 
-        /* Modality Pills (Soft Translucent Fills, Borderless) */
-        .modality-bar {
+        .viz-mode-pills {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .modality-pills {
-            display: flex;
-            flex-wrap: wrap;
             gap: 8px;
         }
 
-        .mod-pill {
+        .viz-mode-btn {
             display: inline-flex;
             align-items: center;
             gap: 7px;
-            padding: 7px 13px;
+            padding: 7px 14px;
             border-radius: 9999px;
             border: none;
             background: rgba(255, 255, 255, 0.04);
@@ -685,253 +527,57 @@
             font-size: 11px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: background 0.2s ease, color 0.2s ease;
             -webkit-tap-highlight-color: transparent;
         }
 
-        .mod-pill:hover {
+        .viz-mode-btn:hover {
             background: rgba(255, 255, 255, 0.08);
             color: #f0f0f0;
         }
 
-        .mod-pill[aria-pressed="true"].tier-base {
-            background: rgba(163, 230, 53, 0.14);
-            color: #f4fce3;
-        }
-
-        .mod-pill[aria-pressed="true"].tier-hw {
-            background: rgba(245, 158, 11, 0.14);
-            color: #fef3c7;
-        }
-
-        .mod-tier-tag {
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            opacity: 0.72;
-        }
-
-        .preset-pills {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .mini-pill {
-            padding: 5px 10px;
-            border-radius: 9999px;
-            border: none;
-            background: rgba(255, 255, 255, 0.04);
-            color: #888888;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .mini-pill:hover,
-        .mini-pill.active {
+        .viz-mode-btn.active {
             background: rgba(255, 255, 255, 0.11);
             color: #ffffff;
+            font-weight: 700;
         }
 
         .viz-caption {
             font-size: 12px;
-            line-height: 1.65;
-            color: #9a9a9a;
-            padding: 12px 16px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.03);
+            line-height: 1.6;
+            color: #969696;
         }
 
         .viz-caption strong {
-            color: #ffffff;
-        }
-
-        /* Layer 3: Soft Rounded Area-Filled Timeline */
-        .viz-timeline {
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.035);
-            padding: 16px 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .transport-row {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .play-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 9999px;
-            border: none;
-            background: var(--accent-color);
-            color: #0e1606;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: transform 0.15s ease, opacity 0.15s ease;
-        }
-
-        .play-pill:hover {
-            transform: scale(1.02);
-        }
-
-        .phase-pills {
-            display: inline-flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-
-        .phase-chip {
-            padding: 5px 10px;
-            border-radius: 9999px;
-            border: none;
-            background: rgba(255, 255, 255, 0.04);
-            color: #888888;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10.5px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .phase-chip:hover {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .phase-chip.active {
-            background: rgba(163, 230, 53, 0.16);
-            color: var(--accent-color);
-            font-weight: 700;
-        }
-
-        .scrubber-input {
-            flex: 1;
-            min-width: 110px;
-            accent-color: var(--accent-color);
-            cursor: pointer;
-        }
-
-        .time-readout {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: #999999;
-            white-space: nowrap;
-        }
-
-        .waveform-box {
-            position: relative;
-            width: 100%;
-            height: 116px;
-            border-radius: 12px;
-            background: rgba(18, 18, 18, 0.65);
-            overflow: hidden;
-        }
-
-        .waveform-svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .wave-curve {
-            transition: opacity 0.25s ease;
-        }
-
-        .wave-curve.inactive {
-            opacity: 0.12;
-        }
-
-        .wave-playhead {
-            position: absolute;
-            top: 8px;
-            bottom: 8px;
-            width: 2px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.9);
-            pointer-events: none;
-            transform: translateX(-1px);
-        }
-
-        .wave-playhead::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -3px;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #ffffff;
-        }
-
-        .schema-soft-box {
-            max-width: 100%;
-            padding: 14px 16px;
-            border-radius: 14px;
-            background: rgba(18, 18, 18, 0.72);
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11.5px;
-            line-height: 1.6;
-            color: #c8cdd6;
-            overflow-x: auto;
-            white-space: pre;
+            color: #f0f0f0;
+            font-weight: 600;
         }
 
         @media (max-width: 640px) {
-            .flow-arrow { display: none; }
-            .flow-pills { gap: 6px; }
             .viz-stage { aspect-ratio: 16 / 10; border-radius: 16px; }
-            .viz-stage::after { border-radius: 16px; box-shadow: inset 0 0 36px 12px #1c1c1c; }
-            .viz-hud-top { top: 8px; left: 8px; right: 8px; flex-wrap: nowrap; gap: 6px; }
-            .viz-hud-bottom { bottom: 8px; left: 8px; right: 8px; flex-wrap: nowrap; gap: 6px; }
-            .hud-long { display: none; }
-            .hud-pill { padding: 3px 8px; font-size: 9.5px; gap: 5px; white-space: nowrap; }
-            .viz-timeline { padding: 12px; }
-            .schema-soft-box { padding: 11px 12px; font-size: 10px; }
+            .viz-stage::after { border-radius: 16px; box-shadow: inset 0 0 32px 10px #1c1c1c; }
+            .viz-stage-badge { left: 10px; bottom: 10px; padding: 4px 9px; font-size: 9.5px; }
         }
 
-        .sk { color: #93c5fd; }
-        .sv { color: var(--accent-color); }
-        .sw { color: #f59e0b; }
-        .sc { color: #666666; }
-
-        /* Visual Informational Blocks Below Viz (Soft Fills, Wireframe SVGs, Ultra-Concise Copy) */
+        /* Clean 2x2 Target Environments Grid */
         .env-visual-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 14px;
+            gap: 12px;
         }
 
         .env-tile {
             border-radius: 18px;
             background: rgba(255, 255, 255, 0.03);
-            padding: 16px;
+            padding: 18px 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
             transition: background 0.2s ease;
         }
 
         .env-tile:hover {
-            background: rgba(255, 255, 255, 0.048);
-        }
-
-        .env-blueprint {
-            width: 100%;
-            height: 86px;
-            border-radius: 12px;
-            background: rgba(16, 16, 16, 0.62);
-            overflow: hidden;
-            display: block;
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .env-tile-head {
@@ -941,25 +587,34 @@
             gap: 10px;
         }
 
-        .env-tile-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 16px;
-            font-weight: 600;
-            color: #ffffff;
-            letter-spacing: 0.01em;
+        .env-tile-icon {
+            width: 30px;
+            height: 30px;
+            padding: 6px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--accent-color);
+            flex-shrink: 0;
         }
 
         .env-idx {
             font-size: 10px;
             font-weight: 700;
-            color: var(--accent-color);
+            color: #666666;
             letter-spacing: 0.08em;
         }
 
-        .env-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
+        .env-tile-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .env-tile-desc {
+            font-size: 11.5px;
+            line-height: 1.55;
+            color: #8f8f8f;
         }
 
         .mini-tag {
@@ -972,17 +627,7 @@
             color: #b8b8b8;
         }
 
-        .mini-tag.accent {
-            background: rgba(163, 230, 53, 0.12);
-            color: #ecfccb;
-        }
-
-        .mini-tag.amber {
-            background: rgba(245, 158, 11, 0.12);
-            color: #fef3c7;
-        }
-
-        /* Visual 4-Node Provenance & QA Chain */
+        /* Clean 4-Node Provenance & QA Row */
         .qa-chain-grid {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -992,7 +637,7 @@
         .qa-node {
             border-radius: 16px;
             background: rgba(255, 255, 255, 0.03);
-            padding: 15px 14px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -1033,11 +678,11 @@
             color: #909090;
         }
 
-        /* Dual Visual Block: Geo Coverage Schematic + 4-Step Pilot Track */
+        /* Clean Coverage & Pilot Execution */
         .pilot-coverage-grid {
             display: grid;
-            grid-template-columns: 1.05fr 1fr;
-            gap: 14px;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 12px;
         }
 
         .info-panel {
@@ -1046,54 +691,44 @@
             padding: 18px;
             display: flex;
             flex-direction: column;
-            gap: 14px;
-        }
-
-        .geo-svg-box {
-            width: 100%;
-            height: 128px;
-            border-radius: 12px;
-            background: rgba(16, 16, 16, 0.62);
-            display: block;
+            gap: 12px;
         }
 
         .geo-rows {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         .geo-row {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            padding: 7px 11px;
-            border-radius: 9999px;
+            flex-direction: column;
+            gap: 4px;
+            padding: 12px 14px;
+            border-radius: 14px;
             background: rgba(255, 255, 255, 0.035);
-            font-size: 11px;
-            color: #d4d4d4;
         }
 
         .geo-row-label {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
             color: #ffffff;
         }
 
         .geo-row-meta {
-            font-size: 10px;
+            font-size: 11px;
             color: #8c8c8c;
-            text-align: right;
+            padding-left: 14px;
         }
 
         .pilot-track {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            position: relative;
+            gap: 8px;
         }
 
         .pilot-step {
@@ -1239,15 +874,12 @@
             z-index: 1005;
             opacity: 0;
             transform-origin: center center;
-            will-change: transform;
         }
 
         .logo-icon {
             width: 100%;
             height: 100%;
             overflow: visible;
-            filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.08));
-            transition: filter 0.3s ease;
         }
 
         /* Prevent mascot intro replay if already seen in session */
@@ -1711,14 +1343,14 @@
 
         .bottom-projects {
             position: absolute;
-            bottom: 52px;
+            bottom: 24px;
             left: 0;
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             z-index: 10;
-            padding: 0 20px;
+            padding: 0 24px;
             opacity: 0;
             animation: fadeIn 0.8s ease forwards 1.95s;
         }
@@ -2112,36 +1744,34 @@
         /* Responsive Breakpoints */
         @media (max-width: 768px) {
             .site-header {
-                padding: 14px 16px;
-                background: rgba(28, 28, 28, 0.68);
-                backdrop-filter: blur(22px) saturate(175%);
-                -webkit-backdrop-filter: blur(22px) saturate(175%);
-                box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+                padding: 14px 18px;
+                background: rgba(28, 28, 28, 0.58);
+                backdrop-filter: blur(22px) saturate(165%);
+                -webkit-backdrop-filter: blur(22px) saturate(165%);
             }
             .header-left {
                 display: inline-flex;
-                min-width: 24px;
-                height: 24px;
+                min-width: 32px;
+                height: 32px;
+            }
+            .header-right {
+                height: 32px;
             }
             .brand-link {
                 display: none;
             }
             .header-star-slot {
-                width: 24px;
-                height: 24px;
+                width: 32px;
+                height: 32px;
             }
             .nav-tabs {
                 gap: 16px;
             }
             .select-trigger {
-                height: 26px;
-                padding: 0 8px 0 7px;
-                gap: 5px;
-                font-size: 10px;
-            }
-            .select-globe {
-                width: 11px;
-                height: 11px;
+                height: 28px;
+                padding: 0 9px;
+                gap: 4px;
+                font-size: 10.5px;
             }
             .center-content {
                 padding-top: 96px;
@@ -2149,7 +1779,7 @@
             }
             .overview-details {
                 padding: 20px 20px 72px;
-                gap: 36px;
+                gap: 48px;
             }
             .careers-section {
                 padding-top: 100px;
@@ -2175,8 +1805,8 @@
             .bottom-projects {
                 position: relative;
                 bottom: 0;
-                padding: 12px 20px 28px;
-                margin-top: 24px;
+                padding: 12px 20px 24px;
+                margin-top: 32px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -2224,24 +1854,18 @@
         <div class="header-right">
             <div class="custom-select" id="custom-lang-select">
                 <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language" id="lang-select-trigger">
-                    <svg class="select-globe" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="9.5"></circle>
-                        <path d="M2.5 12h19"></path>
-                        <path d="M12 2.5a14 14 0 0 1 0 19"></path>
-                        <path d="M12 2.5a14 14 0 0 0 0 19"></path>
-                    </svg>
                     <span class="selected-text" id="lang-selected-text">EN</span>
-                    <svg class="select-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <svg class="select-chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <polyline points="6 9 12 15 18 9"></polyline>
                     </svg>
                 </button>
                 <ul class="select-options" role="listbox" aria-label="Language options" id="lang-select-options">
-                    <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0"><span class="lang-label">English</span><span class="lang-code">EN</span></li>
-                    <li class="select-option" data-value="zh" data-short="中文" role="option" tabindex="0"><span class="lang-label">中文</span><span class="lang-code">ZH</span></li>
-                    <li class="select-option" data-value="hi" data-short="हिन्दी" role="option" tabindex="0"><span class="lang-label">हिन्दी</span><span class="lang-code">HI</span></li>
-                    <li class="select-option" data-value="ko" data-short="한국어" role="option" tabindex="0"><span class="lang-label">한국어</span><span class="lang-code">KO</span></li>
-                    <li class="select-option" data-value="de" data-short="DE" role="option" tabindex="0"><span class="lang-label">Deutsch</span><span class="lang-code">DE</span></li>
-                    <li class="select-option" data-value="pl" data-short="PL" role="option" tabindex="0"><span class="lang-label">Polski</span><span class="lang-code">PL</span></li>
+                    <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0">English</li>
+                    <li class="select-option" data-value="zh" data-short="中文" role="option" tabindex="0">中文</li>
+                    <li class="select-option" data-value="hi" data-short="हिन्दी" role="option" tabindex="0">हिन्दी</li>
+                    <li class="select-option" data-value="ko" data-short="한국어" role="option" tabindex="0">한국어</li>
+                    <li class="select-option" data-value="de" data-short="DE" role="option" tabindex="0">Deutsch</li>
+                    <li class="select-option" data-value="pl" data-short="PL" role="option" tabindex="0">Polski</li>
                 </ul>
             </div>
             <select class="lang-select" id="lang-select" style="display: none;">
@@ -2257,10 +1881,10 @@
 
     <!-- Scroll-Linked Mascot Carrier (Glides smoothly from Hero Center into Header Left Slot) -->
     <div class="logo-icon-container logo-dock-carrier animating" id="logo-dock-carrier" role="button" tabindex="0" aria-label="Sverkaus mascot — click to replay or return to top" title="Sverkaus">
-        <svg class="logo-icon" id="star-svg" viewBox="-30 -30 260 260">
+        <svg class="logo-icon" id="star-svg" viewBox="-30 -30 260 260" shape-rendering="geometricPrecision">
             <g id="star-root" class="star-root">
                 <g id="star-body" class="star-body">
-                    <polygon id="star-polygon" points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#ffffff" stroke-width="14" stroke-linejoin="miter" stroke-miterlimit="10" />
+                    <polygon id="star-polygon" points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#ffffff" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="10" />
                 </g>
                 <g id="star-eyes" class="star-eyes">
                     <ellipse id="star-eye-left" class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#ffffff" />
@@ -2285,311 +1909,117 @@
                 </div>
 
                 <div class="bottom-projects">
-                    <div class="hero-summary-line">Specialized, ML-ready robotics datasets · Skilled operators · Ukraine &amp; Germany</div>
+                    <div class="hero-summary-line">Provide specialized ML-ready datasets</div>
                 </div>
             </div>
 
-            <!-- Visual Pipeline + Concise Collapsible Details -->
+            <!-- Simple Visual Pipeline + Minimal Blocks -->
             <div id="lab-details" class="overview-details">
                 <p class="lang-fallback-note" id="lang-fallback-overview">Technical overview and specifications below are provided in English.</p>
 
-                <!-- 01. Interactive Capture Visualization -->
+                <!-- 01. Clean Interactive Capture Visual -->
                 <div class="overview-block" id="capture-viz">
-                    <div class="overview-kicker">Conceptual Model · Synthetic Demo · Precision Assembly</div>
+                    <div class="overview-kicker">Conceptual Illustration · Precision Assembly</div>
                     <h2 class="overview-heading">Skilled Tasks. Structured Data.</h2>
-                    <div class="flow-pills" aria-label="Data pipeline stages">
-                        <span class="flow-pill"><strong>01</strong> Skilled Professional Task</span>
-                        <span class="flow-arrow" aria-hidden="true">&rarr;</span>
-                        <span class="flow-pill"><strong>02</strong> Multimodal Capture</span>
-                        <span class="flow-arrow" aria-hidden="true">&rarr;</span>
-                        <span class="flow-pill"><strong>03</strong> ML-Ready Dataset</span>
-                    </div>
 
                     <div class="viz-wrap">
-                        <!-- Layer 1: Photorealistic POV Base + Rounded Soft-Filled SVG Telemetry -->
                         <div class="viz-stage">
-                            <div class="viz-media-lock" id="viz-media-lock">
                             <img src="/assets/capture-pov.jpg" alt="Conceptual first-person POV of a gloved technician aligning a locking industrial connector into an anodized receptacle" class="viz-base-img" id="viz-base-img">
 
                             <svg class="viz-overlay-svg" viewBox="0 0 1000 558" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
                                 <defs>
-                                    <radialGradient id="depthGlow" cx="50%" cy="50%" r="50%">
-                                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.22" />
-                                        <stop offset="70%" stop-color="#f59e0b" stop-opacity="0.06" />
-                                        <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
-                                    </radialGradient>
                                     <radialGradient id="forcePulse" cx="50%" cy="50%" r="50%">
-                                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.55" />
-                                        <stop offset="55%" stop-color="#f59e0b" stop-opacity="0.18" />
+                                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.52" />
+                                        <stop offset="55%" stop-color="#f59e0b" stop-opacity="0.16" />
                                         <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
                                     </radialGradient>
                                     <linearGradient id="trajGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                                         <stop offset="0%" stop-color="#a3e635" stop-opacity="0.95" />
-                                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.65" />
+                                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.7" />
                                     </linearGradient>
                                 </defs>
 
-                                <!-- Depth Layer (Project-Dependent) -->
-                                <g class="viz-layer-group" id="svg-layer-depth">
-                                    <ellipse cx="475" cy="268" rx="150" ry="108" fill="url(#depthGlow)" />
-                                    <ellipse cx="458" cy="262" rx="68" ry="50" fill="none" stroke="rgba(245,158,11,0.45)" stroke-width="1.6" stroke-dasharray="6 6" stroke-linecap="round" />
-                                    <ellipse cx="458" cy="262" rx="112" ry="82" fill="none" stroke="rgba(245,158,11,0.28)" stroke-width="1.4" stroke-dasharray="6 6" stroke-linecap="round" />
-                                    <rect x="336" y="328" width="128" height="26" rx="13" fill="rgba(20,20,20,0.75)" />
-                                    <text x="400" y="345" text-anchor="middle" fill="#fbbf24" font-family="JetBrains Mono, monospace" font-size="11" font-weight="600">z_socket 0.42m</text>
+                                <!-- Clean Pose & Path Layer -->
+                                <g class="viz-layer-group hidden" id="viz-layer-pose" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M 458 262 C 520 270, 585 288, 692 325" fill="none" stroke="rgba(163,230,53,0.18)" stroke-width="14" />
+                                    <path d="M 458 262 C 520 270, 585 288, 692 325" fill="none" stroke="url(#trajGrad)" stroke-width="3" stroke-dasharray="6 6" />
+                                    <circle cx="458" cy="262" r="6" fill="#a3e635" />
+                                    <circle cx="624" cy="302" r="5" fill="#38bdf8" />
+                                    <circle cx="664" cy="264" r="5" fill="#38bdf8" />
                                 </g>
 
-                                <!-- Motion Trajectory Layer (Project-Dependent) -->
-                                <g class="viz-layer-group" id="svg-layer-trajectory">
-                                    <path d="M 458 262 C 505 268, 540 278, 610 296 C 655 308, 690 322, 725 338" fill="none" stroke="rgba(163,230,53,0.18)" stroke-width="14" stroke-linecap="round" />
-                                    <path d="M 458 262 C 505 268, 540 278, 610 296 C 655 308, 690 322, 725 338" fill="none" stroke="url(#trajGrad)" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 7" />
-                                    <circle id="traj-marker" cx="522" cy="274" r="7" fill="#a3e635" fill-opacity="0.95" />
-                                    <circle id="traj-marker-halo" cx="522" cy="274" r="15" fill="#a3e635" fill-opacity="0.22" />
-                                </g>
-
-                                <!-- Hand & Object Pose Layer (Project-Dependent) -->
-                                <g class="viz-layer-group" id="svg-layer-pose" stroke-linecap="round" stroke-linejoin="round">
-                                    <!-- Lower gloved hand skeleton -->
-                                    <path d="M 676 508 L 622 418 L 598 352 L 624 302" fill="none" stroke="rgba(56,189,248,0.72)" stroke-width="2.5" />
-                                    <path d="M 622 418 L 574 378 L 592 325" fill="none" stroke="rgba(56,189,248,0.72)" stroke-width="2.5" />
-                                    <!-- Upper gloved hand skeleton -->
-                                    <path d="M 940 236 L 814 198 L 716 226 L 664 264" fill="none" stroke="rgba(56,189,248,0.72)" stroke-width="2.5" />
-                                    <path d="M 814 198 L 765 276 L 740 338" fill="none" stroke="rgba(56,189,248,0.55)" stroke-width="2" />
-                                    <!-- Soft joint halos -->
-                                    <g fill="#38bdf8">
-                                        <circle cx="676" cy="508" r="5" /><circle cx="622" cy="418" r="5" /><circle cx="598" cy="352" r="4.5" /><circle cx="624" cy="302" r="5.5" />
-                                        <circle cx="574" cy="378" r="4.5" /><circle cx="592" cy="325" r="5" />
-                                        <circle cx="940" cy="236" r="5" /><circle cx="814" cy="198" r="5" /><circle cx="716" cy="226" r="4.5" /><circle cx="664" cy="264" r="5.5" />
-                                        <circle cx="765" cy="276" r="4.5" /><circle cx="740" cy="338" r="4.5" />
-                                    </g>
-                                    <!-- 6-DoF Receptacle Triad -->
-                                    <g transform="translate(458,262)">
-                                        <line x1="0" y1="0" x2="34" y2="6" stroke="#ef4444" stroke-width="2.6" />
-                                        <line x1="0" y1="0" x2="2" y2="-34" stroke="#a3e635" stroke-width="2.6" />
-                                        <line x1="0" y1="0" x2="-22" y2="18" stroke="#38bdf8" stroke-width="2.6" />
-                                        <circle cx="0" cy="0" r="4" fill="#ffffff" />
-                                    </g>
-                                    <!-- 6-DoF Plug Triad -->
-                                    <g transform="translate(550,278)">
-                                        <line x1="0" y1="0" x2="-34" y2="-6" stroke="#ef4444" stroke-width="2.6" />
-                                        <line x1="0" y1="0" x2="3" y2="-32" stroke="#a3e635" stroke-width="2.6" />
-                                        <line x1="0" y1="0" x2="24" y2="18" stroke="#38bdf8" stroke-width="2.6" />
-                                        <circle cx="0" cy="0" r="4" fill="#ffffff" />
-                                    </g>
-                                </g>
-
-                                <!-- Force & Tactile Measurements Layer (Project-Dependent) -->
-                                <g class="viz-layer-group" id="svg-layer-force" stroke-linecap="round">
-                                    <circle id="force-glow-circle" cx="488" cy="268" r="56" fill="url(#forcePulse)" />
-                                    <!-- Grip pressure halos on thumb & index -->
-                                    <circle cx="624" cy="302" r="14" fill="rgba(245,158,11,0.16)" stroke="rgba(245,158,11,0.75)" stroke-width="2" />
-                                    <circle cx="664" cy="264" r="14" fill="rgba(245,158,11,0.16)" stroke="rgba(245,158,11,0.75)" stroke-width="2" />
-                                    <!-- Smooth Axial Force Arrow -->
-                                    <line id="force-arrow-line" x1="518" y1="271" x2="462" y2="262" stroke="#f59e0b" stroke-width="3.5" />
-                                    <circle cx="462" cy="262" r="4.5" fill="#f59e0b" />
-                                    <rect x="428" y="218" width="128" height="24" rx="12" fill="rgba(20,20,20,0.82)" />
-                                    <text id="force-label" x="492" y="234" text-anchor="middle" fill="#fbbf24" font-family="JetBrains Mono, monospace" font-size="11" font-weight="700">F_axial</text>
+                                <!-- Clean Contact Force Layer -->
+                                <g class="viz-layer-group hidden" id="viz-layer-force" stroke-linecap="round">
+                                    <circle cx="468" cy="265" r="58" fill="url(#forcePulse)" />
+                                    <circle cx="468" cy="265" r="14" fill="rgba(245,158,11,0.22)" stroke="#f59e0b" stroke-width="2" />
                                 </g>
                             </svg>
-                            </div>
 
-                            <div class="viz-hud-top">
-                                <span class="hud-pill" id="hud-rgb-pill"><span class="hud-dot lime"></span><span class="hud-long">Egocentric </span>RGB · <span id="hud-frame">f116</span></span>
-                                <span class="hud-pill"><span class="hud-dot amber"></span><span class="hud-long">Conceptual Illustration · </span><span id="hud-phase-time">03 Insert · 3.85s</span></span>
-                            </div>
-                            <div class="viz-hud-bottom">
-                                <span class="hud-pill" id="hud-event-pill"><span class="hud-dot lime"></span>event: <span id="hud-event-name">axial_insert</span></span>
-                                <span class="hud-pill" id="hud-clearance-pill">clearance ≈ <span id="hud-clearance">14.2 mm</span></span>
+                            <div class="viz-stage-badge" id="viz-stage-badge">
+                                <span class="hud-dot lime" id="viz-stage-dot"></span>
+                                <span id="viz-stage-label">Baseline · First-person RGB</span>
                             </div>
                         </div>
 
-                        <!-- Layer 2: Soft Rounded Modality Pills -->
-                        <div class="modality-bar">
-                            <div class="modality-pills" role="group" aria-label="Capture modality toggles">
-                                <button type="button" class="mod-pill tier-base" data-channel="rgb" aria-pressed="true"><span class="hud-dot lime"></span>RGB video <span class="mod-tier-tag">Baseline</span></button>
-                                <button type="button" class="mod-pill tier-base" data-channel="events" aria-pressed="true"><span class="hud-dot lime"></span>Task events <span class="mod-tier-tag">Baseline</span></button>
-                                <button type="button" class="mod-pill tier-hw" data-channel="depth" aria-pressed="true"><span class="hud-dot amber"></span>Stereo / depth <span class="mod-tier-tag">Hardware</span></button>
-                                <button type="button" class="mod-pill tier-hw" data-channel="pose" aria-pressed="true"><span class="hud-dot cyan"></span>Hand &amp; obj pose <span class="mod-tier-tag">Hardware</span></button>
-                                <button type="button" class="mod-pill tier-hw" data-channel="trajectory" aria-pressed="true"><span class="hud-dot lime"></span>Trajectories <span class="mod-tier-tag">Hardware</span></button>
-                                <button type="button" class="mod-pill tier-hw" data-channel="force" aria-pressed="true"><span class="hud-dot amber"></span>Force / tactile <span class="mod-tier-tag">Hardware</span></button>
-                            </div>
-                            <div class="preset-pills">
-                                <button type="button" class="mini-pill" data-preset="baseline">Baseline only</button>
-                                <button type="button" class="mini-pill active" data-preset="full">All channels</button>
-                            </div>
+                        <div class="viz-mode-pills" role="group" aria-label="Capture overlay view">
+                            <button type="button" class="viz-mode-btn active" data-viz-mode="pov">POV Video</button>
+                            <button type="button" class="viz-mode-btn" data-viz-mode="pose">+ Pose &amp; Path</button>
+                            <button type="button" class="viz-mode-btn" data-viz-mode="force">+ Contact Force</button>
                         </div>
 
                         <p class="viz-caption" id="viz-caption" aria-live="polite">
-                            <strong>Physical sensing (project-dependent):</strong> Force/tactile sensors capture insertion resistance &amp; detent snap beyond RGB.
+                            <strong>Baseline:</strong> Clean first-person video and task timing markers of skilled manual assembly.
                         </p>
-
-                        <!-- Layer 3: Smooth Area-Filled Waveform Timeline + Expandable Schema -->
-                        <div class="viz-timeline">
-                            <div class="transport-row">
-                                <button type="button" class="play-pill" id="viz-play-btn">Pause</button>
-                                <div class="phase-pills">
-                                    <button type="button" class="phase-chip" data-phase="approach_grasp" data-time="0.6">01 Grasp</button>
-                                    <button type="button" class="phase-chip" data-phase="align_keyway" data-time="2.3">02 Align</button>
-                                    <button type="button" class="phase-chip active" data-phase="axial_insert" data-time="3.9">03 Insert</button>
-                                    <button type="button" class="phase-chip" data-phase="lock_verify" data-time="5.3">04 Lock</button>
-                                </div>
-                                <input type="range" class="scrubber-input" id="viz-scrubber" min="0" max="6" step="0.03" value="3.85" aria-label="Scrub capture timeline">
-                                <span class="time-readout" id="viz-readout">3.85s / 6.00s</span>
-                            </div>
-
-                            <div class="waveform-box">
-                                <svg class="waveform-svg" viewBox="0 0 800 116" preserveAspectRatio="none" aria-hidden="true">
-                                    <defs>
-                                        <linearGradient id="forceAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.34" />
-                                            <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0" />
-                                        </linearGradient>
-                                        <linearGradient id="poseAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.24" />
-                                            <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.0" />
-                                        </linearGradient>
-                                    </defs>
-
-                                    <!-- Event phase pills along bottom -->
-                                    <g class="wave-curve" id="wave-events">
-                                        <rect x="8" y="92" width="190" height="14" rx="7" fill="rgba(163,230,53,0.12)" />
-                                        <rect x="204" y="92" width="218" height="14" rx="7" fill="rgba(163,230,53,0.18)" />
-                                        <rect x="428" y="92" width="206" height="14" rx="7" fill="rgba(163,230,53,0.28)" />
-                                        <rect x="640" y="92" width="152" height="14" rx="7" fill="rgba(163,230,53,0.15)" />
-                                    </g>
-
-                                    <!-- Smooth rounded Pose / Trajectory clearance curve with soft fill -->
-                                    <g class="wave-curve" id="wave-pose">
-                                        <path d="M 0 22 C 140 24, 210 38, 340 58 C 440 72, 520 76, 800 76 L 800 84 L 0 84 Z" fill="url(#poseAreaGrad)" />
-                                        <path d="M 0 22 C 140 24, 210 38, 340 58 C 440 72, 520 76, 800 76" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" />
-                                    </g>
-
-                                    <!-- Smooth rounded Axial Force curve peaking on detent seating with soft fill -->
-                                    <g class="wave-curve" id="wave-force">
-                                        <path d="M 0 82 L 380 82 C 430 82, 465 56, 518 18 C 548 16, 575 68, 620 71 C 680 71, 710 56, 738 71 L 800 74 L 800 84 L 0 84 Z" fill="url(#forceAreaGrad)" />
-                                        <path d="M 0 82 L 380 82 C 430 82, 465 56, 518 18 C 548 16, 575 68, 620 71 C 680 71, 710 56, 738 71 L 800 74" fill="none" stroke="#f59e0b" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" />
-                                    </g>
-                                </svg>
-                                <div class="wave-playhead" id="wave-playhead" style="left: 64%;"></div>
-                            </div>
-
-                            <!-- Collapsible Episode Output Schema (Hidden by default to reduce visual clutter) -->
-                            <div class="vacancy-item" id="acc-schema" style="border-bottom: none; padding-bottom: 0;">
-                                <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-schema" onclick="toggleVacancy('acc-schema')">
-                                    <div class="vacancy-info-col">
-                                        <div class="vacancy-meta"><strong>ML-Ready Episode Schema</strong> · Conceptual JSON structure synced to active channels</div>
-                                    </div>
-                                    <div class="vacancy-toggle-indicator">
-                                        <span class="toggle-text">Details</span>
-                                        <span class="toggle-icon" aria-hidden="true">+</span>
-                                    </div>
-                                </div>
-                                <div class="vacancy-expandable-body" id="body-schema">
-                                    <pre class="schema-soft-box"><code id="viz-schema-code"></code></pre>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
 
-                <!-- 02. Visual Wireframe Environments Grid (2x2 Illustrative Categories) -->
+                <!-- 02. Clean 2x2 Target Environments Grid -->
                 <div class="overview-block" id="environments-grid">
                     <div class="overview-kicker">Target Environments · Illustrative Categories</div>
                     <h2 class="overview-heading">Where We Collect.</h2>
                     <div class="env-visual-grid">
-                        <!-- 01 Manufacturing -->
                         <div class="env-tile">
-                            <svg class="env-blueprint" viewBox="0 0 280 86" fill="none" aria-hidden="true">
-                                <path d="M24 16 L88 38 M24 16 L88 64" stroke="rgba(163,230,53,0.22)" stroke-width="1.2" stroke-dasharray="4 4" stroke-linecap="round" />
-                                <circle cx="24" cy="16" r="3.5" fill="#a3e635" />
-                                <rect x="82" y="30" width="44" height="36" rx="6" stroke="rgba(255,255,255,0.28)" stroke-width="1.5" fill="rgba(255,255,255,0.04)" />
-                                <circle cx="104" cy="48" r="9" stroke="#f59e0b" stroke-width="1.6" stroke-dasharray="3 3" />
-                                <path d="M204 48 L114 48" stroke="#a3e635" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" />
-                                <rect x="176" y="39" width="38" height="18" rx="9" stroke="#38bdf8" stroke-width="1.5" fill="rgba(56,189,248,0.08)" />
-                                <circle cx="122" cy="48" r="14" fill="rgba(245,158,11,0.16)" />
-                                <circle cx="122" cy="48" r="3.5" fill="#f59e0b" />
-                                <text x="266" y="22" text-anchor="end" fill="#666666" font-family="JetBrains Mono, monospace" font-size="9">6-DoF + F/T</text>
-                            </svg>
                             <div class="env-tile-head">
-                                <span class="env-tile-title">Manufacturing &amp; Assembly</span>
+                                <svg class="env-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="8" height="8" rx="2" fill="currentColor" fill-opacity="0.14" /><rect x="13" y="8" width="8" height="8" rx="2" /><path d="M11 12h2" /></svg>
                                 <span class="env-idx">01</span>
                             </div>
-                            <div class="env-chips">
-                                <span class="mini-tag accent">Component mating</span>
-                                <span class="mini-tag">Precision tools</span>
-                                <span class="mini-tag amber">Contact force</span>
-                            </div>
+                            <span class="env-tile-title">Manufacturing &amp; Assembly</span>
+                            <p class="env-tile-desc">Component mating, precision tool handling, and contact-rich workflows.</p>
                         </div>
 
-                        <!-- 02 Food Prep -->
                         <div class="env-tile">
-                            <svg class="env-blueprint" viewBox="0 0 280 86" fill="none" aria-hidden="true">
-                                <path d="M140 10 L76 66 M140 10 L204 66" stroke="rgba(163,230,53,0.2)" stroke-width="1.2" stroke-dasharray="4 4" stroke-linecap="round" />
-                                <circle cx="140" cy="10" r="3.5" fill="#a3e635" />
-                                <ellipse cx="140" cy="58" rx="76" ry="18" stroke="rgba(255,255,255,0.24)" stroke-width="1.5" fill="rgba(255,255,255,0.03)" />
-                                <path d="M98 54 C118 32, 160 32, 184 54" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" />
-                                <circle cx="98" cy="54" r="4" fill="#38bdf8" />
-                                <circle cx="184" cy="54" r="4" fill="#a3e635" />
-                                <text x="266" y="22" text-anchor="end" fill="#666666" font-family="JetBrains Mono, monospace" font-size="9">OVERHEAD POV</text>
-                            </svg>
                             <div class="env-tile-head">
-                                <span class="env-tile-title">Food Preparation</span>
+                                <svg class="env-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13h16a6 6 0 0 1-12 0Z" fill="currentColor" fill-opacity="0.14" /><path d="M15 5l3 3-4 4" /></svg>
                                 <span class="env-idx">02</span>
                             </div>
-                            <div class="env-chips">
-                                <span class="mini-tag accent">Cutting &amp; sorting</span>
-                                <span class="mini-tag">Prep flows</span>
-                                <span class="mini-tag">Utensil use</span>
-                            </div>
+                            <span class="env-tile-title">Food Preparation</span>
+                            <p class="env-tile-desc">Cutting, sorting, utensil control, and repeatable prep sequences.</p>
                         </div>
 
-                        <!-- 03 Warehouse & Logistics -->
                         <div class="env-tile">
-                            <svg class="env-blueprint" viewBox="0 0 280 86" fill="none" aria-hidden="true">
-                                <path d="M44 42 L74 30 L104 42 L104 70 L74 80 L44 70 Z" stroke="rgba(255,255,255,0.28)" stroke-width="1.4" fill="rgba(255,255,255,0.03)" stroke-linejoin="round" />
-                                <path d="M174 42 L204 30 L234 42 L234 70 L204 80 L174 70 Z" stroke="rgba(163,230,53,0.35)" stroke-width="1.4" fill="rgba(163,230,53,0.05)" stroke-linejoin="round" />
-                                <path d="M74 46 C108 12, 170 12, 204 46" stroke="#a3e635" stroke-width="2" stroke-dasharray="5 4" stroke-linecap="round" />
-                                <circle cx="74" cy="46" r="4.5" fill="#f59e0b" />
-                                <circle cx="204" cy="46" r="4.5" fill="#a3e635" />
-                                <text x="266" y="22" text-anchor="end" fill="#666666" font-family="JetBrains Mono, monospace" font-size="9">STEREO DEPTH</text>
-                            </svg>
                             <div class="env-tile-head">
-                                <span class="env-tile-title">Warehouse &amp; Logistics</span>
+                                <svg class="env-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l8-4 8 4v10l-8 4-8-4Z" fill="currentColor" fill-opacity="0.14" /><path d="M4 7l8 4 8-4M12 11v10" /></svg>
                                 <span class="env-idx">03</span>
                             </div>
-                            <div class="env-chips">
-                                <span class="mini-tag accent">Pick &amp; pack</span>
-                                <span class="mini-tag">Sorting flows</span>
-                                <span class="mini-tag">Repetitive grasp</span>
-                            </div>
+                            <span class="env-tile-title">Warehouse &amp; Logistics</span>
+                            <p class="env-tile-desc">Picking, packing, sorting, and multi-object bin manipulation.</p>
                         </div>
 
-                        <!-- 04 Maintenance & Tool Use -->
                         <div class="env-tile">
-                            <svg class="env-blueprint" viewBox="0 0 280 86" fill="none" aria-hidden="true">
-                                <rect x="86" y="48" width="108" height="24" rx="6" stroke="rgba(255,255,255,0.24)" stroke-width="1.4" fill="rgba(255,255,255,0.03)" />
-                                <polygon points="140,38 150,43 150,53 140,58 130,53 130,43" stroke="#38bdf8" stroke-width="1.5" fill="rgba(56,189,248,0.12)" />
-                                <path d="M116 32 A28 16 0 0 1 164 32" stroke="#f59e0b" stroke-width="2.2" stroke-linecap="round" />
-                                <circle cx="164" cy="32" r="3.5" fill="#f59e0b" />
-                                <line x1="140" y1="12" x2="140" y2="48" stroke="#a3e635" stroke-width="1.6" stroke-dasharray="3 3" stroke-linecap="round" />
-                                <text x="266" y="22" text-anchor="end" fill="#666666" font-family="JetBrains Mono, monospace" font-size="9">TOOL TORQUE</text>
-                            </svg>
                             <div class="env-tile-head">
-                                <span class="env-tile-title">Maintenance &amp; Tool Use</span>
+                                <svg class="env-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z" fill="currentColor" fill-opacity="0.14" /></svg>
                                 <span class="env-idx">04</span>
                             </div>
-                            <div class="env-chips">
-                                <span class="mini-tag accent">Fastening &amp; repair</span>
-                                <span class="mini-tag">Tool vectors</span>
-                                <span class="mini-tag">Field service</span>
-                            </div>
+                            <span class="env-tile-title">Maintenance &amp; Tool Use</span>
+                            <p class="env-tile-desc">Fastening, equipment servicing, and technical repair tasks.</p>
                         </div>
                     </div>
                     <p class="subtle-note">
-                        <strong>Illustrative scope only</strong> — sites, permissions &amp; sensor setups confirmed per pilot. Hand/tool framing helps limit bystanders, though framing alone does not guarantee anonymization.
+                        <strong>Illustrative scope only</strong> — sites, permissions &amp; sensor setups confirmed per pilot.
                     </p>
                 </div>
 
-                <!-- 03. Visual 4-Node Provenance, Privacy & QA Chain -->
+                <!-- 03. Clean 4-Node Provenance, Privacy & QA Chain -->
                 <div class="overview-block" id="provenance-visual">
                     <div class="overview-kicker">Verifiable Foundations · Data Governance</div>
                     <h2 class="overview-heading">Provenance, Privacy &amp; QA.</h2>
@@ -2632,42 +2062,24 @@
                     </p>
                 </div>
 
-                <!-- 04. Geographic Coverage Schematic + 4-Step Pilot Track -->
+                <!-- 04. Clean Coverage & Pilot Execution -->
                 <div class="overview-block" id="pilot-coverage">
                     <div class="overview-kicker">Operations &amp; Delivery · Project-Based</div>
                     <h2 class="overview-heading">Coverage &amp; Pilot Execution.</h2>
                     <div class="pilot-coverage-grid">
-                        <!-- Geographic Coverage Panel -->
                         <div class="info-panel">
-                            <svg class="geo-svg-box" viewBox="0 0 360 128" fill="none" aria-hidden="true">
-                                <!-- Minimal geometric map grid -->
-                                <path d="M24 34 H336 M24 64 H336 M24 94 H336 M90 16 V112 M180 16 V112 M270 16 V112" stroke="rgba(255,255,255,0.04)" stroke-width="1" />
-                                <!-- Corridor Curve DE <-> UA -->
-                                <path d="M96 58 Q176 30 256 66" stroke="rgba(255,255,255,0.28)" stroke-width="1.8" stroke-dasharray="5 5" stroke-linecap="round" />
-                                <!-- Germany Node (Project-Specific) -->
-                                <circle cx="96" cy="58" r="18" fill="rgba(245,158,11,0.10)" stroke="rgba(245,158,11,0.45)" stroke-width="1.2" stroke-dasharray="3 3" />
-                                <circle cx="96" cy="58" r="5" fill="#f59e0b" />
-                                <text x="96" y="92" text-anchor="middle" fill="#f59e0b" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700">GERMANY</text>
-                                <text x="96" y="106" text-anchor="middle" fill="#777777" font-family="JetBrains Mono, monospace" font-size="8.5">Project-specific</text>
-                                <!-- Ukraine Node (Primary Hub) -->
-                                <circle cx="256" cy="66" r="28" fill="rgba(163,230,53,0.08)" stroke="rgba(163,230,53,0.3)" stroke-width="1.2" />
-                                <circle cx="256" cy="66" r="14" fill="rgba(163,230,53,0.18)" />
-                                <circle cx="256" cy="66" r="6" fill="#a3e635" />
-                                <text x="256" y="108" text-anchor="middle" fill="#a3e635" font-family="JetBrains Mono, monospace" font-size="10" font-weight="800">UKRAINE · PRIMARY</text>
-                            </svg>
                             <div class="geo-rows">
                                 <div class="geo-row">
-                                    <span class="geo-row-label"><span class="hud-dot lime"></span>Ukraine</span>
-                                    <span class="geo-row-meta">Primary · Confirmed operators</span>
+                                    <span class="geo-row-label"><span class="hud-dot lime"></span>Ukraine · Primary</span>
+                                    <span class="geo-row-meta">Confirmed skilled operator network</span>
                                 </div>
                                 <div class="geo-row">
-                                    <span class="geo-row-label"><span class="hud-dot amber"></span>Germany</span>
-                                    <span class="geo-row-meta">When scope justifies cost</span>
+                                    <span class="geo-row-label"><span class="hud-dot amber"></span>Germany · Project-specific</span>
+                                    <span class="geo-row-meta">Organized when scope justifies cost</span>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 4-Step Pilot Track Panel -->
                         <div class="info-panel">
                             <div class="pilot-track">
                                 <div class="pilot-step">
@@ -2979,7 +2391,7 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
             if (typeof window.__updateSverkausLogoDock === 'function') {
-                window.requestAnimationFrame(window.__updateSverkausLogoDock);
+                window.requestAnimationFrame(() => window.__updateSverkausLogoDock(true));
             }
         }
 
@@ -3206,68 +2618,83 @@
         switchLanguage(currentLang);
         handleHashChange();
 
-        // Scroll-Linked Logo Dock & Interactive Mascot Replay
+        // Scroll-Linked Logo Dock (Silky Damped Glide + Crisp Native Vector Settlement)
         const logoContainer = document.getElementById('logo-dock-carrier');
         const heroLogoSlot = document.getElementById('logo-hero-slot');
         const headerLogoSlot = document.getElementById('header-logo-slot');
         const brandTextEl = document.getElementById('brand-text');
-        const starPolygon = document.getElementById('star-polygon');
-        const starSvg = document.getElementById('star-svg');
+        const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         let dockProgress = 0;
-        let dockRafPending = false;
+        let targetDockProgress = 0;
+        let dockRafId = 0;
+        let lastDockTs = 0;
 
-        function updateLogoDock() {
-            dockRafPending = false;
-            if (!logoContainer || !headerLogoSlot) return;
-            const sr = headerLogoSlot.getBoundingClientRect();
-            if (!sr.width) return;
+        function computeTargetDockProgress(sr) {
+            if (currentTab !== 'overview' || !heroLogoSlot) return 1;
+            const hr = heroLogoSlot.getBoundingClientRect();
+            if (!hr.width) return 1;
+            const heroDocCenterY = hr.top + window.scrollY + hr.height / 2;
+            const navCenterY = sr.top + sr.height / 2;
+            const scrollRange = Math.max(160, heroDocCenterY - navCenterY);
+            return Math.max(0, Math.min(1, window.scrollY / scrollRange));
+        }
 
+        function renderLogoDockFrame(p, sr) {
             const isMobile = window.innerWidth <= 768;
             const baseSize = isMobile ? 90 : 130;
-            if (logoContainer.style.width !== baseSize + 'px') {
-                logoContainer.style.width = baseSize + 'px';
-                logoContainer.style.height = baseSize + 'px';
-            }
+            const t = p * p * p * (p * (p * 6 - 15) + 10);
 
-            let p = 1;
-            let t = 1;
             let cx = sr.left + sr.width / 2;
             let cy = sr.top + sr.height / 2;
-            let scale = sr.width / baseSize;
+            let currentSize = sr.width;
 
             if (currentTab === 'overview' && heroLogoSlot) {
                 const hr = heroLogoSlot.getBoundingClientRect();
                 if (hr.width > 0) {
-                    const heroDocCenterY = hr.top + window.scrollY + hr.height / 2;
-                    const navCenterY = sr.top + sr.height / 2;
-                    const scrollRange = Math.max(160, heroDocCenterY - navCenterY);
-                    p = Math.max(0, Math.min(1, window.scrollY / scrollRange));
-                    t = p * p * (3 - 2 * p);
-
                     const heroCenterX = hr.left + hr.width / 2;
                     const heroCenterY = hr.top + hr.height / 2;
                     const navCenterX = sr.left + sr.width / 2;
-
+                    const navCenterY = sr.top + sr.height / 2;
                     cx = heroCenterX + (navCenterX - heroCenterX) * t;
                     cy = heroCenterY + (navCenterY - heroCenterY) * t;
-                    scale = 1 + (sr.width / hr.width - 1) * t;
+                    currentSize = baseSize + (sr.width - baseSize) * t;
                 }
             }
 
             dockProgress = p;
-            const half = baseSize / 2;
-            logoContainer.style.transform = `translate3d(${(cx - half).toFixed(2)}px, ${(cy - half).toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+
+            if (p <= 0.002) {
+                if (logoContainer.style.width !== baseSize + 'px') {
+                    logoContainer.style.width = baseSize + 'px';
+                    logoContainer.style.height = baseSize + 'px';
+                }
+                const x = Math.round(cx - baseSize / 2);
+                const y = Math.round(cy - baseSize / 2);
+                logoContainer.style.transform = `translate3d(${x}px, ${y}px, 0) scale(1)`;
+            } else if (p >= 0.998) {
+                const dockW = Math.round(sr.width);
+                const dockH = Math.round(sr.height);
+                if (logoContainer.style.width !== dockW + 'px') {
+                    logoContainer.style.width = dockW + 'px';
+                    logoContainer.style.height = dockH + 'px';
+                }
+                const x = Math.round(sr.left);
+                const y = Math.round(sr.top);
+                logoContainer.style.transform = `translate3d(${x}px, ${y}px, 0) scale(1)`;
+            } else {
+                if (logoContainer.style.width !== baseSize + 'px') {
+                    logoContainer.style.width = baseSize + 'px';
+                    logoContainer.style.height = baseSize + 'px';
+                }
+                const scale = currentSize / baseSize;
+                const half = baseSize / 2;
+                logoContainer.style.transform = `translate3d(${(cx - half).toFixed(2)}px, ${(cy - half).toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+            }
+
             logoContainer.style.opacity = '1';
 
-            if (starPolygon) {
-                starPolygon.setAttribute('stroke-width', (14 + t * 5.5).toFixed(2));
-            }
-            if (starSvg) {
-                const glowAlpha = (0.08 * (1 - t)).toFixed(3);
-                starSvg.style.filter = `drop-shadow(0 0 14px rgba(255, 255, 255, ${glowAlpha}))`;
-            }
             if (brandTextEl) {
-                const txtOpacity = currentTab === 'overview' ? Math.max(0, Math.min(1, 1 - p * 2.2)) : 0;
+                const txtOpacity = currentTab === 'overview' ? Math.max(0, Math.min(1, 1 - p * 2.4)) : 0;
                 brandTextEl.style.opacity = txtOpacity.toFixed(3);
                 brandTextEl.style.transform = `translateX(${(-p * 10).toFixed(2)}px)`;
             }
@@ -3276,22 +2703,64 @@
             }
         }
 
-        function scheduleLogoDock() {
-            if (dockRafPending) return;
-            dockRafPending = true;
-            window.requestAnimationFrame(updateLogoDock);
-        }
-        window.__updateSverkausLogoDock = updateLogoDock;
+        function tickLogoDock(ts) {
+            dockRafId = 0;
+            if (!logoContainer || !headerLogoSlot) return;
+            const sr = headerLogoSlot.getBoundingClientRect();
+            if (!sr.width) return;
 
-        window.addEventListener('scroll', updateLogoDock, { passive: true });
-        window.addEventListener('resize', scheduleLogoDock, { passive: true });
+            targetDockProgress = computeTargetDockProgress(sr);
+            const dt = lastDockTs ? Math.min(0.05, (ts - lastDockTs) / 1000) : 0.016;
+            lastDockTs = ts;
+
+            const diff = targetDockProgress - dockProgress;
+            if (prefersReducedMotion || Math.abs(diff) < 0.0008) {
+                dockProgress = targetDockProgress;
+                lastDockTs = 0;
+                renderLogoDockFrame(dockProgress, sr);
+                return;
+            }
+
+            const alpha = 1 - Math.exp(-15 * dt);
+            dockProgress += diff * alpha;
+            renderLogoDockFrame(dockProgress, sr);
+            dockRafId = window.requestAnimationFrame(tickLogoDock);
+        }
+
+        function updateLogoDock(snap = false) {
+            if (!logoContainer || !headerLogoSlot) return;
+            const sr = headerLogoSlot.getBoundingClientRect();
+            if (!sr.width) return;
+            targetDockProgress = computeTargetDockProgress(sr);
+            if (snap || prefersReducedMotion) {
+                if (dockRafId) {
+                    window.cancelAnimationFrame(dockRafId);
+                    dockRafId = 0;
+                }
+                lastDockTs = 0;
+                renderLogoDockFrame(targetDockProgress, sr);
+                return;
+            }
+            if (!dockRafId) {
+                lastDockTs = 0;
+                dockRafId = window.requestAnimationFrame(tickLogoDock);
+            }
+        }
+
+        function scheduleLogoDock() {
+            updateLogoDock(false);
+        }
+        window.__updateSverkausLogoDock = (snap = true) => updateLogoDock(snap === true);
+
+        window.addEventListener('scroll', scheduleLogoDock, { passive: true });
+        window.addEventListener('resize', () => updateLogoDock(true), { passive: true });
         if ('ResizeObserver' in window && heroLogoSlot) {
-            new ResizeObserver(scheduleLogoDock).observe(heroLogoSlot);
+            new ResizeObserver(() => updateLogoDock(true)).observe(heroLogoSlot);
         }
         if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(scheduleLogoDock);
+            document.fonts.ready.then(() => updateLogoDock(true));
         }
-        updateLogoDock();
+        updateLogoDock(true);
 
         if (logoContainer) {
             const handleLogoActivate = () => {
@@ -3337,260 +2806,56 @@
             }, 2250);
         }
 
-        // Interactive POV Capture Visualization Controller
+        // Simple 3-Mode POV Capture Visualization Controller
         (() => {
-            const DURATION = 6.0;
-            const FPS = 30;
-            const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const poseLayer = document.getElementById('viz-layer-pose');
+            const forceLayer = document.getElementById('viz-layer-force');
+            const stageDot = document.getElementById('viz-stage-dot');
+            const stageLabel = document.getElementById('viz-stage-label');
+            const captionEl = document.getElementById('viz-caption');
+            const buttons = document.querySelectorAll('.viz-mode-btn[data-viz-mode]');
 
-            const viz = {
-                time: 3.85,
-                playing: !reduced,
-                lastTs: null,
-                inView: true,
-                channels: {
-                    rgb: true,
-                    events: true,
-                    depth: true,
+            const modes = {
+                pov: {
+                    pose: false,
+                    force: false,
+                    dotClass: 'hud-dot lime',
+                    label: 'Baseline · First-person RGB',
+                    caption: '<strong>Baseline:</strong> Clean first-person video and task timing markers of skilled manual assembly.'
+                },
+                pose: {
                     pose: true,
-                    trajectory: true,
-                    force: true
+                    force: false,
+                    dotClass: 'hud-dot lime',
+                    label: 'Optional · Hand & path tracking',
+                    caption: '<strong>Spatial tracking (project-dependent):</strong> Adds depth and 3D fingertip/part trajectories calibrated to the task.'
+                },
+                force: {
+                    pose: true,
+                    force: true,
+                    dotClass: 'hud-dot amber',
+                    label: 'Optional · Contact force + pose',
+                    caption: '<strong>Physical sensing (project-dependent):</strong> Captures axial insertion force and grip contact beyond RGB video.'
                 }
             };
 
-            const mediaLock = document.getElementById('viz-media-lock');
-            const baseImg = document.getElementById('viz-base-img');
-            const hudRgb = document.getElementById('hud-rgb-pill');
-            const hudEvent = document.getElementById('hud-event-pill');
-            const hudClearancePill = document.getElementById('hud-clearance-pill');
-            const hudFrame = document.getElementById('hud-frame');
-            const hudPhaseTime = document.getElementById('hud-phase-time');
-            const hudEventName = document.getElementById('hud-event-name');
-            const hudClearance = document.getElementById('hud-clearance');
-            const captionEl = document.getElementById('viz-caption');
-            const playBtn = document.getElementById('viz-play-btn');
-            const scrubber = document.getElementById('viz-scrubber');
-            const readoutEl = document.getElementById('viz-readout');
-            const playheadEl = document.getElementById('wave-playhead');
-            const schemaCode = document.getElementById('viz-schema-code');
-
-            const svgDepth = document.getElementById('svg-layer-depth');
-            const svgPose = document.getElementById('svg-layer-pose');
-            const svgTraj = document.getElementById('svg-layer-trajectory');
-            const svgForce = document.getElementById('svg-layer-force');
-            const trajMarker = document.getElementById('traj-marker');
-            const trajHalo = document.getElementById('traj-marker-halo');
-            const forceGlow = document.getElementById('force-glow-circle');
-            const forceArrow = document.getElementById('force-arrow-line');
-            const forceLabel = document.getElementById('force-label');
-
-            const wavePose = document.getElementById('wave-pose');
-            const waveForce = document.getElementById('wave-force');
-            const waveEvents = document.getElementById('wave-events');
-            const modButtons = document.querySelectorAll('.mod-pill[data-channel]');
-            const presetButtons = document.querySelectorAll('.mini-pill[data-preset]');
-            const phaseButtons = document.querySelectorAll('.phase-chip[data-phase]');
-
-            function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
-
-            function getPhase(t) {
-                if (t < 1.5) return { id: 'approach_grasp', label: '01 Grasp' };
-                if (t < 3.2) return { id: 'align_keyway', label: '02 Align' };
-                if (t < 4.8) return { id: 'axial_insert', label: '03 Insert' };
-                return { id: 'lock_verify', label: '04 Lock' };
-            }
-
-            function sampleState(t) {
-                const u = clamp(t / DURATION, 0, 1);
-                const phase = getPhase(t);
-                // Trajectory progress along the spline (starts far right -> seats at socket)
-                const progress = clamp(t / 4.8, 0, 1);
-                const mx = 725 - (725 - 458) * Math.pow(progress, 0.9);
-                const my = 338 - (338 - 262) * Math.pow(progress, 0.9);
-                const clearance = Math.max(0, (1 - progress) * 16.0);
-
-                // Illustrative axial contact force peaking around t=3.9s (detent insertion)
-                let forceNorm = 0.0;
-                if (t >= 2.8 && t < 4.8) {
-                    const p = (t - 2.8) / 2.0;
-                    forceNorm = Math.exp(-Math.pow((p - 0.56) / 0.22, 2));
-                } else if (t >= 4.8) {
-                    forceNorm = 0.14 + 0.18 * Math.exp(-Math.pow((t - 5.5) / 0.18, 2));
-                }
-
-                return { u, phase, mx, my, clearance, forceNorm };
-            }
-
-            function updateCaption() {
-                if (!captionEl) return;
-                const ch = viz.channels;
-                if (ch.force) {
-                    captionEl.innerHTML = '<strong>Physical sensing (project-dependent):</strong> Force/tactile sensors capture insertion resistance &amp; detent snap beyond RGB.';
-                } else if (ch.depth || ch.pose || ch.trajectory) {
-                    captionEl.innerHTML = '<strong>Spatial capture (project-dependent):</strong> Depth &amp; 6-DoF tracking active; contact forces require F/T hardware.';
-                } else {
-                    captionEl.innerHTML = '<strong>Baseline only:</strong> RGB frames &amp; task events synced; 3D trajectories &amp; contact forces require extra sensors.';
-                }
-            }
-
-            function updateSchema(t, s) {
-                if (!schemaCode) return;
-                const ch = viz.channels;
-                const frame = Math.min(180, Math.round(t * FPS));
-                const lines = [
-                    `<span class="sc">// Conceptual ML-ready episode (agreed per project)</span>`,
-                    `{`,
-                    `  <span class="sk">"dataset_profile"</span>: <span class="sv">"ml_ready_conceptual"</span>, <span class="sk">"frame"</span>: ${frame}, <span class="sk">"ts_ns"</span>: ${Math.round(t * 1e9)},`,
-                    `  <span class="sk">"streams"</span>: { <span class="sk">"rgb"</span>: ${ch.rgb ? `<span class="sv">"cam0/${String(frame).padStart(5, '0')}.jpg"</span>` : `<span class="sc">null</span>`}, <span class="sk">"depth_m"</span>: ${ch.depth ? `<span class="sw">"depth/${String(frame).padStart(5, '0')}.png"</span>` : `<span class="sc">null</span>`} },`,
-                    `  <span class="sk">"measurements"</span>: { <span class="sk">"pose_clearance_mm"</span>: ${ch.pose || ch.trajectory ? s.clearance.toFixed(1) : `<span class="sc">null</span>`}, <span class="sk">"force_axial_norm"</span>: ${ch.force ? s.forceNorm.toFixed(2) : `<span class="sc">null /* requires F/T rig */</span>`} },`,
-                    `  <span class="sk">"annotations"</span>: ${ch.events ? `<span class="sv">"${s.phase.id}"</span>` : `<span class="sc">null</span>`}`,
-                    `}`
-                ];
-                schemaCode.innerHTML = lines.join('\n');
-            }
-
-            function renderViz() {
-                const t = viz.time;
-                const s = sampleState(t);
-                const ch = viz.channels;
-                const frame = Math.min(180, Math.round(t * FPS));
-
-                if (baseImg) {
-                    baseImg.classList.toggle('rgb-off', !ch.rgb);
-                }
-                if (mediaLock && !reduced) {
-                    const zoom = s.phase.id === 'axial_insert' ? 1.04 : (s.phase.id === 'lock_verify' ? 1.02 : 1.0);
-                    mediaLock.style.transform = `scale(${zoom})`;
-                }
-
-                if (svgDepth) svgDepth.classList.toggle('hidden', !ch.depth);
-                if (svgPose) svgPose.classList.toggle('hidden', !ch.pose);
-                if (svgTraj) svgTraj.classList.toggle('hidden', !ch.trajectory);
-                if (svgForce) svgForce.classList.toggle('hidden', !ch.force);
-
-                if (trajMarker && trajHalo) {
-                    trajMarker.setAttribute('cx', s.mx.toFixed(1));
-                    trajMarker.setAttribute('cy', s.my.toFixed(1));
-                    trajHalo.setAttribute('cx', s.mx.toFixed(1));
-                    trajHalo.setAttribute('cy', s.my.toFixed(1));
-                }
-
-                if (forceGlow && forceArrow && forceLabel) {
-                    const r = 24 + s.forceNorm * 44;
-                    forceGlow.setAttribute('r', r.toFixed(1));
-                    forceGlow.setAttribute('opacity', (0.25 + s.forceNorm * 0.75).toFixed(2));
-                    const x1 = 492 + s.forceNorm * 32;
-                    forceArrow.setAttribute('x1', x1.toFixed(1));
-                    forceLabel.textContent = s.forceNorm > 0.45 ? 'F_axial · detent' : 'F_axial';
-                }
-
-                if (hudRgb) hudRgb.classList.toggle('hidden', !ch.rgb);
-                if (hudEvent) hudEvent.classList.toggle('hidden', !ch.events);
-                if (hudClearancePill) hudClearancePill.classList.toggle('hidden', !(ch.pose || ch.trajectory));
-                if (hudFrame) hudFrame.textContent = `f${String(frame).padStart(3, '0')}`;
-                if (hudPhaseTime) hudPhaseTime.textContent = `${s.phase.label} · ${t.toFixed(2)}s`;
-                if (hudEventName) hudEventName.textContent = s.phase.id;
-                if (hudClearance) hudClearance.textContent = `${s.clearance.toFixed(1)} mm`;
-
-                if (scrubber) scrubber.value = t.toFixed(2);
-                if (readoutEl) readoutEl.textContent = `${t.toFixed(2)}s / ${DURATION.toFixed(2)}s`;
-                if (playBtn) playBtn.textContent = viz.playing ? 'Pause' : 'Play';
-                if (playheadEl) playheadEl.style.left = `${(s.u * 100).toFixed(2)}%`;
-
-                if (wavePose) wavePose.classList.toggle('inactive', !(ch.pose || ch.trajectory));
-                if (waveForce) waveForce.classList.toggle('inactive', !ch.force);
-                if (waveEvents) waveEvents.classList.toggle('inactive', !ch.events);
-
-                phaseButtons.forEach(btn => {
-                    btn.classList.toggle('active', btn.getAttribute('data-phase') === s.phase.id);
+            function setMode(mode) {
+                const cfg = modes[mode] || modes.pov;
+                if (poseLayer) poseLayer.classList.toggle('hidden', !cfg.pose);
+                if (forceLayer) forceLayer.classList.toggle('hidden', !cfg.force);
+                if (stageDot) stageDot.className = cfg.dotClass;
+                if (stageLabel) stageLabel.textContent = cfg.label;
+                if (captionEl) captionEl.innerHTML = cfg.caption;
+                buttons.forEach(btn => {
+                    btn.classList.toggle('active', btn.getAttribute('data-viz-mode') === mode);
                 });
-
-                const isBaseOnly = ch.rgb && ch.events && !ch.depth && !ch.pose && !ch.trajectory && !ch.force;
-                const isFull = ch.rgb && ch.events && ch.depth && ch.pose && ch.trajectory && ch.force;
-                presetButtons.forEach(btn => {
-                    const p = btn.getAttribute('data-preset');
-                    btn.classList.toggle('active', (p === 'baseline' && isBaseOnly) || (p === 'full' && isFull));
-                });
-
-                updateSchema(t, s);
             }
 
-            modButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const key = btn.getAttribute('data-channel');
-                    if (!(key in viz.channels)) return;
-                    viz.channels[key] = !viz.channels[key];
-                    btn.setAttribute('aria-pressed', viz.channels[key] ? 'true' : 'false');
-                    updateCaption();
-                    renderViz();
-                });
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => setMode(btn.getAttribute('data-viz-mode')));
             });
 
-            presetButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const full = btn.getAttribute('data-preset') === 'full';
-                    viz.channels.rgb = true;
-                    viz.channels.events = true;
-                    viz.channels.depth = full;
-                    viz.channels.pose = full;
-                    viz.channels.trajectory = full;
-                    viz.channels.force = full;
-                    modButtons.forEach(m => {
-                        m.setAttribute('aria-pressed', viz.channels[m.getAttribute('data-channel')] ? 'true' : 'false');
-                    });
-                    updateCaption();
-                    renderViz();
-                });
-            });
-
-            phaseButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    viz.time = parseFloat(btn.getAttribute('data-time')) || 0;
-                    renderViz();
-                });
-            });
-
-            if (playBtn) {
-                playBtn.addEventListener('click', () => {
-                    viz.playing = !viz.playing;
-                    viz.lastTs = null;
-                    renderViz();
-                });
-            }
-
-            if (scrubber) {
-                scrubber.addEventListener('input', () => {
-                    viz.playing = false;
-                    viz.time = parseFloat(scrubber.value) || 0;
-                    renderViz();
-                });
-            }
-
-            const vizEl = document.getElementById('capture-viz');
-            if ('IntersectionObserver' in window && vizEl) {
-                new IntersectionObserver(entries => {
-                    entries.forEach(e => { viz.inView = e.isIntersecting; });
-                }, { threshold: 0.05 }).observe(vizEl);
-            }
-
-            function loop(ts) {
-                if (viz.playing && viz.inView && currentTab === 'overview') {
-                    if (viz.lastTs !== null) {
-                        const dt = Math.min((ts - viz.lastTs) / 1000, 0.1);
-                        viz.time += dt;
-                        if (viz.time > DURATION) viz.time = 0;
-                        renderViz();
-                    }
-                    viz.lastTs = ts;
-                } else {
-                    viz.lastTs = null;
-                }
-                window.requestAnimationFrame(loop);
-            }
-
-            updateCaption();
-            renderViz();
-            window.requestAnimationFrame(loop);
+            setMode('pov');
         })();
     </script>
 </body>

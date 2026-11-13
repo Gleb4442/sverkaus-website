@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="/any/assets/css/site.css">
   <script defer src="/any/assets/js/i18n.js"></script>
   <script defer src="/any/assets/js/site.js"></script>
+  <script defer src="/any/assets/js/orbit.js"></script>
 </head>
 <body>
 <header class="nav glass" data-blur="5">
@@ -107,6 +108,45 @@
       <div><h3 data-t="g1h">Перевод</h3><p data-t="g1p">Выделите текст, назовите язык. macOS 15+.</p></div>
       <div><h3 data-t="g2h">Ваши слова</h3><p data-t="g2p">Имена и термины, как пишете вы.</p></div>
       <div><h3 data-t="g3h">На вашем Mac</h3><p data-t="g3p">Речь может не покидать устройство.</p></div>
+    </div>
+  </section>
+
+  <!-- Feature orbit: a ring of satellites, one feature each. To add a feature, add a satellite, a slide and a caption with the same data-i.
+       To show a video, put its path in the slide's data-video (and a still in data-poster); an empty data-video shows the slide's own placeholder. -->
+  <section class="orbit is-static" id="features" aria-labelledby="orbit-eyebrow">
+    <p class="orbit-eyebrow" id="orbit-eyebrow" data-t="orb.eyebrow">Что ещё умеет any</p>
+    <div class="orbit-stage" id="orbit-stage">
+      <div class="orbit-screen" id="orbit-screen">
+        <div class="orbit-slide is-on" id="orb-slide-0" data-i="0" role="tabpanel" aria-labelledby="orb-sat-0" data-video="/any/assets/video/attach.mp4" data-poster="/any/assets/video/attach-poster.jpg"></div>
+        <div class="orbit-slide" id="orb-slide-1" data-i="1" role="tabpanel" aria-labelledby="orb-sat-1" data-video="" data-poster="">
+          <div class="ph-call" aria-hidden="true">
+            <div class="ph-drop">
+              <p class="ph-who" data-t="orb.c.who">Анна · Meet</p>
+              <p class="ph-orig" data-t="orb.c.orig">Can we move the launch to Friday?</p>
+              <p class="ph-tr" data-t="orb.c.tr">Можем перенести запуск на пятницу?</p>
+              <p class="ph-hint"><i></i><span data-t="orb.c.hint">Спросите, что мешает четвергу</span></p>
+            </div>
+            <div class="ph-tiles"><span class="ph-tile"><b>A</b></span><span class="ph-tile ph-me"><b>G</b></span></div>
+            <p class="ph-goal" data-t="orb.c.goal">Цель: дата запуска</p>
+          </div>
+          <span class="ph-badge" data-t="orb.draft">Черновик · видео в работе</span>
+        </div>
+      </div>
+      <canvas class="orbit-ring" id="orbit-ring" aria-hidden="true"></canvas>
+      <div class="orbit-sats" role="tablist" aria-label="Возможности any" data-ta="orb.tabs">
+        <button class="orbit-sat is-on" id="orb-sat-0" data-i="0" type="button" role="tab" aria-selected="true" aria-controls="orb-slide-0">
+          <span class="sat-orb"><svg class="sat-prog" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30"/></svg><svg class="sat-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 6.5 8.4 13.6a2 2 0 0 0 2.8 2.8l7.4-7.4a3.6 3.6 0 0 0-5.1-5.1l-7.6 7.6a5.2 5.2 0 0 0 7.4 7.4l6.6-6.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="sat-label" data-t="orb.a.name">Промпт и скриншот</span>
+        </button>
+        <button class="orbit-sat" id="orb-sat-1" data-i="1" type="button" role="tab" aria-selected="false" aria-controls="orb-slide-1">
+          <span class="sat-orb"><svg class="sat-prog" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30"/></svg><svg class="sat-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5h11A2.5 2.5 0 0 1 20 7.5v6a2.5 2.5 0 0 1-2.5 2.5H11l-4.2 3.2c-.4.3-.8 0-.8-.4V16h0A2.5 2.5 0 0 1 4 13.5Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8 9.5h8M8 12.3h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
+          <span class="sat-label" data-t="orb.c.name">Звонки</span>
+        </button>
+      </div>
+      <div class="orbit-caps" id="orbit-caps">
+        <div class="orbit-cap is-on" data-i="0"><h3 data-t="orb.a.h">Скриншот прямо посреди фразы.</h3><p data-t="orb.a.p">Диктуйте промпт для Claude, Codex или Cursor и прикладывайте скриншоты, фото и файлы, не прерываясь.</p></div>
+        <div class="orbit-cap" data-i="1"><h3><span data-t="orb.c.h">Перевод и подсказки прямо на звонке.</span> <em class="soon" data-t="orb.c.soon">Скоро</em></h3><p data-t="orb.c.p">В Meet и Zoom any опускается из выреза: субтитры собеседника с переводом, одна подсказка, что сказать, и ваши цели. После звонка — отчёт и письмо-итог.</p></div>
+      </div>
     </div>
   </section>
 

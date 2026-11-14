@@ -142,6 +142,7 @@
             border: none;
             padding: 0;
             user-select: none;
+            position: relative;
         }
 
         .nav-tab {
@@ -175,15 +176,19 @@
             text-decoration: none;
         }
 
-        .nav-tab.active::after {
-            content: '';
+        .nav-tab-indicator {
             position: absolute;
             bottom: -3px;
             left: 0;
-            width: 100%;
             height: 2px;
+            width: 0;
             background: #ffffff;
             border-radius: 1px;
+            pointer-events: none;
+            opacity: 0;
+            transform: translate3d(0, 0, 0);
+            transition: transform 0.36s cubic-bezier(0.22, 1, 0.36, 1), width 0.36s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+            will-change: transform, width;
         }
 
         .tab-badge {
@@ -1983,6 +1988,7 @@
             <button class="nav-tab" data-tab="careers" id="tab-careers" role="tab" aria-selected="false">
                 <span class="tab-label" id="label-nav-careers">Careers</span>
             </button>
+            <span class="nav-tab-indicator" id="nav-tab-indicator" aria-hidden="true"></span>
         </nav>
 
         <div class="header-right">
@@ -2990,12 +2996,35 @@
         // Tab Navigation State
         let currentTab = 'overview';
         let introFinished = false;
+        let tabTransitionRaf = 0;
+
+        function updateNavIndicator(instant = false) {
+            const indicator = document.getElementById('nav-tab-indicator');
+            const activeTab = document.querySelector(`.nav-tab[data-tab="${currentTab}"]`) || document.querySelector('.nav-tab.active');
+            if (!indicator || !activeTab) return;
+
+            const left = activeTab.offsetLeft;
+            const width = activeTab.offsetWidth;
+            if (!width) return;
+
+            if (instant) {
+                indicator.style.transition = 'none';
+            }
+            indicator.style.width = `${width}px`;
+            indicator.style.transform = `translate3d(${left}px, 0, 0)`;
+            indicator.style.opacity = '1';
+
+            if (instant) {
+                void indicator.offsetWidth;
+                indicator.style.transition = '';
+            }
+        }
 
         function switchTab(tabName, updateHash = true, scrollTop = true) {
             if (tabName !== 'overview' && tabName !== 'careers') {
                 tabName = 'overview';
             }
-            
+            const changed = currentTab !== tabName;
             currentTab = tabName;
 
             // Update tab buttons
@@ -3005,21 +3034,47 @@
                 btn.setAttribute('aria-selected', isTarget ? 'true' : 'false');
             });
 
+            updateNavIndicator(false);
+
             const targetSection = document.getElementById(`view-${tabName}`);
+            if (tabTransitionRaf) {
+                window.cancelAnimationFrame(tabTransitionRaf);
+                tabTransitionRaf = 0;
+            }
+
             document.querySelectorAll('.view-section').forEach(sec => {
-                if (sec === targetSection) {
-                    sec.classList.add('active');
-                    sec.style.display = (tabName === 'overview') ? 'flex' : 'block';
-                    sec.style.opacity = '1';
-                    sec.style.transform = 'translateY(0)';
-                    sec.style.visibility = 'visible';
-                } else {
+                if (sec !== targetSection) {
                     sec.classList.remove('active');
                     sec.style.display = 'none';
                     sec.style.opacity = '0';
+                    sec.style.transform = 'translateY(8px)';
                     sec.style.visibility = 'hidden';
                 }
             });
+
+            if (targetSection) {
+                const targetDisplay = (tabName === 'overview') ? 'flex' : 'block';
+                const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (changed && !reduced) {
+                    targetSection.style.display = targetDisplay;
+                    targetSection.style.visibility = 'visible';
+                    targetSection.style.opacity = '0';
+                    targetSection.style.transform = 'translateY(10px)';
+                    targetSection.classList.add('active');
+                    void targetSection.offsetWidth;
+                    tabTransitionRaf = window.requestAnimationFrame(() => {
+                        targetSection.style.opacity = '1';
+                        targetSection.style.transform = 'translateY(0)';
+                        tabTransitionRaf = 0;
+                    });
+                } else {
+                    targetSection.classList.add('active');
+                    targetSection.style.display = targetDisplay;
+                    targetSection.style.opacity = '1';
+                    targetSection.style.transform = 'translateY(0)';
+                    targetSection.style.visibility = 'visible';
+                }
+            }
 
             if (tabName === 'overview') {
                 const typewriterEl = document.getElementById('typewriter');
@@ -3198,6 +3253,7 @@
             const labelCareers = document.getElementById('label-nav-careers');
             if (labelOverview) labelOverview.textContent = t.nav.overview;
             if (labelCareers) labelCareers.textContent = t.nav.careers;
+            updateNavIndicator(true);
 
             // Update Careers Header Text
             const title = document.getElementById('txt-careers-title');
@@ -3399,14 +3455,21 @@
         window.__updateSverkausLogoDock = (snap = true) => updateLogoDock(snap === true);
 
         window.addEventListener('scroll', scheduleLogoDock, { passive: true });
-        window.addEventListener('resize', () => updateLogoDock(true), { passive: true });
+        window.addEventListener('resize', () => {
+            updateLogoDock(true);
+            updateNavIndicator(true);
+        }, { passive: true });
         if ('ResizeObserver' in window && heroLogoSlot) {
             new ResizeObserver(() => updateLogoDock(true)).observe(heroLogoSlot);
         }
         if (document.fonts && document.fonts.ready) {
-            document.fonts.ready.then(() => updateLogoDock(true));
+            document.fonts.ready.then(() => {
+                updateLogoDock(true);
+                updateNavIndicator(true);
+            });
         }
         updateLogoDock(true);
+        updateNavIndicator(true);
 
         if (logoContainer) {
             const handleLogoActivate = () => {

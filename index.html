@@ -261,10 +261,8 @@
             box-sizing: border-box;
             border: none;
             border-radius: 14px;
-            background: rgba(28, 28, 30, 0.68);
-            backdrop-filter: blur(26px) saturate(185%);
-            -webkit-backdrop-filter: blur(26px) saturate(185%);
-            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+            background: #1c1c1c;
+            box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
@@ -550,15 +548,61 @@
         .env-tile {
             border-radius: 18px;
             background: rgba(255, 255, 255, 0.03);
-            padding: 18px 20px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             transition: background 0.2s ease;
         }
 
         .env-tile:hover {
             background: rgba(255, 255, 255, 0.05);
+        }
+
+        .env-visual-stage {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 12px;
+            background: #141414;
+            overflow: hidden;
+        }
+
+        .env-visual-stage img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.92) contrast(1.04);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+        }
+
+        .env-visual-stage::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            background: linear-gradient(180deg, rgba(20, 20, 20, 0.18) 0%, rgba(20, 20, 20, 0) 45%, rgba(20, 20, 20, 0.28) 100%);
+            pointer-events: none;
+        }
+
+        .env-tile:hover .env-visual-stage img {
+            transform: scale(1.035);
+            filter: brightness(0.98) contrast(1.05);
+        }
+
+        .env-visual-idx {
+            position: absolute;
+            top: 9px;
+            right: 10px;
+            z-index: 2;
+            padding: 3px 7px;
+            border-radius: 9999px;
+            background: rgba(28, 28, 28, 0.72);
+            font-size: 9.5px;
+            font-weight: 700;
+            color: #d4d4d8;
+            letter-spacing: 0.08em;
         }
 
         .env-tile-head {
@@ -596,16 +640,6 @@
             font-size: 11.5px;
             line-height: 1.55;
             color: #8f8f8f;
-        }
-
-        .mini-tag {
-            display: inline-flex;
-            align-items: center;
-            padding: 4px 10px;
-            border-radius: 9999px;
-            background: rgba(255, 255, 255, 0.05);
-            font-size: 10.5px;
-            color: #b8b8b8;
         }
 
         /* Clean 4-Node Provenance & QA Row */
@@ -660,78 +694,67 @@
         }
 
         /* Clean Coverage & Pilot Execution */
-        .pilot-coverage-grid {
+        .coverage-regions-grid {
             display: grid;
-            grid-template-columns: 0.9fr 1.1fr;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 12px;
         }
 
-        .info-panel {
-            border-radius: 18px;
+        .coverage-region-block {
+            border-radius: 16px;
             background: rgba(255, 255, 255, 0.03);
-            padding: 18px;
+            padding: 18px 20px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 6px;
         }
 
-        .geo-rows {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        .coverage-region-kicker {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #777777;
         }
 
-        .geo-row {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            padding: 12px 14px;
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.035);
+        .coverage-region-kicker.primary {
+            color: var(--accent-color);
         }
 
-        .geo-row-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+        .coverage-region-list {
             font-family: 'Outfit', sans-serif;
-            font-size: 14px;
+            font-size: 17px;
             font-weight: 600;
             color: #ffffff;
+            letter-spacing: -0.01em;
         }
 
-        .geo-row-meta {
-            font-size: 11px;
-            color: #8c8c8c;
-            padding-left: 14px;
+        .coverage-region-sub {
+            font-size: 11.5px;
+            line-height: 1.5;
+            color: #888888;
         }
 
         .pilot-track {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
         }
 
         .pilot-step {
             display: flex;
-            align-items: center;
+            align-items: baseline;
             gap: 12px;
-            padding: 9px 12px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.035);
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.025);
         }
 
         .pilot-step-num {
-            width: 24px;
-            height: 24px;
-            border-radius: 9999px;
-            background: rgba(163, 230, 53, 0.14);
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
             color: var(--accent-color);
-            font-size: 10px;
-            font-weight: 800;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
             flex-shrink: 0;
         }
 
@@ -742,37 +765,179 @@
         }
 
         .pilot-step-title {
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 700;
             color: #f0f0f0;
         }
 
         .pilot-step-sub {
-            font-size: 10.5px;
+            font-size: 11px;
             color: #888888;
         }
 
-        .spec-pills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            padding-top: 4px;
+        .spec-clean-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px 24px;
+            padding-top: 8px;
+        }
+
+        .spec-clean-item {
+            font-size: 11.5px;
+            color: #9e9e9e;
+            line-height: 1.5;
+        }
+
+        .spec-clean-item span {
+            color: #666666;
+            margin-right: 6px;
+            font-weight: 600;
         }
 
         @media (max-width: 768px) {
-            .qa-chain-grid {
+            .qa-chain-grid,
+            .coverage-regions-grid,
+            .pilot-track {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-            .pilot-coverage-grid {
-                grid-template-columns: 1fr;
             }
         }
 
         @media (max-width: 640px) {
             .env-visual-grid,
-            .qa-chain-grid {
+            .qa-chain-grid,
+            .coverage-regions-grid,
+            .pilot-track,
+            .spec-clean-list,
+            .partner-fields-row {
                 grid-template-columns: 1fr;
             }
+        }
+
+        /* Ultra-Minimalist Borderless Contact Form */
+        .partner-panel {
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .partner-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .partner-label {
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: #777777;
+        }
+
+        .partner-fields-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .partner-input,
+        .partner-textarea {
+            width: 100%;
+            box-sizing: border-box;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            color: #f4f4f5;
+            font-family: inherit;
+            font-size: 12.5px;
+            padding: 11px 13px;
+            outline: none;
+            transition: background 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .partner-input::placeholder,
+        .partner-textarea::placeholder {
+            color: #666666;
+        }
+
+        .partner-input:focus,
+        .partner-textarea:focus,
+        .partner-input:focus-visible,
+        .partner-textarea:focus-visible {
+            background: rgba(255, 255, 255, 0.065);
+            outline: none;
+            box-shadow: none;
+        }
+
+        .partner-textarea {
+            resize: vertical;
+            min-height: 76px;
+            line-height: 1.5;
+        }
+
+        .partner-hp {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .partner-submit-row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 16px;
+            padding-top: 2px;
+        }
+
+        .partner-submit-btn {
+            appearance: none;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 22px;
+            background: #ffffff;
+            color: #141414;
+            font-family: 'Outfit', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            cursor: pointer;
+            transition: background 0.18s ease, transform 0.18s ease, opacity 0.18s ease;
+        }
+
+        .partner-submit-btn:hover:not(:disabled) {
+            background: var(--accent-color);
+            transform: translateY(-1px);
+        }
+
+        .partner-submit-btn:disabled {
+            opacity: 0.55;
+            cursor: default;
+        }
+
+        .partner-status {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #8f8f8f;
+        }
+
+        .partner-status.success {
+            color: var(--accent-color);
+        }
+
+        .partner-status.error {
+            color: #f59e0b;
+        }
+
+        .partner-status a {
+            color: #ffffff;
+            text-decoration: underline;
+            text-underline-offset: 3px;
         }
 
         .subtle-note {
@@ -858,9 +1023,14 @@
         }
 
         .logo-icon {
-            width: 100%;
-            height: 100%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 215.3846%;
+            height: 215.3846%;
+            transform: translate(-50%, -50%);
             overflow: visible;
+            pointer-events: none;
         }
 
         /* Prevent mascot intro replay if already seen in session */
@@ -1842,7 +2012,7 @@
 
     <!-- Scroll-Linked Mascot Carrier (Glides smoothly from Hero Center into Header Left Slot) -->
     <div class="logo-icon-container logo-dock-carrier animating" id="logo-dock-carrier" role="button" tabindex="0" aria-label="Sverkaus mascot — click to replay or return to top" title="Sverkaus">
-        <svg class="logo-icon" id="star-svg" viewBox="-30 -30 260 260" shape-rendering="geometricPrecision">
+        <svg class="logo-icon" id="star-svg" viewBox="-180 -180 560 560" shape-rendering="geometricPrecision">
             <g id="star-root" class="star-root">
                 <g id="star-body" class="star-body">
                     <polygon id="star-polygon" points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#ffffff" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="10" />
@@ -1865,212 +2035,148 @@
             <div class="hero-fold">
                 <div class="center-content">
                     <div class="logo-hero-slot" id="logo-hero-slot" aria-hidden="true"></div>
-                    <p class="lab-name">Physical AI Data Lab</p>
+                    <p class="lab-name" data-i18n="hero.labName">Physical AI Data Lab</p>
                     <div class="tagline"><span id="typewriter"></span></div>
                 </div>
 
                 <div class="bottom-projects">
-                    <div class="hero-summary-line">Provide specialized ML-ready datasets</div>
+                    <div class="hero-summary-line" data-i18n="hero.summary">Provide specialized ML-ready datasets</div>
                 </div>
             </div>
 
             <!-- Simple Visual Pipeline + Minimal Blocks -->
             <div id="lab-details" class="overview-details">
-                <p class="lang-fallback-note" id="lang-fallback-overview">Technical overview and specifications below are provided in English.</p>
 
-                <!-- 01. Clean Interactive Capture Visual -->
-                <div class="overview-block" id="capture-viz">
-                    <div class="overview-kicker">Conceptual Illustration · Precision Assembly</div>
-                    <h2 class="overview-heading">Skilled Tasks. Structured Data.</h2>
-
-                    <div class="viz-wrap">
-                        <div class="viz-stage">
-                            <img src="/assets/capture-pov.jpg" alt="Conceptual first-person POV of a gloved technician aligning a locking industrial connector into an anodized receptacle" class="viz-base-img" id="viz-base-img">
-
-                            <svg class="viz-overlay-svg" viewBox="0 0 1000 558" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-                                <defs>
-                                    <radialGradient id="forcePulse" cx="50%" cy="50%" r="50%">
-                                        <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.52" />
-                                        <stop offset="55%" stop-color="#f59e0b" stop-opacity="0.16" />
-                                        <stop offset="100%" stop-color="#f59e0b" stop-opacity="0" />
-                                    </radialGradient>
-                                    <linearGradient id="trajGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" stop-color="#a3e635" stop-opacity="0.95" />
-                                        <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.7" />
-                                    </linearGradient>
-                                </defs>
-
-                                <!-- Clean Pose & Path Layer -->
-                                <g class="viz-layer-group hidden" id="viz-layer-pose" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M 458 262 C 520 270, 585 288, 692 325" fill="none" stroke="rgba(163,230,53,0.18)" stroke-width="14" />
-                                    <path d="M 458 262 C 520 270, 585 288, 692 325" fill="none" stroke="url(#trajGrad)" stroke-width="3" stroke-dasharray="6 6" />
-                                    <circle cx="458" cy="262" r="6" fill="#a3e635" />
-                                    <circle cx="624" cy="302" r="5" fill="#38bdf8" />
-                                    <circle cx="664" cy="264" r="5" fill="#38bdf8" />
-                                </g>
-
-                                <!-- Clean Contact Force Layer -->
-                                <g class="viz-layer-group hidden" id="viz-layer-force" stroke-linecap="round">
-                                    <circle cx="468" cy="265" r="58" fill="url(#forcePulse)" />
-                                    <circle cx="468" cy="265" r="14" fill="rgba(245,158,11,0.22)" stroke="#f59e0b" stroke-width="2" />
-                                </g>
-                            </svg>
-
-                            <div class="viz-stage-badge" id="viz-stage-badge">
-                                <span class="hud-dot lime" id="viz-stage-dot"></span>
-                                <span id="viz-stage-label">Baseline · First-person RGB</span>
-                            </div>
-                        </div>
-
-                        <div class="viz-mode-pills" role="group" aria-label="Capture overlay view">
-                            <button type="button" class="viz-mode-btn active" data-viz-mode="pov">POV Video</button>
-                            <button type="button" class="viz-mode-btn" data-viz-mode="pose">+ Pose &amp; Path</button>
-                            <button type="button" class="viz-mode-btn" data-viz-mode="force">+ Contact Force</button>
-                        </div>
-
-                        <p class="viz-caption" id="viz-caption" aria-live="polite">
-                            <strong>Baseline:</strong> Clean first-person video and task timing markers of skilled manual assembly.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- 02. Clean 2x2 Target Environments Grid -->
+                <!-- 01. Clean 2x2 Real Workflows & Simulation Grid -->
                 <div class="overview-block" id="environments-grid">
-                    <div class="overview-kicker">Target Environments · Illustrative Categories</div>
-                    <h2 class="overview-heading">Where We Collect.</h2>
+                    <div class="overview-kicker" data-i18n="env.kicker">Real Workflows &amp; Simulation · Data Environments</div>
+                    <h2 class="overview-heading" data-i18n="env.heading">Where We Collect.</h2>
                     <div class="env-visual-grid">
                         <div class="env-tile">
-                            <div class="env-tile-head">
-                                <svg class="env-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="8" height="8" rx="2" fill="currentColor" fill-opacity="0.14" /><rect x="13" y="8" width="8" height="8" rx="2" /><path d="M11 12h2" /></svg>
-                                <span class="env-idx">01</span>
+                            <div class="env-visual-stage">
+                                <img src="/assets/env-hotels.jpg?v=3" alt="Minimalist hotel bed linen and folded towel in natural morning light">
                             </div>
-                            <span class="env-tile-title">Manufacturing &amp; Assembly</span>
-                            <p class="env-tile-desc">Component mating, precision tool handling, and contact-rich workflows.</p>
+                            <span class="env-tile-title" data-i18n="env.hotels.title">Hotels &amp; Hospitality</span>
+                            <p class="env-tile-desc" data-i18n="env.hotels.desc">Room cleaning, ironing, laundry folding, and linen turnover in live hospitality spaces.</p>
                         </div>
 
                         <div class="env-tile">
-                            <div class="env-tile-head">
-                                <svg class="env-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 13h16a6 6 0 0 1-12 0Z" fill="currentColor" fill-opacity="0.14" /><path d="M15 5l3 3-4 4" /></svg>
-                                <span class="env-idx">02</span>
+                            <div class="env-visual-stage">
+                                <img src="/assets/env-barista.jpg?v=4" alt="Modern specialty cafe and restaurant interior with stainless steel espresso bar and seating">
                             </div>
-                            <span class="env-tile-title">Food Preparation</span>
-                            <p class="env-tile-desc">Cutting, sorting, utensil control, and repeatable prep sequences.</p>
+                            <span class="env-tile-title" data-i18n="env.barista.title">Restaurants, Cafés &amp; Barista</span>
+                            <p class="env-tile-desc" data-i18n="env.barista.desc">Food prep, kitchen line assembly, espresso stations, and repeatable service workflows.</p>
                         </div>
 
                         <div class="env-tile">
-                            <div class="env-tile-head">
-                                <svg class="env-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l8-4 8 4v10l-8 4-8-4Z" fill="currentColor" fill-opacity="0.14" /><path d="M4 7l8 4 8-4M12 11v10" /></svg>
-                                <span class="env-idx">03</span>
+                            <div class="env-visual-stage">
+                                <img src="/assets/env-construction.jpg?v=4" alt="Over-the-shoulder view behind a construction worker in an orange hard hat looking at a building site and crane">
                             </div>
-                            <span class="env-tile-title">Warehouse &amp; Logistics</span>
-                            <p class="env-tile-desc">Picking, packing, sorting, and multi-object bin manipulation.</p>
+                            <span class="env-tile-title" data-i18n="env.construction.title">Construction &amp; Workshops</span>
+                            <p class="env-tile-desc" data-i18n="env.construction.desc">Jobsite builds, workshop benches, fastening, and hands-on power-tool operation.</p>
                         </div>
 
                         <div class="env-tile">
-                            <div class="env-tile-head">
-                                <svg class="env-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z" fill="currentColor" fill-opacity="0.14" /></svg>
-                                <span class="env-idx">04</span>
+                            <div class="env-visual-stage">
+                                <img src="/assets/env-simulation.jpg?v=3" alt="Operator in motion-capture suit, sensor gloves, and kinematic exoskeleton capturing manipulation data">
                             </div>
-                            <span class="env-tile-title">Maintenance &amp; Tool Use</span>
-                            <p class="env-tile-desc">Fastening, equipment servicing, and technical repair tasks.</p>
+                            <span class="env-tile-title" data-i18n="env.simulation.title">Simulated Processes</span>
+                            <p class="env-tile-desc" data-i18n="env.simulation.desc">Controlled simulation of real workflows, edge cases, and repeatable task variations.</p>
                         </div>
                     </div>
-                    <p class="subtle-note">
-                        <strong>Illustrative scope only</strong> — sites, permissions &amp; sensor setups confirmed per pilot.
+                    <p class="subtle-note" data-i18n-html="env.note">
+                        <strong>Live &amp; simulated capture</strong> — real-world sites and controlled setups configured per pilot.
                     </p>
                 </div>
 
                 <!-- 03. Clean 4-Node Provenance, Privacy & QA Chain -->
                 <div class="overview-block" id="provenance-visual">
-                    <div class="overview-kicker">Verifiable Foundations · Data Governance</div>
-                    <h2 class="overview-heading">Provenance, Privacy &amp; QA.</h2>
+                    <div class="overview-kicker" data-i18n="prov.kicker">Verifiable Foundations · Data Governance</div>
+                    <h2 class="overview-heading" data-i18n="prov.heading">Provenance, Privacy &amp; QA.</h2>
                     <div class="qa-chain-grid">
                         <div class="qa-node">
                             <div class="qa-node-top">
                                 <svg class="qa-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.2-7 10-4-1.8-7-5.5-7-10V6l7-3z" fill="currentColor" fill-opacity="0.14" /><path d="M9 12l2 2 4-4" /></svg>
                                 <span class="qa-step-num">01</span>
                             </div>
-                            <div class="qa-node-title">Authorized Access</div>
-                            <div class="qa-node-desc">Site permissions &amp; operator consent per pilot.</div>
+                            <div class="qa-node-title" data-i18n="prov.n1.title">Authorized Access</div>
+                            <div class="qa-node-desc" data-i18n="prov.n1.desc">Site permissions &amp; operator consent per pilot.</div>
                         </div>
                         <div class="qa-node">
                             <div class="qa-node-top">
                                 <svg class="qa-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="14" rx="3" fill="currentColor" fill-opacity="0.14" /><circle cx="12" cy="12" r="3" /></svg>
                                 <span class="qa-step-num">02</span>
                             </div>
-                            <div class="qa-node-title">Privacy Review</div>
-                            <div class="qa-node-desc">Scoped FOV, cropping &amp; obscuring pre-delivery.*</div>
+                            <div class="qa-node-title" data-i18n="prov.n2.title">Privacy Review</div>
+                            <div class="qa-node-desc" data-i18n="prov.n2.desc">Scoped FOV, cropping &amp; obscuring pre-delivery.*</div>
                         </div>
                         <div class="qa-node">
                             <div class="qa-node-top">
                                 <svg class="qa-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h4l2-5 4 10 3-5h5" /></svg>
                                 <span class="qa-step-num">03</span>
                             </div>
-                            <div class="qa-node-title">Sync &amp; QA Gates</div>
-                            <div class="qa-node-desc">Checks for frame sync, task match &amp; labels.</div>
+                            <div class="qa-node-title" data-i18n="prov.n3.title">Sync &amp; QA Gates</div>
+                            <div class="qa-node-desc" data-i18n="prov.n3.desc">Checks for frame sync, task match &amp; labels.</div>
                         </div>
                         <div class="qa-node">
                             <div class="qa-node-top">
                                 <svg class="qa-node-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="7" r="3" fill="currentColor" fill-opacity="0.16" /><circle cx="17" cy="17" r="3" fill="currentColor" fill-opacity="0.16" /><path d="M9.5 8.5l5 7" /></svg>
                                 <span class="qa-step-num">04</span>
                             </div>
-                            <div class="qa-node-title">Origin Manifest</div>
-                            <div class="qa-node-desc">Traceable setup, rights &amp; QA records per batch.</div>
+                            <div class="qa-node-title" data-i18n="prov.n4.title">Origin Manifest</div>
+                            <div class="qa-node-desc" data-i18n="prov.n4.desc">Traceable setup, rights &amp; QA records per batch.</div>
                         </div>
                     </div>
-                    <p class="subtle-note">
+                    <p class="subtle-note" data-i18n="prov.note">
                         *Face obscuring alone does not guarantee complete anonymization · Agreed per engagement without unverified certification claims.
                     </p>
                 </div>
 
                 <!-- 04. Clean Coverage & Pilot Execution -->
                 <div class="overview-block" id="pilot-coverage">
-                    <div class="overview-kicker">Operations &amp; Delivery · Project-Based</div>
-                    <h2 class="overview-heading">Coverage &amp; Pilot Execution.</h2>
-                    <div class="pilot-coverage-grid">
-                        <div class="info-panel">
-                            <div class="geo-rows">
-                                <div class="geo-row">
-                                    <span class="geo-row-label"><span class="hud-dot lime"></span>Ukraine · Primary</span>
-                                    <span class="geo-row-meta">Confirmed skilled operator network</span>
-                                </div>
-                                <div class="geo-row">
-                                    <span class="geo-row-label"><span class="hud-dot amber"></span>Germany · Project-specific</span>
-                                    <span class="geo-row-meta">Organized when scope justifies cost</span>
-                                </div>
+                    <div class="overview-kicker" data-i18n="pilot.kicker">Operations &amp; Delivery · Project-Based</div>
+                    <h2 class="overview-heading" data-i18n="pilot.heading">Coverage &amp; Pilot Execution.</h2>
+
+                    <div class="coverage-regions-grid">
+                        <div class="coverage-region-block">
+                            <span class="coverage-region-kicker primary" data-i18n="pilot.primaryKicker">Primary Regions</span>
+                            <div class="coverage-region-list" data-i18n="pilot.primaryList">Ukraine · Poland · Germany</div>
+                            <div class="coverage-region-sub" data-i18n="pilot.primarySub">Active operator &amp; partner site networks for on-site collection.</div>
+                        </div>
+                        <div class="coverage-region-block">
+                            <span class="coverage-region-kicker" data-i18n="pilot.extKicker">Extended · On Request</span>
+                            <div class="coverage-region-list" data-i18n="pilot.extList">Australia · Singapore · Canada</div>
+                            <div class="coverage-region-sub" data-i18n="pilot.extSub">Additional locations arranged when pilot scope aligns.</div>
+                        </div>
+                    </div>
+
+                    <div class="pilot-track">
+                        <div class="pilot-step">
+                            <span class="pilot-step-num">01</span>
+                            <div class="pilot-step-body">
+                                <span class="pilot-step-title" data-i18n="pilot.s1.title">Define Task &amp; Modalities</span>
+                                <span class="pilot-step-sub" data-i18n="pilot.s1.sub">Target workflow, sensors &amp; schema</span>
                             </div>
                         </div>
-
-                        <div class="info-panel">
-                            <div class="pilot-track">
-                                <div class="pilot-step">
-                                    <span class="pilot-step-num">01</span>
-                                    <div class="pilot-step-body">
-                                        <span class="pilot-step-title">Define Task &amp; Modalities</span>
-                                        <span class="pilot-step-sub">Target workflow, sensors &amp; schema</span>
-                                    </div>
-                                </div>
-                                <div class="pilot-step">
-                                    <span class="pilot-step-num">02</span>
-                                    <div class="pilot-step-body">
-                                        <span class="pilot-step-title">Confirm Site &amp; Rig</span>
-                                        <span class="pilot-step-sub">Workplace permissions &amp; hardware</span>
-                                    </div>
-                                </div>
-                                <div class="pilot-step">
-                                    <span class="pilot-step-num">03</span>
-                                    <div class="pilot-step-body">
-                                        <span class="pilot-step-title">Agree Scope &amp; QA Gate</span>
-                                        <span class="pilot-step-sub">Episode quota, price &amp; acceptance</span>
-                                    </div>
-                                </div>
-                                <div class="pilot-step">
-                                    <span class="pilot-step-num">04</span>
-                                    <div class="pilot-step-body">
-                                        <span class="pilot-step-title">Collect &amp; Deliver ML Batch</span>
-                                        <span class="pilot-step-sub">Synced episodes + provenance log</span>
-                                    </div>
-                                </div>
+                        <div class="pilot-step">
+                            <span class="pilot-step-num">02</span>
+                            <div class="pilot-step-body">
+                                <span class="pilot-step-title" data-i18n="pilot.s2.title">Confirm Site &amp; Rig</span>
+                                <span class="pilot-step-sub" data-i18n="pilot.s2.sub">Workplace permissions &amp; hardware</span>
+                            </div>
+                        </div>
+                        <div class="pilot-step">
+                            <span class="pilot-step-num">03</span>
+                            <div class="pilot-step-body">
+                                <span class="pilot-step-title" data-i18n="pilot.s3.title">Agree Scope &amp; QA Gate</span>
+                                <span class="pilot-step-sub" data-i18n="pilot.s3.sub">Episode quota, price &amp; acceptance</span>
+                            </div>
+                        </div>
+                        <div class="pilot-step">
+                            <span class="pilot-step-num">04</span>
+                            <div class="pilot-step-body">
+                                <span class="pilot-step-title" data-i18n="pilot.s4.title">Collect &amp; Deliver ML Batch</span>
+                                <span class="pilot-step-sub" data-i18n="pilot.s4.sub">Synced episodes + provenance log</span>
                             </div>
                         </div>
                     </div>
@@ -2079,7 +2185,7 @@
                     <div class="vacancy-item" id="acc-pilot-specs" style="padding-top: 8px;">
                         <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="false" aria-controls="body-pilot-specs" onclick="toggleVacancy('acc-pilot-specs')">
                             <div class="vacancy-info-col">
-                                <div class="vacancy-meta"><strong>Technical Spec Sign-Off</strong> · 7 parameters aligned before recording</div>
+                                <div class="vacancy-meta" data-i18n-html="pilot.specMeta"><strong>Technical Spec Sign-Off</strong> · 7 parameters aligned before recording</div>
                             </div>
                             <div class="vacancy-toggle-indicator">
                                 <span class="toggle-text">Details</span>
@@ -2087,30 +2193,56 @@
                             </div>
                         </div>
                         <div class="vacancy-expandable-body" id="body-pilot-specs">
-                            <div class="spec-pills-grid">
-                                <span class="mini-tag">01 Task &amp; environment</span>
-                                <span class="mini-tag">02 Sensors &amp; camera rig</span>
-                                <span class="mini-tag">03 Resolution, FPS &amp; timestamps</span>
-                                <span class="mini-tag">04 Calibration &amp; sync</span>
-                                <span class="mini-tag">05 Schema &amp; delivery format</span>
-                                <span class="mini-tag">06 QA &amp; acceptance criteria</span>
-                                <span class="mini-tag">07 Hardware ownership &amp; logistics</span>
+                            <div class="spec-clean-list">
+                                <div class="spec-clean-item"><span>01</span><em style="font-style: normal;" data-i18n="pilot.spec1">Task &amp; environment</em></div>
+                                <div class="spec-clean-item"><span>02</span><em style="font-style: normal;" data-i18n="pilot.spec2">Sensors &amp; camera rig</em></div>
+                                <div class="spec-clean-item"><span>03</span><em style="font-style: normal;" data-i18n="pilot.spec3">Resolution, FPS &amp; timestamps</em></div>
+                                <div class="spec-clean-item"><span>04</span><em style="font-style: normal;" data-i18n="pilot.spec4">Calibration &amp; sync</em></div>
+                                <div class="spec-clean-item"><span>05</span><em style="font-style: normal;" data-i18n="pilot.spec5">Schema &amp; delivery format</em></div>
+                                <div class="spec-clean-item"><span>06</span><em style="font-style: normal;" data-i18n="pilot.spec6">QA &amp; acceptance criteria</em></div>
+                                <div class="spec-clean-item"><span>07</span><em style="font-style: normal;" data-i18n="pilot.spec7">Hardware ownership &amp; logistics</em></div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 05. Compact Contact Line -->
+                <!-- 05. Ultra-Minimalist Contact Form -->
                 <div class="overview-block" id="contact">
-                    <div class="overview-kicker">Contact</div>
-                    <h2 class="overview-heading">Let’s scope your dataset.</h2>
-                    <p class="subtle-note">
-                        Share task details, target modalities, pilot volume &amp; sensor setup.
+                    <div class="overview-kicker" data-i18n="contact.kicker">Contact</div>
+                    <h2 class="overview-heading" data-i18n="contact.heading">Work with us.</h2>
+                    <p class="subtle-note" data-i18n="contact.subtitle">
+                        Have a question, site partnership, or dataset request? Send a short message directly to our team.
                     </p>
+
+                    <form id="partner-form" class="partner-panel" novalidate>
+                        <div class="partner-fields-row">
+                            <div class="partner-group">
+                                <label class="partner-label" for="partner-name" data-i18n="contact.nameLabel">Name</label>
+                                <input class="partner-input" id="partner-name" name="name" type="text" maxlength="160" placeholder="Your name" data-i18n-placeholder="contact.namePlaceholder" required>
+                            </div>
+                            <div class="partner-group">
+                                <label class="partner-label" for="partner-email" data-i18n="contact.emailLabel">Email</label>
+                                <input class="partner-input" id="partner-email" name="email" type="email" maxlength="160" placeholder="you@company.com" data-i18n-placeholder="contact.emailPlaceholder" required>
+                            </div>
+                        </div>
+
+                        <div class="partner-group">
+                            <label class="partner-label" for="partner-message" data-i18n="contact.msgLabel">Question</label>
+                            <textarea class="partner-textarea" id="partner-message" name="message" maxlength="1500" placeholder="Your question, venue details, or dataset request..." data-i18n-placeholder="contact.msgPlaceholder" required></textarea>
+                        </div>
+
+                        <input class="partner-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+                        <div class="partner-submit-row">
+                            <button type="submit" class="partner-submit-btn" id="partner-submit-btn" data-i18n="contact.sendBtn">Send</button>
+                            <span class="partner-status" id="partner-status" aria-live="polite"></span>
+                        </div>
+                    </form>
+
                     <div class="contact-inline">
                         <a href="mailto:gleb@sverkaus.com?subject=Data%20Collection%20Pilot%20-%20Sverkaus" class="bold-link">gleb@sverkaus.com</a>
                         <a href="mailto:main@sverkaus.com?subject=Sverkaus%20Data%20Collection%20Inquiry" class="bold-link">main@sverkaus.com</a>
-                        <span class="subtle-note">sverkaus.com · <a href="#careers" class="bold-link" onclick="switchTab('careers'); return false;">Site Partnerships</a></span>
+                        <span class="subtle-note">sverkaus.com · <a href="#careers" class="bold-link" onclick="switchTab('careers'); return false;" data-i18n="contact.sitePartnerships">Site Partnerships</a></span>
                     </div>
                 </div>
             </div>
@@ -2132,9 +2264,9 @@
                     <div class="vacancy-item expanded" id="vacancy-data-partner">
                         <div class="vacancy-row-header" role="button" tabindex="0" aria-expanded="true" aria-controls="body-data-partner" onclick="toggleVacancy('vacancy-data-partner')">
                             <div class="vacancy-info-col">
-                                <span class="vacancy-eyebrow">Partnership Opportunity</span>
-                                <h2 class="vacancy-title">Data Collection Site Partner</h2>
-                                <div class="vacancy-meta"><strong>Ukraine</strong> · Paid Partnership · Project-based</div>
+                                <span class="vacancy-eyebrow" data-i18n="careers.eyebrow">Partnership Opportunity</span>
+                                <h2 class="vacancy-title" data-i18n="careers.roleTitle">Data Collection Site Partner</h2>
+                                <div class="vacancy-meta" data-i18n-html="careers.roleMeta"><strong>Ukraine</strong> · Paid Partnership · Project-based</div>
                             </div>
                             <div class="vacancy-toggle-indicator">
                                 <span class="toggle-text">Close</span>
@@ -2144,41 +2276,41 @@
                         <div class="vacancy-expandable-body" id="body-data-partner">
                             <div class="vacancy-expandable-content">
                                 <div class="content-group">
-                                    <div class="group-title">Overview</div>
-                                    <p class="group-text">
+                                    <div class="group-title" data-i18n="careers.overviewTitle">Overview</div>
+                                    <p class="group-text" data-i18n="careers.overviewP1">
                                         We're looking for business owners and industry professionals who can provide access to workspaces, equipment, and specialized expertise for robotics data collection.
                                     </p>
-                                    <p class="group-text">
+                                    <p class="group-text" data-i18n="careers.overviewP2">
                                         We welcome partnerships with workshops, warehouses, restaurants, manufacturing facilities, and other real-world environments.
                                     </p>
                                 </div>
                                 <div class="content-group">
                                     <div class="requirements-split">
                                         <div>
-                                            <div class="subgroup-title">Coordination</div>
+                                            <div class="subgroup-title" data-i18n="careers.coordTitle">Coordination</div>
                                             <ul class="clean-list">
-                                                <li><strong>Sverkaus coordinates data collection:</strong> recording procedures, quality control, and on-site execution stay under our management.</li>
-                                                <li><strong>Provide access, not datasets:</strong> partners provide access to real workspaces, equipment, and specialized expertise.</li>
-                                                <li><strong>Permissions &amp; agreements:</strong> necessary permissions and agreements are arranged for each collaboration.</li>
+                                                <li data-i18n-html="careers.coord1"><strong>Sverkaus coordinates data collection:</strong> recording procedures, quality control, and on-site execution stay under our management.</li>
+                                                <li data-i18n-html="careers.coord2"><strong>Provide access, not datasets:</strong> partners provide access to real workspaces, equipment, and specialized expertise.</li>
+                                                <li data-i18n-html="careers.coord3"><strong>Permissions &amp; agreements:</strong> necessary permissions and agreements are arranged for each collaboration.</li>
                                             </ul>
                                         </div>
                                         <div>
-                                            <div class="subgroup-title">Terms</div>
+                                            <div class="subgroup-title" data-i18n="careers.termsTitle">Terms</div>
                                             <ul class="clean-list">
-                                                <li><strong>Project-based:</strong> flexible scheduling and compensation agreed individually for each project.</li>
-                                                <li><strong>Real-world focus:</strong> workshops, warehouses, restaurants, manufacturing facilities, and skilled workflows.</li>
-                                                <li><strong>Low operational overhead:</strong> planned around your regular schedule.</li>
+                                                <li data-i18n-html="careers.terms1"><strong>Project-based:</strong> flexible scheduling and compensation agreed individually for each project.</li>
+                                                <li data-i18n-html="careers.terms2"><strong>Real-world focus:</strong> workshops, warehouses, restaurants, manufacturing facilities, and skilled workflows.</li>
+                                                <li data-i18n-html="careers.terms3"><strong>Low operational overhead:</strong> planned around your regular schedule.</li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="content-group apply-group">
-                                    <div class="group-title">Contact</div>
-                                    <p class="group-text">
-                                        Interested? Contact us at <a href="mailto:main@sverkaus.com?subject=Data%20Collection%20Site%20Partner" class="bold-link">main@sverkaus.com</a>.
+                                    <div class="group-title" data-i18n="careers.contactTitle">Contact</div>
+                                    <p class="group-text" data-i18n-html="careers.contactLead">
+                                        Interested? <a href="#contact" class="bold-link" onclick="openPartnerForm(); return false;">Apply via Partner Form</a> or email <a href="mailto:main@sverkaus.com?subject=Data%20Collection%20Site%20Partner" class="bold-link">main@sverkaus.com</a>.
                                     </p>
-                                    <p class="apply-note">
-                                        Share a brief overview of your workspace, equipment, or domain expertise and your location in Ukraine.
+                                    <p class="apply-note" data-i18n="careers.contactNote">
+                                        Share a brief overview of your workspace, equipment, or domain expertise and your location.
                                     </p>
                                 </div>
                             </div>
@@ -2186,7 +2318,7 @@
                     </div>
                 </div>
 
-                <div class="careers-footer-note">
+                <div class="careers-footer-note" data-i18n-html="careers.footerNote">
                     Don't see your role? We're always open to exceptional engineers and builders: <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>
                 </div>
 
@@ -2197,102 +2329,654 @@
 
 
     <script>
-        // Translation Dictionary
+        // Translation Dictionary (Full Page Coverage across all 6 languages)
         const translations = {
             en: {
                 tagline: "Teach robots with real-world human experience",
-                projects: {
-                    diskpulse: "Keeps your Mac's disk from filling up — safe cleanup for developers, open source",
-                    any: "Local voice dictation for Mac — your speech stays on your device"
-                },
-                badgeInfo: "Details →",
                 nav: {
                     overview: "Overview",
                     careers: "Careers"
                 },
+                ui: {
+                    details: "Details",
+                    close: "Close"
+                },
+                hero: {
+                    labName: "Physical AI Data Lab",
+                    summary: "Provide specialized ML-ready datasets"
+                },
+                env: {
+                    kicker: "Real Workflows & Simulation · Data Environments",
+                    heading: "Where We Collect.",
+                    hotels: {
+                        title: "Hotels & Hospitality",
+                        desc: "Room cleaning, ironing, laundry folding, and linen turnover in live hospitality spaces."
+                    },
+                    barista: {
+                        title: "Restaurants, Cafés & Barista",
+                        desc: "Food prep, kitchen line assembly, espresso stations, and repeatable service workflows."
+                    },
+                    construction: {
+                        title: "Construction & Workshops",
+                        desc: "Jobsite builds, workshop benches, fastening, and hands-on power-tool operation."
+                    },
+                    simulation: {
+                        title: "Simulated Processes",
+                        desc: "Controlled simulation of real workflows, edge cases, and repeatable task variations."
+                    },
+                    note: "<strong>Live &amp; simulated capture</strong> — real-world sites and controlled setups configured per pilot."
+                },
+                prov: {
+                    kicker: "Verifiable Foundations · Data Governance",
+                    heading: "Provenance, Privacy & QA.",
+                    n1: { title: "Authorized Access", desc: "Site permissions & operator consent per pilot." },
+                    n2: { title: "Privacy Review", desc: "Scoped FOV, cropping & obscuring pre-delivery.*" },
+                    n3: { title: "Sync & QA Gates", desc: "Checks for frame sync, task match & labels." },
+                    n4: { title: "Origin Manifest", desc: "Traceable setup, rights & QA records per batch." },
+                    note: "*Face obscuring alone does not guarantee complete anonymization · Agreed per engagement without unverified certification claims."
+                },
+                pilot: {
+                    kicker: "Operations & Delivery · Project-Based",
+                    heading: "Coverage & Pilot Execution.",
+                    primaryKicker: "Primary Regions",
+                    primaryList: "Ukraine · Poland · Germany",
+                    primarySub: "Active operator & partner site networks for on-site collection.",
+                    extKicker: "Extended · On Request",
+                    extList: "Australia · Singapore · Canada",
+                    extSub: "Additional locations arranged when pilot scope aligns.",
+                    s1: { title: "Define Task & Modalities", sub: "Target workflow, sensors & schema" },
+                    s2: { title: "Confirm Site & Rig", sub: "Workplace permissions & hardware" },
+                    s3: { title: "Agree Scope & QA Gate", sub: "Episode quota, price & acceptance" },
+                    s4: { title: "Collect & Deliver ML Batch", sub: "Synced episodes + provenance log" },
+                    specMeta: "<strong>Technical Spec Sign-Off</strong> · 7 parameters aligned before recording",
+                    spec1: "Task & environment",
+                    spec2: "Sensors & camera rig",
+                    spec3: "Resolution, FPS & timestamps",
+                    spec4: "Calibration & sync",
+                    spec5: "Schema & delivery format",
+                    spec6: "QA & acceptance criteria",
+                    spec7: "Hardware ownership & logistics"
+                },
+                contact: {
+                    kicker: "Contact",
+                    heading: "Work with us.",
+                    subtitle: "Have a question, site partnership, or dataset request? Send a short message directly to our team.",
+                    nameLabel: "Name",
+                    namePlaceholder: "Your name",
+                    emailLabel: "Email",
+                    emailPlaceholder: "you@company.com",
+                    msgLabel: "Question",
+                    msgPlaceholder: "Your question, venue details, or dataset request...",
+                    sendBtn: "Send",
+                    sendingBtn: "Sending...",
+                    errMissing: "Please fill in your name, email, and question.",
+                    sentOk: "Sent — we will get back to you shortly.",
+                    errFallback: "Direct send unavailable right now.",
+                    errNetwork: "Network issue.",
+                    sendEmail: "Send via email",
+                    sitePartnerships: "Site Partnerships"
+                },
                 careers: {
                     title: "CAREERS",
-                    tagline: "Physical AI Data Lab · Teach robots with real-world human experience."
+                    tagline: "Physical AI Data Lab · Teach robots with real-world human experience.",
+                    eyebrow: "Partnership Opportunity",
+                    roleTitle: "Data Collection Site Partner",
+                    roleMeta: "<strong>Ukraine</strong> · Paid Partnership · Project-based",
+                    overviewTitle: "Overview",
+                    overviewP1: "We're looking for business owners and industry professionals who can provide access to workspaces, equipment, and specialized expertise for robotics data collection.",
+                    overviewP2: "We welcome partnerships with workshops, warehouses, restaurants, manufacturing facilities, and other real-world environments.",
+                    coordTitle: "Coordination",
+                    coord1: "<strong>Sverkaus coordinates data collection:</strong> recording procedures, quality control, and on-site execution stay under our management.",
+                    coord2: "<strong>Provide access, not datasets:</strong> partners provide access to real workspaces, equipment, and specialized expertise.",
+                    coord3: "<strong>Permissions &amp; agreements:</strong> necessary permissions and agreements are arranged for each collaboration.",
+                    termsTitle: "Terms",
+                    terms1: "<strong>Project-based:</strong> flexible scheduling and compensation agreed individually for each project.",
+                    terms2: "<strong>Real-world focus:</strong> workshops, warehouses, restaurants, manufacturing facilities, and skilled workflows.",
+                    terms3: "<strong>Low operational overhead:</strong> planned around your regular schedule.",
+                    contactTitle: "Contact",
+                    contactLead: 'Interested? <a href="#contact" class="bold-link" onclick="openPartnerForm(); return false;">Apply via Partner Form</a> or email <a href="mailto:main@sverkaus.com?subject=Data%20Collection%20Site%20Partner" class="bold-link">main@sverkaus.com</a>.',
+                    contactNote: "Share a brief overview of your workspace, equipment, or domain expertise and your location.",
+                    footerNote: 'Don\'t see your role? We\'re always open to exceptional engineers and builders: <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>'
                 }
             },
             zh: {
                 tagline: "用真实世界的人类经验训练机器人",
-                projects: {
-                    diskpulse: "防止 Mac 磁盘被占满 — 面向开发者的安全清理，开源",
-                    any: "Mac 本地语音输入 — 语音留在你的设备上"
-                },
-                badgeInfo: "详情 →",
                 nav: {
                     overview: "概览",
                     careers: "招聘"
                 },
+                ui: {
+                    details: "详情",
+                    close: "收起"
+                },
+                hero: {
+                    labName: "Physical AI 数据实验室",
+                    summary: "提供面向机器学习的专用高质量数据集"
+                },
+                env: {
+                    kicker: "真实工作流与仿真 · 数据采集环境",
+                    heading: "采集场景",
+                    hotels: {
+                        title: "酒店与住宿服务",
+                        desc: "真实酒店空间内的客房整理、熨烫、衣物折叠与布草更换流程。"
+                    },
+                    barista: {
+                        title: "餐厅、咖啡馆与咖啡师",
+                        desc: "备餐、后厨配餐线、意式浓缩咖啡台及可复用的服务流程。"
+                    },
+                    construction: {
+                        title: "建筑工地与车间",
+                        desc: "工地施工、车间工作台操作、紧固作业与电动工具实操。"
+                    },
+                    simulation: {
+                        title: "仿真流程",
+                        desc: "对真实工作流、边缘场景及可重复任务变体的可控仿真采集。"
+                    },
+                    note: "<strong>实地与仿真采集</strong> — 根据每个试点项目配置真实场地与可控采集环境。"
+                },
+                prov: {
+                    kicker: "可验证基础 · 数据治理",
+                    heading: "溯源、隐私与质检",
+                    n1: { title: "授权准入", desc: "按试点项目签署场地许可与操作员同意书。" },
+                    n2: { title: "隐私审查", desc: "交付前完成视角限定、画面裁剪与脱敏处理。*" },
+                    n3: { title: "同步与质检门控", desc: "校验帧同步、任务匹配度与标注完整性。" },
+                    n4: { title: "溯源清单", desc: "每批次附带可追溯的设备配置、授权与质检记录。" },
+                    note: "*仅进行人脸模糊处理无法保证完全匿名化 · 按具体合作项目约定，不做未经核实的认证声明。"
+                },
+                pilot: {
+                    kicker: "运营与交付 · 项目制",
+                    heading: "区域覆盖与试点执行",
+                    primaryKicker: "核心区域",
+                    primaryList: "乌克兰 · 波兰 · 德国",
+                    primarySub: "拥有活跃的操作员与合作场地网络，支持实地数据采集。",
+                    extKicker: "扩展区域 · 按需开放",
+                    extList: "澳大利亚 · 新加坡 · 加拿大",
+                    extSub: "当试点项目范围匹配时，可协调安排更多地区的实地采集。",
+                    s1: { title: "明确任务与模态", sub: "目标工作流、传感器与数据格式" },
+                    s2: { title: "确认场地与设备", sub: "作业许可与采集硬件配置" },
+                    s3: { title: "确定范围与质检标准", sub: "片段配额、报价与验收门槛" },
+                    s4: { title: "采集并交付 ML 批次", sub: "同步数据片段 + 完整溯源日志" },
+                    specMeta: "<strong>技术规格确认</strong> · 录制前对齐 7 项核心参数",
+                    spec1: "任务与采集环境",
+                    spec2: "传感器与相机阵列",
+                    spec3: "分辨率、帧率与时间戳",
+                    spec4: "标定与时间同步",
+                    spec5: "数据结构与交付格式",
+                    spec6: "质检与验收标准",
+                    spec7: "硬件归属与物流安排"
+                },
+                contact: {
+                    kicker: "联系我们",
+                    heading: "与我们合作",
+                    subtitle: "有疑问、场地合作意向或数据集需求？直接向我们的团队发送简短消息。",
+                    nameLabel: "姓名",
+                    namePlaceholder: "您的姓名",
+                    emailLabel: "邮箱",
+                    emailPlaceholder: "you@company.com",
+                    msgLabel: "问题或需求",
+                    msgPlaceholder: "您的问题、场地信息或数据集需求...",
+                    sendBtn: "发送",
+                    sendingBtn: "发送中...",
+                    errMissing: "请填写姓名、邮箱和问题内容。",
+                    sentOk: "已发送 — 我们将尽快与您联系。",
+                    errFallback: "当前无法直接发送。",
+                    errNetwork: "网络连接异常。",
+                    sendEmail: "改用邮件发送",
+                    sitePartnerships: "场地合作"
+                },
                 careers: {
                     title: "招贤纳士",
-                    tagline: "Physical AI Data Lab · 用真实世界的人类经验训练机器人。"
+                    tagline: "Physical AI 数据实验室 · 用真实世界的人类经验训练机器人。",
+                    eyebrow: "合作机会",
+                    roleTitle: "数据采集场地合作伙伴",
+                    roleMeta: "<strong>乌克兰</strong> · 付费合作 · 项目制",
+                    overviewTitle: "项目简介",
+                    overviewP1: "我们正在寻找能够提供工作场所、设备及专业经验的企业主与行业从业者，共同开展机器人数据采集。",
+                    overviewP2: "欢迎车间、仓库、餐厅、制造工厂及其他真实作业环境与我们建立合作。",
+                    coordTitle: "协作方式",
+                    coord1: "<strong>Sverkaus 负责采集协调：</strong> 录制流程、质量控制及现场执行均由我们团队统一管理。",
+                    coord2: "<strong>提供场地而非数据集：</strong> 合作伙伴只需提供真实工作空间、设备及专业操作经验。",
+                    coord3: "<strong>许可与协议：</strong> 每次合作均会提前签署所需的场地许可与合作协议。",
+                    termsTitle: "合作条款",
+                    terms1: "<strong>项目制合作：</strong> 时间安排灵活，报酬按单个项目独立协商确定。",
+                    terms2: "<strong>聚焦真实场景：</strong> 涵盖车间、仓库、餐厅、制造工厂及专业技能流程。",
+                    terms3: "<strong>低运营干扰：</strong> 围绕您的日常营业与生产节奏进行排期。",
+                    contactTitle: "联系方式",
+                    contactLead: '有兴趣合作？<a href="#contact" class="bold-link" onclick="openPartnerForm(); return false;">通过合作表单申请</a>或发送邮件至 <a href="mailto:main@sverkaus.com?subject=Data%20Collection%20Site%20Partner" class="bold-link">main@sverkaus.com</a>。',
+                    contactNote: "请简要介绍您的场地情况、设备条件、行业专长及所在城市。",
+                    footerNote: '未找到合适方向？我们始终欢迎优秀的工程师与创造者联系：<a href="mailto:main@sverkaus.com">main@sverkaus.com</a>'
                 }
             },
             hi: {
                 tagline: "वास्तविक दुनिया के मानवीय अनुभव से रोबोट को सिखाना",
-                projects: {
-                    diskpulse: "आपके Mac की डिस्क भरने नहीं देता — डेवलपर्स के लिए सुरक्षित सफ़ाई, ओपन सोर्स",
-                    any: "Mac के लिए स्थानीय वॉइस डिक्टेशन — आपकी आवाज़ आपके डिवाइस पर रहती है"
-                },
-                badgeInfo: "विवरण →",
                 nav: {
                     overview: "अवलोकन",
                     careers: "करियर"
                 },
+                ui: {
+                    details: "विवरण",
+                    close: "बंद करें"
+                },
+                hero: {
+                    labName: "Physical AI डेटा लैब",
+                    summary: "विशेषज्ञ ML-तैयार डेटासेट प्रदान करना"
+                },
+                env: {
+                    kicker: "वास्तविक कार्यप्रवाह और सिमुलेशन · डेटा वातावरण",
+                    heading: "हम कहाँ डेटा एकत्र करते हैं।",
+                    hotels: {
+                        title: "होटल और आतिथ्य",
+                        desc: "लाइव आतिथ्य स्थानों में कमरों की सफ़ाई, इस्त्री, कपड़े तह करना और लिनन बदलना।"
+                    },
+                    barista: {
+                        title: "रेस्तरां, कैफ़े और बरिस्ता",
+                        desc: "भोजन तैयारी, किचन लाइन असेंबली, एस्प्रेसो स्टेशन और दोहराए जाने वाले सर्विस कार्य।"
+                    },
+                    construction: {
+                        title: "निर्माण और कार्यशालाएँ",
+                        desc: "कार्यस्थल निर्माण, वर्कशॉप बेंच, फास्टनिंग और पावर-टूल संचालन।"
+                    },
+                    simulation: {
+                        title: "सिमुलेटेड प्रक्रियाएँ",
+                        desc: "वास्तविक कार्यप्रवाह, एज केस और दोहराए जाने वाले कार्यों का नियंत्रित सिमुलेशन।"
+                    },
+                    note: "<strong>लाइव और सिमुलेटेड कैप्चर</strong> — प्रत्येक पायलट के अनुसार वास्तविक साइट और नियंत्रित सेटअप।"
+                },
+                prov: {
+                    kicker: "सत्यापनीय आधार · डेटा गवर्नेंस",
+                    heading: "उत्पत्ति, गोपनीयता और QA।",
+                    n1: { title: "अधिकृत पहुँच", desc: "प्रत्येक पायलट के लिए साइट अनुमति और ऑपरेटर सहमति।" },
+                    n2: { title: "गोपनीयता समीक्षा", desc: "डिलीवरी से पहले सीमित FOV, क्रॉपिंग और ब्लरिंग।*" },
+                    n3: { title: "सिंक और QA गेट", desc: "फ्रेम सिंक, कार्य मिलान और लेबल की जाँच।" },
+                    n4: { title: "मूल मैनिफ़ेस्ट", desc: "हर बैच के लिए ट्रैसेबल सेटअप, अधिकार और QA रिकॉर्ड।" },
+                    note: "*केवल चेहरा धुंधला करना पूर्ण गुमनामी की गारंटी नहीं देता · बिना किसी असत्यापित प्रमाणन दावे के प्रत्येक प्रोजेक्ट के अनुसार तय।"
+                },
+                pilot: {
+                    kicker: "संचालन और डिलीवरी · प्रोजेक्ट-आधारित",
+                    heading: "कवरेज और पायलट निष्पादन।",
+                    primaryKicker: "प्रमुख क्षेत्र",
+                    primaryList: "यूक्रेन · पोलैंड · जर्मनी",
+                    primarySub: "ऑन-साइट संग्रह के लिए सक्रिय ऑपरेटर और पार्टनर साइट नेटवर्क।",
+                    extKicker: "विस्तारित · अनुरोध पर",
+                    extList: "ऑस्ट्रेलिया · सिंगापुर · कनाडा",
+                    extSub: "पायलट के दायरे के अनुरूप अतिरिक्त स्थानों पर व्यवस्था की जाती है।",
+                    s1: { title: "कार्य और मॉडैलिटी तय करें", sub: "लक्षित कार्यप्रवाह, सेंसर और स्कीमा" },
+                    s2: { title: "साइट और रिग की पुष्टि", sub: "कार्यस्थल अनुमतियाँ और हार्डवेयर" },
+                    s3: { title: "स्कोप और QA गेट तय करें", sub: "एपिसोड कोटा, मूल्य और स्वीकृति" },
+                    s4: { title: "ML बैच संग्रह व डिलीवरी", sub: "सिंक्ड एपिसोड + उत्पत्ति लॉग" },
+                    specMeta: "<strong>तकनीकी विनिर्देश साइन-ऑफ़</strong> · रिकॉर्डिंग से पहले 7 मानदंड तय",
+                    spec1: "कार्य और वातावरण",
+                    spec2: "सेंसर और कैमरा रिग",
+                    spec3: "रिज़ॉल्यूशन, FPS और टाइमस्टैम्प",
+                    spec4: "कैलिब्रेशन और सिंक",
+                    spec5: "स्कीमा और डिलीवरी फ़ॉर्मेट",
+                    spec6: "QA और स्वीकृति मानदंड",
+                    spec7: "हार्डवेयर स्वामित्व और लॉजिस्टिक्स"
+                },
+                contact: {
+                    kicker: "संपर्क",
+                    heading: "हमारे साथ काम करें।",
+                    subtitle: "कोई प्रश्न, साइट साझेदारी या डेटासेट अनुरोध है? हमारी टीम को सीधे संक्षिप्त संदेश भेजें।",
+                    nameLabel: "नाम",
+                    namePlaceholder: "आपका नाम",
+                    emailLabel: "ईमेल",
+                    emailPlaceholder: "you@company.com",
+                    msgLabel: "प्रश्न",
+                    msgPlaceholder: "आपका प्रश्न, स्थान विवरण या डेटासेट अनुरोध...",
+                    sendBtn: "भेजें",
+                    sendingBtn: "भेजा जा रहा है...",
+                    errMissing: "कृपया अपना नाम, ईमेल और प्रश्न भरें।",
+                    sentOk: "संदेश भेजा गया — हम शीघ्र ही आपसे संपर्क करेंगे।",
+                    errFallback: "अभी सीधा भेजना उपलब्ध नहीं है।",
+                    errNetwork: "नेटवर्क समस्या।",
+                    sendEmail: "ईमेल से भेजें",
+                    sitePartnerships: "साइट साझेदारी"
+                },
                 careers: {
                     title: "करियर",
-                    tagline: "Physical AI Data Lab · वास्तविक दुनिया के मानवीय अनुभव से रोबोट को सिखाना।"
+                    tagline: "Physical AI डेटा लैब · वास्तविक दुनिया के मानवीय अनुभव से रोबोट को सिखाना।",
+                    eyebrow: "साझेदारी अवसर",
+                    roleTitle: "डेटा संग्रह साइट पार्टनर",
+                    roleMeta: "<strong>यूक्रेन</strong> · सशुल्क साझेदारी · प्रोजेक्ट-आधारित",
+                    overviewTitle: "अवलोकन",
+                    overviewP1: "हम ऐसे व्यवसाय मालिकों और उद्योग विशेषज्ञों की तलाश कर रहे हैं जो रोबोटिक्स डेटा संग्रह के लिए कार्यस्थल, उपकरण और विशेषज्ञता प्रदान कर सकें।",
+                    overviewP2: "हम वर्कशॉप, गोदामों, रेस्तरां, विनिर्माण संयंत्रों और अन्य वास्तविक कार्य वातावरण के साथ साझेदारी का स्वागत करते हैं।",
+                    coordTitle: "समन्वय",
+                    coord1: "<strong>Sverkaus डेटा संग्रह का समन्वय करता है:</strong> रिकॉर्डिंग प्रक्रिया, गुणवत्ता नियंत्रण और ऑन-साइट निष्पादन हमारे प्रबंधन में रहते हैं।",
+                    coord2: "<strong>पहुँच प्रदान करें, डेटासेट नहीं:</strong> भागीदार वास्तविक कार्यक्षेत्र, उपकरण और विशेष विशेषज्ञता तक पहुँच प्रदान करते हैं।",
+                    coord3: "<strong>अनुमतियाँ और समझौते:</strong> प्रत्येक सहयोग के लिए आवश्यक अनुमतियाँ और अनुबंध तय किए जाते हैं।",
+                    termsTitle: "शर्तें",
+                    terms1: "<strong>प्रोजेक्ट-आधारित:</strong> प्रत्येक प्रोजेक्ट के लिए लचीला समय और पारिश्रमिक अलग से तय किया जाता है।",
+                    terms2: "<strong>वास्तविक कार्य पर ध्यान:</strong> वर्कशॉप, गोदाम, रेस्तरां, फैक्ट्रियाँ और कुशल कार्यप्रवाह।",
+                    terms3: "<strong>न्यूनतम संचालन बाधा:</strong> आपके नियमित कार्य शेड्यूल के अनुसार योजना बनाई जाती है।",
+                    contactTitle: "संपर्क",
+                    contactLead: 'रुचि है? <a href="#contact" class="bold-link" onclick="openPartnerForm(); return false;">पार्टनर फ़ॉर्म से आवेदन करें</a> या <a href="mailto:main@sverkaus.com?subject=Data%20Collection%20Site%20Partner" class="bold-link">main@sverkaus.com</a> पर ईमेल करें।',
+                    contactNote: "अपने कार्यस्थल, उपकरण, विशेषज्ञता और स्थान का संक्षिप्त विवरण साझा करें।",
+                    footerNote: 'अपनी भूमिका नहीं दिख रही? हम हमेशा उत्कृष्ट इंजीनियरों और निर्माताओं के लिए खुले हैं: <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>'
                 }
             },
             ko: {
                 tagline: "실제 인간의 경험으로 로봇을 가르칩니다",
-                projects: {
-                    diskpulse: "Mac 디스크가 가득 차지 않게 — 개발자를 위한 안전한 정리, 오픈 소스",
-                    any: "Mac용 로컬 음성 입력 — 음성은 기기에 보관됩니다"
-                },
-                badgeInfo: "상세보기 →",
                 nav: {
                     overview: "개요",
                     careers: "채용"
                 },
+                ui: {
+                    details: "상세보기",
+                    close: "닫기"
+                },
+                hero: {
+                    labName: "Physical AI 데이터 랩",
+                    summary: "특화된 ML 학습용 데이터셋을 제공합니다"
+                },
+                env: {
+                    kicker: "실제 워크플로우 및 시뮬레이션 · 데이터 수집 환경",
+                    heading: "수집 환경.",
+                    hotels: {
+                        title: "호텔 및 호스피탈리티",
+                        desc: "실제 호텔 공간에서의 객실 정비, 다림질, 세탁물 개기 및 린넨 교체 작업."
+                    },
+                    barista: {
+                        title: "레스토랑, 카페 및 바리스타",
+                        desc: "식재료 손질, 주방 라인 조리, 에스프레소 스테이션 및 반복 가능한 서비스 워크플로우."
+                    },
+                    construction: {
+                        title: "건설 현장 및 워크숍",
+                        desc: "현장 시공, 작업대 작업, 체결 공정 및 실제 전동 공구 운용."
+                    },
+                    simulation: {
+                        title: "시뮬레이션 프로세스",
+                        desc: "실제 워크플로우, 엣지 케이스 및 반복 가능한 작업 변형의 제어된 시뮬레이션."
+                    },
+                    note: "<strong>실제 및 시뮬레이션 캡처</strong> — 각 파일럿에 맞춰 실제 현장과 제어 환경을 구성합니다."
+                },
+                prov: {
+                    kicker: "검증 가능한 기반 · 데이터 거버넌스",
+                    heading: "출처, 프라이버시 및 QA.",
+                    n1: { title: "승인된 접근", desc: "파일럿별 현장 허가 및 작업자 동의 확보." },
+                    n2: { title: "프라이버시 검토", desc: "납품 전 화각 제한, 크롭 및 비식별화 처리.*" },
+                    n3: { title: "동기화 및 QA 게이트", desc: "프레임 동기화, 작업 일치성 및 라벨 검증." },
+                    n4: { title: "출처 매니페스트", desc: "배치별 추적 가능한 설정, 권리 및 QA 기록." },
+                    note: "*얼굴 모자이크만으로는 완전한 익명화가 보장되지 않습니다 · 미검증 인증 주장 없이 계약별로 합의합니다."
+                },
+                pilot: {
+                    kicker: "운영 및 납품 · 프로젝트 기반",
+                    heading: "수집 지역 및 파일럿 실행.",
+                    primaryKicker: "주요 지역",
+                    primaryList: "우크라이나 · 폴란드 · 독일",
+                    primarySub: "현장 수집을 위한 활성 오퍼레이터 및 파트너 현장 네트워크.",
+                    extKicker: "확장 지역 · 요청 시",
+                    extList: "호주 · 싱가포르 · 캐나다",
+                    extSub: "파일럿 범위가 부합할 경우 추가 지역에서도 수집을 진행합니다.",
+                    s1: { title: "작업 및 모달리티 정의", sub: "목표 워크플로우, 센서 및 스키마" },
+                    s2: { title: "현장 및 리그 확정", sub: "작업장 허가 및 하드웨어 구성" },
+                    s3: { title: "범위 및 QA 게이트 합의", sub: "에피소드 할당량, 비용 및 검수 기준" },
+                    s4: { title: "수집 및 ML 배치 납품", sub: "동기화된 에피소드 + 출처 로그" },
+                    specMeta: "<strong>기술 사양 최종 확정</strong> · 촬영 전 7가지 핵심 파라미터 정렬",
+                    spec1: "작업 및 환경",
+                    spec2: "센서 및 카메라 리그",
+                    spec3: "해상도, FPS 및 타임스탬프",
+                    spec4: "캘리브레이션 및 동기화",
+                    spec5: "스키마 및 납품 형식",
+                    spec6: "QA 및 검수 기준",
+                    spec7: "하드웨어 소유권 및 물류"
+                },
+                contact: {
+                    kicker: "문의",
+                    heading: "함께 일해요.",
+                    subtitle: "질문, 현장 파트너십 또는 데이터셋 요청이 있으신가요? 팀에 짧은 메시지를 바로 보내주세요.",
+                    nameLabel: "이름",
+                    namePlaceholder: "성함",
+                    emailLabel: "이메일",
+                    emailPlaceholder: "you@company.com",
+                    msgLabel: "문의 내용",
+                    msgPlaceholder: "질문, 현장 정보 또는 필요한 데이터셋 내용을 적어주세요...",
+                    sendBtn: "보내기",
+                    sendingBtn: "전송 중...",
+                    errMissing: "이름, 이메일, 문의 내용을 모두 입력해 주세요.",
+                    sentOk: "전송되었습니다 — 곧 답변드리겠습니다.",
+                    errFallback: "현재 직접 전송을 사용할 수 없습니다.",
+                    errNetwork: "네트워크 오류가 발생했습니다.",
+                    sendEmail: "이메일로 보내기",
+                    sitePartnerships: "현장 파트너십"
+                },
                 careers: {
                     title: "채용 정보",
-                    tagline: "Physical AI Data Lab · 실제 인간의 경험으로 로봇을 가르칩니다."
+                    tagline: "Physical AI 데이터 랩 · 실제 인간의 경험으로 로봇을 가르칩니다.",
+                    eyebrow: "파트너십 기회",
+                    roleTitle: "데이터 수집 현장 파트너",
+                    roleMeta: "<strong>우크라이나</strong> · 유급 파트너십 · 프로젝트 기반",
+                    overviewTitle: "개요",
+                    overviewP1: "로보틱스 데이터 수집을 위해 작업 공간, 장비 및 전문 노하우를 제공해 주실 사업주 및 산업 전문가를 찾고 있습니다.",
+                    overviewP2: "워크숍, 물류 창고, 레스토랑, 제조 시설 등 다양한 실제 현장과의 파트너십을 환영합니다.",
+                    coordTitle: "협업 방식",
+                    coord1: "<strong>Sverkaus가 수집을 총괄합니다:</strong> 촬영 절차, 품질 관리 및 현장 실행은 당사가 직접 관리합니다.",
+                    coord2: "<strong>데이터셋이 아닌 공간 접근 제공:</strong> 파트너는 실제 작업 공간, 장비 및 전문 지식에 대한 접근을 제공합니다.",
+                    coord3: "<strong>허가 및 계약:</strong> 각 협업마다 필요한 현장 허가와 계약을 사전에 체결합니다.",
+                    termsTitle: "조건",
+                    terms1: "<strong>프로젝트 기반:</strong> 유연한 일정과 보상은 프로젝트별로 개별 협의합니다.",
+                    terms2: "<strong>실제 현장 중심:</strong> 워크숍, 창고, 레스토랑, 제조 시설 및 숙련 작업 워크플로우.",
+                    terms3: "<strong>낮은 운영 부담:</strong> 기존 영업 및 작업 일정에 맞춰 계획합니다.",
+                    contactTitle: "문의",
+                    contactLead: '관심이 있으신가요? <a href="#contact" class="bold-link" onclick="openPartnerForm(); return false;">파트너 양식으로 지원하기</a> 또는 <a href="mailto:main@sverkaus.com?subject=Data%20Collection%20Site%20Partner" class="bold-link">main@sverkaus.com</a>으로 이메일을 보내주세요.',
+                    contactNote: "작업 공간, 보유 장비, 전문 분야 및 위치를 간단히 공유해 주세요.",
+                    footerNote: '원하는 직무가 없나요? 뛰어난 엔지니어와 빌더의 연락은 언제든 환영합니다: <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>'
                 }
             },
             de: {
                 tagline: "Robotern echte menschliche Erfahrung beibringen",
-                projects: {
-                    diskpulse: "Hält die Festplatte deines Macs frei – sichere Bereinigung für Entwickler, Open Source",
-                    any: "Lokales Sprachdiktat für Mac – deine Sprache bleibt auf deinem Gerät"
-                },
-                badgeInfo: "Details →",
                 nav: {
                     overview: "Übersicht",
                     careers: "Karriere"
                 },
+                ui: {
+                    details: "Details",
+                    close: "Schließen"
+                },
+                hero: {
+                    labName: "Physical AI Datenlabor",
+                    summary: "Spezialisierte ML-fähige Datensätze bereitstellen"
+                },
+                env: {
+                    kicker: "Reale Arbeitsabläufe & Simulation · Datenumgebungen",
+                    heading: "Wo wir erfassen.",
+                    hotels: {
+                        title: "Hotels & Gastgewerbe",
+                        desc: "Zimmerreinigung, Bügeln, Wäschefalten und Wäschewechsel im laufenden Hotelbetrieb."
+                    },
+                    barista: {
+                        title: "Restaurants, Cafés & Barista",
+                        desc: "Speisenzubereitung, Küchenabläufe, Espressostationen und reproduzierbare Serviceprozesse."
+                    },
+                    construction: {
+                        title: "Bauwesen & Werkstätten",
+                        desc: "Baustellenarbeiten, Werkbänke, Befestigungstechnik und praktische Elektrowerkzeugnutzung."
+                    },
+                    simulation: {
+                        title: "Simulierte Prozesse",
+                        desc: "Kontrollierte Simulation realer Abläufe, Grenzfälle und reproduzierbarer Aufgabenvarianten."
+                    },
+                    note: "<strong>Live- &amp; Simulations-Erfassung</strong> — reale Standorte und kontrollierte Setups pro Pilotprojekt."
+                },
+                prov: {
+                    kicker: "Nachvollziehbare Grundlagen · Data Governance",
+                    heading: "Herkunft, Datenschutz & QA.",
+                    n1: { title: "Autorisierter Zugang", desc: "Standortgenehmigungen & Einwilligungen pro Pilot." },
+                    n2: { title: "Datenschutz-Prüfung", desc: "Begrenztes Sichtfeld, Zuschnitt & Verpixelung vor Auslieferung.*" },
+                    n3: { title: "Sync- & QA-Gates", desc: "Prüfung auf Frame-Sync, Aufgabenabgleich & Labels." },
+                    n4: { title: "Herkunftsmanifest", desc: "Nachvollziehbare Setup-, Rechte- & QA-Nachweise je Batch." },
+                    note: "*Gesichtsverpixelung allein garantiert keine vollständige Anonymisierung · Projektbezogen vereinbart ohne ungeprüfte Zertifizierungsansprüche."
+                },
+                pilot: {
+                    kicker: "Betrieb & Auslieferung · Projektbasiert",
+                    heading: "Regionen & Pilotdurchführung.",
+                    primaryKicker: "Kernregionen",
+                    primaryList: "Ukraine · Polen · Deutschland",
+                    primarySub: "Aktive Operator- und Partner-Standortnetzwerke für Vor-Ort-Erfassung.",
+                    extKicker: "Erweitert · Auf Anfrage",
+                    extList: "Australien · Singapur · Kanada",
+                    extSub: "Weitere Standorte werden bei passendem Pilotumfang eingerichtet.",
+                    s1: { title: "Aufgabe & Modalitäten definieren", sub: "Zielablauf, Sensorik & Datenschema" },
+                    s2: { title: "Standort & Rig bestätigen", sub: "Arbeitsplatz-Freigaben & Hardware" },
+                    s3: { title: "Umfang & QA-Gate abstimmen", sub: "Episodenquote, Preis & Abnahme" },
+                    s4: { title: "Erfassen & ML-Batch liefern", sub: "Synchronisierte Episoden + Herkunftslog" },
+                    specMeta: "<strong>Technische Spezifikation</strong> · 7 Parameter vor Aufnahme abgestimmt",
+                    spec1: "Aufgabe & Umgebung",
+                    spec2: "Sensorik & Kamera-Rig",
+                    spec3: "Auflösung, FPS & Zeitstempel",
+                    spec4: "Kalibrierung & Synchronisation",
+                    spec5: "Schema & Lieferformat",
+                    spec6: "QA- & Abnahmekriterien",
+                    spec7: "Hardware-Eigentum & Logistik"
+                },
+                contact: {
+                    kicker: "Kontakt",
+                    heading: "Mit uns arbeiten.",
+                    subtitle: "Haben Sie eine Frage, Standort-Partnerschaft oder Datensatz-Anfrage? Senden Sie uns direkt eine kurze Nachricht.",
+                    nameLabel: "Name",
+                    namePlaceholder: "Ihr Name",
+                    emailLabel: "E-Mail",
+                    emailPlaceholder: "sie@unternehmen.de",
+                    msgLabel: "Frage",
+                    msgPlaceholder: "Ihre Frage, Standortdetails oder Datensatz-Anfrage...",
+                    sendBtn: "Senden",
+                    sendingBtn: "Wird gesendet...",
+                    errMissing: "Bitte füllen Sie Name, E-Mail und Frage aus.",
+                    sentOk: "Gesendet — wir melden uns in Kürze.",
+                    errFallback: "Direktversand derzeit nicht verfügbar.",
+                    errNetwork: "Netzwerkfehler.",
+                    sendEmail: "Per E-Mail senden",
+                    sitePartnerships: "Standort-Partnerschaften"
+                },
                 careers: {
                     title: "KARRIERE",
-                    tagline: "Physical AI Data Lab · Robotern echte menschliche Erfahrung beibringen."
+                    tagline: "Physical AI Datenlabor · Robotern echte menschliche Erfahrung beibringen.",
+                    eyebrow: "Partnerschaftsmöglichkeit",
+                    roleTitle: "Standortpartner für Datenerfassung",
+                    roleMeta: "<strong>Ukraine</strong> · Vergütete Partnerschaft · Projektbasiert",
+                    overviewTitle: "Überblick",
+                    overviewP1: "Wir suchen Geschäftsinhaber und Branchenprofis, die Zugang zu Arbeitsbereichen, Ausrüstung und Fachwissen für Robotik-Datenerfassung bieten können.",
+                    overviewP2: "Wir begrüßen Partnerschaften mit Werkstätten, Lagern, Restaurants, Produktionsstätten und anderen realen Arbeitsumgebungen.",
+                    coordTitle: "Koordination",
+                    coord1: "<strong>Sverkaus koordiniert die Datenerfassung:</strong> Aufnahmeverfahren, Qualitätskontrolle und Durchführung vor Ort bleiben in unserer Hand.",
+                    coord2: "<strong>Zugang statt Datensätze:</strong> Partner stellen Zugang zu realen Arbeitsplätzen, Geräten und Fachwissen bereit.",
+                    coord3: "<strong>Genehmigungen &amp; Verträge:</strong> Erforderliche Freigaben und Vereinbarungen werden für jede Zusammenarbeit geregelt.",
+                    termsTitle: "Konditionen",
+                    terms1: "<strong>Projektbasiert:</strong> Flexible Terminplanung und Vergütung werden für jedes Projekt individuell vereinbart.",
+                    terms2: "<strong>Praxisfokus:</strong> Werkstätten, Lager, Restaurants, Produktionsstätten und qualifizierte Arbeitsabläufe.",
+                    terms3: "<strong>Geringer Aufwand:</strong> Planung passend zu Ihrem regulären Betriebsablauf.",
+                    contactTitle: "Kontakt",
+                    contactLead: 'Interessiert? <a href="#contact" class="bold-link" onclick="openPartnerForm(); return false;">Über Partner-Formular bewerben</a> oder per E-Mail an <a href="mailto:main@sverkaus.com?subject=Data%20Collection%20Site%20Partner" class="bold-link">main@sverkaus.com</a>.',
+                    contactNote: "Teilen Sie uns kurz Ihren Arbeitsbereich, Ihre Ausstattung oder Fachrichtung sowie Ihren Standort mit.",
+                    footerNote: 'Keine passende Rolle dabei? Wir freuen uns jederzeit über außergewöhnliche Ingenieure und Builder: <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>'
                 }
             },
             pl: {
                 tagline: "Uczymy roboty na prawdziwym ludzkim doświadczeniu",
-                projects: {
-                    diskpulse: "Nie pozwala zapełnić dysku Maca — bezpieczne czyszczenie dla programistów, open source",
-                    any: "Lokalne dyktowanie na Macu — Twój głos pozostaje na urządzeniu"
-                },
-                badgeInfo: "Szczegóły →",
                 nav: {
                     overview: "Przegląd",
                     careers: "Kariera"
                 },
+                ui: {
+                    details: "Szczegóły",
+                    close: "Zamknij"
+                },
+                hero: {
+                    labName: "Laboratorium Danych Physical AI",
+                    summary: "Dostarczamy wyspecjalizowane zbiory danych gotowe pod ML"
+                },
+                env: {
+                    kicker: "Rzeczywiste procesy i symulacja · Środowiska danych",
+                    heading: "Gdzie zbieramy dane.",
+                    hotels: {
+                        title: "Hotele i hotelarstwo",
+                        desc: "Sprzątanie pokoi, prasowanie, składanie prania i wymiana pościeli w działających obiektach."
+                    },
+                    barista: {
+                        title: "Restauracje, kawiarnie i barista",
+                        desc: "Przygotowywanie potraw, praca na linii kuchennej, stanowiska espresso i powtarzalne procesy obsługi."
+                    },
+                    construction: {
+                        title: "Budownictwo i warsztaty",
+                        desc: "Prace na budowie, stanowiska warsztatowe, montaż elementów i obsługa elektronarzędzi."
+                    },
+                    simulation: {
+                        title: "Procesy symulowane",
+                        desc: "Kontrolowana symulacja rzeczywistych zadań, przypadków brzegowych i powtarzalnych wariantów."
+                    },
+                    note: "<strong>Rejestracja na żywo i w symulacji</strong> — realne obiekty oraz kontrolowane stanowiska dobierane pod każdy pilotaż."
+                },
+                prov: {
+                    kicker: "Weryfikowalne podstawy · Zarządzanie danymi",
+                    heading: "Pochodzenie, prywatność i QA.",
+                    n1: { title: "Autoryzowany dostęp", desc: "Zgody obiektów i operatorów dla każdego pilotażu." },
+                    n2: { title: "Przegląd prywatności", desc: "Zawężony kadr, kadrowanie i anonimizacja przed dostawą.*" },
+                    n3: { title: "Synchronizacja i bramki QA", desc: "Kontrola synchronizacji klatek, zgodności zadań i etykiet." },
+                    n4: { title: "Manifest pochodzenia", desc: "Pełna ścieżka konfiguracji, praw i raportów QA dla partii." },
+                    note: "*Samo zamazanie twarzy nie gwarantuje pełnej anonimizacji · Ustalane indywidualnie bez niezweryfikowanych deklaracji certyfikacji."
+                },
+                pilot: {
+                    kicker: "Operacje i dostawa · Model projektowy",
+                    heading: "Zasięg i realizacja pilotaży.",
+                    primaryKicker: "Główne regiony",
+                    primaryList: "Ukraina · Polska · Niemcy",
+                    primarySub: "Aktywne sieci operatorów i obiektów partnerskich do nagrań na miejscu.",
+                    extKicker: "Rozszerzone · Na zapytanie",
+                    extList: "Australia · Singapur · Kanada",
+                    extSub: "Dodatkowe lokalizacje uruchamiane przy odpowiednim zakresie pilotażu.",
+                    s1: { title: "Określenie zadania i modalności", sub: "Docelowy proces, sensory i schemat" },
+                    s2: { title: "Potwierdzenie obiektu i zestawu", sub: "Zgody miejsca pracy i sprzęt" },
+                    s3: { title: "Ustalenie zakresu i QA", sub: "Liczba epizodów, wycena i odbiór" },
+                    s4: { title: "Nagranie i dostawa paczki ML", sub: "Zsynchronizowane epizody + log pochodzenia" },
+                    specMeta: "<strong>Akceptacja specyfikacji technicznej</strong> · 7 parametrów uzgodnionych przed nagraniem",
+                    spec1: "Zadanie i środowisko",
+                    spec2: "Sensory i zestaw kamer",
+                    spec3: "Rozdzielczość, FPS i znaczniki czasu",
+                    spec4: "Kalibracja i synchronizacja",
+                    spec5: "Schemat i format dostawy",
+                    spec6: "Kryteria QA i odbioru",
+                    spec7: "Własność sprzętu i logistyka"
+                },
+                contact: {
+                    kicker: "Kontakt",
+                    heading: "Współpracuj z nami.",
+                    subtitle: "Masz pytanie, propozycję partnerstwa obiektu lub zapytanie o zbiór danych? Napisz krótką wiadomość bezpośrednio do zespołu.",
+                    nameLabel: "Imię",
+                    namePlaceholder: "Twoje imię",
+                    emailLabel: "E-mail",
+                    emailPlaceholder: "ty@firma.pl",
+                    msgLabel: "Pytanie",
+                    msgPlaceholder: "Twoje pytanie, szczegóły obiektu lub zapytanie o dane...",
+                    sendBtn: "Wyślij",
+                    sendingBtn: "Wysyłanie...",
+                    errMissing: "Wpisz imię, adres e-mail oraz pytanie.",
+                    sentOk: "Wysłano — odezwiemy się wkrótce.",
+                    errFallback: "Bezpośrednie wysłanie jest teraz niedostępne.",
+                    errNetwork: "Problem z siecią.",
+                    sendEmail: "Wyślij e-mailem",
+                    sitePartnerships: "Partnerstwa obiektów"
+                },
                 careers: {
                     title: "KARIERA",
-                    tagline: "Physical AI Data Lab · Uczymy roboty na prawdziwym ludzkim doświadczeniu."
+                    tagline: "Laboratorium Danych Physical AI · Uczymy roboty na prawdziwym ludzkim doświadczeniu.",
+                    eyebrow: "Możliwość współpracy",
+                    roleTitle: "Partner obiektu do zbierania danych",
+                    roleMeta: "<strong>Ukraina</strong> · Płatne partnerstwo · Model projektowy",
+                    overviewTitle: "Opis",
+                    overviewP1: "Szukamy właścicieli firm i specjalistów branżowych, którzy mogą udostępnić przestrzenie robocze, sprzęt oraz wiedzę praktyczną do zbierania danych dla robotyki.",
+                    overviewP2: "Zapraszamy do współpracy warsztaty, magazyny, restauracje, zakłady produkcyjne oraz inne rzeczywiste środowiska pracy.",
+                    coordTitle: "Koordynacja",
+                    coord1: "<strong>Sverkaus koordynuje zbieranie danych:</strong> procedury nagrań, kontrola jakości i realizacja na miejscu pozostają po naszej stronie.",
+                    coord2: "<strong>Udostępniasz dostęp, nie gotowe zbiory:</strong> partnerzy zapewniają dostęp do prawdziwych stanowisk, sprzętu i wiedzy.",
+                    coord3: "<strong>Zgody i umowy:</strong> wszystkie wymagane zgody i umowy przygotowujemy indywidualnie dla każdej współpracy.",
+                    termsTitle: "Warunki",
+                    terms1: "<strong>Projektowo:</strong> elastyczny harmonogram i wynagrodzenie ustalane osobno dla każdego projektu.",
+                    terms2: "<strong>Praktyczne procesy:</strong> warsztaty, magazyny, restauracje, produkcja i wyspecjalizowane prace manualne.",
+                    terms3: "<strong>Minimalne obciążenie:</strong> nagrania planowane zgodnie z Twoim regularnym grafikiem.",
+                    contactTitle: "Kontakt",
+                    contactLead: 'Zainteresowany? <a href="#contact" class="bold-link" onclick="openPartnerForm(); return false;">Zgłoś się przez formularz</a> lub napisz na <a href="mailto:main@sverkaus.com?subject=Data%20Collection%20Site%20Partner" class="bold-link">main@sverkaus.com</a>.',
+                    contactNote: "Opisz krótko swoją przestrzeń, sprzęt lub specjalizację oraz lokalizację.",
+                    footerNote: 'Nie widzisz swojej roli? Zawsze chętnie porozmawiamy z wyjątkowymi inżynierami i twórcami: <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>'
                 }
             }
         };
@@ -2391,6 +3075,10 @@
             });
         }
 
+        function getI18nValue(obj, path) {
+            return path.split('.').reduce((acc, part) => (acc && acc[part] !== undefined ? acc[part] : undefined), obj);
+        }
+
         // Toggle Vacancy Accordion
         function toggleVacancy(id) {
             const item = document.getElementById(id);
@@ -2402,7 +3090,8 @@
                 header.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
             }
             if (toggleText) {
-                toggleText.textContent = isExpanded ? 'Close' : 'Details';
+                const ui = (translations[currentLang] && translations[currentLang].ui) || translations.en.ui;
+                toggleText.textContent = isExpanded ? ui.close : ui.details;
             }
         }
 
@@ -2464,6 +3153,7 @@
             if (!translations[lang]) lang = 'en';
             currentLang = lang;
             localStorage.setItem('sverkaus-lang', currentLang);
+            document.documentElement.lang = currentLang;
 
             // Update language selector dropdown
             const langSelect = document.getElementById('lang-select');
@@ -2481,13 +3171,27 @@
                 startTypewriter(t.tagline);
             }
 
-            // Update project descriptions
-            const descDiskPulse = document.getElementById('desc-diskpulse');
-            const descAny = document.getElementById('desc-any');
-            const badgeInfo = document.getElementById('badge-info-link');
-            if (descDiskPulse && t.projects && t.projects.diskpulse) descDiskPulse.textContent = t.projects.diskpulse;
-            if (descAny && t.projects && t.projects.any) descAny.textContent = t.projects.any;
-            if (badgeInfo) badgeInfo.textContent = t.badgeInfo;
+            // Apply all data-i18n text, HTML, and placeholder bindings
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const val = getI18nValue(t, el.getAttribute('data-i18n'));
+                if (typeof val === 'string') el.textContent = val;
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const val = getI18nValue(t, el.getAttribute('data-i18n-html'));
+                if (typeof val === 'string') el.innerHTML = val;
+            });
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const val = getI18nValue(t, el.getAttribute('data-i18n-placeholder'));
+                if (typeof val === 'string') el.setAttribute('placeholder', val);
+            });
+
+            // Sync accordion toggle labels
+            document.querySelectorAll('.vacancy-item').forEach(item => {
+                const toggleText = item.querySelector('.toggle-text');
+                if (toggleText && t.ui) {
+                    toggleText.textContent = item.classList.contains('expanded') ? t.ui.close : t.ui.details;
+                }
+            });
 
             // Update Nav Labels
             const labelOverview = document.getElementById('label-nav-overview');
@@ -2500,11 +3204,6 @@
             const tagline = document.getElementById('txt-careers-tagline');
             if (title) title.textContent = t.careers.title;
             if (tagline) tagline.textContent = t.careers.tagline;
-
-            const fallbackNote = document.getElementById('lang-fallback-overview');
-            if (fallbackNote) {
-                fallbackNote.classList.toggle('visible', currentLang !== 'en');
-            }
         }
 
         // Initialize translations on load
@@ -2753,56 +3452,91 @@
             }, 2250);
         }
 
-        // Simple 3-Mode POV Capture Visualization Controller
+        // Minimalist Contact Form -> /api/partner-inquiry (Telegram webhook)
+        function openPartnerForm() {
+            switchTab('overview', true, false);
+            const contactSection = document.getElementById('contact');
+            if (contactSection) {
+                setTimeout(() => {
+                    contactSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    const nameInput = document.getElementById('partner-name');
+                    if (nameInput) nameInput.focus({ preventScroll: true });
+                }, 60);
+            }
+        }
+
         (() => {
-            const poseLayer = document.getElementById('viz-layer-pose');
-            const forceLayer = document.getElementById('viz-layer-force');
-            const stageDot = document.getElementById('viz-stage-dot');
-            const stageLabel = document.getElementById('viz-stage-label');
-            const captionEl = document.getElementById('viz-caption');
-            const buttons = document.querySelectorAll('.viz-mode-btn[data-viz-mode]');
+            const form = document.getElementById('partner-form');
+            if (!form) return;
 
-            const modes = {
-                pov: {
-                    pose: false,
-                    force: false,
-                    dotClass: 'hud-dot lime',
-                    label: 'Baseline · First-person RGB',
-                    caption: '<strong>Baseline:</strong> Clean first-person video and task timing markers of skilled manual assembly.'
-                },
-                pose: {
-                    pose: true,
-                    force: false,
-                    dotClass: 'hud-dot lime',
-                    label: 'Optional · Hand & path tracking',
-                    caption: '<strong>Spatial tracking (project-dependent):</strong> Adds depth and 3D fingertip/part trajectories calibrated to the task.'
-                },
-                force: {
-                    pose: true,
-                    force: true,
-                    dotClass: 'hud-dot amber',
-                    label: 'Optional · Contact force + pose',
-                    caption: '<strong>Physical sensing (project-dependent):</strong> Captures axial insertion force and grip contact beyond RGB video.'
-                }
-            };
+            const nameInput = document.getElementById('partner-name');
+            const emailInput = document.getElementById('partner-email');
+            const messageInput = document.getElementById('partner-message');
+            const submitBtn = document.getElementById('partner-submit-btn');
+            const statusEl = document.getElementById('partner-status');
 
-            function setMode(mode) {
-                const cfg = modes[mode] || modes.pov;
-                if (poseLayer) poseLayer.classList.toggle('hidden', !cfg.pose);
-                if (forceLayer) forceLayer.classList.toggle('hidden', !cfg.force);
-                if (stageDot) stageDot.className = cfg.dotClass;
-                if (stageLabel) stageLabel.textContent = cfg.label;
-                if (captionEl) captionEl.innerHTML = cfg.caption;
-                buttons.forEach(btn => {
-                    btn.classList.toggle('active', btn.getAttribute('data-viz-mode') === mode);
-                });
+            function setStatus(type, html) {
+                if (!statusEl) return;
+                statusEl.className = 'partner-status' + (type ? ` ${type}` : '');
+                statusEl.innerHTML = html;
             }
 
-            buttons.forEach(btn => {
-                btn.addEventListener('click', () => setMode(btn.getAttribute('data-viz-mode')));
-            });
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const ct = (translations[currentLang] && translations[currentLang].contact) || translations.en.contact;
+                const name = (nameInput ? nameInput.value : '').trim();
+                const email = (emailInput ? emailInput.value : '').trim();
+                const message = (messageInput ? messageInput.value : '').trim();
+                const hpField = form.querySelector('input[name="website"]');
+                const website = hpField ? hpField.value : '';
 
-            setMode('pov');
+                if (!name || !email || !message) {
+                    setStatus('error', ct.errMissing);
+                    if (!name && nameInput) nameInput.focus();
+                    else if (!email && emailInput) emailInput.focus();
+                    else if (messageInput) messageInput.focus();
+                    return;
+                }
+
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = ct.sendingBtn;
+                }
+                setStatus('', '');
+
+                try {
+                    const res = await fetch('/api/partner-inquiry', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            name,
+                            email,
+                            message,
+                            website,
+                            lang: typeof currentLang === 'string' ? currentLang : 'en'
+                        })
+                    });
+
+                    if (res.ok) {
+                        form.reset();
+                        setStatus('success', ct.sentOk);
+                    } else {
+                        const mailSubject = encodeURIComponent(`Sverkaus Inquiry: ${name}`);
+                        const mailBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+                        setStatus('error', `${ct.errFallback} <a href="mailto:main@sverkaus.com?subject=${mailSubject}&body=${mailBody}">${ct.sendEmail}</a>`);
+                    }
+                } catch {
+                    const mailSubject = encodeURIComponent(`Sverkaus Inquiry: ${name}`);
+                    const mailBody = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+                    setStatus('error', `${ct.errNetwork} <a href="mailto:main@sverkaus.com?subject=${mailSubject}&body=${mailBody}">${ct.sendEmail}</a>`);
+                } finally {
+                    if (submitBtn) {
+                        const latestCt = (translations[currentLang] && translations[currentLang].contact) || translations.en.contact;
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = latestCt.sendBtn;
+                    }
+                }
+            });
         })();
     </script>
 </body>

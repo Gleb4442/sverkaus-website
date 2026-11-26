@@ -1,0 +1,19 @@
+# Sverkaus Physical AI Data Lab
+
+> Sverkaus is an operational and engineering integrator for Physical AI data production. We embed specification-driven, multi-sensor capture directly into active commercial workplaces—delivering combat-ready physical interaction datasets (wrist-synced video, 3D hand kinematics, UMI grippers, MoCap gloves, failure/recovery trajectories, and Edge QA) for robotics teams, while offering Site Partners paid project participation and an optional path to automation assessment.
+
+## Core Pages
+
+- [Overview (For Robotics Teams & OEMs)](https://sverkaus.com/): Specification-driven physical data production, 5 ML transfer advantages, unified Capture Stack (hands, wrists, UMI, MoCap gloves, optional Thermal/IR), live workplace domains, 3-step pilot workflow, and contact form.
+- [Site Partners (For Businesses & Facilities)](https://sverkaus.com/partners): Paid, project-based workplace collaboration under NDA with zero shift disruption, Privacy by Design, and optional Automation Opportunity Assessment.
+- [Careers & Collaboration](https://sverkaus.com/careers): Project-based capture engineering, Data QA operations, and site partnership roles.
+
+## Full Machine-Readable Context
+
+- [Complete Company & Technical Specification](https://sverkaus.com/llms-full.txt): Full positioning, ML methodology, capture tracks, Edge QA gates, dataset export schemas, operational workflow, Site Partner model, governance, and geography.
+
+## Contact
+
+- Robotics & Pilot Scoping: gleb@sverkaus.com
+- Site Partnerships & General Inquiries: main@sverkaus.com
+- Website: https://sverkaus.com

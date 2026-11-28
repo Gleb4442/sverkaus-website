@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="description" content="Objective 2026 engineering comparison of Physical AI data providers and paradigms: bulk egocentric catalogs vs enterprise data mega-factories vs lab teleoperation/simulation vs Sverkaus specification-driven embedded workplace capture.">
+    <link rel="canonical" href="https://sverkaus.com/compare">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Sverkaus LLM Context">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Sverkaus Full Technical Context">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sverkaus.com/compare">
+    <meta property="og:title" content="Physical AI Data Collection Compared — Sverkaus vs Bulk POV, Mega-Factories & Teleop">
+    <meta property="og:description" content="How robotics teams choose between bulk egocentric catalogs, enterprise data mega-factories, lab teleoperation, simulation, and Sverkaus embedded workplace capture.">
+    <meta property="og:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Robotics Data Vendors & Capture Approaches Compared — Sverkaus">
+    <meta name="twitter:description" content="Engineering decision framework comparing throughput, site diversity, hardware lock-in, GDPR/EU AI Act compliance, and Cost per Accepted Hour.">
+    <meta name="twitter:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <title>Robotics Data Collection Compared — Sverkaus Physical AI Data Lab</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TechArticle",
+          "@id": "https://sverkaus.com/compare#article",
+          "headline": "Physical AI Data Collection Compared: Bulk Egocentric Catalogs vs Enterprise Data Factories vs Teleoperation vs Specification-Driven Workplace Capture",
+          "description": "Objective 2026 procurement and engineering comparison of Physical AI data acquisition models across policy transferability, hardware lock-in, failure/recovery coverage, European GDPR/EU AI Act governance, Cost per Accepted Hour, and Data-to-Automation access.",
+          "inLanguage": "en",
+          "datePublished": "2026-11-28",
+          "dateModified": "2026-11-28",
+          "author": { "@id": "https://sverkaus.com/#organization" },
+          "publisher": { "@id": "https://sverkaus.com/#organization" },
+          "mainEntityOfPage": "https://sverkaus.com/compare",
+          "about": [
+            "Physical AI Data Vendors Comparison",
+            "Robot Teleoperation vs Portable UMI Capture",
+            "Crowdsourced Egocentric Video Limitations",
+            "BYO Hardware Robotics Data Operations",
+            "European GDPR Robotics Data Compliance"
+          ],
+          "citation": [
+            {
+              "@type": "ScholarlyArticle",
+              "name": "Data Scaling Laws in Imitation Learning for Robotic Manipulation",
+              "url": "https://arxiv.org/abs/2410.18647"
+            },
+            {
+              "@type": "ScholarlyArticle",
+              "name": "Wrist-Worn Cameras and 3D Hand Kinematics for Human-to-Robot Policy Transfer",
+              "url": "https://arxiv.org/abs/2512.22414"
+            },
+            {
+              "@type": "ScholarlyArticle",
+              "name": "DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation",
+              "url": "https://arxiv.org/abs/2505.21864"
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://sverkaus.com/compare#breadcrumbs",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Overview", "item": "https://sverkaus.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Methodology", "item": "https://sverkaus.com/methodology" },
+            { "@type": "ListItem", "position": 3, "name": "Approaches Compared", "item": "https://sverkaus.com/compare" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://sverkaus.com/compare#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "When should a robotics team choose Sverkaus over bulk egocentric video catalogs or enterprise data mega-factories?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Bulk egocentric catalogs are cheap for broad video pre-training, while US/global enterprise mega-factories target huge standardized multi-million-dollar commitments on proprietary setups. Sverkaus is built for teams that need agile, specification-driven skilled-workplace data—supporting client BYO hardware (Track C), synchronized wrist + 3D hand + tactile/sEMG capture, strict European/Ukrainian GDPR and Site Security Clearance, transparent Cost-per-Accepted-Hour accounting, and a 10–20 minute calibration shakedown before scaling."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "When should a robotics team use embedded live-workplace capture instead of robot teleoperation?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Robot teleoperation is ideal for collecting embodiment-exact action trajectories inside a controlled lab, but it is slow and impractical to deploy across dozens of active commercial kitchens, laundries, workshops, or construction sites. Embedded portable capture (wrist cameras, 3D hand tracking, UMI grippers, MoCap gloves) collects real-world manipulation data more than 3× faster without moving a robot on site—making it the optimal way to scale multi-site environmental diversity and real failure/recovery coverage."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why does cheap crowdsourced head-camera video underperform for dexterous manipulation?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Commoditized crowdsourced POV video lacks synchronized wrist viewpoints, calibrated camera intrinsics/extrinsics, 3D hand kinematics, contact force telemetry, and kinematic reachability checks. Because hands frequently occlude the grasp point and recording quality varies wildly, generic clips provide weak transfer for fine manipulation compared to specification-driven, Edge-QA-verified workplace capture."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How should an ML or procurement lead evaluate a Physical AI data integrator?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Evaluate six concrete criteria: (1) whether they support synchronized wrist + 3D hand / UMI / tactile / client BYO rigs rather than selling stock head-cam clips; (2) whether they run automated on-site Edge QA including timestamp sync, calibration, occlusion, and kinematic reachability; (3) whether they preserve real failures and human recoveries; (4) whether they strictly separate human observations from measured kinematics with zero fabricated robot actions; (5) whether they bill transparently on accepted units with recorded/submitted/accepted hours tracked separately; and (6) whether they deliver written site consent, NDAs, EU AI Act/GDPR privacy controls, and SHA-256 provenance manifests."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>document.documentElement.classList.add('intro-done');</script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261128b">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-left">
+            <a href="/" class="brand-link" id="brand-link"><span class="brand-text" id="brand-text">SVERKAUS</span></a>
+            <span class="header-star-slot" id="header-logo-slot" aria-hidden="true"></span>
+        </div>
+
+        <nav class="nav-tabs" aria-label="Main navigation">
+            <a href="/" class="nav-tab" data-tab="overview" id="tab-overview"><span class="tab-label" data-i18n="nav.overview">Overview</span></a>
+            <a href="/methodology" class="nav-tab active" data-tab="specs" id="tab-specs"><span class="tab-label" data-i18n="nav.specs">Specs</span></a>
+            <a href="/partners" class="nav-tab" data-tab="partners" id="tab-partners"><span class="tab-label" data-i18n="nav.partners">Partners</span></a>
+            <a href="/careers" class="nav-tab" data-tab="careers" id="tab-careers"><span class="tab-label" data-i18n="nav.careers">Careers</span></a>
+            <span class="nav-tab-indicator" id="nav-tab-indicator" aria-hidden="true"></span>
+        </nav>
+
+        <div class="header-right">
+            <div class="custom-select" id="custom-lang-select">
+                <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language" id="lang-select-trigger">
+                    <span class="selected-text" id="lang-selected-text">EN</span>
+                </button>
+                <ul class="select-options" role="listbox" aria-label="Language options" id="lang-select-options">
+                    <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0">English</li>
+                    <li class="select-option" data-value="uk" data-short="UA" role="option" tabindex="0">Українська</li>
+                    <li class="select-option" data-value="zh" data-short="中文" role="option" tabindex="0">中文</li>
+                    <li class="select-option" data-value="hi" data-short="हिन्दी" role="option" tabindex="0">हिन्दी</li>
+                    <li class="select-option" data-value="ko" data-short="한국어" role="option" tabindex="0">한국어</li>
+                    <li class="select-option" data-value="de" data-short="DE" role="option" tabindex="0">Deutsch</li>
+                    <li class="select-option" data-value="pl" data-short="PL" role="option" tabindex="0">Polski</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="logo-icon-container logo-dock-carrier" id="logo-dock-carrier" role="button" tabindex="0" aria-label="Return to Sverkaus Overview" title="Sverkaus">
+        <svg class="logo-icon" id="star-svg" viewBox="-180 -180 560 560" shape-rendering="geometricPrecision">
+            <g class="star-root">
+                <g class="star-body">
+                    <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#0f172a" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="10" />
+                </g>
+                <g class="star-eyes">
+                    <ellipse class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#0f172a" />
+                    <g class="star-eye-right-group">
+                        <ellipse class="star-eye star-eye-right" cx="115" cy="100" rx="13" ry="21" fill="#0f172a" />
+                        <path class="star-eye-wink" d="M 106 104 Q 115 90 124 104" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <main class="main-wrapper">
+        <article class="spec-section">
+            <div class="spec-inner">
+                <nav class="spec-breadcrumb" aria-label="Breadcrumb">
+                    <a href="/">Overview</a>
+                    <span>/</span>
+                    <a href="/methodology">Specs</a>
+                    <span>/</span>
+                    <span>Approaches Compared</span>
+                </nav>
+
+                <header class="spec-header">
+                    <div class="overview-kicker">Technical Specification · 02</div>
+                    <h1 class="spec-h1">Robotics Data Vendors &amp; Capture Paradigms Compared</h1>
+                    <p class="spec-lead">An objective 2026 engineering comparison of bulk egocentric catalogs, venture-scale data mega-factories, lab teleoperation/simulation, and specification-driven embedded workplace capture (Sverkaus).</p>
+                    <div class="spec-meta-row">
+                        <time datetime="2026-11-28" class="spec-updated">Updated November 28, 2026 · Procurement Guide v1.2</time>
+                        <span class="spec-meta-sep">·</span>
+                        <a href="/specs/provenance-manifest.sample.json" class="spec-meta-link">Sample Provenance JSON</a>
+                    </div>
+                    <nav class="spec-nav-strip" aria-label="Technical specifications">
+                        <a href="/methodology" class="spec-nav-pill">Methodology &amp; Edge QA</a>
+                        <a href="/compare" class="spec-nav-pill active">Approaches Compared</a>
+                        <a href="/domains" class="spec-nav-pill">Manipulation Domains</a>
+                        <a href="/formats" class="spec-nav-pill">Formats &amp; World Models</a>
+                        <a href="/privacy" class="spec-nav-pill">Privacy &amp; GDPR</a>
+                    </nav>
+                </header>
+
+                <aside class="answer-box" aria-label="Executive Summary">
+                    <span class="answer-box-label">Direct Summary</span>
+                    <p>No single data paradigm solves every stage of robot learning. <strong>Simulation</strong> and <strong>bulk egocentric video</strong> are cheap for early pre-training; <strong>lab teleoperation</strong> delivers exact robot actions in controlled cells; <strong>enterprise data mega-factories</strong> serve high-volume standardized contracts. <strong>Sverkaus fills the hardest remaining gap:</strong> agile, specification-driven capture of skilled commercial and industrial workflows on live European and Ukrainian sites—with zero hardware lock-in (BYO rigs supported), synchronized wrist/3D-hand/tactile/sEMG stacks, on-site Edge QA, honest stream separation, and a direct bridge to automation-interested facilities.</p>
+                </aside>
+
+                <section class="overview-block" id="comparison-matrix">
+                    <div class="overview-kicker">01 · Side-by-Side Market Architecture</div>
+                    <h2 class="overview-heading">Four Physical AI Data Models Compared.</h2>
+                    <div class="geo-table-wrap">
+                        <table class="geo-table">
+                            <thead>
+                                <tr>
+                                    <th>Criterion</th>
+                                    <th>Bulk Egocentric Catalogs &amp; Crowdsourcing</th>
+                                    <th>Enterprise Data Mega-Factories</th>
+                                    <th>Lab Teleoperation &amp; Sim-Only</th>
+                                    <th>Sverkaus (Embedded Live-Workplace)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Environment Realism</td>
+                                    <td>Mostly domestic, staged, or unverified settings</td>
+                                    <td>Centralized collection warehouses or large remote pools</td>
+                                    <td>1–2 controlled lab cells or synthetic physics</td>
+                                    <td><strong>Active commercial &amp; industrial shifts</strong> (laundries, kitchens, workshops, skilled trades, 3PL)</td>
+                                </tr>
+                                <tr>
+                                    <td>Sensor &amp; Rig Flexibility</td>
+                                    <td>Fixed head/phone RGB; rarely wrist-synced or calibrated</td>
+                                    <td>Often locked to proprietary vendor hardware/wearables</td>
+                                    <td>Locked to specific lab robot arm or simulator</td>
+                                    <td><strong>Track A/B/C + Client BYO rigs</strong> (wrist + stereo + 3D hands + UMI + tactile/sEMG + optional LWIR)</td>
+                                </tr>
+                                <tr>
+                                    <td>Pilot Speed &amp; Minimum Commitment</td>
+                                    <td>Instant shelf download, but cannot fix specific bottlenecks</td>
+                                    <td>Slow enterprise procurement; high minimum contracts</td>
+                                    <td>High CapEx to ship/maintain robots on real sites</td>
+                                    <td><strong>10–20 min shakedown</strong> → bounded paid pilot → iterative Eval Loop</td>
+                                </tr>
+                                <tr>
+                                    <td>Failure &amp; Recovery Coverage</td>
+                                    <td>Unstructured; rarely annotated at step boundary</td>
+                                    <td>Varies by operator SOP; often filtered for clean runs</td>
+                                    <td>Lab failures differ from live clutter; sim misses deformables</td>
+                                    <td><strong>Natural slips &amp; human recoveries preserved</strong> and step-labeled (never artificially staged unsafely)</td>
+                                </tr>
+                                <tr>
+                                    <td>Action Honesty &amp; QA</td>
+                                    <td>Post-hoc crowd QC; occasional synthetic action guessing</td>
+                                    <td>Proprietary central QC; mixed batch transparency</td>
+                                    <td>Exact robot actions (teleop) or sim ground truth</td>
+                                    <td><strong>On-site Edge QA (<code>RELEASE/HOLD/REJECT</code>)</strong>, SHA-256 manifests, <strong>zero fabricated robot actions</strong></td>
+                                </tr>
+                                <tr>
+                                    <td>European Compliance &amp; Site Governance</td>
+                                    <td>Weak or ambiguous workplace consent chains</td>
+                                    <td>Primarily US / global remote focus</td>
+                                    <td>Internal lab only</td>
+                                    <td><strong>6-doc legal packet, Site Clearance (<code>GO/NO GO</code>)</strong>, EU AI Act + GDPR/DSGVO/RODO, offline capture</td>
+                                </tr>
+                                <tr>
+                                    <td>Strategic Upside Beyond Data</td>
+                                    <td>None (pure footage commodity)</td>
+                                    <td>Data volume only</td>
+                                    <td>Internal R&amp;D only</td>
+                                    <td><strong>Industrial Data-to-Automation bridge:</strong> access to real workflows &amp; automation-interested European sites</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="engagement-modes">
+                    <div class="overview-kicker">02 · Four B2B Engagement Models</div>
+                    <h2 class="overview-heading">How Robotics Teams &amp; Data Platforms Work With Sverkaus.</h2>
+                    <div class="spec-grid-2">
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Mode A · Turnkey Production</span>
+                            <h3 class="spec-item-title">Managed Specialized Data Production</h3>
+                            <p class="spec-item-body">End-to-end specification-driven capture on consented real workplaces—covering site sourcing, Site Security Clearance, calibrated hardware setup, SOP execution, Edge QA, and export to LeRobot/RLDS/MCAP/HDF5.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Mode B · BYO Hardware &amp; Regional Ops</span>
+                            <h3 class="spec-item-title">Regional Collection Operations Partner</h3>
+                            <p class="spec-item-body">Already have your own UMI gripper, stereo rig, sensor gloves, or capture app? Sverkaus deploys and operates your exact hardware and QA software across Ukrainian and European commercial workplaces.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Mode C · B2B Supply Partner</span>
+                            <h3 class="spec-item-title">Field Operations for Data Platforms</h3>
+                            <p class="spec-item-body">Sverkaus serves as an accountable, legally cleared regional field-collection partner for larger robotics data aggregators requiring hard-to-reach skilled trades, workshops, kitchens, and industrial sites.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Mode D · Closed-Loop Data Engine</span>
+                            <h3 class="spec-item-title">Iterative Eval-Driven Batching</h3>
+                            <p class="spec-item-body">Following <code>Diagnose → Collect → Validate → Evaluate → Iterate</code>, each follow-up batch targets the exact failure modes surfaced on the buyer's robot evaluation suite instead of adding redundant hours.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="procurement-checklist">
+                    <div class="overview-kicker">03 · Buyer Qualification Checklist</div>
+                    <h2 class="overview-heading">Six Questions to Audit Any Physical AI Data Vendor.</h2>
+                    <div class="spec-grid-2">
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Check 01 · Modality Fit</span>
+                            <h3 class="spec-item-title">Wrist + 3D Hand + Tactile + BYO?</h3>
+                            <p class="spec-item-body">Do they match your actual transfer bottleneck (<a href="https://arxiv.org/abs/2512.22414" target="_blank" rel="noopener" class="cite-link">wrist+hand</a>, tactile/sEMG, or <a href="https://arxiv.org/abs/2505.21864" target="_blank" rel="noopener" class="cite-link">DexUMI</a>) and accept client rigs, or push commoditized head-cam video?</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Check 02 · On-Site Edge QA</span>
+                            <h3 class="spec-item-title">Are Sync &amp; Reachability Gated Locally?</h3>
+                            <p class="spec-item-body">Verify whether p95 sync drift, dropped frames, calibration, hand occlusion, and robot reachability are checked before shipment via auditable <code>RELEASE/HOLD/REJECT</code> reports.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Check 03 · Honest Accounting</span>
+                            <h3 class="spec-item-title">Cost per Accepted Hour Transparency?</h3>
+                            <p class="spec-item-body">Ensure recorded, submitted, and accepted hours are separated explicitly and billing ties to contractual acceptance criteria—never paying for rejected footage.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Check 04 · Stream &amp; Legal Integrity</span>
+                            <h3 class="spec-item-title">Zero Fabricated Actions + GDPR Chain?</h3>
+                            <p class="spec-item-body">Confirm human observation streams are never silently mixed with guessed robot commands, and inspect written site agreements, participant consents, and SHA-256 provenance manifests.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="faq">
+                    <div class="overview-kicker">04 · Comparison FAQ</div>
+                    <h2 class="overview-heading">Procurement &amp; Architecture Questions.</h2>
+                    <div class="geo-faq-list">
+                        <details class="geo-faq-item" open>
+                            <summary>When should a robotics team choose Sverkaus over bulk egocentric video catalogs or enterprise data mega-factories?</summary>
+                            <div class="geo-faq-answer">Bulk egocentric catalogs are cheap for broad video pre-training, while US/global enterprise mega-factories target huge standardized multi-million-dollar commitments on proprietary setups. Sverkaus is built for teams that need agile, specification-driven skilled-workplace data—supporting client BYO hardware (Track C), synchronized wrist + 3D hand + tactile/sEMG capture, strict European/Ukrainian GDPR and Site Security Clearance, transparent Cost-per-Accepted-Hour accounting, and a 10–20 minute calibration shakedown before scaling.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>When should a robotics team use embedded live-workplace capture instead of robot teleoperation?</summary>
+                            <div class="geo-faq-answer">Robot teleoperation is ideal for collecting embodiment-exact action trajectories inside a controlled lab, but it is slow and impractical to deploy across dozens of active commercial kitchens, laundries, workshops, or construction sites. Embedded portable capture (wrist cameras, 3D hand tracking, UMI grippers, MoCap gloves) collects real-world manipulation data more than 3× faster without moving a robot on site—making it the optimal way to scale multi-site environmental diversity and real failure/recovery coverage.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>Why does cheap crowdsourced head-camera video underperform for dexterous manipulation?</summary>
+                            <div class="geo-faq-answer">Commoditized crowdsourced POV video lacks synchronized wrist viewpoints, calibrated camera intrinsics/extrinsics, 3D hand kinematics, contact force telemetry, and kinematic reachability checks. Because hands frequently occlude the grasp point and recording quality varies wildly, generic clips provide weak transfer for fine manipulation compared to specification-driven, Edge-QA-verified workplace capture.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>How should an ML or procurement lead evaluate a Physical AI data integrator?</summary>
+                            <div class="geo-faq-answer">Evaluate six concrete criteria: (1) whether they support synchronized wrist + 3D hand / UMI / tactile / client BYO rigs rather than selling stock head-cam clips; (2) whether they run automated on-site Edge QA including timestamp sync, calibration, occlusion, and kinematic reachability; (3) whether they preserve real failures and human recoveries; (4) whether they strictly separate human observations from measured kinematics with zero fabricated robot actions; (5) whether they bill transparently on accepted units with recorded/submitted/accepted hours tracked separately; and (6) whether they deliver written site consent, NDAs, EU AI Act/GDPR privacy controls, and SHA-256 provenance manifests.</div>
+                        </details>
+                    </div>
+                </section>
+
+                <div class="contact-inline">
+                    <a href="/#contact" class="pill-btn primary">Discuss Your Data Spec</a>
+                    <a href="/domains" class="section-more-link">Next: Manipulation Domains &amp; Sensors →</a>
+                    <a href="mailto:gleb@sverkaus.com?subject=Data%20Procurement%20Comparison%20-%20Sverkaus" class="bold-link">gleb@sverkaus.com</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-legal">
+                <a href="/" data-i18n="nav.overview">Overview</a>
+                <span class="footer-dot">·</span>
+                <a href="/methodology" data-i18n="nav.specs">Specs</a>
+                <span class="footer-dot">·</span>
+                <a href="/partners" data-i18n="nav.partners">Partners</a>
+                <span class="footer-dot">·</span>
+                <a href="/careers" data-i18n="nav.careers">Careers</a>
+                <span class="footer-dot">·</span>
+                <a href="mailto:gleb@sverkaus.com">gleb@sverkaus.com</a>
+            </div>
+            <div class="footer-specs-row">
+                <a href="/methodology">Methodology</a>
+                <span class="footer-dot">·</span>
+                <a href="/compare">Compare</a>
+                <span class="footer-dot">·</span>
+                <a href="/domains">Domains</a>
+                <span class="footer-dot">·</span>
+                <a href="/formats">Formats</a>
+                <span class="footer-dot">·</span>
+                <a href="/privacy">Privacy &amp; GDPR</a>
+                <span class="footer-dot">·</span>
+                <a href="/de">DE</a>
+                <span class="footer-dot">·</span>
+                <a href="/pl">PL</a>
+                <span class="footer-dot">·</span>
+                <a href="/uk">UA</a>
+                <span class="footer-dot">·</span>
+                <a href="/zh">中文</a>
+                <span class="footer-dot">·</span>
+                <a href="/ko">한국어</a>
+                <span class="footer-dot">·</span>
+                <a href="/llms.txt">llms.txt</a>
+            </div>
+            <p class="footer-trading-note">Sverkaus Physical AI Data Lab</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/site.js?v=20261128c"></script>
+</body>
+</html>

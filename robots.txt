@@ -1,7 +1,8 @@
 User-agent: *
 Allow: /
 
-# AI / LLM crawlers welcome — full structured context available at /llms.txt and /llms-full.txt
+# AI search, retrieval & LLM crawlers welcome
+# Full structured context available at /llms.txt and /llms-full.txt
 User-agent: GPTBot
 Allow: /
 
@@ -14,10 +15,40 @@ Allow: /
 User-agent: ClaudeBot
 Allow: /
 
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Perplexity-User
+Allow: /
+
 User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://sverkaus.com/sitemap.xml

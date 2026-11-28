@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="description" content="Sverkaus Physical AI capture methodology: specification-driven live-workplace capture backed by arXiv transfer research, Track A/B/C rigs, Site Security Clearance (GO/HOLD/NO GO), Edge QA (RELEASE/HOLD/REJECT), failure/recovery quotas, and the 6-stage Eval Loop.">
+    <link rel="canonical" href="https://sverkaus.com/methodology">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Sverkaus LLM Context">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Sverkaus Full Technical Context">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sverkaus.com/methodology">
+    <meta property="og:title" content="Capture Methodology, Edge QA & Policy Transfer — Sverkaus Physical AI Data Lab">
+    <meta property="og:description" content="How specification-driven live-workplace capture overcomes sim-to-real and lab-bench plateaus: wrist cameras, 3D hand tracking, FeelTheForce tactile/sEMG, DexUMI rigs, Edge QA, and the Eval Loop.">
+    <meta property="og:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Capture Methodology & Edge QA — Sverkaus Physical AI Data Lab">
+    <meta name="twitter:description" content="Peer-reviewed robot-learning transfer principles, Track A/B/C hardware, Site Security Clearance, Edge QA gates, and Cost-per-Accepted-Hour discipline.">
+    <meta name="twitter:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <title>Capture Methodology &amp; Edge QA — Sverkaus Physical AI Data Lab</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TechArticle",
+          "@id": "https://sverkaus.com/methodology#article",
+          "headline": "Physical AI Data Capture Methodology, Edge QA & Human-to-Robot Policy Transfer",
+          "description": "Engineering specification detailing Sverkaus's specification-driven live-workplace capture methodology, peer-reviewed transfer foundations, Track A/B/C hardware, Site Security Clearance (GO/HOLD/NO GO), Edge QA gates (RELEASE/HOLD/REJECT), Cost-per-Accepted-Hour accounting, and 6-stage Eval Loop.",
+          "inLanguage": "en",
+          "datePublished": "2026-11-28",
+          "dateModified": "2026-11-28",
+          "author": { "@id": "https://sverkaus.com/#organization" },
+          "publisher": { "@id": "https://sverkaus.com/#organization" },
+          "mainEntityOfPage": "https://sverkaus.com/methodology",
+          "about": [
+            "Human-to-Robot Policy Transfer",
+            "Sim-to-Real Gap in Manipulation",
+            "Universal Manipulation Interface (UMI)",
+            "Tactile and sEMG Force Sensing in Robotics",
+            "Edge QA and Kinematic Reachability",
+            "Failure and Recovery Trajectories for Reinforcement Learning"
+          ],
+          "citation": [
+            {
+              "@type": "ScholarlyArticle",
+              "name": "Data Scaling Laws in Imitation Learning for Robotic Manipulation",
+              "url": "https://arxiv.org/abs/2410.18647"
+            },
+            {
+              "@type": "ScholarlyArticle",
+              "name": "Wrist-Worn Cameras and 3D Hand Kinematics for Human-to-Robot Policy Transfer",
+              "url": "https://arxiv.org/abs/2512.22414"
+            },
+            {
+              "@type": "ScholarlyArticle",
+              "name": "FeelTheForce: Contact-Rich Tactile and Force Sensing for Dexterous Manipulation",
+              "url": "https://arxiv.org/abs/2506.01944"
+            },
+            {
+              "@type": "ScholarlyArticle",
+              "name": "DexUMI: Using Human Hand as the Universal Manipulation Interface for Dexterous Manipulation",
+              "url": "https://arxiv.org/abs/2505.21864"
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://sverkaus.com/methodology#breadcrumbs",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Overview", "item": "https://sverkaus.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Methodology & Edge QA", "item": "https://sverkaus.com/methodology" }
+          ]
+        },
+        {
+          "@type": "HowTo",
+          "@id": "https://sverkaus.com/methodology#pilot-howto",
+          "name": "How to Run a Specification-Driven Physical AI Data Pilot with Sverkaus",
+          "description": "Operational workflow from technical bottleneck triage and Site Security Clearance to 10–20 minute shakedown calibration, Edge-QA-verified delivery, and iterative evaluation.",
+          "step": [
+            {
+              "@type": "HowToStep",
+              "position": 1,
+              "name": "Technical Triage & Economics Lock",
+              "text": "Lock the target manipulation bottleneck, robot morphology and workspace limits, required sensor track (Track A Visual/Real2Sim, Track B Tactile/Force/sEMG, or Track C Kinematic-Compatible UMI/BYO), export format, and objective Cost-per-Accepted-Hour acceptance thresholds."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 2,
+              "name": "Site Security Clearance (GO) & 10–20 Minute Calibration Shakedown",
+              "text": "Audit the partner workplace to GO status with written Site Access Agreements, NDAs, and voluntary Participant Consent, then record a 10–20 minute calibration shakedown verifying wrist framing, 3D hand visibility, cross-stream timestamp sync drift, kinematic reachability, and target schema import."
+            },
+            {
+              "@type": "HowToStep",
+              "position": 3,
+              "name": "Live-Shift Production, Edge QA & Iterative Eval Loop",
+              "text": "Execute controlled live-shift collection preserving natural failure and recovery trajectories under on-site Edge QA gating (RELEASE/HOLD/REJECT), pre-delivery privacy review, signed provenance manifests, and buyer model evaluation to scope the next targeted batch."
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://sverkaus.com/methodology#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Why do imitation learning and VLA robotics policies plateau on sterile lab-bench data?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Empirical scaling studies (arXiv:2410.18647) show that imitation policies typically plateau after roughly ~50 demonstrations in a single scene-object setup because additional repeats in the same lighting, background, and fixture geometry add almost no distributional diversity. Strong zero-shot generalization scales as a power law with breadth across distinct real environments and objects, where clutter, wear, lighting shifts, and friction occur naturally."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why are synchronized wrist cameras, 3D hand kinematics, and tactile/sEMG sensors critical compared to plain head-cam video?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Plain head-mounted egocentric video suffers from self-occlusion at the point of contact and cannot recover contact force or finger torque. Research shows human-to-robot transfer nearly doubles when demonstrations include synchronized wrist-worn cameras and 3D hand kinematics (arXiv:2512.22414), while contact-rich tasks with soft, fragile, or high-friction materials require explicit tactile/force or sEMG streams (arXiv:2506.01944)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What does Edge QA check before a robotics data batch is released?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sverkaus Edge QA validates frame drops, multi-stream timestamp synchronization drift, camera intrinsic and extrinsic calibration integrity, hand/tool visibility and occlusion scores, motion-blur and lighting thresholds, episode completeness, privacy Scoped FOV compliance, and kinematic reachability against the buyer's target robot morphology. Every segment is classified as RELEASE, HOLD, or REJECT before delivery, and recorded, submitted, and accepted hours are tracked separately."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why does Sverkaus preserve real slips, failed grasps, and human recoveries instead of filtering for perfect demos?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Policies trained exclusively on clean, error-free demonstrations fail when encountering real-world friction, fabric snagging, or misaligned parts because they have never observed recovery states. Preserving natural slips, corrective human interventions, and step-level success/failure outcomes (without ever staging unsafe errors) provides the exact failure-mode signal needed for reinforcement learning (RL) and robust policy recovery."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>document.documentElement.classList.add('intro-done');</script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261128b">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-left">
+            <a href="/" class="brand-link" id="brand-link"><span class="brand-text" id="brand-text">SVERKAUS</span></a>
+            <span class="header-star-slot" id="header-logo-slot" aria-hidden="true"></span>
+        </div>
+
+        <nav class="nav-tabs" aria-label="Main navigation">
+            <a href="/" class="nav-tab" data-tab="overview" id="tab-overview"><span class="tab-label" data-i18n="nav.overview">Overview</span></a>
+            <a href="/methodology" class="nav-tab active" data-tab="specs" id="tab-specs"><span class="tab-label" data-i18n="nav.specs">Specs</span></a>
+            <a href="/partners" class="nav-tab" data-tab="partners" id="tab-partners"><span class="tab-label" data-i18n="nav.partners">Partners</span></a>
+            <a href="/careers" class="nav-tab" data-tab="careers" id="tab-careers"><span class="tab-label" data-i18n="nav.careers">Careers</span></a>
+            <span class="nav-tab-indicator" id="nav-tab-indicator" aria-hidden="true"></span>
+        </nav>
+
+        <div class="header-right">
+            <div class="custom-select" id="custom-lang-select">
+                <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language" id="lang-select-trigger">
+                    <span class="selected-text" id="lang-selected-text">EN</span>
+                </button>
+                <ul class="select-options" role="listbox" aria-label="Language options" id="lang-select-options">
+                    <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0">English</li>
+                    <li class="select-option" data-value="uk" data-short="UA" role="option" tabindex="0">Українська</li>
+                    <li class="select-option" data-value="zh" data-short="中文" role="option" tabindex="0">中文</li>
+                    <li class="select-option" data-value="hi" data-short="हिन्दी" role="option" tabindex="0">हिन्दी</li>
+                    <li class="select-option" data-value="ko" data-short="한국어" role="option" tabindex="0">한국어</li>
+                    <li class="select-option" data-value="de" data-short="DE" role="option" tabindex="0">Deutsch</li>
+                    <li class="select-option" data-value="pl" data-short="PL" role="option" tabindex="0">Polski</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="logo-icon-container logo-dock-carrier" id="logo-dock-carrier" role="button" tabindex="0" aria-label="Return to Sverkaus Overview" title="Sverkaus">
+        <svg class="logo-icon" id="star-svg" viewBox="-180 -180 560 560" shape-rendering="geometricPrecision">
+            <g class="star-root">
+                <g class="star-body">
+                    <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#0f172a" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="10" />
+                </g>
+                <g class="star-eyes">
+                    <ellipse class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#0f172a" />
+                    <g class="star-eye-right-group">
+                        <ellipse class="star-eye star-eye-right" cx="115" cy="100" rx="13" ry="21" fill="#0f172a" />
+                        <path class="star-eye-wink" d="M 106 104 Q 115 90 124 104" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <main class="main-wrapper">
+        <article class="spec-section">
+            <div class="spec-inner">
+                <nav class="spec-breadcrumb" aria-label="Breadcrumb">
+                    <a href="/">Overview</a>
+                    <span>/</span>
+                    <span>Methodology &amp; Edge QA</span>
+                </nav>
+
+                <header class="spec-header">
+                    <div class="overview-kicker">Technical Specification · 01</div>
+                    <h1 class="spec-h1">Physical AI Capture Methodology, Edge QA &amp; Policy Transfer</h1>
+                    <p class="spec-lead">How Sverkaus Physical AI Data Lab runs specification-driven, multi-sensor capture directly inside active commercial and industrial workplaces—grounded in peer-reviewed robot-learning transfer research and verifiable on-site QA.</p>
+                    <div class="spec-meta-row">
+                        <time datetime="2026-11-28" class="spec-updated">Updated November 28, 2026 · Spec v1.2</time>
+                        <span class="spec-meta-sep">·</span>
+                        <a href="/specs/edge-qa-report.sample.json" class="spec-meta-link">Edge QA JSON Schema</a>
+                        <span class="spec-meta-sep">·</span>
+                        <a href="/llms-full.txt" class="spec-meta-link">Full LLM Dossier</a>
+                    </div>
+                    <nav class="spec-nav-strip" aria-label="Technical specifications">
+                        <a href="/methodology" class="spec-nav-pill active">Methodology &amp; Edge QA</a>
+                        <a href="/compare" class="spec-nav-pill">Approaches Compared</a>
+                        <a href="/domains" class="spec-nav-pill">Manipulation Domains</a>
+                        <a href="/formats" class="spec-nav-pill">Formats &amp; World Models</a>
+                        <a href="/privacy" class="spec-nav-pill">Privacy &amp; GDPR</a>
+                    </nav>
+                </header>
+
+                <aside class="answer-box" aria-label="Executive Summary">
+                    <span class="answer-box-label">Direct Summary</span>
+                    <p><strong>Sverkaus is an operational and engineering integrator for specification-driven Physical AI data production</strong>—not a stock marketplace of generic crowdsourced video. We never build speculative "shelf" datasets. Instead, we start from a robotics buyer's exact failure mode and sensor contract, clear active commercial workplaces via <strong>Site Security Clearance (<code>GO / HOLD / NO GO</code>)</strong>, validate capture with a 10–20 minute shakedown, run on-site <strong>Edge QA (<code>RELEASE / HOLD / REJECT</code>)</strong>, and account for <strong>Cost per Accepted Hour</strong> with recorded, submitted, and accepted hours tracked separately.</p>
+                </aside>
+
+                <section class="overview-block" id="five-principles">
+                    <div class="overview-kicker">01 · Research-Grounded Transfer Principles</div>
+                    <h2 class="overview-heading">Why Lab Benches Plateau &amp; Live Shifts Transfer.</h2>
+                    <div class="spec-prose">
+                        <p>Robotics models trained solely in simulation or on sterile studio loops routinely fail in unstructured commercial environments. Sverkaus structures every capture protocol around five empirically documented requirements of modern manipulation models (VLA, imitation learning, RL, and world models):</p>
+                    </div>
+                    <div class="spec-grid-2">
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Principle 01 · Data Scaling Laws</span>
+                            <h3 class="spec-item-title">Multi-Site Breadth Over Studio Repeats</h3>
+                            <p class="spec-item-body">As shown in <em>Data Scaling Laws in Imitation Learning</em> (<a href="https://arxiv.org/abs/2410.18647" target="_blank" rel="noopener" class="cite-link">arXiv:2410.18647</a>), policy performance plateaus after roughly ~50 demonstrations per scene-object pair, while generalization scales as a power law with environmental and object diversity. Sverkaus sources real commercial shifts so lighting, clutter, wear, and surface friction vary naturally.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Principle 02 · ~2× Human-to-Robot Transfer</span>
+                            <h3 class="spec-item-title">Synchronized Wrist Views + 3D Hand Kinematics</h3>
+                            <p class="spec-item-body">Plain head-mounted POV video suffers from grasp self-occlusion and viewpoint mismatch. Empirical transfer work (<a href="https://arxiv.org/abs/2512.22414" target="_blank" rel="noopener" class="cite-link">arXiv:2512.22414</a>) demonstrates that pairing synchronized wrist-worn cameras with 3D hand tracking nearly doubles human-to-robot transfer on novel manipulation tasks.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Principle 03 · Contact &amp; Force Signal</span>
+                            <h3 class="spec-item-title">Tactile, Force &amp; sEMG Where RGB Falls Short</h3>
+                            <p class="spec-item-body">RGB video alone cannot recover contact Newtons, slip onset, or compliant pressure on soft, fragile, or high-friction objects (<a href="https://arxiv.org/abs/2506.01944" target="_blank" rel="noopener" class="cite-link">FeelTheForce, arXiv:2506.01944</a>). For contact-rich tasks, Sverkaus configures fingertip force/pressure sensors, MoCap gloves, or sEMG per buyer spec.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Principle 04 · Kinematic Compatibility (&gt;3× Teleop)</span>
+                            <h3 class="spec-item-title">Robot-Free UMI / Exoskeleton Capture + Reachability</h3>
+                            <p class="spec-item-body">Portable hand-held gripper and exoskeleton interfaces (<a href="https://arxiv.org/abs/2505.21864" target="_blank" rel="noopener" class="cite-link">DexUMI, arXiv:2505.21864</a>) collect manipulation data &gt;3× faster than robot teleoperation without hauling hardware onto a live shop floor—while Edge QA validates kinematic reachability for the client's target embodiment.</p>
+                        </div>
+                    </div>
+                    <div class="spec-prose">
+                        <p><strong>Principle 05 · Natural Failure &amp; Recovery Quotas + Subgoals:</strong> Sanitized "perfect-only" clips fail when encountering fabric snags, cable tension, or slipped tools. Sverkaus preserves natural errors, corrective human recoveries, and step-level success/failure boundaries (never staging unsafe failures) alongside synced base+wrist frames for both policy learning and world-model subgoal conditioning.</p>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="capture-tracks">
+                    <div class="overview-kicker">02 · Technical Triage &amp; Capture Tracks</div>
+                    <h2 class="overview-heading">Track A, B &amp; C Aligned to Robot Morphology.</h2>
+                    <div class="spec-prose">
+                        <p>Sverkaus never forces a generic rig or speculative hardware purchase. During technical triage, capture hardware is matched directly to the buyer's robot morphology, target modality, and acceptance criteria:</p>
+                    </div>
+                    <div class="geo-table-wrap">
+                        <table class="geo-table">
+                            <thead>
+                                <tr>
+                                    <th>Track</th>
+                                    <th>Modalities &amp; Sensor Stack</th>
+                                    <th>Primary Use Cases</th>
+                                    <th>Engineering Guardrail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Track A · Visual &amp; Real2Sim</td>
+                                    <td>Calibrated stereo egocentric + synchronized L/R wrist RGB, optional 3rd-person, IMU telemetry</td>
+                                    <td>VLA pre-training, Real2Sim 3D scene reconstruction, subgoal video/world models, general pick/place &amp; workflow variety</td>
+                                    <td>Clean observation-only channels; never falsely labeled as 6-DoF robot actions</td>
+                                </tr>
+                                <tr>
+                                    <td>Track B · Force, Tactile &amp; Thermal</td>
+                                    <td>3D hand/finger tracking, MoCap gloves, fingertip pressure/force sensors, sEMG, optional LWIR Thermal / IR</td>
+                                    <td>Deformable textiles, cable routing, small connectors, fragile assembly, hot cookware, liquids, reflective/transparent parts</td>
+                                    <td>Physical calibration logs &amp; drift checks; validates grip naturalness before full batch</td>
+                                </tr>
+                                <tr>
+                                    <td>Track C · Kinematic-Compatible / BYO</td>
+                                    <td>UMI-style handheld grippers, morphology-matched exoskeletons, or client-supplied BYO rigs &amp; QA software</td>
+                                    <td>OEMs and labs with proprietary hardware needing agile European/Ukrainian live-site deployment</td>
+                                    <td>Zero hardware lock-in; Sverkaus runs site clearance, SOPs, Edge QA, and local operations</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="edge-qa">
+                    <div class="overview-kicker">03 · Two-Stage Governance &amp; Edge QA</div>
+                    <h2 class="overview-heading">Site Clearance (GO/NO GO) &amp; Edge QA (RELEASE/HOLD/REJECT).</h2>
+                    <div class="spec-prose">
+                        <p>Data quality fails upstream if sites are unverified or defects are discovered only after delivery. Sverkaus enforces two explicit, auditable operational gates—<strong>Site Security Clearance</strong> before recording starts, and <strong>Edge QA</strong> at the capture station before any batch ships. Inspect our <a href="/specs/edge-qa-report.sample.json" class="bold-link">illustrative Edge QA JSON report schema</a>.</p>
+                    </div>
+                    <div class="geo-table-wrap">
+                        <table class="geo-table">
+                            <thead>
+                                <tr>
+                                    <th>Control Gate</th>
+                                    <th>What Is Verified</th>
+                                    <th>Auditable Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Site Security Clearance</td>
+                                    <td>Workplace safety, legal authorization, NDA, Participant Consent, Scoped FOV boundaries, and zero-IT-network isolation</td>
+                                    <td><code>GO</code> · <code>HOLD</code> · <code>NO GO</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Multi-Stream Sync &amp; Frames</td>
+                                    <td>Frame-drop rate and cross-camera/IMU/kinematic timestamp drift (p95 Δt checked against buyer threshold)</td>
+                                    <td><code>RELEASE</code> within tolerance; else <code>REJECT</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Calibration &amp; Visibility</td>
+                                    <td>Camera intrinsics/extrinsics integrity, hand/tool visibility ratio, occlusion bounds, motion blur, and lighting stability</td>
+                                    <td>Verified in 10–20 min shakedown &amp; per episode</td>
+                                </tr>
+                                <tr>
+                                    <td>Kinematic Reachability</td>
+                                    <td>Trajectory and workspace feasibility checked against the buyer's target robot morphology</td>
+                                    <td>Filters physically unexecutable demonstrations</td>
+                                </tr>
+                                <tr>
+                                    <td>Privacy &amp; Unit Accounting</td>
+                                    <td>Scoped FOV compliance, redaction logs, SHA-256 episode hashes, and separate Recorded / Submitted / Accepted hours</td>
+                                    <td><code>RELEASE</code> · <code>HOLD</code> · <code>REJECT</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="pilot-workflow">
+                    <div class="overview-kicker">04 · Six-Stage Iterative Data Engine</div>
+                    <h2 class="overview-heading">Diagnose → Identify → Collect → Validate → Evaluate → Iterate.</h2>
+                    <div class="spec-prose">
+                        <p>Sverkaus operates as a closed-loop production partner rather than a one-off footage drop. Every pilot is priced and tracked on <strong>Cost per Accepted Hour (or Episode)</strong>—keeping recorded, submitted, and buyer-accepted hours strictly separate:</p>
+                    </div>
+                    <div class="pilot-stepper">
+                        <div class="stepper-item">
+                            <div class="stepper-head"><span class="stepper-num">01</span><span class="stepper-line" aria-hidden="true"></span></div>
+                            <div class="stepper-title">Triage &amp; Spec Lock</div>
+                            <p class="stepper-desc">Diagnose the target policy bottleneck, lock sensor Track A/B/C, export schema (<a href="/formats" class="bold-link">LeRobot, RLDS, MCAP/Rerun, HDF5/Zarr</a>), and objective acceptance criteria.</p>
+                        </div>
+                        <div class="stepper-item">
+                            <div class="stepper-head"><span class="stepper-num">02</span><span class="stepper-line" aria-hidden="true"></span></div>
+                            <div class="stepper-title">Clearance &amp; 15-Min Shakedown</div>
+                            <p class="stepper-desc">Clear the workplace to <code>GO</code> under <a href="/privacy" class="bold-link">Privacy by Design</a>, then run a 10–20 minute shakedown verifying framing, sync, reachability, and schema import.</p>
+                        </div>
+                        <div class="stepper-item">
+                            <div class="stepper-head"><span class="stepper-num">03</span><span class="stepper-line last" aria-hidden="true"></span></div>
+                            <div class="stepper-title">Batch Delivery &amp; Eval Loop</div>
+                            <p class="stepper-desc">Deliver Edge-QA-verified live-shift batches with failure/recovery quotas and provenance manifests, then use buyer eval feedback to target remaining failure modes in the next batch.</p>
+                        </div>
+                    </div>
+                    <aside class="answer-box scope-boundaries" aria-label="Operational Boundaries">
+                        <span class="answer-box-label">Explicit Operational Boundaries</span>
+                        <p><strong>What Sverkaus guarantees vs. what we never claim:</strong> We commit to verified process discipline, written legal clearance, transparent sensor provenance, and objective Edge QA acceptance rules per signed scope. We never sell unconsented scraped video, never fabricate robot joint commands from RGB-only clips, and confirm site capacity, rig BOM, and timelines specifically for each project rather than inflating speculative inventory.</p>
+                    </aside>
+                </section>
+
+                <section class="overview-block" id="faq">
+                    <div class="overview-kicker">05 · Technical FAQ</div>
+                    <h2 class="overview-heading">Common Engineering Questions.</h2>
+                    <div class="geo-faq-list">
+                        <details class="geo-faq-item" open>
+                            <summary>Why do imitation learning and VLA robotics policies plateau on sterile lab-bench data?</summary>
+                            <div class="geo-faq-answer">Empirical scaling studies (<a href="https://arxiv.org/abs/2410.18647" target="_blank" rel="noopener">arXiv:2410.18647</a>) show that imitation policies typically plateau after roughly ~50 demonstrations in a single scene-object setup because additional repeats in the same lighting, background, and fixture geometry add almost no distributional diversity. Strong zero-shot generalization scales as a power law with breadth across distinct real environments and objects, where clutter, wear, lighting shifts, and friction occur naturally.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>Why are synchronized wrist cameras, 3D hand kinematics, and tactile/sEMG sensors critical compared to plain head-cam video?</summary>
+                            <div class="geo-faq-answer">Plain head-mounted egocentric video suffers from self-occlusion at the point of contact and cannot recover contact force or finger torque. Research shows human-to-robot transfer nearly doubles when demonstrations include synchronized wrist-worn cameras and 3D hand kinematics (<a href="https://arxiv.org/abs/2512.22414" target="_blank" rel="noopener">arXiv:2512.22414</a>), while contact-rich tasks with soft, fragile, or high-friction materials require explicit tactile/force or sEMG streams (<a href="https://arxiv.org/abs/2506.01944" target="_blank" rel="noopener">arXiv:2506.01944</a>).</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>What does Edge QA check before a robotics data batch is released?</summary>
+                            <div class="geo-faq-answer">Sverkaus Edge QA validates frame drops, multi-stream timestamp synchronization drift, camera intrinsic and extrinsic calibration integrity, hand/tool visibility and occlusion scores, motion-blur and lighting thresholds, episode completeness, privacy Scoped FOV compliance, and kinematic reachability against the buyer's target robot morphology. Every segment is classified as <strong>RELEASE</strong>, <strong>HOLD</strong>, or <strong>REJECT</strong> before delivery, and recorded, submitted, and accepted hours are tracked separately.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>Why does Sverkaus preserve real slips, failed grasps, and human recoveries instead of filtering for perfect demos?</summary>
+                            <div class="geo-faq-answer">Policies trained exclusively on clean, error-free demonstrations fail when encountering real-world friction, fabric snagging, or misaligned parts because they have never observed recovery states. Preserving natural slips, corrective human interventions, and step-level success/failure outcomes (without ever staging unsafe errors) provides the exact failure-mode signal needed for reinforcement learning (RL) and robust policy recovery.</div>
+                        </details>
+                    </div>
+                </section>
+
+                <div class="contact-inline">
+                    <a href="/#contact" class="pill-btn primary">Scope a Pilot</a>
+                    <a href="/compare" class="section-more-link">Next: Compare Data Vendors &amp; Approaches →</a>
+                    <a href="mailto:gleb@sverkaus.com?subject=Pilot%20Methodology%20Inquiry%20-%20Sverkaus" class="bold-link">gleb@sverkaus.com</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-legal">
+                <a href="/" data-i18n="nav.overview">Overview</a>
+                <span class="footer-dot">·</span>
+                <a href="/methodology" data-i18n="nav.specs">Specs</a>
+                <span class="footer-dot">·</span>
+                <a href="/partners" data-i18n="nav.partners">Partners</a>
+                <span class="footer-dot">·</span>
+                <a href="/careers" data-i18n="nav.careers">Careers</a>
+                <span class="footer-dot">·</span>
+                <a href="mailto:gleb@sverkaus.com">gleb@sverkaus.com</a>
+            </div>
+            <div class="footer-specs-row">
+                <a href="/methodology">Methodology</a>
+                <span class="footer-dot">·</span>
+                <a href="/compare">Compare</a>
+                <span class="footer-dot">·</span>
+                <a href="/domains">Domains</a>
+                <span class="footer-dot">·</span>
+                <a href="/formats">Formats</a>
+                <span class="footer-dot">·</span>
+                <a href="/privacy">Privacy &amp; GDPR</a>
+                <span class="footer-dot">·</span>
+                <a href="/de">DE</a>
+                <span class="footer-dot">·</span>
+                <a href="/pl">PL</a>
+                <span class="footer-dot">·</span>
+                <a href="/uk">UA</a>
+                <span class="footer-dot">·</span>
+                <a href="/zh">中文</a>
+                <span class="footer-dot">·</span>
+                <a href="/ko">한국어</a>
+                <span class="footer-dot">·</span>
+                <a href="/llms.txt">llms.txt</a>
+            </div>
+            <p class="footer-trading-note">Sverkaus Physical AI Data Lab</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/site.js?v=20261128c"></script>
+</body>
+</html>

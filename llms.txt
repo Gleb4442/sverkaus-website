@@ -1,19 +1,40 @@
 # Sverkaus Physical AI Data Lab
 
-> Sverkaus is an operational and engineering integrator for Physical AI data production. We embed specification-driven, multi-sensor capture directly into active commercial workplaces—delivering combat-ready physical interaction datasets (wrist-synced video, 3D hand kinematics, UMI grippers, MoCap gloves, failure/recovery trajectories, and Edge QA) for robotics teams, while offering Site Partners paid project participation and an optional path to automation assessment.
+> Sverkaus connects industrial workflows with Physical AI. We are an operational and engineering integrator for specification-driven Physical AI data production—embedding calibrated multi-sensor capture (synchronized wrist + stereo RGB, 3D hand kinematics, UMI/exoskeletons, tactile/force/sEMG, optional LWIR thermal, and client BYO hardware) directly into active commercial and industrial workplaces in Ukraine (operating base), Germany, Poland, and on request. Every batch passes Site Security Clearance (GO/HOLD/NO GO) and on-site Edge QA (RELEASE/HOLD/REJECT), tracks Recorded/Submitted/Accepted hours separately, preserves natural failure/recovery trajectories, ships with SHA-256 provenance manifests and zero fabricated robot actions, and offers Site Partners paid participation plus an optional path to Automation Opportunity Assessment.
 
 ## Core Pages
 
-- [Overview (For Robotics Teams & OEMs)](https://sverkaus.com/): Specification-driven physical data production, 5 ML transfer advantages, unified Capture Stack (hands, wrists, UMI, MoCap gloves, optional Thermal/IR), live workplace domains, 3-step pilot workflow, and contact form.
-- [Site Partners (For Businesses & Facilities)](https://sverkaus.com/partners): Paid, project-based workplace collaboration under NDA with zero shift disruption, Privacy by Design, and optional Automation Opportunity Assessment.
-- [Careers & Collaboration](https://sverkaus.com/careers): Project-based capture engineering, Data QA operations, and site partnership roles.
+- [Overview (For Robotics Teams & OEMs)](https://sverkaus.com/): Specification-driven physical data production, research-grounded ML transfer principles, unified Capture Stack (Track A/B/C), live workplace domains, 3-step pilot workflow, technical FAQ, and pilot scoping form.
+- [Site Partners (For Businesses & Facilities)](https://sverkaus.com/partners): Paid, project-based workplace collaboration under NDA with zero shift disruption, Privacy by Design, EU AI Act/GDPR alignment, and optional Automation Opportunity Assessment.
+- [Careers & Collaboration](https://sverkaus.com/careers): Project-based Capture & Data QA Specialist roles and Data Collection Site Partner opportunities.
 
-## Full Machine-Readable Context
+## Technical Specifications & Guides
 
-- [Complete Company & Technical Specification](https://sverkaus.com/llms-full.txt): Full positioning, ML methodology, capture tracks, Edge QA gates, dataset export schemas, operational workflow, Site Partner model, governance, and geography.
+- [Capture Methodology & Edge QA](https://sverkaus.com/methodology): Peer-reviewed transfer principles (arXiv:2410.18647, arXiv:2512.22414, arXiv:2506.01944, arXiv:2505.21864), Track A/B/C hardware, Site Security Clearance (GO/HOLD/NO GO), Edge QA gates (RELEASE/HOLD/REJECT), Cost-per-Accepted-Hour accounting, and the 6-stage Eval Loop.
+- [Robotics Data Vendors & Approaches Compared](https://sverkaus.com/compare): Objective 2026 comparison of Bulk Egocentric Catalogs, Enterprise Data Mega-Factories, Lab Teleoperation & Sim-Only Pipelines, and Sverkaus Embedded Live-Workplace Capture; 4 B2B engagement modes; 6-point vendor procurement audit checklist.
+- [Manipulation Domains & Sensor Mapping](https://sverkaus.com/domains): Domain-to-sensor mapping for industrial laundries/deformables, electronics/wire-harness/precision repair workshops, commercial & dark kitchens (LWIR thermal/liquids), skilled construction & maintenance trades (drywall, tiling, plumbing/HVAC/electrical), and 3PL warehouses.
+- [Dataset Formats, Provenance & World Models](https://sverkaus.com/formats): Export specifications for LeRobot, RLDS, MCAP / Rerun, HDF5 / Zarr, and Parquet + MP4; SHA-256 episode integrity; clean separation of human observations vs measured kinematic streams (zero fabricated robot actions); world-model subgoal conditioning.
+- [Workplace Privacy by Design, EU AI Act & GDPR](https://sverkaus.com/privacy): 6-document legal clearance packet, Site Security Clearance (GO/HOLD/NO GO), offline capture (zero corporate IT network connection, zero audio by default), Scoped FOV framing, GDPR/DSGVO/RODO & EU AI Act provenance, international jurisdiction adaptation, and Industrial Data-to-Automation partnerships.
+
+## Machine-Readable Reference Schemas (JSON)
+
+- [Sample Batch Provenance Manifest (JSON)](https://sverkaus.com/specs/provenance-manifest.sample.json): Illustrative batch metadata contract including stream separation (`fabricated_robot_actions: false`), Recorded/Submitted/Accepted hours, calibration refs, SHA-256 checksums, and 6-doc privacy compliance fields.
+- [Sample Edge QA Validation Report (JSON)](https://sverkaus.com/specs/edge-qa-report.sample.json): Illustrative on-site Edge QA output showing `RELEASE/HOLD/REJECT` gate metrics, p95 cross-stream sync drift, hand visibility, kinematic reachability, and rejection breakdown.
+
+## Regional & Localized Hubs
+
+- [Deutsch — Übersicht (Deutschland / DACH)](https://sverkaus.com/de) & [Standort-Partner (DE)](https://sverkaus.com/de/partners)
+- [Polski — Przegląd (Polska)](https://sverkaus.com/pl) & [Partnerzy obiektów (PL)](https://sverkaus.com/pl/partners)
+- [Українська — Огляд (Україна)](https://sverkaus.com/uk) & [Партнери майданчиків (UA)](https://sverkaus.com/uk/partners)
+- [中文 — 具身智能与机器人操作数据概览](https://sverkaus.com/zh)
+- [한국어 — 로보틱스 현장 조작 데이터 개요](https://sverkaus.com/ko)
+
+## Complete Machine-Readable Dossier
+
+- [Full Technical & Operational Specification](https://sverkaus.com/llms-full.txt): Exhaustive canonical reference with academic citations, 2026 market comparison, 4 B2B engagement modes, Edge QA thresholds, domain-to-sensor matrices, format specs, 6-doc GDPR/EU AI Act governance, and Q&A.
 
 ## Contact
 
-- Robotics & Pilot Scoping: gleb@sverkaus.com
-- Site Partnerships & General Inquiries: main@sverkaus.com
+- Robotics Teams & Pilot Scoping: gleb@sverkaus.com
+- Site Partnerships, Careers & General Inquiries: main@sverkaus.com
 - Website: https://sverkaus.com

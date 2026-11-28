@@ -1,0 +1,101 @@
+{
+  "$schema": "https://sverkaus.com/specs/provenance-manifest.sample.json",
+  "schema_version": "1.2.0",
+  "notice": "Illustrative reference structure of a Sverkaus Physical AI Data Lab batch provenance manifest. Actual schemas and sensor fields are locked to each buyer's signed technical specification.",
+  "producer": {
+    "organization": "Sverkaus Physical AI Data Lab",
+    "url": "https://sverkaus.com",
+    "contact": "gleb@sverkaus.com"
+  },
+  "batch": {
+    "batch_id": "SVK-SAMPLE-2026-001",
+    "specification_ref": "SPEC-BUYER-MANIP-01",
+    "capture_track": "Track A+B (Synchronized Base/Wrist RGB + 3D Hand Kinematics + Optional Tactile)",
+    "target_export_formats": ["LeRobot", "MCAP/Rerun"],
+    "domain": "Commercial Textile & Garment Handling (Live Workplace)",
+    "region": "Ukraine (Operating Base) / EU Project Regions (DE, PL)",
+    "capture_date_utc": "2026-11-28"
+  },
+  "accounting": {
+    "recorded_hours": 14.5,
+    "submitted_hours": 11.2,
+    "accepted_hours": 10.0,
+    "episodes_recorded": 182,
+    "episodes_released": 150,
+    "episodes_held_for_redaction": 12,
+    "episodes_rejected": 20,
+    "failure_and_recovery_episodes_included": 28,
+    "acceptance_basis": "Contractual buyer QA criteria; recorded, submitted, and accepted hours are tracked separately."
+  },
+  "streams_and_integrity": {
+    "fabricated_robot_actions": false,
+    "stream_separation_policy": "Human observation streams and physically measured kinematic/sensor streams are stored in separate, explicitly typed channels. Robot retargeting is never silently injected.",
+    "modalities": [
+      {
+        "channel": "obs.images.ego_stereo",
+        "type": "observation_video",
+        "resolution": "1920x1080",
+        "fps": 30,
+        "calibration_file": "calibration/ego_stereo_intrinsics_extrinsics.json",
+        "hardware_timestamped": true
+      },
+      {
+        "channel": "obs.images.wrist_left",
+        "type": "observation_video",
+        "resolution": "1920x1080",
+        "fps": 30,
+        "calibration_file": "calibration/wrist_left_intrinsics_extrinsics.json",
+        "hardware_timestamped": true
+      },
+      {
+        "channel": "obs.images.wrist_right",
+        "type": "observation_video",
+        "resolution": "1920x1080",
+        "fps": 30,
+        "calibration_file": "calibration/wrist_right_intrinsics_extrinsics.json",
+        "hardware_timestamped": true
+      },
+      {
+        "channel": "measured.hand_pose_3d",
+        "type": "measured_human_kinematics",
+        "dof_per_hand": 21,
+        "coordinate_frame": "camera_ego_left_optical",
+        "units": "meters_and_quaternions",
+        "rate_hz": 60
+      },
+      {
+        "channel": "measured.imu_wrist_lr",
+        "type": "measured_inertial",
+        "units": "m/s^2_and_rad/s",
+        "rate_hz": 200
+      }
+    ],
+    "episode_checksum_algorithm": "SHA-256",
+    "checksum_manifest_file": "checksums.sha256"
+  },
+  "governance_and_privacy": {
+    "site_security_clearance_status": "GO",
+    "executed_documents": [
+      "Site Access & Data Collection Agreement",
+      "Mutual NDA",
+      "Participant Consent / Release Form (Voluntary)",
+      "Privacy Notice",
+      "Data Processing Addendum (DPA)",
+      "Data Supply / Licensing Agreement"
+    ],
+    "privacy_by_design": {
+      "scoped_fov_enforced": true,
+      "audio_recorded": false,
+      "bystanders_excluded_or_redacted": true,
+      "screens_monitors_docs_excluded": true,
+      "corporate_it_network_connection": false,
+      "gdpr_and_eu_ai_act_aligned": true
+    },
+    "redaction_and_exclusion_log": "governance/exclusion_redaction_log.json"
+  },
+  "edge_qa_summary_ref": "https://sverkaus.com/specs/edge-qa-report.sample.json",
+  "known_limitations": [
+    "Human demonstration kinematics require buyer-side or separately scoped retargeting to specific robot URDFs.",
+    "Natural workplace lighting variance is preserved intentionally to support policy generalization."
+  ]
+}

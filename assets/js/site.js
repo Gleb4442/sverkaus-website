@@ -7,7 +7,7 @@
     const translations = {
         en: {
             tagline: "Combat-ready physical data from live workplaces",
-            nav: { overview: "Overview", partners: "Partners", careers: "Careers" },
+            nav: { overview: "Overview", specs: "Specs", partners: "Partners", careers: "Careers" },
             ui: { details: "Details", close: "Close" },
             hero: {
                 labName: "Physical AI Data Lab",
@@ -60,6 +60,37 @@
                 t2: { tag: "Tier B/C · Hands", title: "3D Hand & MoCap Gloves", desc: "Finger pose, grip force, optional IR." },
                 t3: { tag: "Edge QA · Export", title: "Reachability & Subgoals", desc: "On-site sync, occlusion & reachability gates." },
                 schemaBadge: "Policy & World-Model Ready"
+            },
+            cmp: {
+                kicker: "01 · Why Sverkaus",
+                heading: "Generic Video Stalls. Live Shifts Transfer.",
+                otherTitle: "Typical POV & Studio Vendors",
+                otherBadge: "Low Transfer",
+                usBadge: "Live Integrator",
+                o1: "Head-camera only — missing wrist angles and 3D hand motion.",
+                o2: "Thousands of identical repeats on one sterile lab bench.",
+                o3: "Scripted \"perfect\" takes — no real failures or human recoveries.",
+                o4: "Slow robot teleop or unverified trajectories that fail QA.",
+                u1: '<strong>Wrist + 3D Hand / Gloves</strong> — drives real policy transfer.<span class="v2-metric-chip">~2×</span>',
+                u2: '<strong>30+ Active Workplaces</strong> — real site diversity, zero staging.<span class="v2-metric-chip">~90% gen</span>',
+                u3: '<strong>Real Slips &amp; Recoveries Kept</strong> — built for RL and world models.<span class="v2-metric-chip">2× less fail</span>',
+                u4: '<strong>Portable UMI + Edge QA</strong> — robot-free capture checked for reachability.<span class="v2-metric-chip">&gt;3× teleop</span>'
+            },
+            trio: {
+                cta: "What You Get",
+                kicker: "02 · What You Get",
+                heading: "Configured Around Your Robot.",
+                c1: { step: "01 · Portable Capture", title: "UMI & Wrist Cams", desc: "Robot-free shift capture—over 3× faster than teleop, verified for your robot's reachability." },
+                c2: { step: "02 · Hands & Rigs", title: "3D Hands, Gloves & BYO", desc: "Finger tracking, MoCap gloves, optional thermal/IR, or your own capture rig deployed on site." },
+                c3: {
+                    step: "03 · Ready to Train",
+                    title: "Edge QA → Your Format",
+                    l1: "Synced base + wrist + subgoal frames",
+                    l2: "Real slips & recovery steps flagged",
+                    l3: "Occlusion & reachability checked on site",
+                    l4: "Written site consent & scoped privacy",
+                    fmtKicker: "Export Schemas"
+                }
             },
             prov: {
                 note: "Written site consent · Scoped FOV privacy · Batch provenance."
@@ -154,7 +185,7 @@
         },
         uk: {
             tagline: "Бойові фізичні дані з реальних робочих змін",
-            nav: { overview: "Огляд", partners: "Партнери", careers: "Кар'єра" },
+            nav: { overview: "Огляд", specs: "Спеки", partners: "Партнери", careers: "Кар'єра" },
             ui: { details: "Деталі", close: "Згорнути" },
             hero: {
                 labName: "Physical AI Дата-лабораторія",
@@ -207,6 +238,37 @@
                 t2: { tag: "Tier B/C · Кисті", title: "3D кисті та MoCap-рукавиці", desc: "Поза пальців, сила захвату, опційний IR." },
                 t3: { tag: "Edge QA · Експорт", title: "Досяжність та Subgoals", desc: "Перевірка синхронізації, оклюзій і кінематики на місці." },
                 schemaBadge: "Готово для Policy та World-моделей"
+            },
+            cmp: {
+                kicker: "01 · Чому Sverkaus",
+                heading: "Звичайне відео гальмує. Живі зміни переносяться.",
+                otherTitle: "Типові POV-вендори та студії",
+                otherBadge: "Слабкий перенос",
+                usBadge: "Живий інтегратор",
+                o1: "Лише камера на голові — без накистьових ракурсів і 3D рухів кистей.",
+                o2: "Тисячі однакових повторів на одному стерильному стенді.",
+                o3: "Постановочні «ідеальні» дублі — без реальних збоїв і виправлень.",
+                o4: "Повільний телеоп або неперевірені траєкторії, що не проходять QA.",
+                u1: '<strong>Накистьові + 3D кисті / рукавиці</strong> — дають реальний перенос політик.<span class="v2-metric-chip">~2×</span>',
+                u2: '<strong>30+ живих майданчиків</strong> — різноманіття реальних змін, нуль постановки.<span class="v2-metric-chip">~90% gen</span>',
+                u3: '<strong>Реальні збої та відновлення</strong> — база для RL і world-моделей.<span class="v2-metric-chip">2× менше браку</span>',
+                u4: '<strong>Портативний UMI + Edge QA</strong> — збір без робота з перевіркою досяжності.<span class="v2-metric-chip">&gt;3× телеоп</span>'
+            },
+            trio: {
+                cta: "Що ви отримуєте",
+                kicker: "02 · Що ви отримуєте",
+                heading: "Налаштовано під вашого робота.",
+                c1: { step: "01 · Портативний збір", title: "UMI та накистьові камери", desc: "Збір у живій зміні без робота — у >3× швидше за телеоп, із перевіркою досяжності." },
+                c2: { step: "02 · Кисті та ріги", title: "3D кисті, рукавиці та BYO", desc: "Трекінг пальців, MoCap-рукавиці, опційно термо/IR або ваш власний ріг на майданчику." },
+                c3: {
+                    step: "03 · Готово до навчання",
+                    title: "Edge QA → Ваш формат",
+                    l1: "Синхронні base + wrist + subgoal кадри",
+                    l2: "Позначені реальні збої та кроки відновлення",
+                    l3: "Перевірка оклюзій і досяжності на місці",
+                    l4: "Письмова згода майданчика та приватність",
+                    fmtKicker: "Формати експорту"
+                }
             },
             prov: {
                 note: "Письмова згода майданчика · Обмежений FOV для приватності · Маніфест походження партії."
@@ -301,7 +363,7 @@
         },
         de: {
             tagline: "Einsatzbereite physische Daten aus laufenden Betrieben",
-            nav: { overview: "Übersicht", partners: "Partner", careers: "Karriere" },
+            nav: { overview: "Übersicht", specs: "Specs", partners: "Partner", careers: "Karriere" },
             ui: { details: "Details", close: "Schließen" },
             hero: {
                 labName: "Physical AI Datenlabor",
@@ -354,6 +416,37 @@
                 t2: { tag: "Tier B/C · Hände", title: "3D-Hand & MoCap", desc: "Fingerpose, Greifkraft, optional IR." },
                 t3: { tag: "Edge QA · Export", title: "Erreichbarkeit & Subgoals", desc: "Vor-Ort-Sync, Verdeckung & Kinematik-Gates." },
                 schemaBadge: "Policy- & World-Model-Ready"
+            },
+            cmp: {
+                kicker: "01 · Warum Sverkaus",
+                heading: "Standard-Video stagniert. Reale Schichten übertragen.",
+                otherTitle: "Typische POV- & Studio-Anbieter",
+                otherBadge: "Geringer Transfer",
+                usBadge: "Live-Integrator",
+                o1: "Nur Kopfkamera — keine Handgelenk-Perspektiven oder 3D-Handbewegung.",
+                o2: "Tausende identische Wiederholungen an einem sterilen Labortisch.",
+                o3: "Gestellte „perfekte“ Takes — keine echten Fehler oder Korrekturen.",
+                o4: "Langsame Teleoperation oder ungeprüfte Trajektorien ohne QA.",
+                u1: '<strong>Wrist + 3D-Hand / Handschuhe</strong> — ermöglicht echten Policy-Transfer.<span class="v2-metric-chip">~2×</span>',
+                u2: '<strong>30+ aktive Betriebe</strong> — echte Standortvielfalt, null Inszenierung.<span class="v2-metric-chip">~90% Gen</span>',
+                u3: '<strong>Echte Fehler &amp; Recoveries</strong> — ideal für RL und World Models.<span class="v2-metric-chip">2× weniger Fehler</span>',
+                u4: '<strong>Mobiles UMI + Edge QA</strong> — roboterfreie Erfassung mit Erreichbarkeits-Check.<span class="v2-metric-chip">&gt;3× Teleop</span>'
+            },
+            trio: {
+                cta: "Was Sie erhalten",
+                kicker: "02 · Was Sie erhalten",
+                heading: "Konfiguriert für Ihren Roboter.",
+                c1: { step: "01 · Mobile Erfassung", title: "UMI & Wrist-Kameras", desc: "Roboterfreie Schichterfassung — über 3× schneller als Teleop, auf Erreichbarkeit geprüft." },
+                c2: { step: "02 · Hände & Rigs", title: "3D-Hände, Handschuhe & BYO", desc: "Fingertracking, MoCap-Handschuhe, optional Thermal/IR oder Ihr eigenes Rig vor Ort." },
+                c3: {
+                    step: "03 · Trainingsbereit",
+                    title: "Edge QA → Ihr Format",
+                    l1: "Synchrone Base- + Wrist- + Subgoal-Frames",
+                    l2: "Echte Fehler & Korrekturschritte markiert",
+                    l3: "Verdeckung & Erreichbarkeit vor Ort geprüft",
+                    l4: "Schriftliche Freigabe & begrenztes FOV",
+                    fmtKicker: "Export-Formate"
+                }
             },
             prov: {
                 note: "Schriftliche Freigabe · Begrenztes FOV · Herkunftsmanifest je Batch."
@@ -448,7 +541,7 @@
         },
         pl: {
             tagline: "Gotowe do wdrożeń dane fizyczne z prawdziwych stanowisk pracy",
-            nav: { overview: "Przegląd", partners: "Partnerzy", careers: "Kariera" },
+            nav: { overview: "Przegląd", specs: "Specyfikacja", partners: "Partnerzy", careers: "Kariera" },
             ui: { details: "Szczegóły", close: "Zamknij" },
             hero: {
                 labName: "Laboratorium Danych Physical AI",
@@ -501,6 +594,37 @@
                 t2: { tag: "Tier B/C · Dłonie", title: "Dłonie 3D i MoCap", desc: "Poza palców, siła chwytu, opcjonalne IR." },
                 t3: { tag: "Edge QA · Eksport", title: "Osiągalność i subgoale", desc: "Kontrola sync, okluzji i kinematyki na miejscu." },
                 schemaBadge: "Gotowe pod Policy & World Models"
+            },
+            cmp: {
+                kicker: "01 · Dlaczego Sverkaus",
+                heading: "Zwykłe wideo staje w miejscu. Realne zmiany transferują.",
+                otherTitle: "Typowi dostawcy POV i studia",
+                otherBadge: "Słaby transfer",
+                usBadge: "Live Integrator",
+                o1: "Tylko kamera na głowie — brak ujęć z nadgarstka i ruchu dłoni 3D.",
+                o2: "Tysiące identycznych powtórek na jednym sterylnym stole.",
+                o3: "Inscenizowane „idealne” ujęcia — zero prawdziwych błędów i korekt.",
+                o4: "Wolna teleoperacja lub niezweryfikowane trajektorie bez QA.",
+                u1: '<strong>Wrist + 3D dłoni / rękawice</strong> — napędza realny transfer polityk.<span class="v2-metric-chip">~2×</span>',
+                u2: '<strong>30+ aktywnych zakładów</strong> — różnorodność realnych miejsc, zero inscenizacji.<span class="v2-metric-chip">~90% gen</span>',
+                u3: '<strong>Błędy i korekty zachowane</strong> — gotowe pod RL i world modele.<span class="v2-metric-chip">2× mniej błędów</span>',
+                u4: '<strong>Mobilne UMI + Edge QA</strong> — nagrania bez robota z kontrolą osiągalności.<span class="v2-metric-chip">&gt;3× teleop</span>'
+            },
+            trio: {
+                cta: "Co otrzymujesz",
+                kicker: "02 · Co otrzymujesz",
+                heading: "Dopasowane do Twojego robota.",
+                c1: { step: "01 · Mobilny zbiór", title: "UMI i kamery nadgarstkowe", desc: "Zbiór na zmianie bez robota — ponad 3× szybciej niż teleop, ze sprawdzeniem zasięgu." },
+                c2: { step: "02 · Dłonie i zestawy", title: "Dłonie 3D, rękawice i BYO", desc: "Śledzenie palców, rękawice MoCap, opcjonalne IR lub Twój własny zestaw na miejscu." },
+                c3: {
+                    step: "03 · Gotowe do treningu",
+                    title: "Edge QA → Twój format",
+                    l1: "Zsynchronizowane klatki base + wrist + subgoal",
+                    l2: "Oznaczone realne poślizgnięcia i korekty",
+                    l3: "Okluzje i osiągalność sprawdzone na miejscu",
+                    l4: "Pisemne zgody obiektu i prywatność kadru",
+                    fmtKicker: "Formaty eksportu"
+                }
             },
             prov: {
                 note: "Pisemne zgody · Prywatność kadru FOV · Manifest pochodzenia."
@@ -595,7 +719,7 @@
         },
         zh: {
             tagline: "源自真实作业现场的实战级物理交互数据",
-            nav: { overview: "概览", partners: "合作伙伴", careers: "招聘" },
+            nav: { overview: "概览", specs: "技术规范", partners: "合作伙伴", careers: "招聘" },
             ui: { details: "详情", close: "收起" },
             hero: {
                 labName: "Physical AI 数据实验室",
@@ -648,6 +772,37 @@
                 t2: { tag: "Tier B/C · 手部", title: "3D 手部与动捕手套", desc: "手指姿态、握力与可选红外。" },
                 t3: { tag: "边缘质检 · 导出", title: "可达性与子目标", desc: "现场同步、遮挡与可达性校验。" },
                 schemaBadge: "策略与世界模型就绪"
+            },
+            cmp: {
+                kicker: "01 · 为什么选择 Sverkaus",
+                heading: "普通视频很快触顶，真实班次才能泛化。",
+                otherTitle: "传统第一视角与棚拍供应商",
+                otherBadge: "迁移率低",
+                usBadge: "现场集成方",
+                o1: "仅有头戴视角 — 缺少腕部相机与 3D 手部运动轨迹。",
+                o2: "在单一无菌实验桌上重复拍摄数千次雷同动作。",
+                o3: "摆拍的“完美”演示 — 缺少真实失误与人工纠偏。",
+                o4: "遥操作效率低，或轨迹未经机器人运动学质检。",
+                u1: '<strong>腕部 + 3D 手部 / 手套</strong> — 驱动真实策略迁移。<span class="v2-metric-chip">~2×</span>',
+                u2: '<strong>30+ 真实合作场地</strong> — 真实班次多样性，零棚拍摆拍。<span class="v2-metric-chip">~90% 泛化</span>',
+                u3: '<strong>保留真实失误与恢复</strong> — 直接适配 RL 与世界模型。<span class="v2-metric-chip">失误减半</span>',
+                u4: '<strong>便携 UMI + 边缘质检</strong> — 无需机器人驻场，现场校验可达性。<span class="v2-metric-chip">&gt;3× 遥操</span>'
+            },
+            trio: {
+                cta: "交付内容",
+                kicker: "02 · 交付内容",
+                heading: "围绕您的机器人定制配置。",
+                c1: { step: "01 · 便携采集", title: "UMI 与腕部相机", desc: "无机器人现场采集，速度超遥操作 3 倍以上，并校验目标机器人可达性。" },
+                c2: { step: "02 · 手部与设备", title: "3D 手部、手套与 BYO", desc: "手指追踪、动捕手套、可选热成像/红外，或现场部署您自有采集设备。" },
+                c3: {
+                    step: "03 · 开箱即训",
+                    title: "Edge QA → 目标格式",
+                    l1: "同步主视角 + 腕部 + 子目标关键帧",
+                    l2: "标注真实打滑与人工恢复步骤",
+                    l3: "现场校验遮挡与运动学可达性",
+                    l4: "书面场地授权与限定视角隐私审查",
+                    fmtKicker: "导出格式"
+                }
             },
             prov: {
                 note: "书面场地许可 · 限定视角隐私审查 · 批次溯源清单。"
@@ -742,7 +897,7 @@
         },
         hi: {
             tagline: "वास्तविक कार्यस्थलों से कॉम्बैट-रेडी फिजिकल डेटा",
-            nav: { overview: "अवलोकन", partners: "पार्टनर्स", careers: "करियर" },
+            nav: { overview: "अवलोकन", specs: "स्पेक्स", partners: "पार्टनर्स", careers: "करियर" },
             ui: { details: "विवरण", close: "बंद करें" },
             hero: {
                 labName: "Physical AI डेटा लैब",
@@ -795,6 +950,37 @@
                 t2: { tag: "Tier B/C · हाथ", title: "3D हैंड व MoCap ग्लव्स", desc: "उँगली पोज़, ग्रिप फोर्स, वैकल्पिक IR।" },
                 t3: { tag: "Edge QA · एक्सपोर्ट", title: "रीचैबिलिटी व सबगोल्स", desc: "ऑन-साइट सिंक, ऑक्लूजन व रीचैबिलिटी गेट।" },
                 schemaBadge: "पॉलिसी व वर्ल्ड-मॉडल तैयार"
+            },
+            cmp: {
+                kicker: "01 · Sverkaus क्यों",
+                heading: "सादा वीडियो थम जाता है। लाइव शिफ्ट ट्रांसफर होती हैं।",
+                otherTitle: "सामान्य POV व स्टूडियो वेंडर",
+                otherBadge: "कम ट्रांसफर",
+                usBadge: "लाइव इंटीग्रेटर",
+                o1: "केवल हेड-कैमरा — रिस्ट एंगल और 3D हैंड मोशन गायब।",
+                o2: "एक ही लैब बेंच पर हज़ारों एक जैसे दोहराव।",
+                o3: "स्क्रिप्टेड 'परफ़ेक्ट' टेक — कोई वास्तविक त्रुटि या सुधार नहीं।",
+                o4: "धीमा टेलीऑप या बिना QA वाली अमान्य ट्रैजेक्टरी।",
+                u1: '<strong>रिस्ट + 3D हैंड / ग्लव्स</strong> — वास्तविक पॉलिसी ट्रांसफर देता है।<span class="v2-metric-chip">~2×</span>',
+                u2: '<strong>30+ सक्रिय कार्यस्थल</strong> — वास्तविक विविधता, शून्य स्टेजिंग।<span class="v2-metric-chip">~90% gen</span>',
+                u3: '<strong>वास्तविक चूक व सुधार सुरक्षित</strong> — RL और वर्ल्ड मॉडल्स के लिए।<span class="v2-metric-chip">2× कम विफलता</span>',
+                u4: '<strong>पोर्टेबल UMI + Edge QA</strong> — बिना रोबोट के कैप्चर, रीचैबिलिटी जाँच सहित।<span class="v2-metric-chip">&gt;3× टेलीऑप</span>'
+            },
+            trio: {
+                cta: "आपको क्या मिलता है",
+                kicker: "02 · आपको क्या मिलता है",
+                heading: "आपके रोबोट के अनुसार कॉन्फ़िगर।",
+                c1: { step: "01 · पोर्टेबल कैप्चर", title: "UMI व रिस्ट कैमरे", desc: "रोबोट-मुक्त शिफ्ट कैप्चर—टेलीऑप से 3× तेज़, आपके रोबोट की रीचैबिलिटी हेतु जाँचा गया।" },
+                c2: { step: "02 · हाथ व रिग्स", title: "3D हैंड्स, ग्लव्स व BYO", desc: "उँगली ट्रैकिंग, MoCap ग्लव्स, वैकल्पिक थर्मल/IR, या साइट पर आपका स्वयं का रिग।" },
+                c3: {
+                    step: "03 · ट्रेनिंग तैयार",
+                    title: "Edge QA → आपका फ़ॉर्मेट",
+                    l1: "सिंक्ड बेस + रिस्ट + सबगोल फ्रेम",
+                    l2: "वास्तविक चूक और सुधार चरण चिह्नित",
+                    l3: "ऑन-साइट ऑक्लूजन व रीचैबिलिटी जाँच",
+                    l4: "लिखित साइट सहमति व सीमित गोपनीयता",
+                    fmtKicker: "एक्सपोर्ट स्कीमा"
+                }
             },
             prov: {
                 note: "लिखित साइट सहमति · सीमित FOV गोपनीयता · बैच मूल मैनिफ़ेस्ट।"
@@ -889,7 +1075,7 @@
         },
         ko: {
             tagline: "실제 현장에서 수집한 실전형 물리 데이터",
-            nav: { overview: "개요", partners: "파트너", careers: "채용" },
+            nav: { overview: "개요", specs: "기술 사양", partners: "파트너", careers: "채용" },
             ui: { details: "상세보기", close: "닫기" },
             hero: {
                 labName: "Physical AI 데이터 랩",
@@ -942,6 +1128,37 @@
                 t2: { tag: "Tier B/C · 손", title: "3D 손 및 MoCap 글러브", desc: "손가락 자세, 파지력, 선택형 IR." },
                 t3: { tag: "Edge QA · 내보내기", title: "도달 가능성 및 서브골", desc: "현장 동기화·가림·도달성 검증." },
                 schemaBadge: "정책 및 월드 모델 대응"
+            },
+            cmp: {
+                kicker: "01 · 왜 Sverkaus인가",
+                heading: "일반 영상은 정체됩니다. 실제 현장이 전이됩니다.",
+                otherTitle: "일반 POV 및 스튜디오 업체",
+                otherBadge: "낮은 전이율",
+                usBadge: "현장 통합 파트너",
+                o1: "헤드 카메라 단독 촬영 — 손목 시점과 3D 손 움직임 부재.",
+                o2: "단일 실험실 테이블에서 수천 번의 동일한 반복 촬영.",
+                o3: "연출된 '완벽한' 테이크 — 실제 실수와 복구 데이터 없음.",
+                o4: "느린 텔레옵 또는 QA 검증 없는 비현실적 궤적.",
+                u1: '<strong>손목 + 3D 손 / 글러브</strong> — 실질적인 정책 전이 극대화.<span class="v2-metric-chip">~2×</span>',
+                u2: '<strong>30+ 실제 작업장</strong> — 연출 없는 다중 현장 다양성.<span class="v2-metric-chip">~90% 일반화</span>',
+                u3: '<strong>실제 오류 및 복구 보존</strong> — RL 및 월드 모델 최적화.<span class="v2-metric-chip">오류 2× 감소</span>',
+                u4: '<strong>휴대형 UMI + Edge QA</strong> — 로봇 없는 고속 수집과 도달성 검증.<span class="v2-metric-chip">&gt;3× 텔레옵</span>'
+            },
+            trio: {
+                cta: "제공 항목",
+                kicker: "02 · 제공 항목",
+                heading: "귀사의 로봇에 맞춘 구성.",
+                c1: { step: "01 · 휴대형 수집", title: "UMI 및 손목 카메라", desc: "현장 로봇 없이 텔레옵 대비 3배 이상 빠른 수집, 목표 로봇 도달성 검증." },
+                c2: { step: "02 · 손 및 리그", title: "3D 손, 글러브 및 BYO", desc: "손가락 추적, MoCap 글러브, 선택형 열화상/IR 또는 고객 자체 리그 현장 배포." },
+                c3: {
+                    step: "03 · 즉시 학습 가능",
+                    title: "Edge QA → 원하는 형식",
+                    l1: "동기화된 베이스 + 손목 + 서브골 프레임",
+                    l2: "실제 미끄러짐 및 복구 단계 태깅",
+                    l3: "현장 가림 및 기구학 도달성 검증",
+                    l4: "서면 현장 동의 및 화각 프라이버시 준수",
+                    fmtKicker: "내보내기 형식"
+                }
             },
             prov: {
                 note: "서면 현장 동의 · 화각 프라이버시 검토 · 배치 출처 매니페스트."
@@ -1036,7 +1253,8 @@
         }
     };
 
-    let currentLang = localStorage.getItem('sverkaus-lang') || 'en';
+    const staticPageLang = document.documentElement.getAttribute('data-static-lang');
+    let currentLang = staticPageLang || localStorage.getItem('sverkaus-lang') || 'en';
     if (!translations[currentLang]) currentLang = 'en';
 
     // =========================================================
@@ -1178,7 +1396,34 @@
         selectOptions.forEach((opt) => {
             const chooseLang = (e) => {
                 e.stopPropagation();
-                switchLanguage(opt.getAttribute('data-value') || 'en');
+                const targetLang = opt.getAttribute('data-value') || 'en';
+                const path = window.location.pathname;
+                const isSpecPage = /^\/(methodology|compare|domains|formats|privacy)(\.html)?\/?$/.test(path);
+                const localizedOverview = { de: '/de', pl: '/pl', uk: '/uk', zh: '/zh', ko: '/ko' };
+                const localizedPartners = { de: '/de/partners', pl: '/pl/partners', uk: '/uk/partners' };
+
+                if (staticPageLang && targetLang !== staticPageLang) {
+                    const isPartnersRoute = path.includes('/partners');
+                    localStorage.setItem('sverkaus-lang', targetLang);
+                    if (isPartnersRoute && localizedPartners[targetLang]) {
+                        window.location.href = localizedPartners[targetLang];
+                        return;
+                    }
+                    if (!isPartnersRoute && localizedOverview[targetLang]) {
+                        window.location.href = localizedOverview[targetLang];
+                        return;
+                    }
+                    window.location.href = isPartnersRoute ? '/partners' : '/';
+                    return;
+                }
+
+                if (isSpecPage && targetLang !== 'en') {
+                    localStorage.setItem('sverkaus-lang', targetLang);
+                    window.location.href = localizedOverview[targetLang] || '/';
+                    return;
+                }
+
+                switchLanguage(targetLang);
                 closeLangMenu();
             };
             opt.addEventListener('click', chooseLang);
@@ -1201,20 +1446,15 @@
     }
 
     // =========================================================
-    // 3. Silky Critically-Damped Spring Mascot Dock (iOS + Desktop)
+    // 3. Direct 1:1 Scroll-Locked Mascot Dock (Zero Lag, Zero Overlap)
     // =========================================================
     const logoContainer = document.getElementById('logo-dock-carrier');
     const heroLogoSlot = document.getElementById('logo-hero-slot');
     const headerLogoSlot = document.getElementById('header-logo-slot');
     const brandTextEl = document.getElementById('brand-text');
     const brandLink = document.getElementById('brand-link');
-    const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     let dockProgress = 0;
-    let dockVelocity = 0;
-    let targetDockProgress = 0;
-    let dockRafId = 0;
-    let lastDockTs = 0;
     let lastViewportWidth = window.innerWidth;
 
     const dockMetrics = {
@@ -1249,18 +1489,18 @@
             const hr = heroLogoSlot.getBoundingClientRect();
             if (hr.width > 0) {
                 dockMetrics.heroX = hr.left + hr.width / 2;
-                // Document-space center Y so fast scroll never pulls the origin off-screen
                 dockMetrics.heroY = hr.top + window.scrollY + hr.height / 2;
-                dockMetrics.scrollRange = Math.max(180, dockMetrics.heroY - dockMetrics.navY);
+                // Exact 1:1 pixel travel distance so Y rises with the page and never overlaps the headline
+                dockMetrics.scrollRange = Math.max(120, dockMetrics.heroY - dockMetrics.navY);
             } else {
                 dockMetrics.heroX = dockMetrics.navX;
                 dockMetrics.heroY = dockMetrics.navY;
-                dockMetrics.scrollRange = 180;
+                dockMetrics.scrollRange = 120;
             }
         } else {
             dockMetrics.heroX = dockMetrics.navX;
             dockMetrics.heroY = dockMetrics.navY;
-            dockMetrics.scrollRange = 180;
+            dockMetrics.scrollRange = 120;
         }
 
         dockMetrics.ready = true;
@@ -1277,22 +1517,23 @@
         if (!logoContainer || !dockMetrics.ready) return;
 
         const clamped = Math.max(0, Math.min(1, p));
-        // Gentle cubic curve + slight arc feel without harsh start/end
-        const t = clamped * clamped * (3 - 2 * clamped);
-        const tX = Math.sin(clamped * Math.PI * 0.5);
-        const tY = t;
+        dockProgress = clamped;
 
         let cx = dockMetrics.navX;
         let cy = dockMetrics.navY;
         let scale = dockMetrics.targetScale;
 
         if (heroLogoSlot) {
-            // Follow iOS top rubber-band overscroll gently when at top
-            const overscrollY = window.scrollY < 0 ? -window.scrollY * (1 - clamped) : 0;
+            const overscrollY = window.scrollY < 0 ? -window.scrollY : 0;
+            // Strict monotonic upward Y locked 1:1 to scroll (zero downward dip, zero headline collision)
+            const tY = clamped;
+            // Smooth ease-out leftward peel & scale-down so the icon clears text immediately
+            const tX = 1 - Math.pow(1 - clamped, 2);
+            const tS = 1 - Math.pow(1 - clamped, 2.2);
+
             cx = dockMetrics.heroX + (dockMetrics.navX - dockMetrics.heroX) * tX;
             cy = dockMetrics.heroY + (dockMetrics.navY - dockMetrics.heroY) * tY + overscrollY;
-            // Perceptually uniform logarithmic scaling (feels linear to the eye)
-            scale = Math.pow(dockMetrics.targetScale, t);
+            scale = Math.pow(dockMetrics.targetScale, tS);
         }
 
         const half = dockMetrics.baseSize / 2;
@@ -1300,99 +1541,43 @@
         logoContainer.style.opacity = '1';
 
         if (brandTextEl) {
-            const fade = heroLogoSlot ? Math.max(0, Math.min(1, 1 - (clamped - 0.04) / 0.36)) : 0;
+            const fade = heroLogoSlot ? Math.max(0, Math.min(1, 1 - clamped / 0.35)) : 0;
             brandTextEl.style.opacity = fade.toFixed(3);
             brandTextEl.style.transform = `translate3d(${(-(1 - fade) * 10).toFixed(2)}px, 0, 0)`;
         }
         if (brandLink) {
-            brandLink.style.pointerEvents = (!heroLogoSlot || clamped < 0.4) ? 'auto' : 'none';
+            brandLink.style.pointerEvents = (!heroLogoSlot || clamped < 0.35) ? 'auto' : 'none';
         }
     }
 
-    function tickLogoDock(ts) {
-        dockRafId = 0;
-        if (!logoContainer || !dockMetrics.ready) return;
-
-        targetDockProgress = computeTargetDockProgress();
-        const rawDt = lastDockTs ? Math.min(0.05, Math.max(0.001, (ts - lastDockTs) / 1000)) : 0.016;
-        lastDockTs = ts;
-
-        if (prefersReducedMotion) {
-            dockProgress = targetDockProgress;
-            dockVelocity = 0;
-            lastDockTs = 0;
-            renderLogoDockFrame(dockProgress);
-            return;
-        }
-
-        // Critically-damped spring (zero bounce, silky ease-in/out on both slow drag and fast flick)
-        const omega = 12.5;
-        const steps = rawDt > 0.02 ? 2 : 1;
-        const dt = rawDt / steps;
-        for (let i = 0; i < steps; i++) {
-            const x = dockProgress - targetDockProgress;
-            const acc = -omega * omega * x - 2 * omega * dockVelocity;
-            dockVelocity += acc * dt;
-            dockProgress += dockVelocity * dt;
-        }
-
-        const settled = Math.abs(targetDockProgress - dockProgress) < 0.0004 && Math.abs(dockVelocity) < 0.0008;
-        if (settled && window.scrollY >= 0) {
-            dockProgress = targetDockProgress;
-            dockVelocity = 0;
-            lastDockTs = 0;
-            renderLogoDockFrame(dockProgress);
-            return;
-        }
-
-        renderLogoDockFrame(dockProgress);
-        dockRafId = window.requestAnimationFrame(tickLogoDock);
-    }
-
-    function updateLogoDock(snap = false, remeasure = false) {
+    function updateLogoDock(remeasure = false) {
         if (!logoContainer || !headerLogoSlot) return;
         if (remeasure || !dockMetrics.ready) {
             if (!measureDockMetrics()) return;
         }
-        targetDockProgress = computeTargetDockProgress();
-        if (snap || prefersReducedMotion) {
-            if (dockRafId) {
-                window.cancelAnimationFrame(dockRafId);
-                dockRafId = 0;
-            }
-            dockProgress = targetDockProgress;
-            dockVelocity = 0;
-            lastDockTs = 0;
-            renderLogoDockFrame(dockProgress);
-            return;
-        }
-        if (!dockRafId) {
-            lastDockTs = 0;
-            dockRafId = window.requestAnimationFrame(tickLogoDock);
-        }
+        renderLogoDockFrame(computeTargetDockProgress());
     }
 
     if (logoContainer && headerLogoSlot) {
-        window.addEventListener('scroll', () => updateLogoDock(false, false), { passive: true });
+        window.addEventListener('scroll', () => updateLogoDock(false), { passive: true });
         window.addEventListener('resize', () => {
-            // Ignore mobile Safari vertical URL-bar resizes during scroll to prevent mid-scroll snaps
             const widthChanged = Math.abs(window.innerWidth - lastViewportWidth) > 2;
             lastViewportWidth = window.innerWidth;
             if (widthChanged) {
-                updateLogoDock(true, true);
+                updateLogoDock(true);
                 updateNavIndicator(true);
-            } else if (!dockRafId && window.scrollY <= 2) {
-                updateLogoDock(true, true);
+            } else if (window.scrollY <= 2) {
+                updateLogoDock(true);
             }
         }, { passive: true });
 
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(() => {
-                updateLogoDock(true, true);
+                updateLogoDock(true);
                 updateNavIndicator(true);
             });
         }
-        updateLogoDock(true, true);
+        updateLogoDock(true);
 
         const handleLogoActivate = () => {
             if (!heroLogoSlot) {
@@ -1473,6 +1658,41 @@
         });
 
         setVizMode('all');
+    }
+
+    // Interactive Documentary Workplace Showcase (#workplace-showcase)
+    const showcase = document.getElementById('workplace-showcase');
+    if (showcase) {
+        const items = showcase.querySelectorAll('.showcase-item');
+        const imgEl = document.getElementById('showcase-img');
+        const tagEl = document.getElementById('showcase-tag');
+
+        function activateSite(item) {
+            items.forEach((btn) => {
+                const isActive = btn === item;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+            const src = item.getAttribute('data-site-img');
+            const tag = item.getAttribute('data-site-tag');
+            const alt = item.getAttribute('data-site-alt');
+            if (imgEl && src && imgEl.getAttribute('src') !== src) {
+                imgEl.style.opacity = '0.35';
+                setTimeout(() => {
+                    imgEl.setAttribute('src', src);
+                    if (alt) imgEl.setAttribute('alt', alt);
+                    imgEl.style.opacity = '1';
+                }, 90);
+            }
+            if (tagEl && tag) tagEl.textContent = tag;
+        }
+
+        items.forEach((item) => {
+            item.addEventListener('click', () => activateSite(item));
+            item.addEventListener('mouseenter', () => {
+                if (window.innerWidth > 768) activateSite(item);
+            });
+        });
     }
 
     // =========================================================

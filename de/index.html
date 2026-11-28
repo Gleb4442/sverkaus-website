@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="de" data-static-lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="description" content="Sverkaus Physical AI Datenlabor: Operativer Integrator für spezifikationsgetriebene Robotik-Datenerfassung in realen Betrieben — Wrist-Kameras, 3D-Hand-Tracking, UMI, MoCap-Handschuhe, Fehler-/Recovery-Trajektorien, Edge QA und DSGVO-Konformität.">
+    <link rel="canonical" href="https://sverkaus.com/de">
+    <link rel="alternate" hreflang="en" href="https://sverkaus.com/">
+    <link rel="alternate" hreflang="de" href="https://sverkaus.com/de">
+    <link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl">
+    <link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk">
+    <link rel="alternate" hreflang="zh" href="https://sverkaus.com/zh">
+    <link rel="alternate" hreflang="ko" href="https://sverkaus.com/ko">
+    <link rel="alternate" hreflang="x-default" href="https://sverkaus.com/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Sverkaus LLM Context">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Sverkaus Full Technical Context">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sverkaus.com/de">
+    <meta property="og:locale" content="de_DE">
+    <meta property="og:title" content="Sverkaus — Physical AI Datenlabor für Robotik-Teams &amp; Betriebe">
+    <meta property="og:description" content="Einsatzbereite Robotik-Daten aus laufenden Schichten: Wrist-Kameras, 3D-Handkinematik, UMI, MoCap-Handschuhe, Edge QA und DSGVO-konforme Standortpartnerschaften.">
+    <meta property="og:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Sverkaus — Physical AI Datenlabor (Deutsch)</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://sverkaus.com/de#webpage",
+          "url": "https://sverkaus.com/de",
+          "name": "Sverkaus — Physical AI Datenlabor (Deutsch)",
+          "inLanguage": "de",
+          "isPartOf": { "@id": "https://sverkaus.com/#website" },
+          "about": { "@id": "https://sverkaus.com/#organization" }
+        },
+        {
+          "@type": "Service",
+          "@id": "https://sverkaus.com/de#service",
+          "name": "Spezifikationsgetriebene Physical-AI-Datenerfassung",
+          "provider": { "@id": "https://sverkaus.com/#organization" },
+          "inLanguage": "de",
+          "areaServed": [
+            { "@type": "Country", "name": "Germany" },
+            { "@type": "Country", "name": "Poland" },
+            { "@type": "Country", "name": "Ukraine" }
+          ],
+          "description": "Operative Integration multimodaler Robotik-Datenerfassung in reale Betriebe (Wäschereien, Werkstätten, Großküchen, Lager): synchrone Wrist-+Base-Kameras, 3D-Hand-Tracking, UMI-Greifer, MoCap-Handschuhe, optionales LWIR-Thermal, Edge QA und Export nach LeRobot, RLDS, MCAP/Rerun, HDF5/Zarr."
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://sverkaus.com/de#faq",
+          "inLanguage": "de",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Was macht Sverkaus Physical AI Data Lab für Robotik-Teams und Industrie-F&E?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sverkaus ist ein operativer und technischer Integrator für die Produktion von Robotik-Trainingsdaten. Statt generischer Crowdsourcing-Videos betten wir kalibrierte Multi-Sensor-Erfassung (Wrist-Kameras, 3D-Handkinematik, UMI, MoCap-Handschuhe, optionales LWIR-Thermal) direkt in laufende Schichten realer Betriebe ein—inklusive Edge QA, Erreichbarkeitsprüfung und realen Fehler-/Recovery-Trajektorien."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Warum liefern reale Arbeitsplätze besseren Policy-Transfer als Labor-Wiederholungen?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Imitation-Learning-Policies stagnieren häufig nach etwa ~50 Wiederholungen in einer einzelnen Labor-Szene. Starke Generalisierung skaliert über Vielfalt an realen Standorten (z. B. 30+ Betriebe), synchrone Handgelenks- und 3D-Handdaten (~2× besserer Transfer) sowie erhaltene Fehler- und Korrekturverläufe für Reinforcement Learning."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Wie werden DSGVO, Betriebsgeheimnisse und Mitarbeiterzustimmung in Deutschland umgesetzt?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Vor Beginn werden schriftliche Standortvereinbarungen, NDAs und freiwillige Einwilligungen der Teilnehmenden unterzeichnet. Das Kamera-Framing (Scoped FOV) beschränkt sich streng auf Werkbank, Hände und Werkzeuge; Gesichter Unbeteiligter, Monitore, Dokumente und sensible Bereiche werden ausgeschlossen oder vor Auslieferung geschwärzt. Projekte in Deutschland und Polen folgen DSGVO-Grundsätzen."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>document.documentElement.classList.add('intro-done');</script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261128b">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-left">
+            <a href="/de" class="brand-link" id="brand-link"><span class="brand-text" id="brand-text">SVERKAUS</span></a>
+            <span class="header-star-slot" id="header-logo-slot" aria-hidden="true"></span>
+        </div>
+
+        <nav class="nav-tabs" aria-label="Hauptnavigation">
+            <a href="/de" class="nav-tab active" data-tab="overview" id="tab-overview"><span class="tab-label">Übersicht</span></a>
+            <a href="/methodology" class="nav-tab" data-tab="specs" id="tab-specs"><span class="tab-label">Specs</span></a>
+            <a href="/de/partners" class="nav-tab" data-tab="partners" id="tab-partners"><span class="tab-label">Partner</span></a>
+            <a href="/careers" class="nav-tab" data-tab="careers" id="tab-careers"><span class="tab-label">Karriere</span></a>
+            <span class="nav-tab-indicator" id="nav-tab-indicator" aria-hidden="true"></span>
+        </nav>
+
+        <div class="header-right">
+            <div class="custom-select" id="custom-lang-select">
+                <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Sprache wählen" id="lang-select-trigger">
+                    <span class="selected-text" id="lang-selected-text">DE</span>
+                </button>
+                <ul class="select-options" role="listbox" aria-label="Sprachoptionen" id="lang-select-options">
+                    <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0">English</li>
+                    <li class="select-option" data-value="uk" data-short="UA" role="option" tabindex="0">Українська</li>
+                    <li class="select-option" data-value="zh" data-short="中文" role="option" tabindex="0">中文</li>
+                    <li class="select-option" data-value="hi" data-short="हिन्दी" role="option" tabindex="0">हिन्दी</li>
+                    <li class="select-option" data-value="ko" data-short="한국어" role="option" tabindex="0">한국어</li>
+                    <li class="select-option selected" data-value="de" data-short="DE" role="option" tabindex="0" aria-selected="true">Deutsch</li>
+                    <li class="select-option" data-value="pl" data-short="PL" role="option" tabindex="0">Polski</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="logo-icon-container logo-dock-carrier" id="logo-dock-carrier" role="button" tabindex="0" aria-label="Zur Sverkaus Übersicht" title="Sverkaus">
+        <svg class="logo-icon" id="star-svg" viewBox="-180 -180 560 560" shape-rendering="geometricPrecision">
+            <g class="star-root">
+                <g class="star-body">
+                    <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#0f172a" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="10" />
+                </g>
+                <g class="star-eyes">
+                    <ellipse class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#0f172a" />
+                    <g class="star-eye-right-group">
+                        <ellipse class="star-eye star-eye-right" cx="115" cy="100" rx="13" ry="21" fill="#0f172a" />
+                        <path class="star-eye-wink" d="M 106 104 Q 115 90 124 104" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <main class="main-wrapper">
+        <article class="spec-section">
+            <div class="spec-inner">
+                <header class="spec-header">
+                    <div class="overview-kicker">Sverkaus · Physical AI Datenlabor · Deutsch</div>
+                    <h1 class="spec-h1">Einsatzbereite Robotik-Daten aus realen Betrieben.</h1>
+                    <p class="spec-lead">Sverkaus ist ein operativer und technischer Integrator für spezifikationsgetriebene Physical-AI-Datenerfassung. Wir betten synchronisierte Wrist-Kameras, 3D-Handkinematik, UMI-Greifer, MoCap-Handschuhe und Edge QA direkt in aktive Werkstätten, Wäschereien, Großküchen und Lager ein—ohne Schichten zu stoppen.</p>
+                    <div class="hero-cta-pills">
+                        <a href="#contact" class="pill-btn primary">Pilot anfragen</a>
+                        <a href="/de/partners" class="pill-btn ghost">Für Betriebe (Standortpartner)</a>
+                    </div>
+                </header>
+
+                <aside class="answer-box" aria-label="Kurzfassung">
+                    <span class="answer-box-label">Kurzfassung</span>
+                    <p><strong>Kein Stock-Video-Marktplatz:</strong> Sverkaus produziert projektbezogene Manipulations-Datensätze exakt nach Robotermorphologie und ML-Spezifikation. Operative Basis in der Ukraine (Engineering, Edge QA, lokale Piloten); projektbezogene Erfassung in <strong>Deutschland, Polen</strong> und weiteren Regionen auf Anfrage unter NDA und <strong>DSGVO</strong>. Auslieferung in <code>LeRobot</code>, <code>RLDS</code>, <code>MCAP / Rerun</code> und <code>HDF5 / Zarr</code>.</p>
+                </aside>
+
+                <section class="overview-block">
+                    <div class="overview-kicker">01 · Der Integrator-Vorteil</div>
+                    <h2 class="overview-heading">Labor-Tische stagnieren. Reale Schichten übertragen.</h2>
+                    <div class="metric-sheet">
+                        <div class="metric-cell">
+                            <div class="metric-stat">~2× Transfer</div>
+                            <div class="metric-title">Wrist + 3D-Hand</div>
+                            <p class="metric-body">Synchrone Handgelenks-Kameras &amp; 3D-Fingerkinematik statt reinem POV-Video.</p>
+                        </div>
+                        <div class="metric-cell">
+                            <div class="metric-stat">30+ Standorte</div>
+                            <div class="metric-title">Standort-Breite</div>
+                            <p class="metric-body">Echte Arbeitsplätze überwinden das ~50-Demo-Plateau isolierter Labortische.</p>
+                        </div>
+                        <div class="metric-cell">
+                            <div class="metric-stat">&gt;3× Teleop</div>
+                            <div class="metric-title">UMI + Edge QA</div>
+                            <p class="metric-body">Roboterfreie Erfassung vor Ort mit kinematischer Erreichbarkeitsprüfung.</p>
+                        </div>
+                        <div class="metric-cell">
+                            <div class="metric-stat">2× Weniger Fehler</div>
+                            <div class="metric-title">Fehler &amp; Recovery</div>
+                            <p class="metric-body">Reale Abrutscher, Korrekturen und Subgoal-Frames für RL &amp; World Models.</p>
+                        </div>
+                    </div>
+                    <div class="section-links-row">
+                        <a href="/methodology" class="section-more-link">Methodik &amp; Edge QA (EN) →</a>
+                        <a href="/compare" class="section-more-link">Teleop vs. Crowdsourcing vs. Sverkaus →</a>
+                        <a href="/formats" class="section-more-link">LeRobot / RLDS / MCAP / Zarr →</a>
+                    </div>
+                </section>
+
+                <section class="overview-block">
+                    <div class="overview-kicker">02 · Einsatzbereiche &amp; Sensorik</div>
+                    <h2 class="overview-heading">Reale Prozesse. Keine Inszenierung.</h2>
+                    <div class="domain-index">
+                        <div class="domain-row">
+                            <span class="domain-num">01</span>
+                            <span class="domain-name">Wäschereien &amp; Textilien</span>
+                            <span class="domain-desc">Kleidung falten, Wäsche, weiche Verpackungen (Deformables).</span>
+                            <span class="domain-code">DEFORMABLES</span>
+                        </div>
+                        <div class="domain-row">
+                            <span class="domain-num">02</span>
+                            <span class="domain-name">Werkstätten &amp; Montage</span>
+                            <span class="domain-desc">Steckverbinder, Kabelbäume, Werkzeuge, Löten &amp; Werkbänke.</span>
+                            <span class="domain-code">ASSEMBLY</span>
+                        </div>
+                        <div class="domain-row">
+                            <span class="domain-num">03</span>
+                            <span class="domain-name">Großküchen &amp; HoReCa</span>
+                            <span class="domain-desc">Ausgießen, Prep, Edelstahl-Reflexionen, optionales LWIR-Thermal.</span>
+                            <span class="domain-code">THERMAL &amp; PREP</span>
+                        </div>
+                        <div class="domain-row">
+                            <span class="domain-num">04</span>
+                            <span class="domain-name">Lager &amp; BYO-Rigs</span>
+                            <span class="domain-desc">Picking, Packing, UMI-Greifer oder kundeneigene Sensor-Rigs vor Ort.</span>
+                            <span class="domain-code">BYO / UMI</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="faq">
+                    <div class="overview-kicker">03 · Häufige Fragen</div>
+                    <h2 class="overview-heading">Antworten für Robotik-Teams &amp; Industrie.</h2>
+                    <div class="geo-faq-list">
+                        <details class="geo-faq-item" open>
+                            <summary>Was macht Sverkaus Physical AI Data Lab für Robotik-Teams und Industrie-F&amp;E?</summary>
+                            <div class="geo-faq-answer">Sverkaus ist ein operativer und technischer Integrator für die Produktion von Robotik-Trainingsdaten. Statt generischer Crowdsourcing-Videos betten wir kalibrierte Multi-Sensor-Erfassung (Wrist-Kameras, 3D-Handkinematik, UMI, MoCap-Handschuhe, optionales LWIR-Thermal) direkt in laufende Schichten realer Betriebe ein—inklusive Edge QA, Erreichbarkeitsprüfung und realen Fehler-/Recovery-Trajektorien.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>Warum liefern reale Arbeitsplätze besseren Policy-Transfer als Labor-Wiederholungen?</summary>
+                            <div class="geo-faq-answer">Imitation-Learning-Policies stagnieren häufig nach etwa ~50 Wiederholungen in einer einzelnen Labor-Szene. Starke Generalisierung skaliert über Vielfalt an realen Standorten (z. B. 30+ Betriebe), synchrone Handgelenks- und 3D-Handdaten (~2× besserer Transfer) sowie erhaltene Fehler- und Korrekturverläufe für Reinforcement Learning.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>Wie werden DSGVO, Betriebsgeheimnisse und Mitarbeiterzustimmung in Deutschland umgesetzt?</summary>
+                            <div class="geo-faq-answer">Vor Beginn werden schriftliche Standortvereinbarungen, NDAs und freiwillige Einwilligungen der Teilnehmenden unterzeichnet. Das Kamera-Framing (Scoped FOV) beschränkt sich streng auf Werkbank, Hände und Werkzeuge; Gesichter Unbeteiligter, Monitore, Dokumente und sensible Bereiche werden ausgeschlossen oder vor Auslieferung geschwärzt. Projekte in Deutschland und Polen folgen DSGVO-Grundsätzen. Mehr unter <a href="/de/partners">Standort-Partner</a> und <a href="/privacy">Privacy &amp; GDPR</a>.</div>
+                        </details>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="contact">
+                    <div class="overview-kicker">04 · Kontakt</div>
+                    <h2 class="overview-heading">Pilot anfragen.</h2>
+                    <form id="partner-form" class="partner-panel" novalidate>
+                        <input type="hidden" id="partner-intent" name="intent" value="Scope a Pilot (DE)">
+                        <div class="partner-fields-row">
+                            <div class="partner-group">
+                                <label class="partner-label" for="partner-name">Name &amp; Team</label>
+                                <input class="partner-input" id="partner-name" name="name" type="text" maxlength="160" placeholder="Ihr Name &amp; Robotik-Team" required>
+                            </div>
+                            <div class="partner-group">
+                                <label class="partner-label" for="partner-email">Geschäftliche E-Mail</label>
+                                <input class="partner-input" id="partner-email" name="email" type="email" maxlength="160" placeholder="sie@unternehmen.de" required>
+                            </div>
+                        </div>
+                        <div class="partner-group">
+                            <label class="partner-label" for="partner-message">Engpass, Sensorik &amp; Format</label>
+                            <textarea class="partner-textarea" id="partner-message" name="message" maxlength="1500" placeholder="Zielaufgabe, Robotermorphologie, benötigte Perspektiven/Sensoren und Lieferformat..." required></textarea>
+                        </div>
+                        <input class="partner-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <div class="partner-submit-row">
+                            <button type="submit" class="partner-submit-btn" id="partner-submit-btn">Senden</button>
+                            <span class="partner-status" id="partner-status" aria-live="polite"></span>
+                        </div>
+                    </form>
+                    <div class="contact-inline">
+                        <a href="mailto:gleb@sverkaus.com?subject=Pilotanfrage%20-%20Sverkaus" class="bold-link">gleb@sverkaus.com</a>
+                        <a href="mailto:main@sverkaus.com?subject=Standortpartnerschaft%20-%20Sverkaus" class="bold-link">main@sverkaus.com</a>
+                    </div>
+                </section>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-legal">
+                <a href="/de">Übersicht</a>
+                <span class="footer-dot">·</span>
+                <a href="/methodology">Specs</a>
+                <span class="footer-dot">·</span>
+                <a href="/de/partners">Partner</a>
+                <span class="footer-dot">·</span>
+                <a href="/careers">Karriere</a>
+                <span class="footer-dot">·</span>
+                <a href="mailto:gleb@sverkaus.com">gleb@sverkaus.com</a>
+            </div>
+            <div class="footer-specs-row">
+                <a href="/">EN</a>
+                <span class="footer-dot">·</span>
+                <a href="/de">DE</a>
+                <span class="footer-dot">·</span>
+                <a href="/pl">PL</a>
+                <span class="footer-dot">·</span>
+                <a href="/uk">UA</a>
+                <span class="footer-dot">·</span>
+                <a href="/privacy">Privacy &amp; GDPR</a>
+                <span class="footer-dot">·</span>
+                <a href="/zh">中文</a>
+                <span class="footer-dot">·</span>
+                <a href="/ko">한국어</a>
+                <span class="footer-dot">·</span>
+                <a href="/llms.txt">llms.txt</a>
+            </div>
+            <p class="footer-trading-note">Sverkaus Physical AI Data Lab</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/site.js?v=20261128a"></script>
+</body>
+</html>

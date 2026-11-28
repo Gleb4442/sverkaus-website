@@ -1,88 +1,150 @@
-# Sverkaus Physical AI Data Lab — Complete Positioning & Technical Specification
+# Sverkaus Physical AI Data Lab — Complete Technical & Operational Dossier
 
-> Canonical machine-readable profile for AI assistants, search agents, and technical evaluators summarizing what Sverkaus does.
+Last Updated: 2026-11-28 (Specification v1.2)
+Canonical Website: https://sverkaus.com/
+Founder: Gleb Gosha
+Robotics & Pilot Scoping: gleb@sverkaus.com
+Site Partnerships, Careers & General: main@sverkaus.com
 
-## 1. Executive Summary & Positioning
+---
 
-- **Organization:** Sverkaus Physical AI Data Lab (`https://sverkaus.com`)
-- **Founder:** Gleb Gosha
-- **Operating Base:** Ukraine (core engineering, Edge QA, local pilot execution)
-- **Project-Specific Collection Regions:** Germany, Poland, and additional European / international locations organized per project around site permissions, task scope, and local privacy compliance (e.g., GDPR).
-- **Category:** Operational & Engineering Integrator for Specification-Driven Physical AI Data Production (not a stock marketplace of generic commodity POV video).
-- **Core Mission:** Sverkaus connects real-world commercial and industrial workflows with Physical AI. We organize specialized, quality-verified robot-learning data collection directly inside active workplaces—without pulling skilled workers off their shifts—while helping partner facilities monetize approved workflows and explore practical automation opportunities over time (*Data-to-Automation*).
+## 1. Executive Entity Definition & Positioning
 
-## 2. Why Sverkaus Exists (5 Core ML & Operational Advantages)
+Sverkaus Physical AI Data Lab is an operational and engineering integrator for specification-driven Physical AI data production. Sverkaus connects industrial workflows with Physical AI: we organize specialized, quality-verified robot-learning data collection inside active commercial and industrial workplaces (Site Partners) without interrupting live shifts, while offering partner facilities agreed project compensation and an optional path to preliminary Automation Opportunity Assessment (Data-to-Automation).
 
-Robotics models trained solely on sterile lab-bench loops or generic crowdsourced head-camera video fail to generalize in live commercial environments. Sverkaus designs capture pipelines around five concrete robot-learning requirements:
+Sverkaus is explicitly NOT a stock marketplace selling cheap generic crowdsourced head-camera video, NOT a speculative shelf-dataset factory, and NOT a vendor that fabricates synthetic robot joint commands from RGB-only footage.
 
-1. **Human-to-Robot Policy Transfer (Wrist Views + 3D Hand Kinematics):**
-   Plain egocentric head-cam video stalls on manipulation transfer. Research shows human demonstrations nearly double policy success rates on novel tasks when paired with synchronized wrist-mounted camera views and 3D hand/finger tracking—especially for robotics teams iterating on an existing base robot policy.
-2. **Site Diversity Over Studio Repetitions (Data Scaling Laws):**
-   Imitation learning policies plateau after roughly ~50 demonstrations in a single scene-object setup, whereas strong zero-shot generalization scales with diversity across dozens of distinct real environments (e.g., 30+ sites × ~50 episodes). Sverkaus scales breadth across active Site Partner workplaces rather than selling thousands of identical studio repeats.
-3. **Robot-Free Portable Capture + Kinematic Reachability QA (UMI-Inspired):**
-   Portable hand-held / gripper-mounted capture rigs (such as Universal Manipulation Interface / UMI-style setups) collect manipulation data more than 3× faster than robot teleoperation without deploying an expensive robot onto a live factory or kitchen floor. Sverkaus pairs portable capture with Edge QA checks verifying kinematic reachability for the client's target robot morphology.
-4. **Real Failure & Recovery Trajectories (RL & Data Engine Ready):**
-   Sterile "perfect" demos do not teach robots how to recover from real-world slips, dropped objects, snagging fabrics, or misalignments. Embedding into live shifts naturally captures real edge cases, human corrective interventions, and step-level success/failure outcomes required for reinforcement learning (RL) and failure-mode remediation.
-5. **Policy & World-Model Conditioning (Synced Base + Wrist Subgoals):**
-   Tightly synchronized multi-view streams (ego/base + wrist + optional 3rd-person), camera intrinsics/extrinsics calibration, and structured episode/subtask metadata make each batch usable both for policy learning (VLA / IL / RL) and for world-model training.
+### Four B2B Engagement Modes
+1. **Managed Specialized Data Production:** Turnkey specification-driven capture on consented real workplaces—covering site qualification, Site Security Clearance, calibrated hardware setup, SOP execution, Edge QA, and ML-ready export.
+2. **Regional Collection Operations Partner (BYO Hardware):** Operating client-supplied UMI grippers, stereo rigs, sensor gloves, capture apps, and buyer QA pipelines across European and Ukrainian commercial facilities with zero hardware lock-in.
+3. **Field Supply Partner for Data Platforms & Aggregators:** Legally cleared, accountable regional field execution partner supplying skilled-trade and industrial workplace capture for larger robotics data ecosystems.
+4. **Iterative Data Engine / Closed-Loop Eval Partner:** Six-stage loop (`Diagnose -> Identify -> Collect -> Validate -> Evaluate -> Iterate`) where buyer model evaluation guides targeted follow-up batches to close specific policy failure modes.
 
-## 3. Unified Capture Stack & Supported Modalities
+### Core Geographic Footprint
+- **Operating Base:** Ukraine (core capture engineering, sensor integration, Edge QA pipeline, rapid local pilots, strict restricted-infrastructure compliance).
+- **EU Project Operations:** Germany and Poland (project-specific capture structured around GDPR / DSGVO / RODO, EU AI Act training-data provenance, and local workplace permissions).
+- **Additional Jurisdictions:** Organized on request with local legal adaptation (e.g., PDPA, PIPEDA, Privacy Act) prior to launch.
 
-Sverkaus configures hardware strictly around the robotics buyer's task bottleneck, robot embodiment, and acceptance criteria—never forcing a one-size-fits-all rig.
+---
 
-- **Track A — Portable Visual, Multi-View & UMI Capture:**
-  Synchronized egocentric POV, wrist-mounted cameras, optional 3rd-person contextual views, stereo depth, and portable UMI-style grippers for robot-free shift capture (pick-and-place, folding, sorting, packing, kitchen prep, tooling).
-- **Track B — 3D Hand Kinematics, MoCap Gloves, Tactile & Thermal:**
-  High-precision 3D hand/finger pose tracking, motion-capture (MoCap) gloves, fingertip contact/force or pressure sensors, sEMG, and optional LWIR Thermal / IR layers for tasks involving heat, liquids, deformable materials, or reflective/transparent surfaces where RGB alone misses grip or state.
-- **Track C — Kinematic-Compatible & Client BYO Hardware:**
-  Deployment and on-site operation of client-supplied rigs (BYO hardware), exoskeletons, custom sensor suites, or morphology-specific interfaces in target European workplaces.
+## 2. Research-Grounded Robot-Learning Transfer Foundations
 
-## 4. Edge QA, Provenance & Export Formats
+Every Sverkaus collection protocol is built around four peer-reviewed / arXiv empirical findings plus failure/recovery supervision:
 
-Every collection batch runs through structured on-site and central validation before delivery:
+1. **Multi-Site Breadth Beats Studio Repeats (Data Scaling Laws — https://arxiv.org/abs/2410.18647):**
+   Imitation learning policies plateau after roughly ~50 demonstrations per scene-object configuration, whereas generalization scales as a power law with breadth across distinct real environments and objects. Sverkaus embeds capture into active commercial workplaces where lighting, clutter, wear, and object diversity occur naturally.
+2. **Synchronized Wrist Cameras + 3D Hand Kinematics (~2× Transfer — https://arxiv.org/abs/2512.22414):**
+   Plain head-mounted POV video suffers from grasp self-occlusion and viewpoint mismatch. Synchronized wrist-worn cameras paired with 3D hand kinematics nearly double human-to-robot policy transfer on novel manipulation tasks.
+3. **Explicit Tactile, Force & sEMG for Contact-Rich Tasks (FeelTheForce — https://arxiv.org/abs/2506.01944):**
+   Contact forces (Newtons), slip onset, and compliant surface pressure cannot be recovered reliably from RGB pixels alone. For soft, fragile, or high-friction tasks, Sverkaus configures fingertip force/pressure sensors, MoCap gloves, or sEMG per buyer spec.
+4. **Robot-Free Kinematic-Compatible Capture (>3× Teleop Throughput — DexUMI — https://arxiv.org/abs/2505.21864):**
+   Portable handheld grippers and exoskeleton interfaces collect manipulation trajectories more than 3× faster than robot teleoperation without hauling fragile robots onto active floors, while Edge QA verifies kinematic reachability for the buyer's target embodiment.
+5. **Natural Failure & Recovery Trajectories Preserved:**
+   Real shifts organically produce fabric snags, cardboard jams, cable friction, and slipped tools. Sverkaus preserves and step-labels natural errors and corrective human recoveries for RL and policy robustness—without ever staging unsafe or hazardous errors.
 
-- **Edge QA Checks:** Frame-drop detection, multi-stream timestamp synchronization, camera intrinsic/extrinsic calibration verification, hand/tool visibility and occlusion scoring, motion-blur and lighting thresholds, episode completeness, and kinematic reachability gates against the client's target embodiment.
-- **Batch Status Classification:** Each recorded segment is classified as `RELEASE` (passed QA and privacy review), `HOLD` (requires review/redaction), or `REJECT` (excluded).
-- **Provenance & Governance:** Every delivered batch includes a structured provenance manifest, sensor/calibration specification, task/subtask hierarchy, outcome/failure flags, and exclusion/redaction logs.
-- **Supported ML-Ready Formats:** `LeRobot`, `RLDS`, `MCAP / Rerun` (visualization & multimodal playback), `HDF5 / Zarr`, and custom `Parquet + MP4` schemas. Sverkaus keeps observation-only human data and measured action/kinematic streams cleanly separated and documented without fabricating robot commands.
+---
 
-## 5. Target Workplace Domains (Embedded Live Shifts)
+## 3. Capture Hardware Architecture (Track A / B / C)
 
-Sverkaus recruits and coordinates active commercial workplaces where skilled operators perform real daily tasks:
+| Track | Modalities & Hardware | Primary Use Cases | Guardrails |
+| :--- | :--- | :--- | :--- |
+| **Track A · Visual & Real2Sim** | Calibrated stereo egocentric + synchronized L/R wrist RGB, optional 3rd-person, IMU telemetry | VLA pre-training, Real2Sim 3D scene reconstruction, subgoal video/world models, general workflow breadth | Strictly labeled as observation-only; never disguised as robot-action ground truth |
+| **Track B · Force, Tactile & Thermal** | 3D hand/finger tracking, MoCap gloves, fingertip pressure/force sensors, sEMG, optional LWIR Thermal / IR | Deformable textiles, cable routing, small connectors, fragile assembly, hot cookware, liquids, reflective/transparent objects | Physical calibration logs & drift checks; grip naturalness verified in shakedown |
+| **Track C · Kinematic-Compatible / BYO** | UMI-style handheld grippers, morphology-matched exoskeletons, or client-supplied BYO rigs & capture software | OEMs and labs with proprietary hardware needing agile European/Ukrainian live-site deployment | Zero hardware lock-in; Sverkaus handles site clearance, SOPs, and Edge QA |
 
-- **Laundries, Hospitality & Soft Goods:** Garment folding, linen turnover, ironing, flexible packaging, and deformable-object manipulation.
-- **Workshops, Electronics & Light Manufacturing:** Connector assembly, cable/harness routing, fasteners, soldering, bench tooling, and thermal tasks.
-- **Commercial Kitchens & Food Service:** Pouring, ingredient prep, utensil manipulation, plating, and temperature-sensitive workflows.
-- **Warehouses & Fulfillment:** Bin picking, bagging, kitting, sorting, and packing stations.
-- **Client-Specific Environments:** Custom workplaces scoped to a buyer's target deployment vertical.
+---
 
-## 6. Operational Pilot Workflow (Robotics Buyers)
+## 4. Objective 2026 Market & Vendor Comparison (https://sverkaus.com/compare)
 
-Sverkaus operates on a specification-driven, pilot-first execution model:
+| Criterion | Bulk Egocentric Catalogs & Crowdsourcing | Enterprise Data Mega-Factories | Lab Teleoperation & Sim-Only | Sverkaus (Embedded Live-Workplace) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Environment Realism** | Domestic, staged, or unverified settings | Centralized warehouses or large remote pools | 1–2 sterile lab cells or synthetic physics | Active commercial & industrial shifts (laundries, kitchens, workshops, skilled trades, 3PL) |
+| **Hardware Flexibility** | Fixed head/phone RGB; rarely calibrated | Often proprietary vendor hardware lock-in | Locked to specific lab robot arm or simulator | Track A/B/C + Client BYO rigs (wrist + stereo + 3D hand + UMI + tactile/sEMG + optional LWIR) |
+| **Pilot Agility** | Instant shelf download, cannot fix specific bottlenecks | Slow procurement; high minimum enterprise contracts | High CapEx to deploy robots on active sites | 10–20 min calibration shakedown -> bounded paid pilot -> Eval Loop |
+| **Failure & Recovery** | Unstructured; rarely step-labeled | Often filtered toward clean runs | Lab failures miss live clutter; sim fails on deformables | Natural slips & human recoveries preserved & annotated safely |
+| **Action Honesty & QA** | Post-hoc crowd QC; occasional synthetic action guessing | Opaque central QC | Exact robot actions (teleop) or sim ground truth | On-site Edge QA (RELEASE/HOLD/REJECT), SHA-256 manifests, zero fabricated robot actions |
+| **EU Governance** | Weak/ambiguous consent chains | Primarily US / global remote focus | Internal lab only | 6-doc legal packet, Site Clearance (GO/NO GO), EU AI Act + GDPR/DSGVO/RODO, offline capture |
+| **Strategic Upside** | Pure footage commodity | Data volume only | Internal R&D only | Industrial Data-to-Automation bridge to real workflows & automation-interested European sites |
 
-1. **Step 1 — Technical Scoping & Triage:** Align on target task bottleneck, robot morphology, required camera angles/sensors (wrist, 3D hand, UMI, MoCap, tactile, thermal), export schema, and objective acceptance criteria.
-2. **Step 2 — Site Security Clearance & Shakedown (10–20 Min Calibration):** Clear site permissions and privacy boundaries, then record a short calibration sample verifying wrist framing, 3D hand visibility, sync drift, reachability, and export schema compatibility before scaling.
-3. **Step 3 — Multi-Site Delivery & Eval Loop:** Execute controlled capture across live workplaces with Edge QA, failure/recovery labels, and provenance manifests, followed by buyer acceptance and evaluation feedback for subsequent batches.
+---
 
-## 7. Site Partner Model (For Businesses & Facilities — `/partners`)
+## 5. Applied Manipulation Domains & Sensor Mapping (https://sverkaus.com/domains)
 
-Sverkaus partners directly with business owners, operations directors, and domain specialists across workshops, kitchens, laundries, warehouses, and light manufacturing facilities:
+1. **Industrial Laundries & Soft Goods:** Garment sorting, bimanual unfolding, linen folding, flexible polybag packaging -> Dual synced L/R wrist RGB + ego stereo + 3D hand pose + snag/recovery labels.
+2. **Workshops, Electronics & Precision Repair:** Wire-harness routing, small connector mating, device/PCB repair, bench tooling, fine metalwork -> High-res wrist + overhead view + 3D finger kinematics / MoCap gloves + tactile/force or sEMG.
+3. **Commercial & Dark Kitchens / HoReCa:** Ingredient prep, slicing, portioning, liquid pouring, hot cookware handling, hospitality turnover -> Ego + L/R wrist RGB + optional LWIR Thermal / IR layer for heat, steam, liquids, and specular stainless steel/glass.
+4. **Skilled Trades & Construction Finishing:** Drywall taping & edge finishing, tiling, plumbing fittings, HVAC/electrical installation, auto repair -> Stereo ego + dual wrist RGB + IMU + tactile/sEMG (Track B) or client BYO wearable rig (Track C).
+5. **3PL Warehouses & Fulfillment:** Mixed-SKU bin picking, cardboard insert/box packing, taping, deformable parcel handling -> Portable UMI-style gripper or stereo + wrist stack + jam/misalignment recovery annotations.
 
-- **Paid Project Participation:** Facilities receive agreed compensation per accepted project/capture session. Partners provide workspace access, real workflows, and domain expertise—not ML engineering or dataset packaging.
-- **Zero Shift Disruption:** Recording sessions are planned around regular operations so skilled staff stay on the job. Sverkaus coordinates setup, SOPs, sensors, and QA end-to-end.
-- **Privacy by Design & NDA:** Written Site Access & Data Collection Agreements, voluntary Participant Consent forms, and NDAs are signed before capture begins. Camera framing is strictly scoped to workbenches, hands, and tools; bystanders' faces, monitors, screens, documents, license plates, and sensitive infrastructure are excluded or redacted pre-delivery. EU projects follow GDPR compliance.
-- **Optional Path to Automation:** For interested industrial partners, Sverkaus can optionally provide a structured preliminary overview of repetitive manual bottlenecks and automation readiness (*Automation Opportunity Assessment*), creating a practical long-term bridge toward future robotics evaluation with qualified technology partners (without forcing automation or making unverified ROI promises).
+---
 
-## 8. Engagement Principles & Scope Clarity
+## 6. Two-Stage Governance: Site Security Clearance & Edge QA
 
-- Sverkaus executes **specification-driven, project-based production** rather than selling unverified mass-scraped video.
-- Hardware configurations, site networks, and multi-site batches are scoped and organized around confirmed technical requirements and pilot validation.
-- All site collaborations, privacy controls, and licensing terms are defined in writing prior to capture.
+### Stage 1: Site Security Clearance (Pre-Capture)
+- `GO`: Facility audited, safety & exclusion boundaries verified, 6-document legal packet executed, filming authorized.
+- `HOLD`: Open legal, privacy, or safety item must be resolved prior to setup.
+- `NO GO`: High risk or non-compliant terms; site rejected.
 
-## 9. Direct Contact
+### Stage 2: On-Site Edge QA & Unit Accounting (Pre-Delivery)
+- `RELEASE`: Passed all automated + human Edge QA checks (frame drops, p95 cross-stream sync drift, intrinsics/extrinsics calibration, hand/tool visibility & occlusion, blur/lighting, kinematic reachability, Scoped FOV privacy) and SHA-256 integrity hashing.
+- `HOLD`: Flagged for targeted human audit or pre-delivery privacy redaction.
+- `REJECT`: Failed hard threshold; excluded and never billed.
+- **Cost per Accepted Hour Discipline:** Recorded hours, submitted hours, and buyer-accepted hours are always reported in separate manifest fields.
 
-- **Robotics Teams & Pilot Scoping:** `gleb@sverkaus.com`
-- **Site Partnerships, Careers & General Inquiries:** `main@sverkaus.com`
-- **Overview:** `https://sverkaus.com/`
-- **Site Partners:** `https://sverkaus.com/partners`
-- **Careers:** `https://sverkaus.com/careers`
+---
+
+## 7. Dataset Formats, Provenance & Machine-Readable Samples (https://sverkaus.com/formats)
+
+- **Two Product Tiers:** (1) Video-Only ML-Ready Datasets (Real2Sim, VLM/world-model pre-training) and (2) Action/Kinematic-Labeled Multimodal Datasets (IL/RL/VLA).
+- **Supported Formats:** `LeRobot` (Parquet + MP4 + JSON), `RLDS` (TFRecord episode-step), `MCAP / Rerun` (time-indexed multimodal playback + `.rrd` inspection), `HDF5 / Zarr` (Diffusion Policy / UMI / PyTorch), and custom `Parquet + MP4`.
+- **Zero Fabricated Robot Actions:** Human observations and physically measured kinematic/force streams are stored in explicitly separated channels; robot retargeting is never silently hallucinated.
+- **Inspectable Sample JSON Contracts:**
+  - Batch Provenance Manifest Sample: https://sverkaus.com/specs/provenance-manifest.sample.json
+  - Edge QA Validation Report Sample: https://sverkaus.com/specs/edge-qa-report.sample.json
+
+---
+
+## 8. Privacy by Design, 6-Document Legal Packet & Industrial Data-to-Automation (https://sverkaus.com/privacy)
+
+### 6-Document Legal Clearance Packet
+1. Site Access & Data Collection Agreement
+2. Mutual Non-Disclosure Agreement (NDA)
+3. Participant Consent / Release Form (strictly voluntary)
+4. Privacy Notice
+5. Data Processing Addendum (DPA)
+6. Data Supply / Licensing Agreement (plus Internal Data Collection Protocol)
+
+### Technical & Privacy Safeguards
+- **Air-Gapped / Offline Capture:** Autonomous rigs never connect to partner Wi-Fi or corporate IT networks.
+- **Zero Audio by Default:** Audio capture is disabled unless explicitly required and consented.
+- **Scoped FOV Exclusion:** Camera geometry frames workbenches, hands, and tools only—excluding bystanders, faces, monitors/ERP screens, printed documents, CCTV/security elements, license plates, and sensitive infrastructure.
+- **Local Hashing & Redaction:** SHA-256 integrity hashing and privacy redaction occur prior to external data transfer; EU operations align with GDPR (DSGVO / RODO) and EU AI Act training-data provenance.
+
+### Value for Site Partners (Data-to-Automation)
+- Paid, project-based compensation aligned to regular shifts with zero ML labeling burden on partner staff.
+- Optional preliminary **Automation Opportunity Assessment** mapping observed repetitive manual bottlenecks and readiness considerations—separately scoped, zero obligation to purchase robots.
+
+---
+
+## 9. Explicit Operational Boundaries (Honesty Guarantee)
+- Sverkaus does not claim speculative pre-built factory inventory or guaranteed robot deployment outcomes; site availability, rig BOM, timelines, and acceptance criteria are confirmed explicitly per project.
+- Pilot scoping starts with a bounded 10–20 minute calibration shakedown and explicit written acceptance thresholds before scaling to multi-site batches.
+
+---
+
+## 10. Canonical URL Map
+- https://sverkaus.com/ (English Overview — Robotics Buyers)
+- https://sverkaus.com/methodology (Capture Methodology, arXiv Foundations, Edge QA & Eval Loop)
+- https://sverkaus.com/compare (2026 Vendor & Capture Approach Comparison + 6-Point Audit Checklist)
+- https://sverkaus.com/domains (Hard Manipulation Domains, Skilled Trades & Sensor Mapping)
+- https://sverkaus.com/formats (LeRobot, RLDS, MCAP/Rerun, HDF5/Zarr & JSON Provenance Schemas)
+- https://sverkaus.com/privacy (Privacy by Design, 6-Doc Legal Packet, EU AI Act/GDPR & Data-to-Automation)
+- https://sverkaus.com/partners (Site Partner Program — English)
+- https://sverkaus.com/careers (Careers & Capture/QA Specialist Roles)
+- https://sverkaus.com/specs/provenance-manifest.sample.json (Sample Provenance Manifest JSON)
+- https://sverkaus.com/specs/edge-qa-report.sample.json (Sample Edge QA Report JSON)
+- https://sverkaus.com/de & https://sverkaus.com/de/partners (German / DACH Hubs)
+- https://sverkaus.com/pl & https://sverkaus.com/pl/partners (Polish Hubs)
+- https://sverkaus.com/uk & https://sverkaus.com/uk/partners (Ukrainian Hubs)
+- https://sverkaus.com/zh (Chinese Robotics Buyer Hub)
+- https://sverkaus.com/ko (Korean Robotics Buyer Hub)

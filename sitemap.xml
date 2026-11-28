@@ -1,23 +1,195 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- Core Overview & Localized Overview Hubs -->
   <url>
     <loc>https://sverkaus.com/</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sverkaus.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sverkaus.com/de"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://sverkaus.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sverkaus.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sverkaus.com/"/>
   </url>
   <url>
-    <loc>https://sverkaus.com/partners</loc>
+    <loc>https://sverkaus.com/de</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sverkaus.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sverkaus.com/de"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://sverkaus.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sverkaus.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sverkaus.com/"/>
+  </url>
+  <url>
+    <loc>https://sverkaus.com/pl</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sverkaus.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sverkaus.com/de"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://sverkaus.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sverkaus.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sverkaus.com/"/>
+  </url>
+  <url>
+    <loc>https://sverkaus.com/uk</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sverkaus.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sverkaus.com/de"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://sverkaus.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sverkaus.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sverkaus.com/"/>
+  </url>
+  <url>
+    <loc>https://sverkaus.com/zh</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sverkaus.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sverkaus.com/de"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://sverkaus.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sverkaus.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sverkaus.com/"/>
+  </url>
+  <url>
+    <loc>https://sverkaus.com/ko</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sverkaus.com/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sverkaus.com/de"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://sverkaus.com/zh"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://sverkaus.com/ko"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sverkaus.com/"/>
+  </url>
+
+  <!-- Technical Knowledge Hub Specifications -->
+  <url>
+    <loc>https://sverkaus.com/methodology</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://sverkaus.com/compare</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://sverkaus.com/careers</loc>
-    <priority>0.7</priority>
+    <loc>https://sverkaus.com/domains</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://sverkaus.com/formats</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sverkaus.com/privacy</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Site Partners & Localized Partner Hubs -->
+  <url>
+    <loc>https://sverkaus.com/partners</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sverkaus.com/partners"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sverkaus.com/de/partners"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl/partners"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk/partners"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sverkaus.com/partners"/>
+  </url>
+  <url>
+    <loc>https://sverkaus.com/de/partners</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sverkaus.com/partners"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sverkaus.com/de/partners"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl/partners"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk/partners"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sverkaus.com/partners"/>
+  </url>
+  <url>
+    <loc>https://sverkaus.com/pl/partners</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sverkaus.com/partners"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sverkaus.com/de/partners"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl/partners"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk/partners"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sverkaus.com/partners"/>
+  </url>
+  <url>
+    <loc>https://sverkaus.com/uk/partners</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sverkaus.com/partners"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://sverkaus.com/de/partners"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl/partners"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk/partners"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sverkaus.com/partners"/>
+  </url>
+
+  <!-- Careers -->
+  <url>
+    <loc>https://sverkaus.com/careers</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Machine-Readable AI Context & Reference Schemas -->
+  <url>
     <loc>https://sverkaus.com/llms.txt</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sverkaus.com/llms-full.txt</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sverkaus.com/specs/provenance-manifest.sample.json</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://sverkaus.com/specs/edge-qa-report.sample.json</loc>
+    <lastmod>2026-11-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
   </url>
 </urlset>

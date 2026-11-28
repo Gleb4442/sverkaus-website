@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko" data-static-lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="description" content="Sverkaus Physical AI 데이터 랩: 로보틱스 팀을 위한 사양 기반 실제 작업 현장 멀티모달 조작 데이터 운영 통합 파트너. 동기화 손목 카메라, 3D 손 추적, UMI, 촉각/sEMG, 선택형 LWIR 열화상, Edge QA 및 LeRobot/RLDS/MCAP 내보내기 지원.">
+    <link rel="canonical" href="https://sverkaus.com/ko">
+    <link rel="alternate" hreflang="en" href="https://sverkaus.com/">
+    <link rel="alternate" hreflang="de" href="https://sverkaus.com/de">
+    <link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl">
+    <link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk">
+    <link rel="alternate" hreflang="zh" href="https://sverkaus.com/zh">
+    <link rel="alternate" hreflang="ko" href="https://sverkaus.com/ko">
+    <link rel="alternate" hreflang="x-default" href="https://sverkaus.com/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Sverkaus LLM Context">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Sverkaus Full Technical Context">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sverkaus.com/ko">
+    <meta property="og:title" content="Sverkaus — Physical AI 데이터 랩 (실제 현장 로보틱스 데이터 수집)">
+    <meta property="og:description" content="실제 상업·산업 현장에서 사양 기반으로 수집하는 멀티모달 조작 데이터: 손목 카메라, 3D 손 트래킹, UMI, 촉각/sEMG, 오류·복구 궤적, Edge QA 및 GDPR 준수.">
+    <meta property="og:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sverkaus — Physical AI 데이터 랩">
+    <meta name="twitter:description" content="실제 작업 현장 기반 로보틱스 멀티모달 데이터 수집, Edge QA 및 LeRobot/RLDS/MCAP 포맷 납품.">
+    <meta name="twitter:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <title>Sverkaus — Physical AI 데이터 랩 (실제 현장 로보틱스 조작 데이터)</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://sverkaus.com/ko#webpage",
+          "url": "https://sverkaus.com/ko",
+          "name": "Sverkaus — Physical AI 데이터 랩",
+          "inLanguage": "ko",
+          "datePublished": "2026-11-28",
+          "dateModified": "2026-11-28",
+          "isPartOf": { "@id": "https://sverkaus.com/#website" },
+          "about": { "@id": "https://sverkaus.com/#organization" }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://sverkaus.com/ko#breadcrumbs",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Sverkaus", "item": "https://sverkaus.com/" },
+            { "@type": "ListItem", "position": 2, "name": "한국어 개요", "item": "https://sverkaus.com/ko" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://sverkaus.com/ko#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Sverkaus는 일반 크라우드소싱 POV 영상 업체나 연구실 텔레오퍼레이션과 어떻게 다릅니까?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "저가 크라우드소싱 POV 영상은 손목 동기화 시점, 카메라 캘리브레이션, 접촉력 센서가 부재하며, 연구실 텔레오퍼레이션은 실제 상업 주방·세탁 시설·작업장에 대량 배치하기 어렵습니다. Sverkaus는 우크라이나 및 유럽(독일·폴란드 등) 실제 현장에 고객 사양 맞춤형으로 들어가 손목 카메라+3D 손 추적+UMI/촉각/sEMG/선택형 LWIR 및 고객 BYO 리그를 운영하고, 현장 Edge QA(RELEASE/HOLD/REJECT)와 실제 오류·복구 궤적 보존을 제공합니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "어떤 ML 데이터셋 포맷과 품질 검증 지표를 제공합니까?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "LeRobot(Parquet + MP4), RLDS, MCAP / Rerun, HDF5 / Zarr 및 맞춤형 Parquet + MP4 포맷을 지원합니다. 모든 배치는 SHA-256 체크섬, 카메라 내외부 캘리브레이션, 멀티스트림 동기화 드리프트(p95 Δt), 녹화·제출·승인 시간 분리 집계, 그리고 가짜 로봇 액션 명령을 절대 합성하지 않는 정직한 스트림 분리 원칙을 따릅니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "한국 및 글로벌 로보틱스 팀은 Sverkaus 파일럿을 어떻게 시작할 수 있습니까?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "3단계로 진행합니다: (1) 목표 조작 병목·로봇 형태·센서 트랙(Track A/B/C 또는 BYO 하드웨어)·승인 기준 확정; (2) 현장 보안 승인(GO) 및 10~20분 캘리브레이션 셰이크다운으로 구도·동기화·도달 가능성·포맷 임포트 검증; (3) 다중 실제 현장 배치 납품 및 모델 평가 피드백 기반 반복(Eval Loop) 확장."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>document.documentElement.classList.add('intro-done');</script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261128b">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-left">
+            <a href="/ko" class="brand-link" id="brand-link"><span class="brand-text" id="brand-text">SVERKAUS</span></a>
+            <span class="header-star-slot" id="header-logo-slot" aria-hidden="true"></span>
+        </div>
+
+        <nav class="nav-tabs" aria-label="주 탐색">
+            <a href="/ko" class="nav-tab active" data-tab="overview" id="tab-overview"><span class="tab-label">개요</span></a>
+            <a href="/methodology" class="nav-tab" data-tab="specs" id="tab-specs"><span class="tab-label">기술 사양</span></a>
+            <a href="/partners" class="nav-tab" data-tab="partners" id="tab-partners"><span class="tab-label">현장 파트너</span></a>
+            <a href="/careers" class="nav-tab" data-tab="careers" id="tab-careers"><span class="tab-label">채용</span></a>
+            <span class="nav-tab-indicator" id="nav-tab-indicator" aria-hidden="true"></span>
+        </nav>
+
+        <div class="header-right">
+            <div class="custom-select" id="custom-lang-select">
+                <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="언어 선택" id="lang-select-trigger">
+                    <span class="selected-text" id="lang-selected-text">한국어</span>
+                </button>
+                <ul class="select-options" role="listbox" aria-label="언어 옵션" id="lang-select-options">
+                    <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0">English</li>
+                    <li class="select-option" data-value="uk" data-short="UA" role="option" tabindex="0">Українська</li>
+                    <li class="select-option" data-value="zh" data-short="中文" role="option" tabindex="0">中文</li>
+                    <li class="select-option" data-value="hi" data-short="हिन्दी" role="option" tabindex="0">हिन्दी</li>
+                    <li class="select-option selected" data-value="ko" data-short="한국어" role="option" aria-selected="true" tabindex="0">한국어</li>
+                    <li class="select-option" data-value="de" data-short="DE" role="option" tabindex="0">Deutsch</li>
+                    <li class="select-option" data-value="pl" data-short="PL" role="option" tabindex="0">Polski</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="logo-icon-container logo-dock-carrier" id="logo-dock-carrier" role="button" tabindex="0" aria-label="Sverkaus 개요로 돌아가기" title="Sverkaus">
+        <svg class="logo-icon" id="star-svg" viewBox="-180 -180 560 560" shape-rendering="geometricPrecision">
+            <g class="star-root">
+                <g class="star-body">
+                    <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#0f172a" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="10" />
+                </g>
+                <g class="star-eyes">
+                    <ellipse class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#0f172a" />
+                    <g class="star-eye-right-group">
+                        <ellipse class="star-eye star-eye-right" cx="115" cy="100" rx="13" ry="21" fill="#0f172a" />
+                        <path class="star-eye-wink" d="M 106 104 Q 115 90 124 104" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <main class="main-wrapper">
+        <article class="spec-section">
+            <div class="spec-inner">
+                <header class="spec-header">
+                    <div class="overview-kicker">Sverkaus Physical AI 데이터 랩 · 한국어 개요</div>
+                    <h1 class="spec-h1">휴머노이드·VLA·월드 모델을 위한 실제 현장 조작 데이터 생산</h1>
+                    <p class="spec-lead">Sverkaus는 사양 기반(Specification-Driven) 물리 데이터 운영 통합 파트너입니다. 기성 일반 영상을 판매하지 않고 우크라이나·독일·폴란드 등 실제 상업 및 산업 근무 현장에 직접 들어가 Edge QA로 검증된 멀티모달 조작 데이터셋을 납품합니다.</p>
+                    <div class="spec-meta-row">
+                        <time datetime="2026-11-28" class="spec-updated">2026년 11월 28일 업데이트</time>
+                        <span class="spec-meta-sep">·</span>
+                        <a href="/specs/provenance-manifest.sample.json" class="spec-meta-link">출처 매니페스트 JSON</a>
+                        <span class="spec-meta-sep">·</span>
+                        <a href="/specs/edge-qa-report.sample.json" class="spec-meta-link">Edge QA 리포트 JSON</a>
+                    </div>
+                    <nav class="spec-nav-strip" aria-label="기술 사양">
+                        <a href="/methodology" class="spec-nav-pill">수집 방법론 &amp; Edge QA (EN)</a>
+                        <a href="/compare" class="spec-nav-pill">수집 방식 비교 (EN)</a>
+                        <a href="/domains" class="spec-nav-pill">도메인 &amp; 센서 매핑 (EN)</a>
+                        <a href="/formats" class="spec-nav-pill">LeRobot / RLDS 포맷 (EN)</a>
+                        <a href="/privacy" class="spec-nav-pill">GDPR &amp; 프라이버시 (EN)</a>
+                    </nav>
+                </header>
+
+                <aside class="answer-box" aria-label="핵심 요약">
+                    <span class="answer-box-label">핵심 요약</span>
+                    <p><strong>왜 Sverkaus인가?</strong> 단일 실험실 데모는 약 50회 이후 성능 정체에 빠지며(arXiv:2410.18647), 단순 헤드캠 POV 영상은 파지 가림과 접촉력 부재로 전이율이 낮습니다. Sverkaus는 <strong>Track A(비주얼/스테레오/손목 동기화)</strong>, <strong>Track B(3D 손/MoCap/촉각·힘/sEMG/선택형 LWIR 열화상)</strong>, <strong>Track C(UMI/외골격/고객 BYO 하드웨어)</strong>를 지원하며, <strong>10~20분 캘리브레이션 셰이크다운</strong>과 현장 <strong>Edge QA(RELEASE/HOLD/REJECT)</strong>를 통해 승인 시간 기준(Cost per Accepted Hour)으로 투명하게 납품합니다.</p>
+                </aside>
+
+                <section class="overview-block">
+                    <div class="overview-kicker">01 · 캡처 스택 및 적용 도메인</div>
+                    <h2 class="overview-heading">고난도 실제 물리 조작과 정책 전이에 최적화.</h2>
+                    <div class="spec-grid-2">
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">멀티모달 · Track A/B/C</span>
+                            <h3 class="spec-item-title">손목 동기화 + 3D 손 + 촉각/sEMG + BYO 리그</h3>
+                            <p class="spec-item-body">좌우 손목 카메라, 스테레오 1인칭, 3D 손가락 기구학, 촉각/압력 센서, sEMG, 선택형 LWIR 열화상 및 고객 자체 UMI·캡처 하드웨어 현장 운영을 지원합니다.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">실제 산업·상업 도메인</span>
+                            <h3 class="spec-item-title">섬유·전자조립·상업용 주방·숙련 공종·3PL 물류</h3>
+                            <p class="spec-item-body">세탁 시설 의류/린넨 접기, 케이블 하네스 및 정밀 수리, 열·액체 공정의 상업용 주방, 건식벽체/배관/전기 등 숙련 공종, 다품종 물류 피킹 및 포장을 포괄합니다.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">데이터 무결성</span>
+                            <h3 class="spec-item-title">가짜 로봇 액션 배제 + SHA-256 출처 매니페스트</h3>
+                            <p class="spec-item-body">관측 전용 인간 영상과 실측 기구학/힘 스트림을 엄격히 분리하며, LeRobot·RLDS·MCAP/Rerun·HDF5/Zarr 포맷과 캘리브레이션·실패/복구 라벨을 함께 제공합니다.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">유럽 컴플라이언스</span>
+                            <h3 class="spec-item-title">6종 법률 패키지 + 오프라인 Privacy by Design</h3>
+                            <p class="spec-item-body">우크라이나 핵심 엔지니어링 거점과 독일·폴란드 프로젝트 운영을 기반으로 GDPR/EU AI Act 출처 추적, Scoped FOV, 사내망 비연결 오프라인 수집을 준수합니다.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="faq">
+                    <div class="overview-kicker">02 · 자주 묻는 질문</div>
+                    <h2 class="overview-heading">로보틱스 팀 주요 기술 문의.</h2>
+                    <div class="geo-faq-list">
+                        <details class="geo-faq-item" open>
+                            <summary>Sverkaus는 일반 크라우드소싱 POV 영상 업체나 연구실 텔레오퍼레이션과 어떻게 다릅니까?</summary>
+                            <div class="geo-faq-answer">저가 크라우드소싱 POV 영상은 손목 동기화 시점, 카메라 캘리브레이션, 접촉력 센서가 부재하며, 연구실 텔레오퍼레이션은 실제 상업 주방·세탁 시설·작업장에 대량 배치하기 어렵습니다. Sverkaus는 우크라이나 및 유럽(독일·폴란드 등) 실제 현장에 고객 사양 맞춤형으로 들어가 손목 카메라+3D 손 추적+UMI/촉각/sEMG/선택형 LWIR 및 고객 BYO 리그를 운영하고, 현장 Edge QA(RELEASE/HOLD/REJECT)와 실제 오류·복구 궤적 보존을 제공합니다.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>어떤 ML 데이터셋 포맷과 품질 검증 지표를 제공합니까?</summary>
+                            <div class="geo-faq-answer">LeRobot(Parquet + MP4), RLDS, MCAP / Rerun, HDF5 / Zarr 및 맞춤형 Parquet + MP4 포맷을 지원합니다. 모든 배치는 SHA-256 체크섬, 카메라 내외부 캘리브레이션, 멀티스트림 동기화 드리프트(p95 Δt), 녹화·제출·승인 시간 분리 집계, 그리고 가짜 로봇 액션 명령을 절대 합성하지 않는 정직한 스트림 분리 원칙을 따릅니다.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>한국 및 글로벌 로보틱스 팀은 Sverkaus 파일럿을 어떻게 시작할 수 있습니까?</summary>
+                            <div class="geo-faq-answer">3단계로 진행합니다: (1) 목표 조작 병목·로봇 형태·센서 트랙(Track A/B/C 또는 BYO 하드웨어)·승인 기준 확정; (2) 현장 보안 승인(GO) 및 10~20분 캘리브레이션 셰이크다운으로 구도·동기화·도달 가능성·포맷 임포트 검증; (3) 다중 실제 현장 배치 납품 및 모델 평가 피드백 기반 반복(Eval Loop) 확장.</div>
+                        </details>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="contact">
+                    <div class="overview-kicker">03 · 파일럿 문의</div>
+                    <h2 class="overview-heading">맞춤형 데이터 파일럿 협의하기.</h2>
+                    <form id="partner-form" class="partner-panel" novalidate>
+                        <input type="hidden" id="partner-intent" name="intent" value="KO Robotics Pilot Inquiry">
+                        <div class="partner-fields-row">
+                            <div class="partner-group">
+                                <label class="partner-label" for="partner-name">성함 및 팀명</label>
+                                <input class="partner-input" id="partner-name" name="name" type="text" maxlength="160" placeholder="성함 및 로보틱스 팀명" required>
+                            </div>
+                            <div class="partner-group">
+                                <label class="partner-label" for="partner-email">업무용 이메일</label>
+                                <input class="partner-input" id="partner-email" name="email" type="email" maxlength="160" placeholder="you@company.com" required>
+                            </div>
+                        </div>
+                        <div class="partner-group">
+                            <label class="partner-label" for="partner-message">목표 작업, 센서 사양 및 납품 포맷</label>
+                            <textarea class="partner-textarea" id="partner-message" name="message" maxlength="1500" placeholder="목표 조작 작업, 로봇 형태, 필요한 시점/센서(손목, 3D 손, UMI, 촉각/BYO) 및 납품 포맷을 알려주세요..." required></textarea>
+                        </div>
+                        <input class="partner-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <div class="partner-submit-row">
+                            <button type="submit" class="partner-submit-btn" id="partner-submit-btn">문의 보내기</button>
+                            <span class="partner-status" id="partner-status" aria-live="polite"></span>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-legal">
+                <a href="/ko">개요</a>
+                <span class="footer-dot">·</span>
+                <a href="/methodology">기술 사양</a>
+                <span class="footer-dot">·</span>
+                <a href="/partners">현장 파트너</a>
+                <span class="footer-dot">·</span>
+                <a href="/careers">채용</a>
+                <span class="footer-dot">·</span>
+                <a href="mailto:gleb@sverkaus.com">gleb@sverkaus.com</a>
+            </div>
+            <div class="footer-specs-row">
+                <a href="/">EN</a>
+                <span class="footer-dot">·</span>
+                <a href="/de">DE</a>
+                <span class="footer-dot">·</span>
+                <a href="/pl">PL</a>
+                <span class="footer-dot">·</span>
+                <a href="/uk">UA</a>
+                <span class="footer-dot">·</span>
+                <a href="/zh">中文</a>
+                <span class="footer-dot">·</span>
+                <a href="/methodology">Methodology</a>
+                <span class="footer-dot">·</span>
+                <a href="/formats">Formats</a>
+                <span class="footer-dot">·</span>
+                <a href="/llms.txt">llms.txt</a>
+            </div>
+            <p class="footer-trading-note">Sverkaus Physical AI Data Lab</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/site.js?v=20261128c"></script>
+</body>
+</html>

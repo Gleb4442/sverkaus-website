@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="uk" data-static-lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="description" content="Sverkaus Physical AI Дата-лабораторія: операційний інтегратор збору фізичних даних для робототехніки на живих змінах в Україні, Німеччині та Польщі — накистьові камери, 3D-кінематика кистей, UMI, MoCap-рукавиці та Edge QA.">
+    <link rel="canonical" href="https://sverkaus.com/uk">
+    <link rel="alternate" hreflang="en" href="https://sverkaus.com/">
+    <link rel="alternate" hreflang="de" href="https://sverkaus.com/de">
+    <link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl">
+    <link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk">
+    <link rel="alternate" hreflang="zh" href="https://sverkaus.com/zh">
+    <link rel="alternate" hreflang="ko" href="https://sverkaus.com/ko">
+    <link rel="alternate" hreflang="x-default" href="https://sverkaus.com/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Sverkaus LLM Context">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Sverkaus Full Technical Context">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sverkaus.com/uk">
+    <meta property="og:locale" content="uk_UA">
+    <meta property="og:title" content="Sverkaus — Physical AI Дата-лабораторія (Українська)">
+    <meta property="og:description" content="Бойові фізичні дані з реальних робочих змін: накистьові камери, 3D кисті, UMI, MoCap-рукавиці, реальні збої/відновлення та Edge QA.">
+    <meta property="og:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>Sverkaus — Physical AI Дата-лабораторія (Українська)</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://sverkaus.com/uk#webpage",
+          "url": "https://sverkaus.com/uk",
+          "name": "Sverkaus — Physical AI Дата-лабораторія (Українська)",
+          "inLanguage": "uk",
+          "isPartOf": { "@id": "https://sverkaus.com/#website" },
+          "about": { "@id": "https://sverkaus.com/#organization" }
+        },
+        {
+          "@type": "Service",
+          "@id": "https://sverkaus.com/uk#service",
+          "name": "Збір Physical AI даних за специфікацією",
+          "provider": { "@id": "https://sverkaus.com/#organization" },
+          "inLanguage": "uk",
+          "areaServed": [
+            { "@type": "Country", "name": "Ukraine" },
+            { "@type": "Country", "name": "Germany" },
+            { "@type": "Country", "name": "Poland" }
+          ],
+          "description": "Операційна інтеграція мультисенсорного збору даних для робототехніки на активних робочих місцях (пральні, майстерні, комерційні кухні, склади): синхронні накистьові камери, 3D-трекінг кистей, UMI-ріги, MoCap-рукавиці, опційний LWIR-термошар, Edge QA та експорт у LeRobot, RLDS, MCAP/Rerun, HDF5/Zarr."
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://sverkaus.com/uk#faq",
+          "inLanguage": "uk",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Чим займається Sverkaus Physical AI Data Lab?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sverkaus — операційний та інженерний інтегратор виробництва даних для робототехніки. Замість продажу звичайного краудсорсингового POV-відео ми вбудовуємо відкалібрований збір (накистьові + базові камери, 3D-кінематика кистей, UMI, MoCap-рукавиці, опційний LWIR) у живі робочі зміни реальних підприємств з контролем Edge QA та збереженням реальних помилок і відновлень."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Де базується Sverkaus і як організований збір в Україні та ЄС?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Основна інженерія, система Edge QA та швидкі локальні пілоти працюють в Україні. Проєктний збір у Німеччині, Польщі та інших регіонах організовується під конкретні дозволи майданчиків, NDA та локальні вимоги приватності (включно з GDPR)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Які формати датасетів підтримує Sverkaus?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Ми експортуємо готові до навчання партії у форматах LeRobot, RLDS, MCAP / Rerun, HDF5 / Zarr та кастомних Parquet + MP4 схемах, суворо відокремлюючи відеоспостереження від виміряної кінематики та додаючи маніфест походження і калібрування."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>document.documentElement.classList.add('intro-done');</script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261128b">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-left">
+            <a href="/uk" class="brand-link" id="brand-link"><span class="brand-text" id="brand-text">SVERKAUS</span></a>
+            <span class="header-star-slot" id="header-logo-slot" aria-hidden="true"></span>
+        </div>
+
+        <nav class="nav-tabs" aria-label="Головна навігація">
+            <a href="/uk" class="nav-tab active" data-tab="overview" id="tab-overview"><span class="tab-label">Огляд</span></a>
+            <a href="/methodology" class="nav-tab" data-tab="specs" id="tab-specs"><span class="tab-label">Спеки</span></a>
+            <a href="/uk/partners" class="nav-tab" data-tab="partners" id="tab-partners"><span class="tab-label">Партнери</span></a>
+            <a href="/careers" class="nav-tab" data-tab="careers" id="tab-careers"><span class="tab-label">Кар'єра</span></a>
+            <span class="nav-tab-indicator" id="nav-tab-indicator" aria-hidden="true"></span>
+        </nav>
+
+        <div class="header-right">
+            <div class="custom-select" id="custom-lang-select">
+                <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Вибрати мову" id="lang-select-trigger">
+                    <span class="selected-text" id="lang-selected-text">UA</span>
+                </button>
+                <ul class="select-options" role="listbox" aria-label="Опції мови" id="lang-select-options">
+                    <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0">English</li>
+                    <li class="select-option selected" data-value="uk" data-short="UA" role="option" tabindex="0" aria-selected="true">Українська</li>
+                    <li class="select-option" data-value="zh" data-short="中文" role="option" tabindex="0">中文</li>
+                    <li class="select-option" data-value="hi" data-short="हिन्दी" role="option" tabindex="0">हिन्दी</li>
+                    <li class="select-option" data-value="ko" data-short="한국어" role="option" tabindex="0">한국어</li>
+                    <li class="select-option" data-value="de" data-short="DE" role="option" tabindex="0">Deutsch</li>
+                    <li class="select-option" data-value="pl" data-short="PL" role="option" tabindex="0">Polski</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="logo-icon-container logo-dock-carrier" id="logo-dock-carrier" role="button" tabindex="0" aria-label="На головну Sverkaus" title="Sverkaus">
+        <svg class="logo-icon" id="star-svg" viewBox="-180 -180 560 560" shape-rendering="geometricPrecision">
+            <g class="star-root">
+                <g class="star-body">
+                    <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#0f172a" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="10" />
+                </g>
+                <g class="star-eyes">
+                    <ellipse class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#0f172a" />
+                    <g class="star-eye-right-group">
+                        <ellipse class="star-eye star-eye-right" cx="115" cy="100" rx="13" ry="21" fill="#0f172a" />
+                        <path class="star-eye-wink" d="M 106 104 Q 115 90 124 104" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <main class="main-wrapper">
+        <article class="spec-section">
+            <div class="spec-inner">
+                <header class="spec-header">
+                    <div class="overview-kicker">Sverkaus · Physical AI Дата-лабораторія · Українська</div>
+                    <h1 class="spec-h1">Бойові дані для робототехніки. Живі виробництва.</h1>
+                    <p class="spec-lead">Sverkaus — операційний та інженерний інтегратор збору даних Physical AI за специфікацією. Ми вбудовуємо синхронні накистьові камери, 3D-трекінг кистей, портативні UMI-ріги, MoCap-рукавиці та Edge QA у реальні робочі зміни пралень, майстерень, комерційних кухонь і складів.</p>
+                    <div class="hero-cta-pills">
+                        <a href="#contact" class="pill-btn primary">Обговорити пілот</a>
+                        <a href="/uk/partners" class="pill-btn ghost">Для бізнесу (Партнерам)</a>
+                    </div>
+                </header>
+
+                <aside class="answer-box" aria-label="Коротке резюме">
+                    <span class="answer-box-label">Коротке резюме</span>
+                    <p><strong>Операційна база в Україні:</strong> інженерія, Edge QA та швидкі пілоти виконуються з України, а проєктний збір у <strong>Німеччині, Польщі</strong> та інших країнах організовується за запитом з дотриманням NDA та GDPR. Готові партії експортуються у <code>LeRobot</code>, <code>RLDS</code>, <code>MCAP / Rerun</code> та <code>HDF5 / Zarr</code>.</p>
+                </aside>
+
+                <section class="overview-block">
+                    <div class="overview-kicker">01 · Перевага інтегратора</div>
+                    <h2 class="overview-heading">Стенди виходять на плато. Живі зміни переносяться.</h2>
+                    <div class="metric-sheet">
+                        <div class="metric-cell">
+                            <div class="metric-stat">~2× Перенос</div>
+                            <div class="metric-title">Накистьові + 3D кисті</div>
+                            <p class="metric-body">Синхронні wrist-камери й 3D-кінематика пальців замість звичайного POV.</p>
+                        </div>
+                        <div class="metric-cell">
+                            <div class="metric-stat">30+ Майданчиків</div>
+                            <div class="metric-title">Широта локацій</div>
+                            <p class="metric-body">Реальні робочі місця долають плато ~50 повторів на одному стенді.</p>
+                        </div>
+                        <div class="metric-cell">
+                            <div class="metric-stat">&gt;3× Телеоп</div>
+                            <div class="metric-title">UMI + Edge QA</div>
+                            <p class="metric-body">Портативний збір без робота з перевіркою кінематичної досяжності.</p>
+                        </div>
+                        <div class="metric-cell">
+                            <div class="metric-stat">2× Менше збоїв</div>
+                            <div class="metric-title">Помилки збережено</div>
+                            <p class="metric-body">Реальні зриви, корекції оператора та subgoal-кадри для RL і world models.</p>
+                        </div>
+                    </div>
+                    <div class="section-links-row">
+                        <a href="/methodology" class="section-more-link">Методологія та Edge QA (EN) →</a>
+                        <a href="/compare" class="section-more-link">Порівняння підходів →</a>
+                        <a href="/formats" class="section-more-link">Формати LeRobot / RLDS / MCAP →</a>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="faq">
+                    <div class="overview-kicker">02 · Часті питання</div>
+                    <h2 class="overview-heading">Відповіді для ML-команд та інженерів.</h2>
+                    <div class="geo-faq-list">
+                        <details class="geo-faq-item" open>
+                            <summary>Чим займається Sverkaus Physical AI Data Lab?</summary>
+                            <div class="geo-faq-answer">Sverkaus — операційний та інженерний інтегратор виробництва даних для робототехніки. Замість продажу звичайного краудсорсингового POV-відео ми вбудовуємо відкалібрований збір (накистьові + базові камери, 3D-кінематика кистей, UMI, MoCap-рукавиці, опційний LWIR) у живі робочі зміни реальних підприємств з контролем Edge QA та збереженням реальних помилок і відновлень.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>Де базується Sverkaus і як організований збір в Україні та ЄС?</summary>
+                            <div class="geo-faq-answer">Основна інженерія, система Edge QA та швидкі локальні пілоти працюють в Україні. Проєктний збір у Німеччині, Польщі та інших регіонах організовується під конкретні дозволи майданчиків, NDA та локальні вимоги приватності (включно з GDPR).</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>Які формати датасетів підтримує Sverkaus?</summary>
+                            <div class="geo-faq-answer">Ми експортуємо готові до навчання партії у форматах <strong>LeRobot</strong>, <strong>RLDS</strong>, <strong>MCAP / Rerun</strong>, <strong>HDF5 / Zarr</strong> та кастомних Parquet + MP4 схемах, суворо відокремлюючи відеоспостереження від виміряної кінематики та додаючи маніфест походження і калібрування. Деталі на <a href="/formats">Formats &amp; Provenance</a>.</div>
+                        </details>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="contact">
+                    <div class="overview-kicker">03 · Контакт</div>
+                    <h2 class="overview-heading">Обговорити пілот.</h2>
+                    <form id="partner-form" class="partner-panel" novalidate>
+                        <input type="hidden" id="partner-intent" name="intent" value="Scope a Pilot (UK)">
+                        <div class="partner-fields-row">
+                            <div class="partner-group">
+                                <label class="partner-label" for="partner-name">Ім'я та команда</label>
+                                <input class="partner-input" id="partner-name" name="name" type="text" maxlength="160" placeholder="Ваше ім'я та команда робототехніки" required>
+                            </div>
+                            <div class="partner-group">
+                                <label class="partner-label" for="partner-email">Робочий Email</label>
+                                <input class="partner-input" id="partner-email" name="email" type="email" maxlength="160" placeholder="you@company.com" required>
+                            </div>
+                        </div>
+                        <div class="partner-group">
+                            <label class="partner-label" for="partner-message">Вузьке місце, сенсори та формат</label>
+                            <textarea class="partner-textarea" id="partner-message" name="message" maxlength="1500" placeholder="Цільова задача, морфологія робота, потрібні ракурси/сенсори та формат видачі..." required></textarea>
+                        </div>
+                        <input class="partner-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <div class="partner-submit-row">
+                            <button type="submit" class="partner-submit-btn" id="partner-submit-btn">Надіслати</button>
+                            <span class="partner-status" id="partner-status" aria-live="polite"></span>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-legal">
+                <a href="/uk">Огляд</a>
+                <span class="footer-dot">·</span>
+                <a href="/methodology">Спеки</a>
+                <span class="footer-dot">·</span>
+                <a href="/uk/partners">Партнери</a>
+                <span class="footer-dot">·</span>
+                <a href="/careers">Кар'єра</a>
+                <span class="footer-dot">·</span>
+                <a href="mailto:gleb@sverkaus.com">gleb@sverkaus.com</a>
+            </div>
+            <div class="footer-specs-row">
+                <a href="/">EN</a>
+                <span class="footer-dot">·</span>
+                <a href="/de">DE</a>
+                <span class="footer-dot">·</span>
+                <a href="/pl">PL</a>
+                <span class="footer-dot">·</span>
+                <a href="/uk">UA</a>
+                <span class="footer-dot">·</span>
+                <a href="/privacy">Privacy &amp; GDPR</a>
+                <span class="footer-dot">·</span>
+                <a href="/zh">中文</a>
+                <span class="footer-dot">·</span>
+                <a href="/ko">한국어</a>
+                <span class="footer-dot">·</span>
+                <a href="/llms.txt">llms.txt</a>
+            </div>
+            <p class="footer-trading-note">Sverkaus Physical AI Data Lab</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/site.js?v=20261128a"></script>
+</body>
+</html>

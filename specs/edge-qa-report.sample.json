@@ -1,0 +1,63 @@
+{
+  "$schema": "https://sverkaus.com/specs/edge-qa-report.sample.json",
+  "schema_version": "1.2.0",
+  "notice": "Illustrative reference structure of a Sverkaus Edge QA validation report generated at the capture station prior to batch release. Thresholds are configured per buyer technical specification.",
+  "batch_id": "SVK-SAMPLE-2026-001",
+  "qa_protocol_version": "edge-qa-v1.2",
+  "site_clearance_status": "GO",
+  "shakedown_calibration_passed": true,
+  "gate_definitions": {
+    "RELEASE": "Passed all automated Edge QA, calibration, reachability, and Privacy by Design checks; cleared for buyer delivery.",
+    "HOLD": "Flagged for targeted human audit or pre-delivery privacy redaction before release decision.",
+    "REJECT": "Failed hard threshold (sync drift, occlusion, dropped frames, calibration loss, or unconsented zone); excluded and not billed."
+  },
+  "batch_metrics": {
+    "episodes_evaluated": 182,
+    "released_count": 150,
+    "held_count": 12,
+    "rejected_count": 20,
+    "first_pass_acceptance_ratio": 0.824,
+    "p95_cross_stream_sync_drift_ms": 2.4,
+    "max_allowed_sync_drift_ms": 8.0,
+    "dropped_frame_rate": 0.0008,
+    "hands_and_contact_visibility_ratio": 0.964,
+    "kinematic_reachability_pass_ratio": 0.941,
+    "privacy_scoped_fov_violations_in_released": 0
+  },
+  "rejection_reason_breakdown": {
+    "hand_or_tool_occlusion_over_threshold": 8,
+    "incomplete_episode_boundary": 5,
+    "motion_blur_or_exposure_spike": 4,
+    "cross_stream_sync_drift_exceeded": 2,
+    "bystander_entered_scoped_fov": 1
+  },
+  "sample_episodes": [
+    {
+      "episode_id": "ep_00014",
+      "task": "bimanual_garment_unfold_and_align",
+      "outcome": "success_with_recovery",
+      "failure_recovery_annotated": true,
+      "recovery_event": "fabric_corner_snag_corrected_by_left_wrist_regrip",
+      "sync_drift_ms": 1.9,
+      "dropped_frames": 0,
+      "hand_visibility_ratio": 0.98,
+      "kinematic_reachability_pass": true,
+      "privacy_fov_pass": true,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gate_status": "RELEASE"
+    },
+    {
+      "episode_id": "ep_00015",
+      "task": "bimanual_garment_unfold_and_align",
+      "outcome": "aborted_due_to_occlusion",
+      "failure_recovery_annotated": false,
+      "sync_drift_ms": 2.1,
+      "dropped_frames": 0,
+      "hand_visibility_ratio": 0.61,
+      "kinematic_reachability_pass": true,
+      "privacy_fov_pass": true,
+      "gate_status": "REJECT",
+      "reject_reason": "hand_or_tool_occlusion_over_threshold"
+    }
+  ]
+}

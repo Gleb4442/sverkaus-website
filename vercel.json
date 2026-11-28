@@ -2,6 +2,47 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/((?!assets/|specs/|any/|diskpulse/|api/).*)",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://sverkaus.com/llms.txt>; rel=\"alternate\"; type=\"text/plain\", <https://sverkaus.com/llms-full.txt>; rel=\"alternate\"; type=\"text/plain\""
+        }
+      ]
+    },
+    {
+      "source": "/(llms\\.txt|llms-full\\.txt)",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=3600"
+        }
+      ]
+    },
+    {
+      "source": "/specs/(.*)\\.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json; charset=utf-8"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=3600"
+        }
+      ]
+    }
+  ],
   "redirects": [
     { "source": "/terms", "destination": "/any/terms", "permanent": true },
     { "source": "/refund", "destination": "/any/refund", "permanent": true }

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="description" content="Robotics dataset export formats and provenance standards at Sverkaus: LeRobot, RLDS, MCAP / Rerun, HDF5 / Zarr, Parquet + MP4, SHA-256 episode integrity, inspectable JSON sample schemas, zero fabricated robot actions, and world-model readiness.">
+    <link rel="canonical" href="https://sverkaus.com/formats">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Sverkaus LLM Context">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Sverkaus Full Technical Context">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sverkaus.com/formats">
+    <meta property="og:title" content="Robotics Dataset Formats, JSON Provenance & World-Model Readiness — Sverkaus">
+    <meta property="og:description" content="ML-ready export schemas (LeRobot, RLDS, MCAP/Rerun, HDF5/Zarr), inspectable JSON provenance manifests, SHA-256 integrity, and honest stream separation.">
+    <meta property="og:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Robotics Dataset Formats & Provenance — Sverkaus">
+    <meta name="twitter:description" content="LeRobot, RLDS, MCAP/Rerun, HDF5/Zarr, SHA-256 provenance manifests, Edge QA JSON schema, and zero fabricated robot actions.">
+    <meta name="twitter:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <title>Dataset Formats &amp; Provenance — Sverkaus Physical AI Data Lab</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TechArticle",
+          "@id": "https://sverkaus.com/formats#article",
+          "headline": "Robotics Dataset Formats, Batch Provenance & World-Model Readiness (LeRobot, RLDS, MCAP/Rerun, HDF5/Zarr)",
+          "description": "Technical specification covering Sverkaus's supported ML dataset formats, inspectable JSON provenance manifest and Edge QA schemas, SHA-256 episode checksums, camera calibration metadata, subgoal conditioning, and strict separation of human observation streams from measured kinematic data.",
+          "inLanguage": "en",
+          "datePublished": "2026-11-28",
+          "dateModified": "2026-11-28",
+          "author": { "@id": "https://sverkaus.com/#organization" },
+          "publisher": { "@id": "https://sverkaus.com/#organization" },
+          "mainEntityOfPage": "https://sverkaus.com/formats",
+          "about": [
+            "LeRobot Dataset Format",
+            "RLDS Robotics Dataset Format",
+            "MCAP and Rerun Multimodal Playback",
+            "HDF5 and Zarr Robotics Pipelines",
+            "SHA-256 Robotics Dataset Provenance",
+            "World-Model Subgoal Conditioning"
+          ]
+        },
+        {
+          "@type": "Dataset",
+          "@id": "https://sverkaus.com/formats#sample-schema",
+          "name": "Sverkaus Batch Provenance Manifest & Edge QA Reference Schemas (Illustrative JSON)",
+          "description": "Public, machine-readable JSON reference structures showing Sverkaus's batch provenance manifest, stream separation rules (zero fabricated robot actions), camera calibration links, SHA-256 episode integrity checksums, and Edge QA gate metrics (RELEASE/HOLD/REJECT).",
+          "url": "https://sverkaus.com/formats#sample-artifacts",
+          "creator": { "@id": "https://sverkaus.com/#organization" },
+          "isAccessibleForFree": true,
+          "version": "1.2.0",
+          "distribution": [
+            {
+              "@type": "DataDownload",
+              "name": "Sample Batch Provenance Manifest (JSON)",
+              "encodingFormat": "application/json",
+              "contentUrl": "https://sverkaus.com/specs/provenance-manifest.sample.json"
+            },
+            {
+              "@type": "DataDownload",
+              "name": "Sample Edge QA Validation Report (JSON)",
+              "encodingFormat": "application/json",
+              "contentUrl": "https://sverkaus.com/specs/edge-qa-report.sample.json"
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://sverkaus.com/formats#breadcrumbs",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Overview", "item": "https://sverkaus.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Methodology", "item": "https://sverkaus.com/methodology" },
+            { "@type": "ListItem", "position": 3, "name": "Formats & Provenance", "item": "https://sverkaus.com/formats" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://sverkaus.com/formats#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Which robotics ML dataset formats does Sverkaus export?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Sverkaus exports batches in LeRobot (Parquet + MP4), RLDS (TensorFlow/JAX ecosystem), MCAP / Rerun (synchronized multimodal playback and inspection), HDF5 / Zarr (ACT, Diffusion Policy, and custom PyTorch loaders), or buyer-specified custom Parquet + MP4 schemas."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does Sverkaus fabricate synthetic robot joint commands from human video?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Sverkaus strictly separates observation-only human data from physically measured kinematic, UMI gripper, MoCap glove, or force streams, and documents every stream's exact sensor provenance in the batch manifest. Human-to-robot retargeting is kept as a separately validated stage—never silently injected as fake robot commands."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is included inside a Sverkaus batch provenance manifest?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Every delivered batch includes a structured JSON provenance manifest containing hardware/sensor specifications, per-session camera intrinsics and extrinsics, p95 timestamp synchronization metrics, SHA-256 episode integrity checksums, separate recorded/submitted/accepted hour totals, task/subtask hierarchy, failure/recovery flags, Edge QA gate status (RELEASE/HOLD/REJECT), and privacy exclusion/redaction logs."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>document.documentElement.classList.add('intro-done');</script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261128b">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-left">
+            <a href="/" class="brand-link" id="brand-link"><span class="brand-text" id="brand-text">SVERKAUS</span></a>
+            <span class="header-star-slot" id="header-logo-slot" aria-hidden="true"></span>
+        </div>
+
+        <nav class="nav-tabs" aria-label="Main navigation">
+            <a href="/" class="nav-tab" data-tab="overview" id="tab-overview"><span class="tab-label" data-i18n="nav.overview">Overview</span></a>
+            <a href="/methodology" class="nav-tab active" data-tab="specs" id="tab-specs"><span class="tab-label" data-i18n="nav.specs">Specs</span></a>
+            <a href="/partners" class="nav-tab" data-tab="partners" id="tab-partners"><span class="tab-label" data-i18n="nav.partners">Partners</span></a>
+            <a href="/careers" class="nav-tab" data-tab="careers" id="tab-careers"><span class="tab-label" data-i18n="nav.careers">Careers</span></a>
+            <span class="nav-tab-indicator" id="nav-tab-indicator" aria-hidden="true"></span>
+        </nav>
+
+        <div class="header-right">
+            <div class="custom-select" id="custom-lang-select">
+                <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language" id="lang-select-trigger">
+                    <span class="selected-text" id="lang-selected-text">EN</span>
+                </button>
+                <ul class="select-options" role="listbox" aria-label="Language options" id="lang-select-options">
+                    <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0">English</li>
+                    <li class="select-option" data-value="uk" data-short="UA" role="option" tabindex="0">Українська</li>
+                    <li class="select-option" data-value="zh" data-short="中文" role="option" tabindex="0">中文</li>
+                    <li class="select-option" data-value="hi" data-short="हिन्दी" role="option" tabindex="0">हिन्दी</li>
+                    <li class="select-option" data-value="ko" data-short="한국어" role="option" tabindex="0">한국어</li>
+                    <li class="select-option" data-value="de" data-short="DE" role="option" tabindex="0">Deutsch</li>
+                    <li class="select-option" data-value="pl" data-short="PL" role="option" tabindex="0">Polski</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="logo-icon-container logo-dock-carrier" id="logo-dock-carrier" role="button" tabindex="0" aria-label="Return to Sverkaus Overview" title="Sverkaus">
+        <svg class="logo-icon" id="star-svg" viewBox="-180 -180 560 560" shape-rendering="geometricPrecision">
+            <g class="star-root">
+                <g class="star-body">
+                    <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#0f172a" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="10" />
+                </g>
+                <g class="star-eyes">
+                    <ellipse class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#0f172a" />
+                    <g class="star-eye-right-group">
+                        <ellipse class="star-eye star-eye-right" cx="115" cy="100" rx="13" ry="21" fill="#0f172a" />
+                        <path class="star-eye-wink" d="M 106 104 Q 115 90 124 104" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <main class="main-wrapper">
+        <article class="spec-section">
+            <div class="spec-inner">
+                <nav class="spec-breadcrumb" aria-label="Breadcrumb">
+                    <a href="/">Overview</a>
+                    <span>/</span>
+                    <a href="/methodology">Specs</a>
+                    <span>/</span>
+                    <span>Formats &amp; Provenance</span>
+                </nav>
+
+                <header class="spec-header">
+                    <div class="overview-kicker">Technical Specification · 04</div>
+                    <h1 class="spec-h1">Robotics Dataset Formats, Provenance &amp; World-Model Readiness</h1>
+                    <p class="spec-lead">How Sverkaus packages synchronized multi-view video, 3D hand kinematics, UMI/MoCap streams, calibration metadata, SHA-256 episode integrity, and failure/recovery labels for frictionless ingestion into modern ML pipelines.</p>
+                    <div class="spec-meta-row">
+                        <time datetime="2026-11-28" class="spec-updated">Updated November 28, 2026 · Schema v1.2</time>
+                        <span class="spec-meta-sep">·</span>
+                        <a href="/specs/provenance-manifest.sample.json" class="spec-meta-link">provenance-manifest.sample.json</a>
+                        <span class="spec-meta-sep">·</span>
+                        <a href="/specs/edge-qa-report.sample.json" class="spec-meta-link">edge-qa-report.sample.json</a>
+                    </div>
+                    <nav class="spec-nav-strip" aria-label="Technical specifications">
+                        <a href="/methodology" class="spec-nav-pill">Methodology &amp; Edge QA</a>
+                        <a href="/compare" class="spec-nav-pill">Approaches Compared</a>
+                        <a href="/domains" class="spec-nav-pill">Manipulation Domains</a>
+                        <a href="/formats" class="spec-nav-pill active">Formats &amp; World Models</a>
+                        <a href="/privacy" class="spec-nav-pill">Privacy &amp; GDPR</a>
+                    </nav>
+                </header>
+
+                <aside class="answer-box" aria-label="Executive Summary">
+                    <span class="answer-box-label">Direct Summary</span>
+                    <p>Sverkaus delivers two clearly delineated ML-ready product tiers—<strong>Video-Only ML-Ready Datasets</strong> (Real2Sim, VLM/world-model pre-training) and <strong>Action/Kinematic-Labeled Multimodal Datasets</strong>—exported in <strong>LeRobot, RLDS, MCAP / Rerun, HDF5 / Zarr, or custom Parquet + MP4</strong>. Every batch ships with a signed provenance manifest, SHA-256 episode checksums, per-session camera intrinsics/extrinsics, synced base + wrist subgoals, and <strong>zero fabricated robot actions</strong>.</p>
+                </aside>
+
+                <section class="overview-block" id="format-matrix">
+                    <div class="overview-kicker">01 · Supported Export Schemas</div>
+                    <h2 class="overview-heading">Drop-In Compatibility with Modern Robotics Pipelines.</h2>
+                    <div class="geo-table-wrap">
+                        <table class="geo-table">
+                            <thead>
+                                <tr>
+                                    <th>Format</th>
+                                    <th>Storage Layout</th>
+                                    <th>Target Frameworks &amp; Workflows</th>
+                                    <th>Best Used For</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>LeRobot</td>
+                                    <td>Parquet tables + synchronized MP4 streams + JSON metadata</td>
+                                    <td>Hugging Face LeRobot, PyTorch VLA / ACT / Diffusion loaders</td>
+                                    <td>Rapid policy fine-tuning &amp; open-ecosystem training</td>
+                                </tr>
+                                <tr>
+                                    <td>RLDS</td>
+                                    <td>TFRecord / Episode-step structured datasets</td>
+                                    <td>Open X-Embodiment, JAX / TensorFlow VLA pipelines</td>
+                                    <td>Large-scale multi-embodiment VLA pre-training &amp; co-training</td>
+                                </tr>
+                                <tr>
+                                    <td>MCAP / Rerun</td>
+                                    <td>Time-indexed multimodal container + Rerun <code>.rrd</code> visualization</td>
+                                    <td>ROS 2, Rerun SDK, Foxglove, multimodal QA inspection</td>
+                                    <td>Visual debugging of synced cameras, 3D skeletons, force &amp; thermal (note: Rerun complements rather than replaces a training format)</td>
+                                </tr>
+                                <tr>
+                                    <td>HDF5 / Zarr</td>
+                                    <td>Chunked N-dimensional arrays + compressed frames</td>
+                                    <td>Diffusion Policy, UMI pipelines, custom PyTorch / JAX loops</td>
+                                    <td>High-throughput sequential GPU training &amp; UMI workflows</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="provenance-integrity">
+                    <div class="overview-kicker">02 · Data Integrity &amp; Provenance</div>
+                    <h2 class="overview-heading">Clean Stream Separation &amp; World-Model Conditioning.</h2>
+                    <div class="spec-grid-2">
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Integrity Rule 01</span>
+                            <h3 class="spec-item-title">Zero Fabricated Robot Actions</h3>
+                            <p class="spec-item-body">Observation-only human video and physically measured kinematic/action streams (3D hand joints, UMI aperture/pose, MoCap glove angles, contact force) are stored in separate, explicitly typed channels. Human-to-robot retargeting is never silently hallucinated into the raw export.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Integrity Rule 02</span>
+                            <h3 class="spec-item-title">World-Model &amp; Subgoal Conditioning</h3>
+                            <p class="spec-item-body">Synchronized base + wrist camera frames paired with structured subtask boundaries (approach, grasp, slip, recovery, completion) allow a single batch to train both action policies and video/world models conditioned on visual subgoals.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Integrity Rule 03</span>
+                            <h3 class="spec-item-title">Calibration, Units &amp; SHA-256 Chain</h3>
+                            <p class="spec-item-body">Every batch manifest documents camera intrinsics/extrinsics, coordinate frames, force/pose units, p95 sync drift, known limitations, and per-episode SHA-256 checksums for verifiable chain-of-custody.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Integrity Rule 04</span>
+                            <h3 class="spec-item-title">Separate Recorded vs. Accepted Accounting</h3>
+                            <p class="spec-item-body">Recorded, submitted, and accepted hours are logged in distinct fields alongside Edge QA statuses (<code>RELEASE</code>, <code>HOLD</code>, <code>REJECT</code>), consent references, and privacy exclusion/redaction logs.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="sample-artifacts">
+                    <div class="overview-kicker">03 · Inspectable Machine-Readable Schemas</div>
+                    <h2 class="overview-heading">Illustrative Provenance Manifest &amp; Edge QA JSON.</h2>
+                    <div class="spec-prose">
+                        <p>Below is an illustrative excerpt of the exact JSON metadata contract Sverkaus delivers alongside each batch (actual channels and thresholds are locked to each buyer's specification). Download the complete machine-readable reference files: <a href="/specs/provenance-manifest.sample.json" class="bold-link">provenance-manifest.sample.json</a> and <a href="/specs/edge-qa-report.sample.json" class="bold-link">edge-qa-report.sample.json</a>.</p>
+                    </div>
+                    <pre class="spec-code"><code>{
+  "schema_version": "1.2.0",
+  "batch_id": "SVK-SAMPLE-2026-001",
+  "accounting": {
+    "recorded_hours": 14.5, "submitted_hours": 11.2, "accepted_hours": 10.0,
+    "episodes_released": 150, "episodes_held": 12, "episodes_rejected": 20,
+    "failure_and_recovery_episodes_included": 28
+  },
+  "streams_and_integrity": {
+    "fabricated_robot_actions": false,
+    "episode_checksum_algorithm": "SHA-256",
+    "modalities": ["obs.images.ego_stereo", "obs.images.wrist_left", "obs.images.wrist_right", "measured.hand_pose_3d", "measured.imu_wrist_lr"]
+  },
+  "governance_and_privacy": {
+    "site_security_clearance_status": "GO",
+    "scoped_fov_enforced": true, "audio_recorded": false, "corporate_it_network_connection": false,
+    "gdpr_and_eu_ai_act_aligned": true
+  }
+}</code></pre>
+                </section>
+
+                <section class="overview-block" id="faq">
+                    <div class="overview-kicker">04 · Format FAQ</div>
+                    <h2 class="overview-heading">Pipeline &amp; Schema Questions.</h2>
+                    <div class="geo-faq-list">
+                        <details class="geo-faq-item" open>
+                            <summary>Which robotics ML dataset formats does Sverkaus export?</summary>
+                            <div class="geo-faq-answer">Sverkaus exports batches in <strong>LeRobot</strong> (Parquet + MP4), <strong>RLDS</strong> (TensorFlow/JAX ecosystem), <strong>MCAP / Rerun</strong> (synchronized multimodal playback and inspection), <strong>HDF5 / Zarr</strong> (ACT, Diffusion Policy, and custom PyTorch loaders), or buyer-specified custom Parquet + MP4 schemas.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>Does Sverkaus fabricate synthetic robot joint commands from human video?</summary>
+                            <div class="geo-faq-answer">No. Sverkaus strictly separates observation-only human data from physically measured kinematic, UMI gripper, MoCap glove, or force streams, and documents every stream's exact sensor provenance in the batch manifest. Human-to-robot retargeting is kept as a separately validated stage—never silently injected as fake robot commands.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>What is included inside a Sverkaus batch provenance manifest?</summary>
+                            <div class="geo-faq-answer">Every delivered batch includes a structured JSON provenance manifest containing hardware/sensor specifications, per-session camera intrinsics and extrinsics, p95 timestamp synchronization metrics, SHA-256 episode integrity checksums, separate recorded/submitted/accepted hour totals, task/subtask hierarchy, failure/recovery flags, Edge QA gate status (<strong>RELEASE</strong>/<strong>HOLD</strong>/<strong>REJECT</strong>), and privacy exclusion/redaction logs.</div>
+                        </details>
+                    </div>
+                </section>
+
+                <div class="contact-inline">
+                    <a href="/#contact" class="pill-btn primary">Request Schema Sample</a>
+                    <a href="/privacy" class="section-more-link">Next: Privacy, EU AI Act &amp; GDPR Governance →</a>
+                    <a href="mailto:gleb@sverkaus.com?subject=Dataset%20Schema%20Inquiry%20-%20Sverkaus" class="bold-link">gleb@sverkaus.com</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-legal">
+                <a href="/" data-i18n="nav.overview">Overview</a>
+                <span class="footer-dot">·</span>
+                <a href="/methodology" data-i18n="nav.specs">Specs</a>
+                <span class="footer-dot">·</span>
+                <a href="/partners" data-i18n="nav.partners">Partners</a>
+                <span class="footer-dot">·</span>
+                <a href="/careers" data-i18n="nav.careers">Careers</a>
+                <span class="footer-dot">·</span>
+                <a href="mailto:gleb@sverkaus.com">gleb@sverkaus.com</a>
+            </div>
+            <div class="footer-specs-row">
+                <a href="/methodology">Methodology</a>
+                <span class="footer-dot">·</span>
+                <a href="/compare">Compare</a>
+                <span class="footer-dot">·</span>
+                <a href="/domains">Domains</a>
+                <span class="footer-dot">·</span>
+                <a href="/formats">Formats</a>
+                <span class="footer-dot">·</span>
+                <a href="/privacy">Privacy &amp; GDPR</a>
+                <span class="footer-dot">·</span>
+                <a href="/de">DE</a>
+                <span class="footer-dot">·</span>
+                <a href="/pl">PL</a>
+                <span class="footer-dot">·</span>
+                <a href="/uk">UA</a>
+                <span class="footer-dot">·</span>
+                <a href="/zh">中文</a>
+                <span class="footer-dot">·</span>
+                <a href="/ko">한국어</a>
+                <span class="footer-dot">·</span>
+                <a href="/llms.txt">llms.txt</a>
+            </div>
+            <p class="footer-trading-note">Sverkaus Physical AI Data Lab</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/site.js?v=20261128c"></script>
+</body>
+</html>

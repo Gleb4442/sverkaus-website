@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="description" content="Applied robotics manipulation domains captured by Sverkaus: deformable garments & laundries, electronics/cable/precision repair workshops, commercial kitchens & LWIR thermal workflows, skilled construction trades (drywall, plumbing, electrical, tiling), and 3PL warehouses.">
+    <link rel="canonical" href="https://sverkaus.com/domains">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Sverkaus LLM Context">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Sverkaus Full Technical Context">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sverkaus.com/domains">
+    <meta property="og:title" content="Physical Manipulation Domains & Sensor Mapping — Sverkaus">
+    <meta property="og:description" content="Domain-to-sensor mapping for deformables, cable/electronics assembly, commercial kitchens (LWIR), skilled trades (drywall, plumbing, electrical), and 3PL warehouses.">
+    <meta property="og:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Physical Manipulation Domains & Sensor Mapping — Sverkaus">
+    <meta name="twitter:description" content="Laundries, electronics & precision workshops, commercial kitchens, skilled trades, 3PL warehouses, and custom verticals on live shifts.">
+    <meta name="twitter:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <title>Manipulation Domains &amp; Sensor Mapping — Sverkaus Physical AI Data Lab</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TechArticle",
+          "@id": "https://sverkaus.com/domains#article",
+          "headline": "Hard Physical Manipulation Domains & Sensor Mapping for Robotics Datasets",
+          "description": "Domain-by-domain engineering guide mapping real-world manipulation bottlenecks—deformable textiles, cable/electronics/precision repair, commercial kitchen thermal/liquid workflows, skilled construction/maintenance trades, and 3PL warehouse fulfillment—to camera views, 3D hand tracking, tactile/sEMG sensors, LWIR thermal, and Edge QA criteria.",
+          "inLanguage": "en",
+          "datePublished": "2026-11-28",
+          "dateModified": "2026-11-28",
+          "author": { "@id": "https://sverkaus.com/#organization" },
+          "publisher": { "@id": "https://sverkaus.com/#organization" },
+          "mainEntityOfPage": "https://sverkaus.com/domains",
+          "about": [
+            "Deformable Object Manipulation Datasets",
+            "Cable Routing and Electronics Assembly Robotics",
+            "Commercial Kitchen Robotics and Thermal LWIR Data",
+            "Skilled Trades and Construction Finishing Robotics Data",
+            "3PL Warehouse Picking and Packing Manipulation"
+          ],
+          "citation": [
+            {
+              "@type": "ScholarlyArticle",
+              "name": "FeelTheForce: Contact-Rich Tactile and Force Sensing for Dexterous Manipulation",
+              "url": "https://arxiv.org/abs/2506.01944"
+            },
+            {
+              "@type": "ScholarlyArticle",
+              "name": "Data Scaling Laws in Imitation Learning for Robotic Manipulation",
+              "url": "https://arxiv.org/abs/2410.18647"
+            }
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://sverkaus.com/domains#breadcrumbs",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Overview", "item": "https://sverkaus.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Methodology", "item": "https://sverkaus.com/methodology" },
+            { "@type": "ListItem", "position": 3, "name": "Manipulation Domains", "item": "https://sverkaus.com/domains" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://sverkaus.com/domains#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Why are deformable objects like garments, linen, and flexible packaging so difficult for robotics models?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Deformable materials have near-infinite state spaces, self-occlude during bimanual folding, and behave unpredictably under friction or static cling. Capturing live laundry and soft-goods shifts with synchronized left/right wrist cameras, 3D hand kinematics, and preserved snag/recovery trajectories gives models the exact contact cues that simulators struggle to reproduce."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "When does Sverkaus add an LWIR thermal / IR layer or tactile/sEMG sensors to a capture rig?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Optional LWIR thermal imaging is added for tasks involving heat transfer, hot cookware, commercial kitchen prep, soldering, liquid pouring, or reflective/transparent surfaces (glass, stainless steel, clear containers) where standard RGB fails. Tactile/force gloves or sEMG are added when contact pressure, surface compliance, or insertion friction cannot be inferred from video alone (as demonstrated in FeelTheForce, arXiv:2506.01944)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can Sverkaus source skilled trades and custom industrial verticals beyond standard lab benchmarks?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Sverkaus operates a specification-driven sourcing model. Alongside laundries, electronics/precision repair workshops, commercial kitchens, and 3PL warehouses, we qualify and clear skilled trades and light-manufacturing workflows—including drywall and surface finishing, tiling, plumbing/HVAC/electrical assembly, wire harnesses, and hospitality operations—in Ukraine, Germany, Poland, and additional regions per project."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>document.documentElement.classList.add('intro-done');</script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261128b">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-left">
+            <a href="/" class="brand-link" id="brand-link"><span class="brand-text" id="brand-text">SVERKAUS</span></a>
+            <span class="header-star-slot" id="header-logo-slot" aria-hidden="true"></span>
+        </div>
+
+        <nav class="nav-tabs" aria-label="Main navigation">
+            <a href="/" class="nav-tab" data-tab="overview" id="tab-overview"><span class="tab-label" data-i18n="nav.overview">Overview</span></a>
+            <a href="/methodology" class="nav-tab active" data-tab="specs" id="tab-specs"><span class="tab-label" data-i18n="nav.specs">Specs</span></a>
+            <a href="/partners" class="nav-tab" data-tab="partners" id="tab-partners"><span class="tab-label" data-i18n="nav.partners">Partners</span></a>
+            <a href="/careers" class="nav-tab" data-tab="careers" id="tab-careers"><span class="tab-label" data-i18n="nav.careers">Careers</span></a>
+            <span class="nav-tab-indicator" id="nav-tab-indicator" aria-hidden="true"></span>
+        </nav>
+
+        <div class="header-right">
+            <div class="custom-select" id="custom-lang-select">
+                <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="Select language" id="lang-select-trigger">
+                    <span class="selected-text" id="lang-selected-text">EN</span>
+                </button>
+                <ul class="select-options" role="listbox" aria-label="Language options" id="lang-select-options">
+                    <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0">English</li>
+                    <li class="select-option" data-value="uk" data-short="UA" role="option" tabindex="0">Українська</li>
+                    <li class="select-option" data-value="zh" data-short="中文" role="option" tabindex="0">中文</li>
+                    <li class="select-option" data-value="hi" data-short="हिन्दी" role="option" tabindex="0">हिन्दी</li>
+                    <li class="select-option" data-value="ko" data-short="한국어" role="option" tabindex="0">한국어</li>
+                    <li class="select-option" data-value="de" data-short="DE" role="option" tabindex="0">Deutsch</li>
+                    <li class="select-option" data-value="pl" data-short="PL" role="option" tabindex="0">Polski</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="logo-icon-container logo-dock-carrier" id="logo-dock-carrier" role="button" tabindex="0" aria-label="Return to Sverkaus Overview" title="Sverkaus">
+        <svg class="logo-icon" id="star-svg" viewBox="-180 -180 560 560" shape-rendering="geometricPrecision">
+            <g class="star-root">
+                <g class="star-body">
+                    <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#0f172a" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="10" />
+                </g>
+                <g class="star-eyes">
+                    <ellipse class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#0f172a" />
+                    <g class="star-eye-right-group">
+                        <ellipse class="star-eye star-eye-right" cx="115" cy="100" rx="13" ry="21" fill="#0f172a" />
+                        <path class="star-eye-wink" d="M 106 104 Q 115 90 124 104" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <main class="main-wrapper">
+        <article class="spec-section">
+            <div class="spec-inner">
+                <nav class="spec-breadcrumb" aria-label="Breadcrumb">
+                    <a href="/">Overview</a>
+                    <span>/</span>
+                    <a href="/methodology">Specs</a>
+                    <span>/</span>
+                    <span>Manipulation Domains</span>
+                </nav>
+
+                <header class="spec-header">
+                    <div class="overview-kicker">Technical Specification · 03</div>
+                    <h1 class="spec-h1">Hard Physical Manipulation Domains &amp; Sensor Mapping</h1>
+                    <p class="spec-lead">How Sverkaus maps complex real-world physical bottlenecks—deformable fabrics, cables, precision repair, commercial kitchens, skilled construction trades, and 3PL logistics—to calibrated capture stacks and Edge QA criteria.</p>
+                    <div class="spec-meta-row">
+                        <time datetime="2026-11-28" class="spec-updated">Updated November 28, 2026 · Domain Spec v1.2</time>
+                    </div>
+                    <nav class="spec-nav-strip" aria-label="Technical specifications">
+                        <a href="/methodology" class="spec-nav-pill">Methodology &amp; Edge QA</a>
+                        <a href="/compare" class="spec-nav-pill">Approaches Compared</a>
+                        <a href="/domains" class="spec-nav-pill active">Manipulation Domains</a>
+                        <a href="/formats" class="spec-nav-pill">Formats &amp; World Models</a>
+                        <a href="/privacy" class="spec-nav-pill">Privacy &amp; GDPR</a>
+                    </nav>
+                </header>
+
+                <aside class="answer-box" aria-label="Executive Summary">
+                    <span class="answer-box-label">Direct Summary</span>
+                    <p>Standard robotics benchmarks over-index on rigid tabletop pick-and-place while under-representing the physical phenomena that break real deployments: <strong>deformable textiles, flexible cables, tiny fasteners, liquids, specular reflections, thermal state changes, and skilled trade tool forces</strong>. Sverkaus maps each domain directly to the minimum-sufficient calibrated sensor suite (Track A/B/C), preserves natural errors and recoveries where safe, and never asks workers to stage hazardous failures.</p>
+                </aside>
+
+                <section class="overview-block" id="domain-sensor-matrix">
+                    <div class="overview-kicker">01 · Domain-to-Sensor Engineering Matrix</div>
+                    <h2 class="overview-heading">Active Workplace Domains &amp; Required Modalities.</h2>
+                    <div class="geo-table-wrap">
+                        <table class="geo-table">
+                            <thead>
+                                <tr>
+                                    <th>Workplace Domain</th>
+                                    <th>Target Manipulation Tasks</th>
+                                    <th>Core Physical Bottleneck</th>
+                                    <th>Recommended Sverkaus Stack</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Laundries &amp; Soft Goods</td>
+                                    <td>Garment sorting, bimanual unfolding, linen folding, polybag/flexible packaging</td>
+                                    <td>Infinite deformable state space, self-occlusion, static cling, fabric snagging</td>
+                                    <td>Dual synchronized L/R wrist RGB + ego stereo + 3D hand pose + snag/recovery labels</td>
+                                </tr>
+                                <tr>
+                                    <td>Workshops, Electronics &amp; Precision Repair</td>
+                                    <td>Wire-harness routing, small connector mating, device/PCB repair, bench tooling, fine metalwork</td>
+                                    <td>Tight contact tolerances, cable buckling, insertion force invisible to RGB (<a href="https://arxiv.org/abs/2506.01944" target="_blank" rel="noopener" class="cite-link">arXiv:2506.01944</a>)</td>
+                                    <td>High-res wrist + overhead bench view + 3D finger kinematics / MoCap gloves + tactile/force or sEMG</td>
+                                </tr>
+                                <tr>
+                                    <td>Commercial &amp; Dark Kitchens / HoReCa</td>
+                                    <td>Ingredient prep, slicing, portioning, liquid pouring, hot pan handling, plating &amp; hospitality turnover</td>
+                                    <td>Liquids, steam, glare on stainless steel/glass, invisible heat transfer, wet grip slip</td>
+                                    <td>Ego + L/R wrist RGB + optional <strong>LWIR Thermal / IR</strong> layer + fluid/heat boundary labels</td>
+                                </tr>
+                                <tr>
+                                    <td>Skilled Trades &amp; Construction Finishing</td>
+                                    <td>Drywall taping &amp; edge finishing, tiling, plumbing fittings, HVAC/electrical installation, auto repair</td>
+                                    <td>Continuous surface compliance, hand-tool force modulation, uneven real-world surfaces &amp; dust</td>
+                                    <td>Stereo ego + dual wrist RGB + IMU + tactile/sEMG (Track B) or client BYO wearable rig (Track C)</td>
+                                </tr>
+                                <tr>
+                                    <td>3PL Warehouses &amp; Fulfillment</td>
+                                    <td>Bin picking, mixed-SKU sorting, cardboard insert/box packing, taping, deformable parcel handling</td>
+                                    <td>Cluttered dense bins, jam/misalignment recovery, variable parcel weight &amp; friction</td>
+                                    <td>Portable UMI-style gripper or stereo + wrist stack + failure/jam recovery annotations</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="domain-deep-dives">
+                    <div class="overview-kicker">02 · Why Live Shifts Beat Staged Studios</div>
+                    <h2 class="overview-heading">Capturing Real Failure Modes Safely.</h2>
+                    <div class="spec-grid-2">
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Skilled Labor Realism</span>
+                            <h3 class="spec-item-title">Experienced Professionals, Not Lab Volunteers</h3>
+                            <p class="spec-item-body">A trained seamstress, line cook, drywall finisher, or electronics technician uses micro-adjustments, bimanual bracing, and compliant wrist torques that untrained studio volunteers never exhibit.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Beyond-RGB Sensing</span>
+                            <h3 class="spec-item-title">Thermal (LWIR), Tactile &amp; sEMG When Required</h3>
+                            <p class="spec-item-body">When RGB fails—hot cookware, transparent vessels, reflective steel, or tight connector seating—we layer calibrated LWIR thermal, fingertip force, or sEMG channels strictly matched to the buyer's model input.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Safety-First Recovery Data</span>
+                            <h3 class="spec-item-title">Natural Recoveries, Zero Staged Hazards</h3>
+                            <p class="spec-item-body">Real shifts naturally produce cardboard jams, torn tape edges, fabric folds catching, or dropped fasteners. We annotate these organic recovery sequences without ever instructing workers to create unsafe mistakes.</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">Custom Vertical Sourcing</span>
+                            <h3 class="spec-item-title">Specification-Driven Site Qualification</h3>
+                            <p class="spec-item-body">Each workplace is qualified per project across Ukraine (operating base), Germany, Poland, and additional regions on request—confirming access, safety, duty cycle, and acceptance yield before production.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="faq">
+                    <div class="overview-kicker">03 · Domain FAQ</div>
+                    <h2 class="overview-heading">Modality &amp; Sourcing Questions.</h2>
+                    <div class="geo-faq-list">
+                        <details class="geo-faq-item" open>
+                            <summary>Why are deformable objects like garments, linen, and flexible packaging so difficult for robotics models?</summary>
+                            <div class="geo-faq-answer">Deformable materials have near-infinite state spaces, self-occlude during bimanual folding, and behave unpredictably under friction or static cling. Capturing live laundry and soft-goods shifts with synchronized left/right wrist cameras, 3D hand kinematics, and preserved snag/recovery trajectories gives models the exact contact cues that simulators struggle to reproduce.</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>When does Sverkaus add an LWIR thermal / IR layer or tactile/sEMG sensors to a capture rig?</summary>
+                            <div class="geo-faq-answer">Optional LWIR thermal imaging is added for tasks involving heat transfer, hot cookware, commercial kitchen prep, soldering, liquid pouring, or reflective/transparent surfaces (glass, stainless steel, clear containers) where standard RGB fails. Tactile/force gloves or sEMG are added when contact pressure, surface compliance, or insertion friction cannot be inferred from video alone (as demonstrated in FeelTheForce, <a href="https://arxiv.org/abs/2506.01944" target="_blank" rel="noopener">arXiv:2506.01944</a>).</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>Can Sverkaus source skilled trades and custom industrial verticals beyond standard lab benchmarks?</summary>
+                            <div class="geo-faq-answer">Yes. Sverkaus operates a specification-driven sourcing model. Alongside laundries, electronics/precision repair workshops, commercial kitchens, and 3PL warehouses, we qualify and clear skilled trades and light-manufacturing workflows—including drywall and surface finishing, tiling, plumbing/HVAC/electrical assembly, wire harnesses, and hospitality operations—in Ukraine, Germany, Poland, and additional regions per project.</div>
+                        </details>
+                    </div>
+                </section>
+
+                <div class="contact-inline">
+                    <a href="/#contact" class="pill-btn primary">Request a Domain Pilot</a>
+                    <a href="/formats" class="section-more-link">Next: Dataset Formats &amp; Provenance →</a>
+                    <a href="mailto:gleb@sverkaus.com?subject=Domain%20Capture%20Inquiry%20-%20Sverkaus" class="bold-link">gleb@sverkaus.com</a>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-legal">
+                <a href="/" data-i18n="nav.overview">Overview</a>
+                <span class="footer-dot">·</span>
+                <a href="/methodology" data-i18n="nav.specs">Specs</a>
+                <span class="footer-dot">·</span>
+                <a href="/partners" data-i18n="nav.partners">Partners</a>
+                <span class="footer-dot">·</span>
+                <a href="/careers" data-i18n="nav.careers">Careers</a>
+                <span class="footer-dot">·</span>
+                <a href="mailto:gleb@sverkaus.com">gleb@sverkaus.com</a>
+            </div>
+            <div class="footer-specs-row">
+                <a href="/methodology">Methodology</a>
+                <span class="footer-dot">·</span>
+                <a href="/compare">Compare</a>
+                <span class="footer-dot">·</span>
+                <a href="/domains">Domains</a>
+                <span class="footer-dot">·</span>
+                <a href="/formats">Formats</a>
+                <span class="footer-dot">·</span>
+                <a href="/privacy">Privacy &amp; GDPR</a>
+                <span class="footer-dot">·</span>
+                <a href="/de">DE</a>
+                <span class="footer-dot">·</span>
+                <a href="/pl">PL</a>
+                <span class="footer-dot">·</span>
+                <a href="/uk">UA</a>
+                <span class="footer-dot">·</span>
+                <a href="/zh">中文</a>
+                <span class="footer-dot">·</span>
+                <a href="/ko">한국어</a>
+                <span class="footer-dot">·</span>
+                <a href="/llms.txt">llms.txt</a>
+            </div>
+            <p class="footer-trading-note">Sverkaus Physical AI Data Lab</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/site.js?v=20261128c"></script>
+</body>
+</html>

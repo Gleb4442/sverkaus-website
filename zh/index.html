@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh" data-static-lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="description" content="Sverkaus Physical AI 数据实验室：面向机器人团队的按规格定制物理交互数据运营集成商。在真实欧洲及乌克兰商业作业现场部署腕部同步相机、3D 手部追踪、UMI、触觉/sEMG、可选 LWIR 热成像与边缘质检（Edge QA），支持 LeRobot、RLDS、MCAP 与 HDF5/Zarr 导出。">
+    <link rel="canonical" href="https://sverkaus.com/zh">
+    <link rel="alternate" hreflang="en" href="https://sverkaus.com/">
+    <link rel="alternate" hreflang="de" href="https://sverkaus.com/de">
+    <link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl">
+    <link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk">
+    <link rel="alternate" hreflang="zh" href="https://sverkaus.com/zh">
+    <link rel="alternate" hreflang="ko" href="https://sverkaus.com/ko">
+    <link rel="alternate" hreflang="x-default" href="https://sverkaus.com/">
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="Sverkaus LLM Context">
+    <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Sverkaus Full Technical Context">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sverkaus.com/zh">
+    <meta property="og:title" content="Sverkaus — Physical AI 数据实验室（真实作业现场机器人数据采集）">
+    <meta property="og:description" content="按技术规格在真实商业现场采集多模态操作数据：腕部相机、3D 手部运动学、UMI、触觉/sEMG、失误与恢复轨迹、边缘质检与 GDPR 合规。">
+    <meta property="og:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sverkaus — Physical AI 数据实验室">
+    <meta name="twitter:description" content="真实作业现场的多模态机器人训练数据采集、边缘质检（Edge QA）与 LeRobot/RLDS/MCAP 导出。">
+    <meta name="twitter:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <title>Sverkaus — Physical AI 数据实验室（真实作业现场机器人操作数据）</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://sverkaus.com/zh#webpage",
+          "url": "https://sverkaus.com/zh",
+          "name": "Sverkaus — Physical AI 数据实验室",
+          "inLanguage": "zh",
+          "datePublished": "2026-11-28",
+          "dateModified": "2026-11-28",
+          "isPartOf": { "@id": "https://sverkaus.com/#website" },
+          "about": { "@id": "https://sverkaus.com/#organization" }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://sverkaus.com/zh#breadcrumbs",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Sverkaus", "item": "https://sverkaus.com/" },
+            { "@type": "ListItem", "position": 2, "name": "中文概览", "item": "https://sverkaus.com/zh" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://sverkaus.com/zh#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Sverkaus 与普通众包第一视角（POV）视频平台或实验室遥操有何本质区别？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "普通众包视频缺乏同步腕部视角、相机标定与触觉力反馈；而实验室遥操难以部署到数十个真实商用后厨、洗衣房或车间。Sverkaus 按客户技术规格直接嵌入真实商业与工业班次，提供腕部同步+双目+3D手部追踪+UMI/触觉/sEMG/可选 LWIR 热成像（并支持客户自带 BYO 硬件），现场执行边缘质检（RELEASE/HOLD/REJECT），保留真实打滑与人工恢复轨迹，且绝不伪造机器人动作标签。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Sverkaus 支持哪些机器人数据导出格式与质量验证标准？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "支持 LeRobot（Parquet + MP4）、RLDS、MCAP / Rerun、HDF5 / Zarr 及客户定制 Parquet + MP4 架构。每个交付批次均附带 JSON 溯源清单、SHA-256 片段校验和、相机内外参标定、跨流时间同步漂移指标（p95 Δt），并将录制时长、提交时长与验收合格时长严格分开核算。"
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "中国或国际具身智能与人形机器人团队如何启动 Sverkaus 欧洲/乌克兰现场试点？",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "试点分三步推进：（1）技术规格对齐（锁定任务瓶颈、机器人构型、Track A/B/C 或 BYO 硬件、导出格式与验收门槛）；（2）场地安全审查（GO）与 10–20 分钟现场校准测试（验证手部可见性、同步漂移与格式导入）；（3）多场地真实班次批量交付并结合模型评测反馈进入迭代闭环。"
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>document.documentElement.classList.add('intro-done');</script>
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261128b">
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-left">
+            <a href="/zh" class="brand-link" id="brand-link"><span class="brand-text" id="brand-text">SVERKAUS</span></a>
+            <span class="header-star-slot" id="header-logo-slot" aria-hidden="true"></span>
+        </div>
+
+        <nav class="nav-tabs" aria-label="主导航">
+            <a href="/zh" class="nav-tab active" data-tab="overview" id="tab-overview"><span class="tab-label">概览</span></a>
+            <a href="/methodology" class="nav-tab" data-tab="specs" id="tab-specs"><span class="tab-label">技术规格</span></a>
+            <a href="/partners" class="nav-tab" data-tab="partners" id="tab-partners"><span class="tab-label">场地合作</span></a>
+            <a href="/careers" class="nav-tab" data-tab="careers" id="tab-careers"><span class="tab-label">招聘</span></a>
+            <span class="nav-tab-indicator" id="nav-tab-indicator" aria-hidden="true"></span>
+        </nav>
+
+        <div class="header-right">
+            <div class="custom-select" id="custom-lang-select">
+                <button class="select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="选择语言" id="lang-select-trigger">
+                    <span class="selected-text" id="lang-selected-text">中文</span>
+                </button>
+                <ul class="select-options" role="listbox" aria-label="语言选项" id="lang-select-options">
+                    <li class="select-option" data-value="en" data-short="EN" role="option" tabindex="0">English</li>
+                    <li class="select-option" data-value="uk" data-short="UA" role="option" tabindex="0">Українська</li>
+                    <li class="select-option selected" data-value="zh" data-short="中文" role="option" aria-selected="true" tabindex="0">中文</li>
+                    <li class="select-option" data-value="hi" data-short="हिन्दी" role="option" tabindex="0">हिन्दी</li>
+                    <li class="select-option" data-value="ko" data-short="한국어" role="option" tabindex="0">한국어</li>
+                    <li class="select-option" data-value="de" data-short="DE" role="option" tabindex="0">Deutsch</li>
+                    <li class="select-option" data-value="pl" data-short="PL" role="option" tabindex="0">Polski</li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="logo-icon-container logo-dock-carrier" id="logo-dock-carrier" role="button" tabindex="0" aria-label="返回 Sverkaus 概览" title="Sverkaus">
+        <svg class="logo-icon" id="star-svg" viewBox="-180 -180 560 560" shape-rendering="geometricPrecision">
+            <g class="star-root">
+                <g class="star-body">
+                    <polygon points="100.0,-10.0 124.9,39.9 177.8,22.2 160.1,75.1 210.0,100.0 160.1,124.9 177.8,177.8 124.9,160.1 100.0,210.0 75.1,160.1 22.2,177.8 39.9,124.9 -10.0,100.0 39.9,75.1 22.2,22.2 75.1,39.9" fill="none" stroke="#0f172a" stroke-width="15" stroke-linejoin="miter" stroke-miterlimit="10" />
+                </g>
+                <g class="star-eyes">
+                    <ellipse class="star-eye star-eye-left" cx="85" cy="100" rx="13" ry="21" fill="#0f172a" />
+                    <g class="star-eye-right-group">
+                        <ellipse class="star-eye star-eye-right" cx="115" cy="100" rx="13" ry="21" fill="#0f172a" />
+                        <path class="star-eye-wink" d="M 106 104 Q 115 90 124 104" fill="none" stroke="#0f172a" stroke-width="7" stroke-linecap="round" />
+                    </g>
+                </g>
+            </g>
+        </svg>
+    </div>
+
+    <main class="main-wrapper">
+        <article class="spec-section">
+            <div class="spec-inner">
+                <header class="spec-header">
+                    <div class="overview-kicker">Sverkaus Physical AI 数据实验室 · 中文概览</div>
+                    <h1 class="spec-h1">面向 VLA 与具身智能的真实作业现场操作数据生产</h1>
+                    <p class="spec-lead">Sverkaus 是一家按技术规格定制（Specification-Driven）的物理数据运营集成商。我们不售卖廉价通用视频库存，而是直接嵌入乌克兰、德国、波兰等真实商业与工业班次，为人形机器人、灵巧手与世界模型团队交付经过边缘质检（Edge QA）验证的多模态操作数据集。</p>
+                    <div class="spec-meta-row">
+                        <time datetime="2026-11-28" class="spec-updated">更新于 2026年11月28日</time>
+                        <span class="spec-meta-sep">·</span>
+                        <a href="/specs/provenance-manifest.sample.json" class="spec-meta-link">溯源清单 JSON 示例</a>
+                        <span class="spec-meta-sep">·</span>
+                        <a href="/specs/edge-qa-report.sample.json" class="spec-meta-link">边缘质检报告示例</a>
+                    </div>
+                    <nav class="spec-nav-strip" aria-label="技术文档">
+                        <a href="/methodology" class="spec-nav-pill">采集方法与 Edge QA (EN)</a>
+                        <a href="/compare" class="spec-nav-pill">方案与供应商对比 (EN)</a>
+                        <a href="/domains" class="spec-nav-pill">作业场景与传感器 (EN)</a>
+                        <a href="/formats" class="spec-nav-pill">LeRobot / RLDS 格式 (EN)</a>
+                        <a href="/privacy" class="spec-nav-pill">GDPR 与隐私合规 (EN)</a>
+                    </nav>
+                </header>
+
+                <aside class="answer-box" aria-label="核心摘要">
+                    <span class="answer-box-label">核心定位</span>
+                    <p><strong>为什么选择 Sverkaus？</strong> 实验室单场景数据约在 ~50 条演示后进入平台期（arXiv:2410.18647），普通头戴 POV 视频缺乏手部接触与力反馈。Sverkaus 提供 <strong>Track A（视觉/双目/腕部同步）</strong>、<strong>Track B（3D 手部/动捕手套/触觉力传感/sEMG/可选 LWIR 热成像）</strong> 与 <strong>Track C（UMI/外骨骼/客户自带 BYO 硬件）</strong>，通过现场 <strong>10–20 分钟校准测试</strong> 与 <strong>Edge QA（RELEASE/HOLD/REJECT）</strong>，按“验收合格小时（Cost per Accepted Hour）”透明核算，并将真实失误与人工恢复轨迹完整保留。</p>
+                </aside>
+
+                <section class="overview-block">
+                    <div class="overview-kicker">01 · 核心采集栈与适用场景</div>
+                    <h2 class="overview-heading">专为高难度真实物理操作与策略迁移打造。</h2>
+                    <div class="spec-grid-2">
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">多模态采集 · Track A/B/C</span>
+                            <h3 class="spec-item-title">腕部同步 + 3D 手部 + 触觉/sEMG + BYO 硬件</h3>
+                            <p class="spec-item-body">支持左右腕部同步相机、双目第一视角、3D 手指运动学、触觉/力传感、sEMG、可选 LWIR 热成像，以及直接部署客户自有 UMI 或采集硬件（零硬件锁定）。</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">高难真实场景</span>
+                            <h3 class="spec-item-title">柔性织物、线束维修、商用后厨、建筑工艺与 3PL 仓储</h3>
+                            <p class="spec-item-body">覆盖工业洗衣房织物折叠、电子线束与精密维修、商用后厨热源与液体倾倒、干墙批灰/水电安装等专业技能工种，以及多 SKU 仓储分拣包装。</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">严格数据真实性</span>
+                            <h3 class="spec-item-title">零伪造机器人动作 + SHA-256 溯源清单</h3>
+                            <p class="spec-item-body">严格区分人类观测流与实测运动学/力传感流，绝不将纯视频伪造为机器人关节指令；交付 LeRobot、RLDS、MCAP/Rerun、HDF5/Zarr 格式与完整内外参标定。</p>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-item-kicker">欧洲合规与场地通道</span>
+                            <h3 class="spec-item-title">6 份法律合规文件 + 离线隐私保护</h3>
+                            <p class="spec-item-body">核心工程与试点基地位于乌克兰，德国、波兰及更多地区按项目组织；严格遵循 GDPR / 欧盟 AI 法案溯源要求、限定视角（Scoped FOV）与离线采集（不接入工厂内网）。</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="faq">
+                    <div class="overview-kicker">02 · 常见问题</div>
+                    <h2 class="overview-heading">具身智能团队核心关注问题。</h2>
+                    <div class="geo-faq-list">
+                        <details class="geo-faq-item" open>
+                            <summary>Sverkaus 与普通众包第一视角（POV）视频平台或实验室遥操有何本质区别？</summary>
+                            <div class="geo-faq-answer">普通众包视频缺乏同步腕部视角、相机标定与触觉力反馈；而实验室遥操难以部署到数十个真实商用后厨、洗衣房或车间。Sverkaus 按客户技术规格直接嵌入真实商业与工业班次，提供腕部同步+双目+3D手部追踪+UMI/触觉/sEMG/可选 LWIR 热成像（并支持客户自带 BYO 硬件），现场执行边缘质检（RELEASE/HOLD/REJECT），保留真实打滑与人工恢复轨迹，且绝不伪造机器人动作标签。</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>Sverkaus 支持哪些机器人数据导出格式与质量验证标准？</summary>
+                            <div class="geo-faq-answer">支持 LeRobot（Parquet + MP4）、RLDS、MCAP / Rerun、HDF5 / Zarr 及客户定制 Parquet + MP4 架构。每个交付批次均附带 JSON 溯源清单、SHA-256 片段校验和、相机内外参标定、跨流时间同步漂移指标（p95 Δt），并将录制时长、提交时长与验收合格时长严格分开核算。</div>
+                        </details>
+                        <details class="geo-faq-item">
+                            <summary>中国或国际具身智能与人形机器人团队如何启动 Sverkaus 欧洲/乌克兰现场试点？</summary>
+                            <div class="geo-faq-answer">试点分三步推进：（1）技术规格对齐（锁定任务瓶颈、机器人构型、Track A/B/C 或 BYO 硬件、导出格式与验收门槛）；（2）场地安全审查（GO）与 10–20 分钟现场校准测试（验证手部可见性、同步漂移与格式导入）；（3）多场地真实班次批量交付并结合模型评测反馈进入迭代闭环。</div>
+                        </details>
+                    </div>
+                </section>
+
+                <section class="overview-block" id="contact">
+                    <div class="overview-kicker">03 · 试点需求沟通</div>
+                    <h2 class="overview-heading">规划您的定制数据试点。</h2>
+                    <form id="partner-form" class="partner-panel" novalidate>
+                        <input type="hidden" id="partner-intent" name="intent" value="ZH Robotics Pilot Inquiry">
+                        <div class="partner-fields-row">
+                            <div class="partner-group">
+                                <label class="partner-label" for="partner-name">姓名与团队</label>
+                                <input class="partner-input" id="partner-name" name="name" type="text" maxlength="160" placeholder="您的姓名与机器人团队" required>
+                            </div>
+                            <div class="partner-group">
+                                <label class="partner-label" for="partner-email">工作邮箱</label>
+                                <input class="partner-input" id="partner-email" name="email" type="email" maxlength="160" placeholder="you@company.com" required>
+                            </div>
+                        </div>
+                        <div class="partner-group">
+                            <label class="partner-label" for="partner-message">目标任务、传感器规格与导出格式</label>
+                            <textarea class="partner-textarea" id="partner-message" name="message" maxlength="1500" placeholder="请描述目标操作任务、机器人构型、所需视角/传感器（腕部、3D手部、UMI、触觉/BYO）与交付格式..." required></textarea>
+                        </div>
+                        <input class="partner-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <div class="partner-submit-row">
+                            <button type="submit" class="partner-submit-btn" id="partner-submit-btn">发送需求</button>
+                            <span class="partner-status" id="partner-status" aria-live="polite"></span>
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-legal">
+                <a href="/zh">概览</a>
+                <span class="footer-dot">·</span>
+                <a href="/methodology">技术规格</a>
+                <span class="footer-dot">·</span>
+                <a href="/partners">场地合作</a>
+                <span class="footer-dot">·</span>
+                <a href="/careers">招聘</a>
+                <span class="footer-dot">·</span>
+                <a href="mailto:gleb@sverkaus.com">gleb@sverkaus.com</a>
+            </div>
+            <div class="footer-specs-row">
+                <a href="/">EN</a>
+                <span class="footer-dot">·</span>
+                <a href="/de">DE</a>
+                <span class="footer-dot">·</span>
+                <a href="/pl">PL</a>
+                <span class="footer-dot">·</span>
+                <a href="/uk">UA</a>
+                <span class="footer-dot">·</span>
+                <a href="/ko">한국어</a>
+                <span class="footer-dot">·</span>
+                <a href="/methodology">Methodology</a>
+                <span class="footer-dot">·</span>
+                <a href="/formats">Formats</a>
+                <span class="footer-dot">·</span>
+                <a href="/llms.txt">llms.txt</a>
+            </div>
+            <p class="footer-trading-note">Sverkaus Physical AI Data Lab</p>
+        </div>
+    </footer>
+
+    <script src="/assets/js/site.js?v=20261128c"></script>
+</body>
+</html>

@@ -3,34 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
     <meta name="description" content="Sverkaus Physical AI Data Lab: operational integrator embedding specification-driven physical data capture into active workplaces—wrist-synced video, 3D hand tracking, UMI, MoCap gloves, failure/recovery trajectories, and Edge QA.">
     <link rel="canonical" href="https://sverkaus.com/">
+    <link rel="alternate" hreflang="en" href="https://sverkaus.com/">
+    <link rel="alternate" hreflang="de" href="https://sverkaus.com/de">
+    <link rel="alternate" hreflang="pl" href="https://sverkaus.com/pl">
+    <link rel="alternate" hreflang="uk" href="https://sverkaus.com/uk">
+    <link rel="alternate" hreflang="zh" href="https://sverkaus.com/zh">
+    <link rel="alternate" hreflang="ko" href="https://sverkaus.com/ko">
+    <link rel="alternate" hreflang="x-default" href="https://sverkaus.com/">
     <link rel="alternate" type="text/plain" href="/llms.txt" title="Sverkaus LLM Context">
     <link rel="alternate" type="text/plain" href="/llms-full.txt" title="Sverkaus Full Technical Context">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sverkaus.com/">
     <meta property="og:title" content="Sverkaus — Physical AI Data Lab">
-    <meta property="og:description" content="Combat-ready physical data from live workplaces: wrist + 3D hand kinematics, UMI & MoCap gloves, real failures & recoveries, and Edge QA.">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:description" content="Combat-ready physical data from live workplaces: wrist + 3D hand kinematics, UMI & MoCap gloves, tactile/sEMG, real failures & recoveries, and Edge QA.">
+    <meta property="og:image" content="https://sverkaus.com/assets/og-sverkaus.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Sverkaus — Physical AI Data Lab">
     <meta name="twitter:description" content="Combat-ready physical data from live workplaces—built for policy transfer and world models.">
+    <meta name="twitter:image" content="https://sverkaus.com/assets/og-sverkaus.png">
     <title>Sverkaus — Physical AI Data Lab</title>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "WebSite",
+          "@id": "https://sverkaus.com/#website",
+          "url": "https://sverkaus.com/",
+          "name": "Sverkaus Physical AI Data Lab",
+          "inLanguage": ["en", "de", "pl", "uk", "zh", "ko"],
+          "publisher": { "@id": "https://sverkaus.com/#organization" }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://sverkaus.com/#webpage",
+          "url": "https://sverkaus.com/",
+          "name": "Sverkaus — Physical AI Data Lab",
+          "inLanguage": "en",
+          "dateModified": "2026-11-28",
+          "isPartOf": { "@id": "https://sverkaus.com/#website" },
+          "about": { "@id": "https://sverkaus.com/#organization" }
+        },
+        {
           "@type": "Organization",
           "@id": "https://sverkaus.com/#organization",
           "name": "Sverkaus Physical AI Data Lab",
           "alternateName": "Sverkaus",
           "url": "https://sverkaus.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://sverkaus.com/assets/logo-sverkaus.png",
+            "width": 512,
+            "height": 512
+          },
+          "image": "https://sverkaus.com/assets/og-sverkaus.png",
           "email": "gleb@sverkaus.com",
           "founder": {
             "@type": "Person",
             "name": "Gleb Gosha"
           },
-          "description": "Operational and engineering integrator for specification-driven Physical AI data production. Sverkaus embeds multi-sensor capture directly into active commercial and industrial workplaces (Site Partners) without interrupting shifts—delivering wrist-synced video, 3D hand tracking, UMI grippers, MoCap gloves, real failure/recovery trajectories, and Edge QA for robotics teams, while offering partner facilities paid project participation and an optional path to automation assessment (Data-to-Automation).",
+          "description": "Sverkaus connects industrial workflows with Physical AI. As an operational and engineering integrator for specification-driven Physical AI data production, Sverkaus embeds calibrated multi-sensor capture directly into active commercial and industrial workplaces (Site Partners) without interrupting shifts—delivering wrist-synced video, 3D hand tracking, UMI grippers, MoCap gloves, tactile/sEMG, optional LWIR thermal, real failure/recovery trajectories, Site Security Clearance (GO/HOLD/NO GO), and Edge QA (RELEASE/HOLD/REJECT) for robotics teams, while offering partner facilities paid project participation and an optional path to preliminary Automation Opportunity Assessment.",
           "areaServed": [
             { "@type": "Country", "name": "Ukraine" },
             { "@type": "Country", "name": "Germany" },
@@ -42,10 +79,13 @@
             "Human-to-Robot Policy Transfer",
             "Wrist-Mounted Camera Synchronization",
             "3D Hand Tracking and MoCap Gloves",
-            "Universal Manipulation Interface (UMI)",
+            "Tactile, Force and sEMG Sensing for Manipulation",
+            "Universal Manipulation Interface (UMI) and DexUMI",
+            "Regional Collection Operations Partner (BYO Hardware)",
             "Failure and Recovery Trajectories for Reinforcement Learning",
             "Edge QA and Kinematic Reachability Verification",
             "LeRobot, RLDS, MCAP, Rerun, HDF5, Zarr Dataset Formats",
+            "EU AI Act and GDPR Robotics Data Compliance",
             "Industrial Site Partnerships and Automation Readiness Assessment"
           ],
           "contactPoint": [
@@ -151,7 +191,7 @@
             document.documentElement.classList.add('intro-done');
         }
     </script>
-    <link rel="stylesheet" href="/assets/css/site.css?v=20261126e">
+    <link rel="stylesheet" href="/assets/css/site.css?v=20261128c">
 </head>
 <body>
 
@@ -164,6 +204,9 @@
         <nav class="nav-tabs" aria-label="Main navigation">
             <a href="/" class="nav-tab active" data-tab="overview" id="tab-overview">
                 <span class="tab-label" data-i18n="nav.overview">Overview</span>
+            </a>
+            <a href="/methodology" class="nav-tab" data-tab="specs" id="tab-specs">
+                <span class="tab-label" data-i18n="nav.specs">Specs</span>
             </a>
             <a href="/partners" class="nav-tab" data-tab="partners" id="tab-partners">
                 <span class="tab-label" data-i18n="nav.partners">Partners</span>
@@ -222,7 +265,7 @@
                     </p>
                     <div class="hero-cta-pills">
                         <a href="#contact" class="pill-btn primary" data-scroll-intent="Scope a Pilot" data-i18n="hero.ctaPrimary">Scope a Pilot</a>
-                        <a href="#capture-stack" class="pill-btn ghost" data-i18n="hero.ctaSecondary">Capture Stack</a>
+                        <a href="#capture-stack" class="pill-btn ghost" data-i18n="trio.cta">What You Get</a>
                     </div>
                 </div>
 
@@ -233,272 +276,143 @@
 
             <div class="overview-details">
 
-                <!-- 01. Editorial Benchmark Sheet (Zero Cards) -->
+                <!-- 01. Why Sverkaus: Direct 2-Column Competitor Contrast -->
                 <div class="overview-block" id="edge">
-                    <div class="overview-kicker" data-i18n="edge.kicker">01 · The Integrator Edge</div>
-                    <h2 class="overview-heading" data-i18n="edge.heading">Lab Benches Plateau. Live Shifts Transfer.</h2>
+                    <div class="overview-kicker" data-i18n="cmp.kicker">01 · Why Sverkaus</div>
+                    <h2 class="overview-heading" data-i18n="cmp.heading">Generic Video Stalls. Live Shifts Transfer.</h2>
 
-                    <div class="metric-sheet">
-                        <div class="metric-cell">
-                            <div class="metric-stat" data-i18n="edge.c1.stat">~2× Transfer</div>
-                            <div class="metric-title" data-i18n="edge.c1.title">Wrist + 3D Hand</div>
-                            <p class="metric-body" data-i18n="edge.c1.body">Synced wrist cams &amp; 3D hands, not plain POV.</p>
+                    <div class="v2-compare-grid">
+                        <div class="v2-compare-card muted">
+                            <div class="v2-compare-head">
+                                <span class="v2-compare-label" data-i18n="cmp.otherTitle">Typical POV &amp; Studio Vendors</span>
+                                <span class="v2-compare-badge" data-i18n="cmp.otherBadge">Low Transfer</span>
+                            </div>
+                            <ul class="v2-compare-list">
+                                <li><span class="v2-ico bad">✕</span><span data-i18n="cmp.o1">Head-camera only — missing wrist angles and 3D hand motion.</span></li>
+                                <li><span class="v2-ico bad">✕</span><span data-i18n="cmp.o2">Thousands of identical repeats on one sterile lab bench.</span></li>
+                                <li><span class="v2-ico bad">✕</span><span data-i18n="cmp.o3">Scripted "perfect" takes — no real failures or human recoveries.</span></li>
+                                <li><span class="v2-ico bad">✕</span><span data-i18n="cmp.o4">Slow robot teleop or unverified trajectories that fail QA.</span></li>
+                            </ul>
                         </div>
-                        <div class="metric-cell">
-                            <div class="metric-stat" data-i18n="edge.c2.stat">30+ Sites</div>
-                            <div class="metric-title" data-i18n="edge.c2.title">Site Breadth</div>
-                            <p class="metric-body" data-i18n="edge.c2.body">Real workplaces beat studio repeats.</p>
-                        </div>
-                        <div class="metric-cell">
-                            <div class="metric-stat" data-i18n="edge.c3.stat">&gt;3× Teleop</div>
-                            <div class="metric-title" data-i18n="edge.c3.title">UMI + Edge QA</div>
-                            <p class="metric-body" data-i18n="edge.c3.body">Robot-free capture checked for reachability.</p>
-                        </div>
-                        <div class="metric-cell">
-                            <div class="metric-stat" data-i18n="edge.c4.stat">2× Less Failure</div>
-                            <div class="metric-title" data-i18n="edge.c4.title">Errors Kept</div>
-                            <p class="metric-body" data-i18n="edge.c4.body">Real slips, recoveries &amp; subgoal frames.</p>
+
+                        <div class="v2-compare-card winner">
+                            <div class="v2-compare-head">
+                                <span class="v2-compare-label">Sverkaus</span>
+                                <span class="v2-compare-badge" data-i18n="cmp.usBadge">Live Integrator</span>
+                            </div>
+                            <ul class="v2-compare-list">
+                                <li><span class="v2-ico good">✓</span><span data-i18n-html="cmp.u1"><strong>Wrist + 3D Hand / Gloves</strong> — drives real policy transfer.<span class="v2-metric-chip">~2×</span></span></li>
+                                <li><span class="v2-ico good">✓</span><span data-i18n-html="cmp.u2"><strong>30+ Active Workplaces</strong> — real site diversity, zero staging.<span class="v2-metric-chip">~90% gen</span></span></li>
+                                <li><span class="v2-ico good">✓</span><span data-i18n-html="cmp.u3"><strong>Real Slips &amp; Recoveries Kept</strong> — built for RL and world models.<span class="v2-metric-chip">2× less fail</span></span></li>
+                                <li><span class="v2-ico good">✓</span><span data-i18n-html="cmp.u4"><strong>Portable UMI + Edge QA</strong> — robot-free capture checked for reachability.<span class="v2-metric-chip">&gt;3× teleop</span></span></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- 02. Engineering Capture Console (Rerun / MCAP Schematic — Zero AI Photos) -->
+                <!-- 02. What You Get: Clean 3-Card Hardware & Deliverable Trio -->
                 <div class="overview-block" id="capture-stack">
-                    <div class="overview-kicker" data-i18n="ep.kicker">02 · Capture Stack</div>
-                    <h2 class="overview-heading" data-i18n="ep.heading">Hands, Wrists &amp; Gloves. One Pipeline.</h2>
+                    <div class="overview-kicker" data-i18n="trio.kicker">02 · What You Get</div>
+                    <h2 class="overview-heading" data-i18n="trio.heading">Configured Around Your Robot.</h2>
 
-                    <div class="console-wrap" id="episode-viz">
-                        <div class="console-frame">
-                            <div class="console-topbar">
-                                <div class="console-topbar-left">
-                                    <span class="console-dot"></span>
-                                    <span class="console-id" id="viz-badge-text">EPISODE_SCHEMA · BASE + WRIST + 3D HAND</span>
-                                </div>
-                                <div class="console-tabs" role="group" aria-label="Capture layer preview">
-                                    <button type="button" class="viz-mode-btn active" data-viz-mode="all" data-i18n="ep.mAll">Full Stack</button>
-                                    <button type="button" class="viz-mode-btn" data-viz-mode="sync" data-i18n="ep.mSync">Wrist + Base</button>
-                                    <button type="button" class="viz-mode-btn" data-viz-mode="kinematics" data-i18n="ep.mKin">Hands &amp; Gloves</button>
-                                    <button type="button" class="viz-mode-btn" data-viz-mode="thermal" data-i18n="ep.mThermal">Thermal / IR</button>
-                                </div>
+                    <div class="v2-trio-grid">
+                        <div class="v2-trio-card">
+                            <div class="v2-trio-photo">
+                                <img src="/assets/real-umi.jpg" alt="Portable 3D-printed UMI gripper with wrist-mounted action camera">
                             </div>
-
-                            <div class="console-body">
-                                <!-- Left: Clean Vector Rig & Kinematic Blueprint -->
-                                <div class="console-blueprint">
-                                    <svg class="blueprint-svg" viewBox="0 0 520 300" role="img" aria-label="Technical capture topology showing synchronized base and wrist camera frustums, 3D hand kinematic joints, UMI caliper, and optional radiometric thermal contours">
-                                        <defs>
-                                            <pattern id="bp-grid" width="24" height="24" patternUnits="userSpaceOnUse">
-                                                <path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(148,163,184,0.09)" stroke-width="1"/>
-                                            </pattern>
-                                            <linearGradient id="frustum-blue" x1="0%" y1="0%" x2="100%" y2="0%">
-                                                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.28"/>
-                                                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.03"/>
-                                            </linearGradient>
-                                            <linearGradient id="frustum-slate" x1="50%" y1="0%" x2="50%" y2="100%">
-                                                <stop offset="0%" stop-color="#94a3b8" stop-opacity="0.18"/>
-                                                <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.02"/>
-                                            </linearGradient>
-                                        </defs>
-
-                                        <!-- Engineering Grid & Bench Footprint -->
-                                        <rect width="520" height="300" fill="url(#bp-grid)"/>
-                                        <rect x="64" y="62" width="392" height="186" rx="4" fill="none" stroke="rgba(148,163,184,0.22)" stroke-width="1" stroke-dasharray="4 4"/>
-                                        <text x="74" y="78" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="9" font-weight="700">WORKBENCH ROI · SCOPED FOV</text>
-
-                                        <!-- Target Manipulation Object -->
-                                        <g class="bp-object">
-                                            <rect x="224" y="128" width="72" height="44" rx="4" fill="rgba(37,99,235,0.10)" stroke="#60a5fa" stroke-width="1.2"/>
-                                            <line x1="252" y1="150" x2="268" y2="150" stroke="#93c5fd" stroke-width="1"/>
-                                            <line x1="260" y1="142" x2="260" y2="158" stroke="#93c5fd" stroke-width="1"/>
-                                            <text x="260" y="186" text-anchor="middle" fill="#94a3b8" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700">CONTACT TARGET</text>
-                                        </g>
-
-                                        <!-- LAYER 1: Multi-View Camera Frustums (Base + Wrist L/R) -->
-                                        <g id="viz-layer-sync" class="bp-layer">
-                                            <!-- Base / Ego Camera Top -->
-                                            <polygon points="260,26 168,144 352,144" fill="url(#frustum-slate)" stroke="rgba(148,163,184,0.38)" stroke-width="1" stroke-dasharray="3 3"/>
-                                            <rect x="234" y="16" width="52" height="16" rx="3" fill="#1e293b" stroke="#64748b" stroke-width="1"/>
-                                            <text x="260" y="27" text-anchor="middle" fill="#e2e8f0" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">CAM_BASE</text>
-
-                                            <!-- Left Wrist Camera -->
-                                            <polygon points="102,216 238,118 242,182" fill="url(#frustum-blue)" stroke="#3b82f6" stroke-width="1.2"/>
-                                            <rect x="66" y="210" width="66" height="18" rx="3" fill="#172554" stroke="#3b82f6" stroke-width="1.2"/>
-                                            <text x="99" y="222" text-anchor="middle" fill="#bfdbfe" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">WRIST_L</text>
-
-                                            <!-- Right Wrist Camera -->
-                                            <polygon points="418,216 282,118 278,182" fill="url(#frustum-blue)" stroke="#3b82f6" stroke-width="1.2"/>
-                                            <rect x="388" y="210" width="66" height="18" rx="3" fill="#172554" stroke="#3b82f6" stroke-width="1.2"/>
-                                            <text x="421" y="222" text-anchor="middle" fill="#bfdbfe" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">WRIST_R</text>
-                                        </g>
-
-                                        <!-- LAYER 2: 3D Hand Kinematics, MoCap Gloves & UMI Caliper -->
-                                        <g id="viz-layer-kinematics" class="bp-layer">
-                                            <!-- Left Hand Articulated Vector Skeleton -->
-                                            <polyline points="148,200 184,174 206,154 224,144" fill="none" stroke="#38bdf8" stroke-width="1.8"/>
-                                            <polyline points="184,174 206,166 226,158" fill="none" stroke="#38bdf8" stroke-width="1.6"/>
-                                            <polyline points="184,174 202,178 220,174" fill="none" stroke="#38bdf8" stroke-width="1.4"/>
-                                            <polyline points="184,174 196,192 214,194" fill="none" stroke="#38bdf8" stroke-width="1.3"/>
-                                            <circle cx="184" cy="174" r="3.5" fill="#0b1120" stroke="#38bdf8" stroke-width="1.6"/>
-                                            <circle cx="206" cy="154" r="2.8" fill="#38bdf8"/>
-                                            <circle cx="224" cy="144" r="3.6" fill="#ffffff"/>
-                                            <circle cx="226" cy="158" r="3.2" fill="#ffffff"/>
-
-                                            <!-- Right Hand / UMI Gripper Vector Skeleton -->
-                                            <polyline points="372,200 336,174 314,154 296,144" fill="none" stroke="#38bdf8" stroke-width="1.8"/>
-                                            <polyline points="336,174 314,166 294,158" fill="none" stroke="#38bdf8" stroke-width="1.6"/>
-                                            <polyline points="336,174 318,178 300,174" fill="none" stroke="#38bdf8" stroke-width="1.4"/>
-                                            <polyline points="336,174 324,192 306,194" fill="none" stroke="#38bdf8" stroke-width="1.3"/>
-                                            <circle cx="336" cy="174" r="3.5" fill="#0b1120" stroke="#38bdf8" stroke-width="1.6"/>
-                                            <circle cx="314" cy="154" r="2.8" fill="#38bdf8"/>
-                                            <circle cx="296" cy="144" r="3.6" fill="#ffffff"/>
-                                            <circle cx="294" cy="158" r="3.2" fill="#ffffff"/>
-
-                                            <!-- Aperture / Force Readout Arc -->
-                                            <path d="M 224 114 Q 260 100 296 114" fill="none" stroke="#38bdf8" stroke-width="1.1" stroke-dasharray="2 2"/>
-                                            <text x="260" y="102" text-anchor="middle" fill="#7dd3fc" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700">42 DOF · UMI / GLOVE</text>
-                                        </g>
-
-                                        <!-- LAYER 3: Scientific Thermal / LWIR Isotherm Contours -->
-                                        <g id="viz-layer-thermal" class="bp-layer">
-                                            <ellipse cx="260" cy="150" rx="58" ry="34" fill="none" stroke="rgba(249,115,22,0.35)" stroke-width="1.2" stroke-dasharray="4 3"/>
-                                            <ellipse cx="260" cy="150" rx="38" ry="22" fill="rgba(249,115,22,0.08)" stroke="#f97316" stroke-width="1.3"/>
-                                            <ellipse cx="260" cy="150" rx="18" ry="11" fill="rgba(251,191,36,0.16)" stroke="#fbbf24" stroke-width="1.4"/>
-                                            <line x1="298" y1="138" x2="338" y2="114" stroke="#fb923c" stroke-width="1"/>
-                                            <rect x="338" y="104" width="84" height="17" rx="3" fill="rgba(67,20,7,0.9)" stroke="#f97316" stroke-width="1"/>
-                                            <text x="380" y="115.5" text-anchor="middle" fill="#fed7aa" font-family="JetBrains Mono, monospace" font-size="8" font-weight="700">LWIR · 74.2°C</text>
-                                        </g>
-
-                                        <!-- Axis Corner Marker -->
-                                        <g transform="translate(24, 272)">
-                                            <line x1="0" y1="0" x2="22" y2="0" stroke="#64748b" stroke-width="1.2"/>
-                                            <line x1="0" y1="0" x2="0" y2="-22" stroke="#64748b" stroke-width="1.2"/>
-                                            <text x="26" y="3" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="8">X</text>
-                                            <text x="-3" y="-26" fill="#64748b" font-family="JetBrains Mono, monospace" font-size="8">Y</text>
-                                        </g>
-                                    </svg>
-                                </div>
-
-                                <!-- Right: Synchronized Sensor Stream Table -->
-                                <div class="console-streams">
-                                    <div class="stream-row" data-stream-group="sync">
-                                        <div class="stream-key">CAM_BASE + WRIST</div>
-                                        <div class="stream-val">3× RGB · 60 Hz · Δt &lt; 2 ms</div>
-                                    </div>
-                                    <div class="stream-row" data-stream-group="kinematics">
-                                        <div class="stream-key">HAND_3D / GLOVES</div>
-                                        <div class="stream-val">42 DOF · Contact Force</div>
-                                    </div>
-                                    <div class="stream-row" data-stream-group="kinematics">
-                                        <div class="stream-key">UMI + IK GATE</div>
-                                        <div class="stream-val">Robot-Free · Reachability OK</div>
-                                    </div>
-                                    <div class="stream-row" data-stream-group="thermal">
-                                        <div class="stream-key">THERMAL / LWIR</div>
-                                        <div class="stream-val">Optional · Heat / Liquids</div>
-                                    </div>
-                                    <div class="stream-row" data-stream-group="all">
-                                        <div class="stream-key">EDGE_QA STATUS</div>
-                                        <div class="stream-val ok">RELEASE · Manifest Signed</div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Bottom: Synchronized Multimodal Timeline (Rerun / MCAP style) -->
-                            <div class="console-timeline">
-                                <div class="tl-row" data-stream-group="sync">
-                                    <span class="tl-label">WRIST + BASE</span>
-                                    <div class="tl-track tl-ticks" aria-hidden="true"></div>
-                                </div>
-                                <div class="tl-row" data-stream-group="kinematics">
-                                    <span class="tl-label">3D HAND / FORCE</span>
-                                    <div class="tl-track">
-                                        <svg viewBox="0 0 400 22" preserveAspectRatio="none" aria-hidden="true">
-                                            <path d="M0,18 L48,18 C64,18 72,6 92,6 C112,6 124,14 148,14 C172,14 182,3 206,3 C224,3 236,15 262,10 C288,5 304,5 328,17 L400,17" fill="none" stroke="#38bdf8" stroke-width="1.6"/>
-                                        </svg>
-                                    </div>
-                                </div>
-                                <div class="tl-row" data-stream-group="all">
-                                    <span class="tl-label">SUBGOALS &amp; RL</span>
-                                    <div class="tl-segments">
-                                        <span class="tl-seg base" style="width:20%">APPROACH</span>
-                                        <span class="tl-seg base" style="width:24%">GRASP</span>
-                                        <span class="tl-seg warn" style="width:18%">SLIP (KEPT)</span>
-                                        <span class="tl-seg accent" style="width:22%">RECOVERY</span>
-                                        <span class="tl-seg ok" style="width:16%">OK ✓</span>
-                                    </div>
-                                </div>
+                            <div class="v2-trio-body">
+                                <div class="v2-trio-step" data-i18n="trio.c1.step">01 · Portable Capture</div>
+                                <div class="v2-trio-title" data-i18n="trio.c1.title">UMI &amp; Wrist Cams</div>
+                                <p class="v2-trio-desc" data-i18n="trio.c1.desc">Robot-free shift capture—over 3× faster than teleop, verified for your robot's reachability.</p>
                             </div>
                         </div>
 
-                        <p class="viz-caption" id="viz-caption" data-i18n-html="ep.capAll">
-                            <strong>Full Stack</strong> — synced wrist + base cams, 3D hands or MoCap gloves, and failure labels.
-                        </p>
-
-                        <!-- Open 3-Column Hairline Spec Strip (Zero Boxes) -->
-                        <div class="spec-strip">
-                            <div class="spec-col">
-                                <div class="spec-tag" data-i18n="ep.t1.tag">Tier A · Portable</div>
-                                <div class="spec-title" data-i18n="ep.t1.title">Wrist + Stereo + UMI</div>
-                                <p class="spec-desc" data-i18n="ep.t1.desc">Robot-free shift capture, &gt;3× teleop.</p>
+                        <div class="v2-trio-card">
+                            <div class="v2-trio-photo">
+                                <img src="/assets/real-workshop.jpg" alt="Technician hands assembling an industrial wire harness on an active workbench">
                             </div>
-                            <div class="spec-col">
-                                <div class="spec-tag" data-i18n="ep.t2.tag">Tier B/C · Hands</div>
-                                <div class="spec-title" data-i18n="ep.t2.title">3D Hand &amp; MoCap Gloves</div>
-                                <p class="spec-desc" data-i18n="ep.t2.desc">Finger pose, grip force, optional IR.</p>
-                            </div>
-                            <div class="spec-col">
-                                <div class="spec-tag" data-i18n="ep.t3.tag">Edge QA · Export</div>
-                                <div class="spec-title" data-i18n="ep.t3.title">Reachability &amp; Subgoals</div>
-                                <p class="spec-desc" data-i18n="ep.t3.desc">On-site sync, occlusion &amp; reachability gates.</p>
+                            <div class="v2-trio-body">
+                                <div class="v2-trio-step" data-i18n="trio.c2.step">02 · Hands &amp; Rigs</div>
+                                <div class="v2-trio-title" data-i18n="trio.c2.title">3D Hands, Gloves &amp; BYO</div>
+                                <p class="v2-trio-desc" data-i18n="trio.c2.desc">Finger tracking, MoCap gloves, optional thermal/IR, or your own capture rig deployed on site.</p>
                             </div>
                         </div>
 
-                        <div class="export-line">
-                            <span class="export-label" data-i18n="ep.schemaBadge">Policy &amp; World-Model Ready</span>
-                            <span class="export-schemas">LeRobot · RLDS · MCAP / Rerun · HDF5 / Zarr</span>
+                        <div class="v2-trio-card deliverable">
+                            <div>
+                                <div class="v2-trio-step" data-i18n="trio.c3.step">03 · Ready to Train</div>
+                                <div class="v2-trio-title" data-i18n="trio.c3.title">Edge QA → Your Format</div>
+                                <ul class="v2-deliv-checks">
+                                    <li><span>✓</span><em style="font-style:normal;" data-i18n="trio.c3.l1">Synced base + wrist + subgoal frames</em></li>
+                                    <li><span>✓</span><em style="font-style:normal;" data-i18n="trio.c3.l2">Real slips &amp; recovery steps flagged</em></li>
+                                    <li><span>✓</span><em style="font-style:normal;" data-i18n="trio.c3.l3">Occlusion &amp; reachability checked on site</em></li>
+                                    <li><span>✓</span><em style="font-style:normal;" data-i18n="trio.c3.l4">Written site consent &amp; scoped privacy</em></li>
+                                </ul>
+                            </div>
+                            <div class="v2-deliv-formats">
+                                <span class="v2-deliv-fmt-kicker" data-i18n="trio.c3.fmtKicker">Export Schemas</span>
+                                <span class="v2-deliv-fmt-list">LeRobot · RLDS · MCAP / Rerun · HDF5</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 03. Editorial Capability Index (Zero Fake Photos, Zero Card Grid) -->
+                <!-- 03. Interactive Split Documentary Photo Showcase -->
                 <div class="overview-block" id="domains">
                     <div class="overview-kicker" data-i18n="env.kicker">03 · Live Workplaces</div>
                     <h2 class="overview-heading" data-i18n="env.heading">Real Work. Zero Staging.</h2>
 
-                    <div class="domain-index">
-                        <div class="domain-row">
-                            <span class="domain-num">01</span>
-                            <span class="domain-name" data-i18n="env.d1.title">Laundries &amp; Soft Goods</span>
-                            <span class="domain-desc" data-i18n="env.d1.desc">Garments, linen, flexible packs.</span>
-                            <span class="domain-code">DEFORMABLES</span>
+                    <div class="workplace-showcase" id="workplace-showcase">
+                        <div class="showcase-list" role="tablist" aria-label="Live workplace environments">
+                            <button type="button" class="showcase-item active" role="tab" aria-selected="true" data-site-img="/assets/real-laundry.jpg" data-site-tag="LIVE SHIFT · DEFORMABLES · WRIST + BASE" data-site-alt="Worker hands folding white hotel towels in a bright commercial laundry">
+                                <span class="showcase-num">01</span>
+                                <span class="showcase-text">
+                                    <span class="showcase-title" data-i18n="env.d1.title">Laundries &amp; Soft Goods</span>
+                                    <span class="showcase-desc" data-i18n="env.d1.desc">Garments, linen, flexible packs.</span>
+                                </span>
+                            </button>
+
+                            <button type="button" class="showcase-item" role="tab" aria-selected="false" data-site-img="/assets/real-workshop.jpg" data-site-tag="LIVE SHIFT · ASSEMBLY & TOOLING · 3D HAND" data-site-alt="Technician hands assembling an industrial wire harness on a bright workshop bench">
+                                <span class="showcase-num">02</span>
+                                <span class="showcase-text">
+                                    <span class="showcase-title" data-i18n="env.d2.title">Workshops &amp; Tooling</span>
+                                    <span class="showcase-desc" data-i18n="env.d2.desc">Connectors, cables, benches.</span>
+                                </span>
+                            </button>
+
+                            <button type="button" class="showcase-item" role="tab" aria-selected="false" data-site-img="/assets/real-kitchen.jpg" data-site-tag="LIVE SHIFT · COMMERCIAL KITCHEN · OPTIONAL LWIR" data-site-alt="Chef hands ladling hot broth on a stainless commercial kitchen counter">
+                                <span class="showcase-num">03</span>
+                                <span class="showcase-text">
+                                    <span class="showcase-title" data-i18n="env.d3.title">Commercial Kitchens</span>
+                                    <span class="showcase-desc" data-i18n="env.d3.desc">Pouring, prep, thermal tasks.</span>
+                                </span>
+                            </button>
+
+                            <button type="button" class="showcase-item" role="tab" aria-selected="false" data-site-img="/assets/real-umi.jpg" data-site-tag="PORTABLE RIG · UMI & CLIENT BYO · IK GATE" data-site-alt="Engineer hand operating a 3D-printed UMI gripper with wrist action camera and calibration target">
+                                <span class="showcase-num">04</span>
+                                <span class="showcase-text">
+                                    <span class="showcase-title" data-i18n="env.d4.title">UMI &amp; MoCap Rigs</span>
+                                    <span class="showcase-desc" data-i18n="env.d4.desc">Your rig or ours, on site.</span>
+                                </span>
+                            </button>
                         </div>
-                        <div class="domain-row">
-                            <span class="domain-num">02</span>
-                            <span class="domain-name" data-i18n="env.d2.title">Workshops &amp; Tooling</span>
-                            <span class="domain-desc" data-i18n="env.d2.desc">Connectors, cables, benches.</span>
-                            <span class="domain-code">ASSEMBLY</span>
-                        </div>
-                        <div class="domain-row">
-                            <span class="domain-num">03</span>
-                            <span class="domain-name" data-i18n="env.d3.title">Commercial Kitchens</span>
-                            <span class="domain-desc" data-i18n="env.d3.desc">Pouring, prep, thermal tasks.</span>
-                            <span class="domain-code">THERMAL &amp; PREP</span>
-                        </div>
-                        <div class="domain-row">
-                            <span class="domain-num">04</span>
-                            <span class="domain-name" data-i18n="env.d4.title">UMI &amp; MoCap Rigs</span>
-                            <span class="domain-desc" data-i18n="env.d4.desc">Your rig or ours, on site.</span>
-                            <span class="domain-code">BYO / UMI</span>
+
+                        <div class="showcase-stage">
+                            <img id="showcase-img" src="/assets/real-laundry.jpg" alt="Worker hands folding white hotel towels in a bright commercial laundry">
+                            <div class="showcase-meta-bar">
+                                <span class="console-dot"></span>
+                                <span id="showcase-tag">LIVE SHIFT · DEFORMABLES · WRIST + BASE</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 04. Open Horizontal Stepper + Clean Geography Ledger (Zero Boxes) -->
-                <div class="overview-block" id="pilot">
+                <!-- 04. Dark Architectural Blueprint Band (High Visual Contrast) -->
+                <div class="overview-block pilot-dark-band" id="pilot">
                     <div class="overview-kicker" data-i18n="pilot.kicker">04 · Pilot</div>
                     <h2 class="overview-heading" data-i18n="pilot.heading">Spec to Batch. Three Steps.</h2>
 
-                    <div class="pilot-stepper">
+                    <div class="pilot-stepper dark">
                         <div class="stepper-item">
                             <div class="stepper-head">
                                 <span class="stepper-num">01</span>
@@ -525,7 +439,7 @@
                         </div>
                     </div>
 
-                    <div class="geo-ledger">
+                    <div class="geo-ledger dark">
                         <div class="geo-col">
                             <span class="geo-kicker primary" data-i18n="pilot.primaryKicker">Operating Base</span>
                             <div class="geo-val" data-i18n="pilot.primaryList">Ukraine</div>
@@ -538,15 +452,22 @@
                         </div>
                     </div>
 
-                    <p class="subtle-note" data-i18n="prov.note">
+                    <p class="subtle-note dark-note" data-i18n="prov.note">
                         Written site consent · Scoped FOV privacy · Batch provenance.
                     </p>
                 </div>
 
-                <!-- 05. Contact (The Single Focused Elevated Surface) -->
-                <div class="overview-block" id="contact">
-                    <div class="overview-kicker" data-i18n="contact.kicker">05 · Contact</div>
-                    <h2 class="overview-heading" data-i18n="contact.heading">Scope a Pilot.</h2>
+                <!-- 05. Asymmetric 2-Column Contact Split -->
+                <div class="overview-block contact-split" id="contact">
+                    <div class="contact-left">
+                        <div class="overview-kicker" data-i18n="contact.kicker">05 · Contact</div>
+                        <h2 class="overview-heading" data-i18n="contact.heading">Scope a Pilot.</h2>
+                        <div class="contact-links-col">
+                            <a href="mailto:gleb@sverkaus.com?subject=Pilot%20Requirements%20-%20Sverkaus" class="bold-link">gleb@sverkaus.com</a>
+                            <a href="mailto:main@sverkaus.com?subject=Sverkaus%20Data%20Production%20Inquiry" class="bold-link">main@sverkaus.com</a>
+                            <span class="subtle-note"><a href="/partners" class="bold-link" data-i18n="contact.sitePartnerships">Site Partnerships</a> · <a href="/careers" class="bold-link" data-i18n="nav.careers">Careers</a></span>
+                        </div>
+                    </div>
 
                     <form id="partner-form" class="partner-panel" novalidate>
                         <div class="intent-pills" role="group" aria-label="Inquiry topic">
@@ -579,12 +500,6 @@
                             <span class="partner-status" id="partner-status" aria-live="polite"></span>
                         </div>
                     </form>
-
-                    <div class="contact-inline">
-                        <a href="mailto:gleb@sverkaus.com?subject=Pilot%20Requirements%20-%20Sverkaus" class="bold-link">gleb@sverkaus.com</a>
-                        <a href="mailto:main@sverkaus.com?subject=Sverkaus%20Data%20Production%20Inquiry" class="bold-link">main@sverkaus.com</a>
-                        <span class="subtle-note">sverkaus.com · <a href="/partners" class="bold-link" data-i18n="contact.sitePartnerships">Site Partnerships</a> · <a href="/careers" class="bold-link" data-i18n="nav.careers">Careers</a></span>
-                    </div>
                 </div>
 
             </div>
@@ -596,6 +511,8 @@
             <div class="footer-legal">
                 <a href="/" data-i18n="nav.overview">Overview</a>
                 <span class="footer-dot">·</span>
+                <a href="/methodology" data-i18n="nav.specs">Specs</a>
+                <span class="footer-dot">·</span>
                 <a href="/partners" data-i18n="nav.partners">Partners</a>
                 <span class="footer-dot">·</span>
                 <a href="/careers" data-i18n="nav.careers">Careers</a>
@@ -604,10 +521,33 @@
                 <span class="footer-dot">·</span>
                 <a href="mailto:main@sverkaus.com">main@sverkaus.com</a>
             </div>
+            <div class="footer-specs-row">
+                <a href="/methodology">Methodology</a>
+                <span class="footer-dot">·</span>
+                <a href="/compare">Compare</a>
+                <span class="footer-dot">·</span>
+                <a href="/domains">Domains</a>
+                <span class="footer-dot">·</span>
+                <a href="/formats">Formats</a>
+                <span class="footer-dot">·</span>
+                <a href="/privacy">Privacy &amp; GDPR</a>
+                <span class="footer-dot">·</span>
+                <a href="/de">DE</a>
+                <span class="footer-dot">·</span>
+                <a href="/pl">PL</a>
+                <span class="footer-dot">·</span>
+                <a href="/uk">UA</a>
+                <span class="footer-dot">·</span>
+                <a href="/zh">中文</a>
+                <span class="footer-dot">·</span>
+                <a href="/ko">한국어</a>
+                <span class="footer-dot">·</span>
+                <a href="/llms.txt">llms.txt</a>
+            </div>
             <p class="footer-trading-note">Sverkaus Physical AI Data Lab</p>
         </div>
     </footer>
 
-    <script src="/assets/js/site.js?v=20261126e"></script>
+    <script src="/assets/js/site.js?v=20261128c"></script>
 </body>
 </html>
